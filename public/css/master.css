@@ -18,3 +18,7 @@ header {
   margin: 2% 0% 0% 4%;
   text-align: center;
 }
+
+.hide{
+  visibility: hidden;
+}
