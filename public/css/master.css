@@ -1,5 +1,22 @@
 header {
+  border-bottom: 2px solid darkGray;
+}
 
+.inline{
+  display: inline-block;
+}
+.playersName{
+  margin:2% 2% 5% 2%;
+  border: 2px solid black;
+}
+
+.exit{
+  margin-top: 3.5%;
+  float: right;
+}
+.main{
+  margin: 2% 0% 0% 4%;
+  text-align: center;
 }
 
 .hide{

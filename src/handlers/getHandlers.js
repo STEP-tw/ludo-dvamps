@@ -1,5 +1,5 @@
-const serveAvailableGames = function(manager,req,res){
-  let availableGames = manager.getAvailableGames();
+const serveAvailableGames = function(req,res){
+  let availableGames = req.app.gamesManager.getAvailableGames();
   res.send(availableGames);
 };
 

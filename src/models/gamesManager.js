@@ -8,11 +8,19 @@ class GamesManager {
     let allGames = Object.values(this.allRunningGames);
     return allGames.filter(game=>game.players.length < 4);
   }
-  addGame(gameName){
-    this.allRunningGames[gameName] = new Game(gameName);
+  addGame(gameName) {
+    let game = new Game();
+    this.allRunningGames[gameName] = game;
+    return game;
+  }
+  getGame(gameName){
+    return this.allRunningGames[gameName];
   }
   addPlayerTo(gameName,player){
     this.allRunningGames[gameName].addPlayer(player);
+  }
+  doesGameExists(gameName) {
+    return gameName in this.allRunningGames;
   }
 }
 
