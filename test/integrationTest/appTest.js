@@ -13,7 +13,7 @@ let doesNotHaveCookies = (res)=>{
   }
 };
 
-describe.only('#App', () => {
+describe('#App', () => {
   beforeEach(function(){
     app.initialize(new GamesManager());
   });

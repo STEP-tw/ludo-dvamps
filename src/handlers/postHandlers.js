@@ -1,5 +1,12 @@
 let postHandlers = {};
+const isValidReqBodyFormat = function(paramsKeys,req) {
+  let reqParams = Object.keys(req.body);
+  return paramsKeys.every(function(key){
+    return reqParams.includes(key);
+  })
+}
 const createNewGame = function(req,res) {
+  if(!isValidReqBodyFormat(['gameName','playerName'],req)) res.end();
   let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;
   if(gamesManager.doesGameExists(gameName)){
