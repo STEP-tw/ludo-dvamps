@@ -1,7 +1,8 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const cookieParser = require('cookie-parser');
-const defaultHandlers = require("./src/handlers/defaultHandler.js");
+const defaultHandlers = require(path.resolve('src/handlers/defaultHandler.js'));
 
 const logger = function(req,res,next){
   console.log(req.method,req.url);
