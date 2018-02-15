@@ -10,8 +10,33 @@ const createRequest = function(method,url,action,data){
   req.send(data);
 };
 
+const createElement = function(element,innerText,className){
+  let ele = document.createElement(element);
+  ele.innerText = innerText || '';
+  ele.class = className;
+  return ele;
+};
+
+const appendChilds = function(node,...childs){
+  childs.forEach((child)=>{
+    node.appendChild(child);
+  });
+};
+
+
 const displayGames = function(games){
-  console.log(games);
+  let table = document.querySelector('table');
+  games.forEach(game=>{
+    let tr = createElement('tr');
+    let gameName = createElement('td',game.name);
+    let createdBy = createElement('td',game.createdBy);
+    let playersToJoin = createElement('td',game.remain);
+    let button = createElement('button','Join','join');
+    let td = createElement('td');
+    appendChilds(td,button);
+    appendChilds(tr,gameName,createdBy,playersToJoin,td);
+    appendChilds(table,tr);
+  });
 };
 
 const getAvailableGames = function(){

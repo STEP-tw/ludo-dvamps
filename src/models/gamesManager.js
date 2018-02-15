@@ -2,7 +2,6 @@ const Game = require('./game.js');
 
 class GamesManager {
   constructor() {
-    this.numberOfPlayers =
     this.allRunningGames={};
   }
   getAvailableGames(){
