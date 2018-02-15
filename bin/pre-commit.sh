@@ -1,4 +1,4 @@
-eslint . -i cypress -i coverage
+eslint . 
 if [ $? == 1 ]; then
   exit 1
 fi
