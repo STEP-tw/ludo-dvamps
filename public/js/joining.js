@@ -11,7 +11,7 @@ const createRequest = function(method,url,action,data){
 };
 
 const displayGames = function(games){
-  alert("1223");
+  console.log(games);
 };
 
 const getAvailableGames = function(){
@@ -19,5 +19,25 @@ const getAvailableGames = function(){
   createRequest('GET',url,displayGames);
 };
 
+const goToHome = function(){
+  window.location = "/index.html";
+};
 
-window.onload = getAvailableGames;
+const setClickListener = function(selector,listener) {
+  let element = getElement(selector);
+  if(element){
+    element.onclick = listener;
+  }
+};
+
+const getElement = function(selector) {
+  return document.querySelector(selector);
+};
+
+const onLoad = function(){
+  getAvailableGames();
+  setClickListener('button[name=back]',goToHome);
+};
+
+
+window.onload = onLoad;

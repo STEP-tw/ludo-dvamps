@@ -20,6 +20,8 @@ describe('GameManager', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
       assert.deepPropertyVal(gameManager.allRunningGames, 'newGame', {
+        name:'newGame',
+        numberOfPlayers: 4,
         players: [{
           name: 'john'
         }],
@@ -40,14 +42,9 @@ describe('GameManager', () => {
       gameManager.addPlayerTo('newGame', 'sandy');
       gameManager.addPlayerTo('newGame', 'mandy');
       let expectation = [{
-        players: [{
-          name: 'john'
-        }, {
-          name: 'sandy'
-        }, {
-          name: 'mandy'
-        }],
-        status :{}
+        name:'newGame',
+        remain:1,
+        createdBy: 'john'
       }];
       assert.deepEqual(gameManager.getAvailableGames(), expectation);
     });
@@ -63,11 +60,13 @@ describe('GameManager', () => {
   describe('#getGame()', () => {
     it('should return Game', () => {
       let expectedGame = {
+        name:'newGame',
+        numberOfPlayers: 4,
         players: [],
         status: {}
       };
       assert.deepEqual(gameManager.getGame('newGame'), expectedGame);
-      assert.isUndefined(gameManager.getGame('SAMAJ'));
+      assert.isUndefined(gameManager.getGame('badGame'));
     });
   });
 });
