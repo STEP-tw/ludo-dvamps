@@ -8,6 +8,7 @@ const isValidReqBodyFormat = function(paramsKeys,req) {
 const createNewGame = function(req,res) {
   if(!isValidReqBodyFormat(['gameName','playerName'],req)){
     res.end();
+    return;
   }
   let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;
