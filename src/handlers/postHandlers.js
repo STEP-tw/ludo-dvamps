@@ -24,7 +24,6 @@ const createNewGame = function(req,res) {
   res.json({gameCreated:true});
   res.end();
 };
-
 postHandlers.createNewGame = createNewGame;
 
 module.exports = postHandlers;

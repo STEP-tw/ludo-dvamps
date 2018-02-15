@@ -63,5 +63,49 @@ describe('#App', () => {
         .expect(doesNotHaveCookies)
         .end(done);
     });
+    describe('GET /gameName', () => {
+      it('should send gameName', (done) => {
+        request(app)
+          .get('/gameName')
+          .set('Cookie','gameName=ludo')
+          .expect(200)
+          .end(done);
+      });
+    });
+    describe('GET /userName', () => {
+      it('should send userName', (done) => {
+        request(app)
+          .get('/gameName')
+          .set('Cookie','playerName=player')
+          .expect(200)
+          .end(done);
+      });
+    });
+    describe.skip('DELETE /player', () => {
+      it('should delete Player', (done) => {
+        let gamesManager = new GamesManager();
+        gamesManager.addGame('ludo');
+        let game= gamesManager.getGame('ludo');
+        game.addPlayer('player');
+        app.initialize(gamesManager);
+        request(app)
+          .delete('/player')
+          .send('playerName=player&gameName=ludo')
+          .expect(200)
+          .end(done);
+      });
+    });
+    describe('get /getStatus', () => {
+      it('should send gameStatus', (done) => {
+        let gamesManager = new GamesManager();
+        gamesManager.addGame('ludo');
+        app.initialize(gamesManager);
+        request(app)
+          .get('/getStatus')
+          .set('Cookie','gameName=ludo')
+          .expect(200)
+          .end(done);
+      });
+    });
   });
 });
