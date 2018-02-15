@@ -2,6 +2,10 @@ const getElement = function(selector) {
   return document.querySelector(selector);
 };
 
+const getAllElements = function(selector) {
+  return document.querySelectorAll(selector);
+};
+
 const setClickListener = function(selector,listener) {
   let element = getElement(selector);
   if(element){
@@ -20,6 +24,14 @@ const sendAjaxRequest = function(method,url,callBack,reqBody){
   ajax.send();
 };
 
+const isEmptyString = function(string) {
+  return string.trim() == "";
+};
+
+const anyEmptyField = function(fields) {
+  return fields.some(isEmptyString);
+};
+
 const getInput = function(selector) {
   let element = getElement(selector);
   if(element){
@@ -28,8 +40,8 @@ const getInput = function(selector) {
 };
 
 const showCreateForm = function() {
-  let form = getElement('.hidden');
-  form.classList.remove('hidden');
+  let allElements = getAllElements('.hidden');
+  allElements.forEach(element=>element.classList.remove('hidden'));
   let createButton = getElement('button[name="createFormOption"]').remove();
 };
 
@@ -44,6 +56,9 @@ const handleServerResponse = function(serverResponse) {
 const createGame = function() {
   let gameName = getInput('input[name="gameName"]');
   let playerName = getInput('input[name="playerName"]');
+  if(anyEmptyField([gameName,playerName])){
+    return;
+  }
   let requestBody = `gameName=${gameName}&playerName=${playerName}`;
   return sendAjaxRequest('POST','/createGame',function(){
     handleServerResponse(JSON.parse(this.responseText));
