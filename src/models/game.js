@@ -1,6 +1,6 @@
 class Game {
   constructor() {
-    this.players=[{name:'Manish'},{name:'salman'},{name:'pallabi'},{name:'PK'}];
+    this.players=[];
     this.status={players:this.players};
   }
   getStatus(){
