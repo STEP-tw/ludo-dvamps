@@ -15,7 +15,9 @@ let accessLogStream = rfs('access.log', {
 });
 
 
-app.gamesManager = new GamesManager();
+app.initialize = function(gamesManager) {
+  app.gamesManager = gamesManager;
+};
 app.use(logger('combined', {stream: accessLogStream}));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
