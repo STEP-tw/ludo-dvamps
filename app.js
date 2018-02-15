@@ -9,7 +9,14 @@ const defaultHandlers = require(path.resolve('src/handlers/defaultHandler.js'));
 const app = express();
 let logDir = path.resolve('logs/');
 
-let accessLogStream = rfs('access.log', {
+let lognameGenerator = function() {
+  let time = new Date();
+  let month = (time.getMonth() + 1) + "-" + time.getFullYear();
+  let day = time.getDate();
+  return day + '-' + month + '-file.log';
+};
+
+let accessLogStream = rfs(lognameGenerator, {
   interval: '1d',
   path: logDir
 });

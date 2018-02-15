@@ -25,4 +25,15 @@ describe('#GamesManager', () => {
       assert.isNotOk(gamesManager.doesGameExists('newGame'));
     });
   });
+  describe('#getGame()', () => {
+    it('should return Game', () => {
+      let expectedGame={
+        players:[],
+        status:{}
+      };
+      gamesManager.addGame('newGame');
+      assert.deepEqual(gamesManager.getGame('newGame'),expectedGame);
+      assert.isUndefined(gamesManager.getGame('SAMAJ'));
+    });
+  });
 });

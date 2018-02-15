@@ -14,5 +14,8 @@ class GamesManager {
     this.games[gameName] = game;
     return game;
   }
+  getGame(gameName){
+    return this.games[gameName];
+  }
 }
 module.exports = GamesManager;
