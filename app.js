@@ -6,7 +6,12 @@ const rfs = require('rotating-file-stream');
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const postHandlers = require(path.resolve('src/handlers/postHandlers.js'));
 const defaultHandlers = require(path.resolve('src/handlers/defaultHandler.js'));
+const getHandlers = require(path.resolve('src/handlers/getHandlers.js'));
 const app = express();
+
+
+const gamesManager = new GamesManager();
+
 let logDir = path.resolve('logs/');
 
 let lognameGenerator = function() {
@@ -28,8 +33,11 @@ app.initialize = function(gamesManager) {
 app.use(logger('combined', {stream: accessLogStream}));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
+
+app.get('/',defaultHandlers.handleSlash);
+app.get('/getAvailableGames',getHandlers.serveAvailableGames);
+
 app.use(express.static('public'));
 app.post('/createGame',postHandlers.createNewGame);
-app.get('/',defaultHandlers.handleSlash);
 app.use(cookieParser());
 module.exports = app;

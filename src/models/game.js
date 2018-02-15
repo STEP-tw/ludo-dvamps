@@ -1,13 +1,13 @@
 class Game {
-  constructor(name) {
-    this.players=[];
+  constructor() {
+    this.players = [];
     this.status={};
+  }
+  addPlayer(name){
+    this.players.push({name:name});
   }
   getStatus(){
     return this.status;
-  }
-  addPlayer(playerName) {
-    this.players.push(playerName);
   }
 }
 module.exports = Game;
