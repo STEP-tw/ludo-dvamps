@@ -2,14 +2,16 @@ const Game = require('./game.js');
 
 class GamesManager {
   constructor() {
+    this.numberOfPlayers =
     this.allRunningGames={};
   }
   getAvailableGames(){
     let allGames = Object.values(this.allRunningGames);
-    return allGames.filter(game=>game.players.length < 4);
+    let availableGames = allGames.filter(game=>!game.hasEnoughPlayers());
+    return availableGames.map(game=>game.getDetails());
   }
   addGame(gameName) {
-    let game = new Game();
+    let game = new Game(gameName);
     this.allRunningGames[gameName] = game;
     return game;
   }

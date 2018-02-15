@@ -11,7 +11,7 @@ const createRequest = function(method,url,action,data){
 };
 
 const displayGames = function(games){
-  alert("1223");
+  console.log(games);
 };
 
 const getAvailableGames = function(){
