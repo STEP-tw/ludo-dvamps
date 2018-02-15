@@ -1,6 +1,6 @@
 class Game {
-  constructor(name) {
-    this.players=[];
+  constructor() {
+    this.players = [];
     this.status={};
   }
   getStatus(){
