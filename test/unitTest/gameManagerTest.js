@@ -27,14 +27,13 @@ describe('#GamesManager', () => {
   });
   describe('#getGame()', () => {
     it('should return Game', () => {
-      let expectedGame = {
-        players: [],
-        status: {
-          players: []
-        }
+      let expectedGame={
+        players:[],
+        status:{}
       };
-      assert.deepEqual(gameManager.getGame('D-VAMPS'), expectedGame);
-      assert.isUndefined(gameManager.getGame('SAMAJ'));
+      gamesManager.addGame('newGame');
+      assert.deepEqual(gamesManager.getGame('newGame'),expectedGame);
+      assert.isUndefined(gamesManager.getGame('SAMAJ'));
     });
   });
 });
