@@ -1,15 +1,19 @@
 const express = require('express');
 const path = require('path');
-const app = express();
 const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const rfs = require('rotating-file-stream');
 const defaultHandlers = require(path.resolve('src/handlers/defaultHandler.js'));
+const app = express();
 
-const logger = function(req,res,next){
-  console.log(req.method,req.url);
-  next();
-};
+let logDir = path.resolve('logs/');
 
-app.use(logger);
+let accessLogStream = rfs('access.log', {
+  interval: '1d',
+  path: logDir
+});
+
+app.use(logger('combined', {stream: accessLogStream}));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
