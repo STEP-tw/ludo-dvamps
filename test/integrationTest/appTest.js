@@ -1,4 +1,3 @@
-
 const assert = require('chai').assert;
 const request = require('supertest');
 const path = require('path');
@@ -17,6 +16,27 @@ describe('#App', () => {
   beforeEach(function(){
     app.initialize(new GamesManager());
   });
+  describe('GET /', () => {
+    it('should serve index page', done => {
+      request(app)
+        .get('/')
+        .expect(200)
+        .expect(/createGame/)
+        .expect(/joinGame/)
+        .end(done);
+    });
+  });
+
+  describe('GET getAvailableGames', () => {
+    it('should give all available games', done => {
+      request(app)
+        .get('/getAvailableGames')
+        .expect(200)
+        .expect('[]')
+        .end(done);
+    });
+  });
+
   describe('POST /createGame', () => {
     it('should set gameName and playerName in cookie', (done) => {
       request(app)

@@ -50,8 +50,13 @@ const createGame = function() {
   },requestBody);
 };
 
+const goToJoin = function(){
+  window.location = "/joining.html";
+};
+
 const setClickListeners = function() {
   setClickListener('button[name="createFormOption"]',showCreateForm);
   setClickListener('button[name="createGame"]',createGame);
+  setClickListener('button[name="joinGame"]',goToJoin);
 };
 window.onload = setClickListeners;
