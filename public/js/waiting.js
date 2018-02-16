@@ -8,7 +8,7 @@ const exitGame = function() {
   xhr.addEventListener('load', updateGameName);
   xhr.open("DELETE", '/player');
   xhr.send();
-  location.reload();
+  goToHome();
 };
 const goToBoard = function() {
   location.href = 'board.html';
