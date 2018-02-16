@@ -10,6 +10,10 @@ header {
   border: 2px solid black;
 }
 
+#errorMessage{
+  color: red;
+}
+
 .exit{
   margin-top: 3.5%;
   float: right;
@@ -21,4 +25,8 @@ header {
 
 .hide{
   visibility: hidden;
+}
+
+.show{
+  visibility: visible;
 }

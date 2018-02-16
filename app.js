@@ -44,4 +44,5 @@ app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.delete('/player', deleteHandler.removePlayer);
 app.get('/getStatus', getHandlers.serveGameStatus);
+app.post('/joinGame',postHandlers.joinPlayerToGame);
 module.exports = app;

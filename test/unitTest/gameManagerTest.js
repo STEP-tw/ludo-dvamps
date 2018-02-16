@@ -18,7 +18,19 @@ describe('GameManager', () => {
   });
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
-      gameManager.addPlayerTo('newGame', 'john');
+      assert.isOk(gameManager.addPlayerTo('newGame', 'john'));
+      assert.deepPropertyVal(gameManager.allRunningGames, 'newGame', {
+        name:'newGame',
+        numberOfPlayers: 4,
+        players: [{
+          name: 'john'
+        }],
+        status:{}
+      });
+    });
+    it('should not add player to given game if player is already there', () => {
+      assert.isOk(gameManager.addPlayerTo('newGame', 'john'));
+      assert.isNotOk(gameManager.addPlayerTo('newGame', 'john'));
       assert.deepPropertyVal(gameManager.allRunningGames, 'newGame', {
         name:'newGame',
         numberOfPlayers: 4,

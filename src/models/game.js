@@ -21,9 +21,19 @@ class Game {
       createdBy:this.players[0].name,
     };
   }
-  addPlayer(playerName) {
-    this.players.push({name:`${playerName}`});
+
+  doesPlayerExist(playerName){
+    return this.players.some((player)=>player.name == playerName);
   }
+
+  addPlayer(playerName) {
+    if (!this.doesPlayerExist(playerName)) {
+      this.players.push({name:`${playerName}`});
+      return true;
+    }
+    return false;
+  }
+
   getPlayer(playerName){
     let player = this.players.find( player => player.name == playerName);
     let playerIndex=this.players.indexOf(player);

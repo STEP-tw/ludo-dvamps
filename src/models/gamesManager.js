@@ -18,7 +18,7 @@ class GamesManager {
     return this.allRunningGames[gameName];
   }
   addPlayerTo(gameName,player){
-    this.allRunningGames[gameName].addPlayer(player);
+    return this.allRunningGames[gameName].addPlayer(player);
   }
   doesGameExists(gameName) {
     return gameName in this.allRunningGames;
