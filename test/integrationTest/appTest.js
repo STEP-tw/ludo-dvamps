@@ -89,23 +89,25 @@ describe('#App', () => {
   describe('GET /userName', () => {
     it('should send userName', (done) => {
       request(app)
-        .get('/gameName')
+        .get('/userName')
         .set('Cookie','playerName=player')
+        .expect("player")
         .expect(200)
         .end(done);
     });
   });
-  describe.skip('DELETE /player', () => {
+  describe('DELETE /player', () => {
     it('should delete Player', (done) => {
-      let gamesManager = new GamesManager();
+      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('ludo');
       let game= gamesManager.getGame('ludo');
       game.addPlayer('player');
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
-        .send('playerName=player&gameName=ludo')
+        .set('Cookie',['playerName=player','gameName=ludo'])
         .expect(200)
+        .expect('set-cookie',`playerName=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
     });
   });
@@ -117,6 +119,16 @@ describe('#App', () => {
       request(app)
         .get('/getStatus')
         .set('Cookie','gameName=ludo')
+        .expect(200)
+        .end(done);
+    });
+    it('should send empty response', (done) => {
+      let gamesManager = new GamesManager();
+      gamesManager.addGame('ludo');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/getStatus')
+        .expect("")
         .expect(200)
         .end(done);
     });

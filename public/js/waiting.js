@@ -6,10 +6,13 @@ const exitGame = function () {
   let xhr = new XMLHttpRequest();
   xhr.addEventListener('load',updateGameName);
   xhr.open("DELETE",'/player');
-  xhr.send(`playerName=${player}&gameName=${gameName}`);
+  xhr.send();
 };
 const goToBoard = function(){
   location.href='board.html';
+};
+const goToHome = function(){
+  location.href='index.html';
 };
 const updateSeconds = function(){
   let secondBlock=document.getElementById('sec');
@@ -19,8 +22,15 @@ const updateSeconds = function(){
 };
 
 const updatePlayers= function () {
-  let players=JSON.parse(this.responseText).players;
-  players.forEach((player,index)=>{
+  if(this.responseText=="") {
+    goToHome();
+    return;
+  }
+  let players=JSON.parse(this.responseText)["players"];
+  if(players==undefined) {
+    return;
+  }
+  players.forEach((player,index)=> {
     document.getElementById(`player${index+1}`).innerHTML=player.name;
   });
   if(players.length==4) {
@@ -54,12 +64,11 @@ const setUserName = function(){
 };
 const getStatus = function(){
   let gameName=document.getElementById('gameName').innerText;
-  console.log(getStatus);
   let xhr = new XMLHttpRequest();
   xhr.addEventListener("load", updatePlayers);
-  xhr.open("POST",'/getStatus');
+  xhr.open("GET",'/getStatus');
   xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-  xhr.send(`gameName=${gameName}`);
+  xhr.send();
 };
 
 const begin = function(){

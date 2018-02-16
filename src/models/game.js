@@ -27,6 +27,7 @@ class Game {
     let playerColor = this.colorDistributor.getColor();
     let player = new Player(playerName,playerColor);
     this.players.push(player);
+    this.status.players=this.players;
   }
   getPlayer(playerName){
     let player = this.players.find( player => player.name == playerName);
@@ -37,6 +38,7 @@ class Game {
     let player = this.players.find(player => player.name == playerName);
     let playerIndex=this.players.indexOf(player);
     this.players.splice(playerIndex,1);
+    this.status.players=this.players;
   }
   getBoardStatus() {
     return this.players.reduce(function(boardStatus,player) {
