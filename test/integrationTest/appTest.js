@@ -191,9 +191,12 @@ describe('#App', () => {
     });
   });
   describe('POST /joinGame', () => {
-    it('should return joiningStatus as true', done => {
+    beforeEach(function(){
       app.gamesManager.addGame('newGame');
       app.gamesManager.addPlayerTo('newGame','lala');
+
+    })
+    it('should return joiningStatus as true', done => {
       request(app)
         .post('/joinGame')
         .send('gameName=newGame&playerName=ram')
@@ -202,11 +205,19 @@ describe('#App', () => {
         .end(done)
     });
     it('should return joining Status as false', done => {
-      app.gamesManager.addGame('newGame');
-      app.gamesManager.addPlayerTo('newGame','lala');
       request(app)
         .post('/joinGame')
         .send('gameName=newGame')
+        .expect(/status/)
+        .expect(/false/)
+        .end(done)
+    });
+
+    it('should return status false for bad request', done => {
+      request(app)
+        .post('/joinGame')
+        .send('gameName=&playerName=')
+        .expect(400)
         .expect(/status/)
         .expect(/false/)
         .end(done)
