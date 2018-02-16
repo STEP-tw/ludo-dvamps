@@ -14,11 +14,17 @@
     <main>
       <button type="button" name="createFormOption">Create Game</button>
       <div class="createForm hidden">
-        Player Name : <input type="text" name='playerName'><br />
-        Game Name : <input type="text" name='gameName'><br>
-        <button type="button" name="createGame">Create Game</button>
+        <span class="hidden">
+          <label for="playername">Enter Your Name :</label>
+          <input type="text" name='playerName' id="playername">
+        </span>
+        <span class="hidden">
+          <label for="gamename">Enter Game Name :</label>
+          <input type="text" name='gameName' id="gamename">
+        </span>
+        <button class="hidden" type="button" name="createGame">Create Game</button>
       </div>
-      <button type="button" name="joinGame" >Join Game</button>
+      <button type="button" name="button" id="joinGame">Join Game</button>
     </main>
   </body>
 </html>
