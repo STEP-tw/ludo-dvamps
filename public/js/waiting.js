@@ -31,7 +31,7 @@ const updatePlayers= function () {
     return;
   }
   players.forEach((player,index)=> {
-    document.getElementById(`player${index+1}`).innerHTML=player.name;
+    document.getElementById(`player${index+1}`).value=player.name;
   });
   if(players.length==4) {
     let timer=document.getElementById('Timer');
