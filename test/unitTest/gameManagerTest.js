@@ -24,17 +24,12 @@ describe('GameManager', () => {
       assert.instanceOf(game,Game);
     });
   });
-  describe.skip('#addPlayerTo', () => {
+  describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
-      assert.deepPropertyVal(gameManager.allRunningGames, 'newGame', {
-        name:'newGame',
-        numberOfPlayers: 4,
-        players: [{
-          name: 'john'
-        }],
-        status:{}
-      });
+      let expectedGame = new Game('newGame',new ColorDistributer());
+      expectedGame.addPlayer('john');
+      assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
     });
   });
   describe('#getAvailableGames', () => {
@@ -67,12 +62,6 @@ describe('GameManager', () => {
   });
   describe('#getGame()', () => {
     it('should return Game', () => {
-    //   let expectedGame = {
-    //     name:'newGame',
-    //     numberOfPlayers: 4,
-    //     players: [],
-    //     status: {}
-    //   };
       assert.deepEqual(gameManager.getGame('newGame'), new Game('newGame',new ColorDistributer));
       assert.isUndefined(gameManager.getGame('badGame'));
     });

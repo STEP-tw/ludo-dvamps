@@ -121,4 +121,28 @@ describe('#App', () => {
         .end(done);
     });
   });
+  describe('get /game/boardStatus', () => {
+    beforeEach(function(){
+      let gamesManager = new GamesManager(new ColorDistributer());
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('ashish');
+      game.addPlayer('joy');
+      app.initialize(gamesManager);
+    });
+
+    it('should give board status', (done) => {
+      request(app)
+        .get('/game/boardStatus')
+        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .expect(200)
+        .expect(JSON.stringify({'red':'ashish','green':'joy'}))
+        .end(done);
+    });
+    it('should redirect index  ', (done) => {
+      request(app)
+        .get('/game/boardStatus')
+        .expect('Location','/index')
+        .end(done);
+    });
+  });
 });

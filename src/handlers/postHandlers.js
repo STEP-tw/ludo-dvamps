@@ -26,11 +26,6 @@ const resGameAlreadyExists = function(res) {
   res.end();
 };
 
-const resWithBadRequest = function(res,message) {
-  res.status = 400;
-  res.send(message||'');
-};
-
 const createNewGame = function(req,res) {
   let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;

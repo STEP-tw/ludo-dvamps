@@ -32,9 +32,23 @@ const anyEmptyField = function(fields) {
   return fields.some(isEmptyString);
 };
 
+const getFormInput = function(selector) {
+  let element = getElement(selector);
+  if(element){
+    return encodeURIComponent(element.value);
+  }
+};
+
 const getInput = function(selector) {
   let element = getElement(selector);
   if(element){
     return element.value;
+  }
+};
+
+const setInnerText = function(selector,text) {
+  let element = document.querySelector(selector);
+  if(element){
+    element.innerText = text;
   }
 };

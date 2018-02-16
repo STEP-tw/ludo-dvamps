@@ -11,12 +11,12 @@ const handleServerResponse = function(serverResponse) {
     window.location.href = '/waiting.html';
     return;
   }
-  console.log(serverResponse);
+  setInnerText('.message',serverResponse.message);
 };
 
 const createGame = function() {
-  let gameName = getInput('input[name="gameName"]');
-  let playerName = getInput('input[name="playerName"]');
+  let gameName = getFormInput('input[name="gameName"]');
+  let playerName = getFormInput('input[name="playerName"]');
   if(anyEmptyField([gameName,playerName])){
     return;
   }
