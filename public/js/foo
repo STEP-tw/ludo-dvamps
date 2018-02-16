@@ -1,7 +1,0 @@
-const isEmptyString = function(string) {
-  return string.trim() == "";
-}
-
-const anyEmptyField = function(fields) {
-  return fields.some(isEmptyString);
-}
