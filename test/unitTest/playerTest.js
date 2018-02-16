@@ -29,11 +29,11 @@ describe('#Player', () => {
       player.addCoin();
       player.addCoin();
       player.addCoin();
-      let expectedStatus={ player:{
+      let expectedStatus={
         name:'ashish',
         color:'red',
         coins:['home','home','home','home']
-      }};
+      };
       assert.deepEqual(player.getStatus(),expectedStatus);
     });
   });
