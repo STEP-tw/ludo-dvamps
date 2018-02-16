@@ -24,7 +24,8 @@ describe('#Game', () => {
       assert.isOk(game.addPlayer('manish'));
       assert.deepEqual(game.getPlayer('manish'), {
         name: 'manish',
-        color:'red'
+        color:'red',
+        coins:[]
       });
     });
 
@@ -32,14 +33,14 @@ describe('#Game', () => {
       game.addPlayer('manish');
       assert.isNotOk(game.addPlayer('manish'));
       assert.deepEqual(game.getPlayer('manish'), {
-        name: 'manish',color:'red'
+        name: 'manish',color:'red',coins:[]
       });
     });
   });
   describe('#removePlayer()', () => {
     it('should removePlayer from game', () => {
       game.addPlayer('manish');
-      assert.deepEqual(game.getPlayer('manish'), {name: 'manish',color:'red'});
+      assert.deepEqual(game.getPlayer('manish'), {name: 'manish',color:'red',coins:[]});
       game.removePlayer('manish');
       assert.isUndefined(game.getPlayer('manish'));
     });
@@ -47,12 +48,12 @@ describe('#Game', () => {
   describe('#addPlayer()', () => {
     it('should add player in games', () => {
       game.addPlayer('john');
-      assert.deepEqual(game.players,[{name:'john',color:'red'}]);
+      assert.deepEqual(game.players,[{name:'john',color:'red',coins:[]}]);
     });
     it('should add player in games', () => {
       game.addPlayer('john');
       game.addPlayer('alex');
-      assert.deepEqual(game.players,[{name:'john',color:'red'},{name:'alex',color:'green'}]);
+      assert.deepEqual(game.players,[{name:'john',color:'red',coins:[]},{name:'alex',color:'green',coins:[]}]);
     });
   });
   describe('#hasEnoughPlayers()', () => {
