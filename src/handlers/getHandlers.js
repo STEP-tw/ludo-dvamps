@@ -20,13 +20,15 @@ const serveGameStatus=(req,res)=>{
 };
 
 const getBoardStatus = function(req,res) {
-  let gameName = req.cookies.gameName;
-  let game = req.app.gamesManager.getGame(gameName);
+  let game = req.game;
   res.json(game.getBoardStatus());
 };
+
+
 module.exports = {
   serveAvailableGames,
   serveGameName,
   serveUserName,
-  serveGameStatus
+  serveGameStatus,
+  getBoardStatus
 };

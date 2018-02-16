@@ -26,7 +26,6 @@ const resGameAlreadyExists = function(res) {
   res.end();
 };
 
-
 const createNewGame = function(req,res) {
   let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;
@@ -39,7 +38,22 @@ const createNewGame = function(req,res) {
   resWithGameCreated(res,gameName,playerName);
 };
 
+const joinPlayerToGame = function(req,res){
+  if(!isValidReqBodyFormat(['gameName','playerName'],req)){
+    res.send({status:false});
+    return;
+  }
+  let gameName = req.body.gameName;
+  let playerName = req.body.playerName;
+  let joiningStatus = req.app.gamesManager.addPlayerTo(gameName,playerName);
+  res.cookie('gameName',gameName,{path:''});
+  res.cookie('playerName',playerName,{path:''});
+  res.json({status:joiningStatus});
+  res.end();
+};
+
 module.exports = {
   createNewGame,
+  joinPlayerToGame,
   verifyCreateGameReq
 };

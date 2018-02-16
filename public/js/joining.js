@@ -7,13 +7,14 @@ const createRequest = function(method,url,action,data){
     }
   };
   req.open(method,url);
-  req.send(data);
+  req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+  req.send(data || '');
 };
 
 const createElement = function(element,innerText,className){
   let ele = document.createElement(element);
   ele.innerText = innerText || '';
-  ele.class = className;
+  ele.className = className;
   return ele;
 };
 
@@ -23,25 +24,67 @@ const appendChilds = function(node,...childs){
   });
 };
 
+const getElement = function(selector) {
+  return document.querySelector(selector);
+};
 
-const displayGames = function(games){
+const showGameData = function(game){
   let table = document.querySelector('table');
-  games.forEach(game=>{
-    let tr = createElement('tr');
-    let gameName = createElement('td',game.name);
-    let createdBy = createElement('td',game.createdBy);
-    let playersToJoin = createElement('td',game.remain);
-    let button = createElement('button','Join','join');
-    let td = createElement('td');
-    appendChilds(td,button);
-    appendChilds(tr,gameName,createdBy,playersToJoin,td);
-    appendChilds(table,tr);
+  let tr = createElement('tr');
+  let gameName = createElement('td',game.name);
+  let createdBy = createElement('td',game.createdBy);
+  let playersToJoin = createElement('td',game.remain);
+  let button = createElement('button','Join','join');
+  let td = createElement('td');
+  appendChilds(td,button);
+  appendChilds(tr,gameName,createdBy,playersToJoin,td);
+  appendChilds(table,tr);
+};
+
+const getGameName = function(event){
+  let clickedButton = event.target;
+  let gameInfo = clickedButton.parentElement.parentElement;
+  let gameName = gameInfo.firstChild.innerText;
+  return gameName;
+};
+
+const showErrorMessage = function(message){
+  let messageBox = getElement('span[id=errorMessage]');
+  messageBox.innerText = message;
+  messageBox.className = 'show';
+};
+
+const actionOnJoin = function(joiningStatus){
+  if (joiningStatus.status) {
+    window.location = '/waiting.html';
+    return;
+  }
+  showErrorMessage('* Name already Exists');
+};
+
+let joinGame = function(event){
+  let gameName = getGameName(event);
+  let playerName = getElement('input[name=playerName]').value;
+  if (!playerName) {
+    showErrorMessage('* Player Name required');
+    return;
+  }
+  let query = `gameName=${gameName}&playerName=${playerName}`;
+  createRequest('POST','/joinGame',actionOnJoin,query);
+};
+
+const displayGamesToJoin = function(games){
+  games.forEach(showGameData);
+  let joiningButtons = document.querySelectorAll('button[class=join]');
+  joiningButtons.forEach(button=>{
+    button.onclick = joinGame;
   });
 };
 
+
 const getAvailableGames = function(){
   const url = '/getAvailableGames';
-  createRequest('GET',url,displayGames);
+  createRequest('GET',url,displayGamesToJoin);
 };
 
 const goToHome = function(){
@@ -55,14 +98,9 @@ const setClickListener = function(selector,listener) {
   }
 };
 
-const getElement = function(selector) {
-  return document.querySelector(selector);
-};
-
 const onLoad = function(){
   getAvailableGames();
   setClickListener('button[name=back]',goToHome);
 };
-
 
 window.onload = onLoad;

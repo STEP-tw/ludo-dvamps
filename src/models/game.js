@@ -23,12 +23,22 @@ class Game {
       createdBy:this.players[0].name,
     };
   }
-  addPlayer(playerName) {
-    let playerColor = this.colorDistributor.getColor();
-    let player = new Player(playerName,playerColor);
-    this.players.push(player);
-    this.status.players=this.players;
+
+  doesPlayerExist(playerName){
+    return this.players.some((player)=>player.name == playerName);
   }
+
+  addPlayer(playerName) {
+    if (!this.doesPlayerExist(playerName)) {
+      let playerColor = this.colorDistributor.getColor();
+      let player = new Player(playerName,playerColor);
+      this.players.push(player);
+      this.status.players=this.players;
+      return true;
+    }
+    return false;
+  }
+
   getPlayer(playerName){
     let player = this.players.find( player => player.name == playerName);
     let playerIndex=this.players.indexOf(player);

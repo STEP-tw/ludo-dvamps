@@ -87,6 +87,15 @@ describe('#App', () => {
         .end(done);
     });
   });
+  describe('GET /gameName', () => {
+    it('should send gameName', (done) => {
+      request(app)
+        .get('/gameName')
+        .set('Cookie','gameName=ludo')
+        .expect(200)
+        .end(done);
+    });
+  });
   describe('GET /userName', () => {
     it('should send userName', (done) => {
       request(app)
@@ -149,5 +158,58 @@ describe('#App', () => {
         .end(done);
     });
     
+  });
+  describe('get /game/boardStatus', () => {
+    beforeEach(function(){
+      let gamesManager = new GamesManager(new ColorDistributer());
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('ashish');
+      game.addPlayer('joy');
+      app.initialize(gamesManager);
+    });
+
+    it('should give board status', (done) => {
+      request(app)
+        .get('/game/boardStatus')
+        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .expect(200)
+        .expect(JSON.stringify({'red':'ashish','green':'joy'}))
+        .end(done);
+    });
+    it('should redirect index  ', (done) => {
+      request(app)
+        .get('/game/boardStatus')
+        .expect('Location','/index')
+        .end(done);
+    });
+    it('should response with bad request if game not exists',function(done){
+      request(app)
+        .get('/game/boardStatus')
+        .set('Cookie',['gameName=badGame','playerName=badPlayer'])
+        .expect(400)
+        .end(done);
+    });
+  });
+  describe('POST /joinGame', () => {
+    it('should return joiningStatus as true', done => {
+      app.gamesManager.addGame('newGame');
+      app.gamesManager.addPlayerTo('newGame','lala');
+      request(app)
+        .post('/joinGame')
+        .send('gameName=newGame&playerName=ram')
+        .expect(/status/)
+        .expect(/true/)
+        .end(done)
+    });
+    it('should return joining Status as false', done => {
+      app.gamesManager.addGame('newGame');
+      app.gamesManager.addPlayerTo('newGame','lala');
+      request(app)
+        .post('/joinGame')
+        .send('gameName=newGame')
+        .expect(/status/)
+        .expect(/false/)
+        .end(done)
+    });
   });
 });
