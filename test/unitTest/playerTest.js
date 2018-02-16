@@ -22,4 +22,19 @@ describe('#Player', () => {
       assert.equal(player.coins.length,2);
     });
   });
+  describe('#getStatus', () => {
+    it('should return playerStatus', () => {
+      let player = new Player('ashish','red');
+      player.addCoin();
+      player.addCoin();
+      player.addCoin();
+      player.addCoin();
+      let expectedStatus={ player:{
+        name:'ashish',
+        color:'red',
+        coins:['home','home','home','home']
+      }};
+      assert.deepEqual(player.getStatus(),expectedStatus);
+    });
+  });
 });

@@ -16,5 +16,15 @@ class Player {
     let coin = new Coin(coinId);
     this.coins.push(coin);
   }
+  getStatus(){
+    let coinsPositions = this.coins.map(coin => coin.getPosition());
+    return {
+      player:{
+        name:this.name,
+        color:this.color,
+        coins: coinsPositions,
+      }
+    };
+  }
 }
 module.exports = Player;
