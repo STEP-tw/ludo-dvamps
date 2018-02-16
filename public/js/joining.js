@@ -63,8 +63,9 @@ const actionOnJoin = function(joiningStatus){
 };
 
 let joinGame = function(event){
-  let gameName = getGameName(event);
+  let gameName = encodeURIComponent(getGameName(event));
   let playerName = getElement('input[name=playerName]').value;
+  playerName = encodeURIComponent(playerName);
   if (!playerName) {
     showErrorMessage('* Player Name required');
     return;
@@ -80,7 +81,6 @@ const displayGamesToJoin = function(games){
     button.onclick = joinGame;
   });
 };
-
 
 const getAvailableGames = function(){
   const url = '/getAvailableGames';

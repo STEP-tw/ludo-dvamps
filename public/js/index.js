@@ -21,6 +21,8 @@ const createGame = function() {
     setInnerText('.message','Fields should not be empty');
     return;
   }
+  gameName = encodeURIComponent(gameName);
+  playerName = encodeURIComponent(playerName);
   let requestBody = `gameName=${gameName}&playerName=${playerName}`;
   return sendAjaxRequest('POST','/createGame',function(){
     handleServerResponse(JSON.parse(this.responseText));

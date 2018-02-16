@@ -35,7 +35,7 @@ const anyEmptyField = function(fields) {
 const getFormInput = function(selector) {
   let element = getElement(selector);
   if(element){
-    return encodeURIComponent(element.value);
+    return element.value;
   }
 };
 
