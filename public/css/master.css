@@ -5,11 +5,16 @@ header {
 .inline{
   display: inline-block;
 }
-.playersName{
+.playerNames{
   margin:2% 2% 5% 2%;
   border: 2px solid black;
+  height: 70px;
+  width:200px;
+  text-align: center;
+  font-weight:normal;
+  font-family: sans-serif;
+  font-size: 20px;
 }
-
 #errorMessage{
   color: red;
 }
@@ -18,7 +23,7 @@ header {
   margin-top: 3.5%;
   float: right;
 }
-.main{
+main{
   margin: 2% 0% 0% 4%;
   text-align: center;
 }
