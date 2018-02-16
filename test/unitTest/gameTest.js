@@ -20,8 +20,17 @@ describe('#Game', () => {
     });
   });
   describe('#addPlayer()', () => {
-    it('should addPlayer to game', () => {
+    it('should addPlayer to game if player is not there', () => {
+      assert.isOk(game.addPlayer('manish'));
+      assert.deepEqual(game.getPlayer('manish'), {
+        name: 'manish',
+        color:'red'
+      });
+    });
+
+    it('should not addPlayer to game if player is in the game', () => {
       game.addPlayer('manish');
+      assert.isNotOk(game.addPlayer('manish'));
       assert.deepEqual(game.getPlayer('manish'), {
         name: 'manish',color:'red'
       });
@@ -64,7 +73,7 @@ describe('#Game', () => {
       game.addPlayer('ram');
       assert.equal(game.neededPlayers(),3);
 
-      game.addPlayer('ram');
+      game.addPlayer('lala');
       game.addPlayer('shyam');
       game.addPlayer('kaka');
       assert.equal(game.neededPlayers(),0);
@@ -81,11 +90,21 @@ describe('#Game', () => {
       assert.deepEqual(expected,game.getDetails());
     });
   });
+
+  describe('#doesPlayerExist', () => {
+    it('should return true if player name is in the game', () => {
+      game.addPlayer('kaka');
+      assert.isOk(game.doesPlayerExist('kaka'));
+    });
+    it('should return false if player name is not in the game', () => {
+      assert.isNotOk(game.doesPlayerExist('kaka'));
+    });
+  });
   describe('#getBoardStatus',() => {
     it('should give the color-coin pair', () => {
       game.addPlayer('ashish');
       game.addPlayer('joy');
       assert.deepEqual(game.getBoardStatus(),{'red':'ashish','green':'joy'});
     })
-  });
+  })
 });

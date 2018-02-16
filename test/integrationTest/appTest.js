@@ -86,6 +86,15 @@ describe('#App', () => {
         .end(done);
     });
   });
+  describe('GET /gameName', () => {
+    it('should send gameName', (done) => {
+      request(app)
+        .get('/gameName')
+        .set('Cookie','gameName=ludo')
+        .expect(200)
+        .end(done);
+    });
+  });
   describe('GET /userName', () => {
     it('should send userName', (done) => {
       request(app)
@@ -156,15 +165,34 @@ describe('#App', () => {
         .expect('Location','/index')
         .end(done);
     });
-    it('should response with bad request if game does not exists ', (done) => {
-      let gamesManager = new GamesManager();
-      gamesManager.addGame('ludo');
-      app.initialize(gamesManager);
+    it('should response with bad request if game not exists',function(done){
       request(app)
         .get('/game/boardStatus')
-        .set('Cookie',['gameName=bad','playerName=bad'])
+        .set('Cookie',['gameName=badGame','playerName=badPlayer'])
         .expect(400)
         .end(done);
+    });
+  });
+  describe('POST /joinGame', () => {
+    it('should return joiningStatus as true', done => {
+      app.gamesManager.addGame('newGame');
+      app.gamesManager.addPlayerTo('newGame','lala');
+      request(app)
+        .post('/joinGame')
+        .send('gameName=newGame&playerName=ram')
+        .expect(/status/)
+        .expect(/true/)
+        .end(done)
+    });
+    it('should return joining Status as false', done => {
+      app.gamesManager.addGame('newGame');
+      app.gamesManager.addPlayerTo('newGame','lala');
+      request(app)
+        .post('/joinGame')
+        .send('gameName=newGame')
+        .expect(/status/)
+        .expect(/false/)
+        .end(done)
     });
   });
 });

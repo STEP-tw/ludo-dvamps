@@ -45,6 +45,8 @@ app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.delete('/player', deleteHandler.removePlayer);
 app.get('/getStatus', getHandlers.serveGameStatus);
+
+app.post('/joinGame',postHandlers.joinPlayerToGame);
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);

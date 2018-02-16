@@ -23,6 +23,8 @@ const getBoardStatus = function(req,res) {
   let game = req.game;
   res.json(game.getBoardStatus());
 };
+
+
 module.exports = {
   serveAvailableGames,
   serveGameName,
