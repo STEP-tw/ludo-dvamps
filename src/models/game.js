@@ -23,6 +23,7 @@ class Game {
   }
   addPlayer(playerName) {
     this.players.push({name:`${playerName}`});
+    this.status.players=this.players;
   }
   getPlayer(playerName){
     let player = this.players.find( player => player.name == playerName);
@@ -33,6 +34,7 @@ class Game {
     let player = this.players.find(player => player.name == playerName);
     let playerIndex=this.players.indexOf(player);
     this.players.splice(playerIndex,1);
+    this.status.players=this.players;
   }
 }
 module.exports = Game;

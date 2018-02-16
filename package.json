@@ -7,7 +7,7 @@
     "start": "node server.js",
     "nodemon": "nodemon -w src -w server.js -w app.js",
     "linter": "eslint .",
-    "coverage": "nyc --reporter=html mocha --recursive",
+    "coverage": "nyc mocha --recursive",
     "test": "mocha --recursive"
   },
   "repository": {

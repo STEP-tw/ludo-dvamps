@@ -19,14 +19,9 @@ describe('GameManager', () => {
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
-      assert.deepPropertyVal(gameManager.allRunningGames, 'newGame', {
-        name:'newGame',
-        numberOfPlayers: 4,
-        players: [{
-          name: 'john'
-        }],
-        status:{}
-      });
+      let expectedGame = new Game('newGame');
+      expectedGame.addPlayer('john');
+      assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
     });
   });
   describe('#getAvailableGames', () => {
