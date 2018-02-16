@@ -1,8 +1,9 @@
 let intervalID;
+const getElem= id => document.getElementById(`${id}`);
 const exitGame = function() {
   location.href = 'index.html';
-  let player = document.getElementById('userName').innerText;
-  let gameName = document.getElementById('gameName').innerText;
+  let player = getElem('userName').innerText;
+  let gameName = getElem('gameName').innerText;
   let xhr = new XMLHttpRequest();
   xhr.addEventListener('load', updateGameName);
   xhr.open("DELETE", '/player');
@@ -16,7 +17,7 @@ const goToHome = function() {
   location.href = 'index.html';
 };
 const updateSeconds = function() {
-  let secondBlock = document.getElementById('sec');
+  let secondBlock = getElem('sec');
   let seconds = +(secondBlock.innerText);
   seconds--;
   secondBlock.innerHTML = seconds;
@@ -32,12 +33,17 @@ const updatePlayers = function() {
     return;
   }
   players.forEach((player, index) => {
-    document.getElementById(`player${index+1}`).value = player.name;
-    document.getElementById(`player${index+2}`).value ="";
+    if(index>3) {
+      return;
+    }
+    if(getElem(`player${index+2}`)!=undefined){
+      getElem(`player${index+2}`).value ="";
+    }
+    getElem(`player${index+1}`).value = player.name;
   });
   if (players.length == 4) {
-    let timer = document.getElementById('Timer');
-    document.getElementById('message').style.visibility = 'hidden';
+    let timer = getElem('Timer');
+    getElem('message').style.visibility = 'hidden';
     timer.style.visibility = 'visible';
     setInterval(updateSeconds, 1000);
     setTimeout(goToBoard, 3000);
@@ -46,11 +52,11 @@ const updatePlayers = function() {
 };
 const updateGameName = function() {
   let gameName = this.responseText;
-  document.getElementById('gameName').innerText = gameName;
+  getElem('gameName').innerText = gameName;
 };
 const updateUserName = function() {
   let userName = this.responseText;
-  document.getElementById('userName').innerText = userName;
+  getElem('userName').innerText = userName;
 };
 const setGameName = function() {
   let xhr = new XMLHttpRequest();
@@ -65,7 +71,7 @@ const setUserName = function() {
   xhr.send();
 };
 const getStatus = function() {
-  let gameName = document.getElementById('gameName').innerText;
+  let gameName = getElem('gameName').innerText;
   let xhr = new XMLHttpRequest();
   xhr.addEventListener("load", updatePlayers);
   xhr.open("GET", '/getStatus');
