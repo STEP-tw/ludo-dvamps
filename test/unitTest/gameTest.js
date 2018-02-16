@@ -3,7 +3,15 @@ const Game = require('../../src/models/game.js');
 let game;
 describe('#Game', () => {
   beforeEach(() => {
-    game = new Game('newGame');
+    let ColorDistributer = function() {
+      this.colors = ['red','green','blue','yellow'];
+    }
+    ColorDistributer.prototype = {
+      getColor:function() {
+        return this.colors.shift();
+      }
+    }
+    game = new Game('newGame',new ColorDistributer());
   });
   describe('#getStatus()', () => {
     it('should return game status', () => {
@@ -15,31 +23,29 @@ describe('#Game', () => {
     it('should addPlayer to game', () => {
       game.addPlayer('manish');
       assert.deepEqual(game.getPlayer('manish'), {
-        name: 'manish'
+        name: 'manish',color:'red'
       });
     });
   });
   describe('#removePlayer()', () => {
     it('should removePlayer from game', () => {
       game.addPlayer('manish');
-      assert.deepEqual(game.getPlayer('manish'), {name: 'manish'});
+      assert.deepEqual(game.getPlayer('manish'), {name: 'manish',color:'red'});
       game.removePlayer('manish');
       assert.isUndefined(game.getPlayer('manish'));
     });
   });
-
   describe('#addPlayer()', () => {
     it('should add player in games', () => {
       game.addPlayer('john');
-      assert.deepEqual(game.players,[{name:'john'}]);
+      assert.deepEqual(game.players,[{name:'john',color:'red'}]);
     });
     it('should add player in games', () => {
       game.addPlayer('john');
       game.addPlayer('alex');
-      assert.deepEqual(game.players,[{name:'john'},{name:'alex'}]);
+      assert.deepEqual(game.players,[{name:'john',color:'red'},{name:'alex',color:'green'}]);
     });
   });
-
   describe('#hasEnoughPlayers()', () => {
     it(`should give false when game don't have enough players`, () => {
       game.addPlayer('ram');
@@ -74,5 +80,12 @@ describe('#Game', () => {
       };
       assert.deepEqual(expected,game.getDetails());
     });
+  });
+  describe('#getBoardStatus',() => {
+    it('should give the color-coin pair', () => {
+      game.addPlayer('ashish');
+      game.addPlayer('joy');
+      assert.deepEqual(game.getBoardStatus(),{'red':'ashish','green':'joy'});
+    })
   });
 });

@@ -11,10 +11,17 @@ let doesNotHaveCookies = (res)=>{
     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
   }
 };
-
+const ColorDistributer = function() {
+  this.colors = ['red','green','blue','yellow'];
+}
+ColorDistributer.prototype = {
+  getColor:function() {
+    return this.colors.shift();
+  }
+}
 describe('#App', () => {
   beforeEach(function(){
-    app.initialize(new GamesManager());
+    app.initialize(new GamesManager(new ColorDistributer()));
   });
   describe('GET /', () => {
     it('should serve index page', done => {
@@ -45,7 +52,7 @@ describe('#App', () => {
         .expect(JSON.stringify({gameCreated:true}))
         .end(done);
     });
-    it('should set gameName and playerName in cookie', (done) => {
+    it('should not create game', (done) => {
       let gamesManager = new GamesManager();
       gamesManager.addGame('newGame');
       app.initialize(gamesManager);

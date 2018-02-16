@@ -9,7 +9,6 @@ const postHandlers = require(path.resolve('src/handlers/postHandlers.js'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler.js'));
 const defaultHandlers = require(path.resolve('src/handlers/defaultHandler.js'));
 const app = express();
-const gamesManager = new GamesManager();
 let logDir = path.resolve('logs/');
 
 let lognameGenerator = function() {
@@ -39,9 +38,11 @@ app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 
 app.use(express.static('public'));
 app.use(cookieParser());
-app.post('/createGame', postHandlers.createNewGame);
+app.post('/createGame', postHandlers.verifyCreateGameReq,
+  postHandlers.createNewGame);
 app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.delete('/player', deleteHandler.removePlayer);
 app.get('/getStatus', getHandlers.serveGameStatus);
+//app.get('/boardStatus',postHandlers.serveBoardStatus);
 module.exports = app;
