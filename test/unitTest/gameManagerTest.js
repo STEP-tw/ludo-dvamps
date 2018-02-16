@@ -2,43 +2,34 @@ const assert = require('chai').assert;
 const path = require('path');
 const GameManager = require(path.resolve('src/models/gamesManager.js'));
 const Game = require(path.resolve('src/models/game.js'));
-
+const ColorDistributer = function() {
+  this.colors = ['red','green','blue','yellow'];
+}
+ColorDistributer.prototype = {
+  getColor:function() {
+    return this.colors.shift();
+  }
+}
 describe('GameManager', () => {
   let gameManager;
   let game;
   beforeEach(() => {
-    gameManager = new GameManager();
-    game = gameManager.addGame('newGame');
+    let colorDistributor = new ColorDistributer();
+    gameManager = new GameManager(colorDistributor);
+    game = gameManager.addGame('newGame',colorDistributor);
   });
   describe('#addGame', () => {
     it('should create a new game with given name and store it', () => {
-      assert.deepEqual(game, new Game('newGame'));
+      assert.deepEqual(game, new Game('newGame',new ColorDistributer()));
       assert.instanceOf(game,Game);
     });
   });
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
-      assert.isOk(gameManager.addPlayerTo('newGame', 'john'));
-      assert.deepPropertyVal(gameManager.allRunningGames, 'newGame', {
-        name:'newGame',
-        numberOfPlayers: 4,
-        players: [{
-          name: 'john'
-        }],
-        status:{}
-      });
-    });
-    it('should not add player to given game if player is already there', () => {
-      assert.isOk(gameManager.addPlayerTo('newGame', 'john'));
-      assert.isNotOk(gameManager.addPlayerTo('newGame', 'john'));
-      assert.deepPropertyVal(gameManager.allRunningGames, 'newGame', {
-        name:'newGame',
-        numberOfPlayers: 4,
-        players: [{
-          name: 'john'
-        }],
-        status:{}
-      });
+      gameManager.addPlayerTo('newGame', 'john');
+      let expectedGame = new Game('newGame',new ColorDistributer());
+      expectedGame.addPlayer('john');
+      assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
     });
   });
   describe('#getAvailableGames', () => {
@@ -71,13 +62,7 @@ describe('GameManager', () => {
   });
   describe('#getGame()', () => {
     it('should return Game', () => {
-      let expectedGame = {
-        name:'newGame',
-        numberOfPlayers: 4,
-        players: [],
-        status: {}
-      };
-      assert.deepEqual(gameManager.getGame('newGame'), expectedGame);
+      assert.deepEqual(gameManager.getGame('newGame'), new Game('newGame',new ColorDistributer));
       assert.isUndefined(gameManager.getGame('badGame'));
     });
   });

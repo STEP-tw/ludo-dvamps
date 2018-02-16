@@ -12,11 +12,23 @@ const serveUserName=(req,res)=>{
 const serveGameStatus=(req,res)=>{
   let gameName=req.cookies.gameName;
   let game = req.app.gamesManager.getGame(gameName);
+  if(game==undefined) {
+    res.end();
+    return;
+  }
   res.send(lib.toS(game.getStatus()));
 };
+
+const getBoardStatus = function(req,res) {
+  let game = req.game;
+  res.json(game.getBoardStatus());
+};
+
+
 module.exports = {
   serveAvailableGames,
   serveGameName,
   serveUserName,
-  serveGameStatus
+  serveGameStatus,
+  getBoardStatus
 };
