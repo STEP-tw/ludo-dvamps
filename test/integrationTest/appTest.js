@@ -11,6 +11,7 @@ let doesNotHaveCookies = (res)=>{
     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
   }
 };
+
 const ColorDistributer = function() {
   this.colors = ['red','green','blue','yellow'];
 }
@@ -97,7 +98,7 @@ describe('#App', () => {
     });
   });
   describe('DELETE /player', () => {
-    it('should delete Player', (done) => {
+    it('should delete Player and game if all the players left', (done) => {
       let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('ludo');
       let game= gamesManager.getGame('ludo');
@@ -105,7 +106,22 @@ describe('#App', () => {
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
-        .set('Cookie',['playerName=player','gameName=ludo'])
+        .set('Cookie',['playerName=player;','gameName=ludo;'])
+        .expect(200)
+        .expect('set-cookie',`playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()}`)
+        .end(done);
+    });
+    it('should delete Player if a player lefts', (done) => {
+      let gamesManager = new GamesManager(new ColorDistributer());
+      gamesManager.addGame('ludo');
+      let game= gamesManager.getGame('ludo');
+      game.addPlayer('player1');
+      game.addPlayer('player2');
+      game.addPlayer('player3');
+      app.initialize(gamesManager);
+      request(app)
+        .delete('/player')
+        .set('Cookie',['playerName=player;','gameName=ludo;'])
         .expect(200)
         .expect('set-cookie',`playerName=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
@@ -132,5 +148,6 @@ describe('#App', () => {
         .expect(200)
         .end(done);
     });
+    
   });
 });

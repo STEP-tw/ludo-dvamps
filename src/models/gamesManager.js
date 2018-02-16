@@ -24,6 +24,9 @@ class GamesManager {
   doesGameExists(gameName) {
     return gameName in this.allRunningGames;
   }
+  removeGame(gameName){
+    delete this.allRunningGames[gameName];
+  }
 }
 
 module.exports = GamesManager;

@@ -74,6 +74,7 @@ const getStatus = function(){
 const begin = function(){
   setGameName();
   setUserName();
+  getStatus();
   intervalID=setInterval(getStatus,1000);
 };
 window.onload=begin;

@@ -46,5 +46,8 @@ class Game {
       return boardStatus;
     },{});
   }
+  getNoOfPlayers(){
+    return this.players.length;
+  }
 }
 module.exports = Game;

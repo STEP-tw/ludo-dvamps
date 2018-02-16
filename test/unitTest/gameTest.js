@@ -88,4 +88,11 @@ describe('#Game', () => {
       assert.deepEqual(game.getBoardStatus(),{'red':'ashish','green':'joy'});
     })
   });
+  describe('#getNoOfPlayers',() => {
+    it('should give total number of players in game', () => {
+      game.addPlayer('ashish');
+      game.addPlayer('joy');
+      assert.equal(game.getNoOfPlayers(),2);
+    })
+  });
 });
