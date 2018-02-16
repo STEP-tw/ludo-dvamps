@@ -1,9 +1,11 @@
+const Player = require('./player.js');
 class Game {
-  constructor(name) {
+  constructor(name,colorDistributor) {
     this.name = name;
     this.players = [];
     this.status={};
     this.numberOfPlayers = 4;
+    this.colorDistributor = colorDistributor;
   }
   getStatus(){
     return this.status;
@@ -22,7 +24,9 @@ class Game {
     };
   }
   addPlayer(playerName) {
-    this.players.push({name:`${playerName}`});
+    let playerColor = this.colorDistributor.getColor();
+    let player = new Player(playerName,playerColor);
+    this.players.push(player);
     this.status.players=this.players;
   }
   getPlayer(playerName){
@@ -35,6 +39,12 @@ class Game {
     let playerIndex=this.players.indexOf(player);
     this.players.splice(playerIndex,1);
     this.status.players=this.players;
+  }
+  getBoardStatus() {
+    return this.players.reduce(function(boardStatus,player) {
+      boardStatus[player.getColor()] = player.getName();
+      return boardStatus;
+    },{});
   }
 }
 module.exports = Game;

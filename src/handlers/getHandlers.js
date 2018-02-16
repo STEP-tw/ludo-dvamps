@@ -18,6 +18,12 @@ const serveGameStatus=(req,res)=>{
   }
   res.send(lib.toS(game.getStatus()));
 };
+
+const getBoardStatus = function(req,res) {
+  let gameName = req.cookies.gameName;
+  let game = req.app.gamesManager.getGame(gameName);
+  res.json(game.getBoardStatus());
+};
 module.exports = {
   serveAvailableGames,
   serveGameName,
