@@ -73,7 +73,7 @@ describe('#App', () => {
       request(app)
         .post('/createGame')
         .send('gamme=newGame&plaame=dhana')
-        .expect(200)
+        .expect(400)
         .expect(doesNotHaveCookies)
         .end(done);
     });
@@ -157,7 +157,7 @@ describe('#App', () => {
         .expect(200)
         .end(done);
     });
-    
+
   });
   describe('get /game/boardStatus', () => {
     beforeEach(function(){

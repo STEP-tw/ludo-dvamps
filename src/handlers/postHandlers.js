@@ -1,13 +1,14 @@
 const isValidReqBodyFormat = function(paramsKeys,req) {
   let reqParams = Object.keys(req.body);
   return paramsKeys.every(function(key){
-    return reqParams.includes(key);
+    return reqParams.includes(key) && req.body[key];
   });
 };
 
 const verifyCreateGameReq = function(req,res,next) {
   if(!isValidReqBodyFormat(['gameName','playerName'],req)){
-    res.json({gameCreated:false,message:'game name already taken'});
+    res.statusCode = 400 ;
+    res.json({gameCreated:false,message:'bad request'});
     res.end();
     return;
   }
