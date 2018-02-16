@@ -41,7 +41,9 @@ const createNewGame = function(req,res) {
 
 const joinPlayerToGame = function(req,res){
   if(!isValidReqBodyFormat(['gameName','playerName'],req)){
-    res.send({status:false});
+    res.statusCode = 400 ;
+    res.json({status:false,message:'bad request'});
+    res.end();
     return;
   }
   let gameName = req.body.gameName;
