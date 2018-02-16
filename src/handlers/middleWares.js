@@ -9,7 +9,7 @@ const checkCookie = function(req,res,next) {
 };
 
 const resWithBadRequest = function(res,message) {
-  res.status = 400;
+  res.statusCode = 400;
   res.send(message||'');
 };
 
@@ -17,7 +17,7 @@ const loadGame = function(req,res,next) {
   let gameName = req.cookies.gameName;
   let game = req.app.gamesManager.getGame(gameName);
   if(!game){
-    return resWithBadRequest();
+    return resWithBadRequest(res);
   }
   req.game = game;
   next();

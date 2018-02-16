@@ -18,6 +18,7 @@ const createGame = function() {
   let gameName = getFormInput('input[name="gameName"]');
   let playerName = getFormInput('input[name="playerName"]');
   if(anyEmptyField([gameName,playerName])){
+    setInnerText('.message','Fields should not be empty');
     return;
   }
   let requestBody = `gameName=${gameName}&playerName=${playerName}`;

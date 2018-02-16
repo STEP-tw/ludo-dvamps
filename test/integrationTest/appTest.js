@@ -156,5 +156,15 @@ describe('#App', () => {
         .expect('Location','/index')
         .end(done);
     });
+    it('should response with bad request if game does not exists ', (done) => {
+      let gamesManager = new GamesManager();
+      gamesManager.addGame('ludo');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/game/boardStatus')
+        .set('Cookie',['gameName=bad','playerName=bad'])
+        .expect(400)
+        .end(done);
+    });
   });
 });

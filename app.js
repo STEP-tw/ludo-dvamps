@@ -7,7 +7,6 @@ const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const getHandlers = require(path.resolve('src/handlers/getHandlers.js'));
 const postHandlers = require(path.resolve('src/handlers/postHandlers.js'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler.js'));
-const defaultHandlers = require(path.resolve('src/handlers/defaultHandler.js'));
 const lib = require(path.resolve('src/handlers/middleWares.js'));
 const app = express();
 /*eslint-disable*/
@@ -39,7 +38,6 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use('/game',ludo);
-app.get('/', defaultHandlers.handleSlash);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.post('/createGame', postHandlers.verifyCreateGameReq,
   postHandlers.createNewGame);
@@ -47,7 +45,6 @@ app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.delete('/player', deleteHandler.removePlayer);
 app.get('/getStatus', getHandlers.serveGameStatus);
-
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
