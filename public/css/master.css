@@ -1,8 +1,9 @@
 header {
   border-bottom: 2px solid darkGray;
+  margin-bottom: 1%; 
 }
 .dice{
-  margin-top:  1%;
+  margin-top: 1%;
 }
 h1 {
   margin: 0.5%;
