@@ -1,6 +1,7 @@
 const http = require('http');
 const app = require('./app.js');
 const path = require('path');
+const fs = require('fs');
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const PORT = 8000;
 const ColorDistributer = function() {
@@ -11,7 +12,7 @@ ColorDistributer.prototype = {
     return this.colors.shift();
   }
 };
-app.initialize(new GamesManager(new ColorDistributer()));
+app.initialize(new GamesManager(new ColorDistributer()),fs);
 const server = http.createServer(app);
 server.listen(PORT);
 console.log(`server listening at ${PORT}`);

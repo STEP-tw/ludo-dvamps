@@ -23,13 +23,11 @@ class Game {
       createdBy: this.players[0].name,
     };
   }
-
   doesPlayerExist(playerName) {
     return this.players.some((player) => player.name == playerName);
   }
-
   addPlayer(playerName) {
-    if (!this.doesPlayerExist(playerName)) {
+    if (!this.doesPlayerExist(playerName) && !this.hasEnoughPlayers()) {
       let playerColor = this.colorDistributor.getColor();
       let player = new Player(playerName, playerColor);
       this.players.push(player);
@@ -38,7 +36,6 @@ class Game {
     }
     return false;
   }
-
   getPlayer(playerName) {
     let player = this.players.find(player => player.name == playerName);
     let playerIndex = this.players.indexOf(player);
