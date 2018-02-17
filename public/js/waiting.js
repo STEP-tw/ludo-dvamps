@@ -1,11 +1,7 @@
 let intervalID;
 const getElem= id => document.getElementById(`${id}`);
 const exitGame = function() {
-  location.href = 'index.html';
-  let player = getElem('userName').innerText;
-  let gameName = getElem('gameName').innerText;
   let xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', updateGameName);
   xhr.open("DELETE", '/player');
   xhr.send();
   goToHome();

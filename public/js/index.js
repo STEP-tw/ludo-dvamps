@@ -3,7 +3,7 @@
 const showCreateForm = function() {
   let allElements = getAllElements('.hidden');
   allElements.forEach(element=>element.classList.remove('hidden'));
-  let createButton = getElement('button[name="createFormOption"]').remove();
+  let createButton = getElement('input[name="createFormOption"]').remove();
 };
 
 const handleServerResponse = function(serverResponse) {
@@ -11,14 +11,14 @@ const handleServerResponse = function(serverResponse) {
     window.location.href = '/waiting.html';
     return;
   }
-  setInnerText('.message',serverResponse.message);
+  setInnerText('.message',`* ${serverResponse.message}`);
 };
 
 const createGame = function() {
   let gameName = getFormInput('input[name="gameName"]');
   let playerName = getFormInput('input[name="playerName"]');
   if(anyEmptyField([gameName,playerName])){
-    setInnerText('.message','Fields should not be empty');
+    setInnerText('.message','* Fields should not be empty');
     return;
   }
   gameName = encodeURIComponent(gameName);
@@ -34,8 +34,8 @@ const goToJoin = function(){
 };
 
 const setClickListeners = function() {
-  setClickListener('button[name="createFormOption"]',showCreateForm);
-  setClickListener('button[name="createGame"]',createGame);
-  setClickListener('button[name="joinGame"]',goToJoin);
+  setClickListener('input[name="createFormOption"]',showCreateForm);
+  setClickListener('input[name="createGame"]',createGame);
+  setClickListener('input[name="joinGame"]',goToJoin);
 };
 window.onload = setClickListeners;

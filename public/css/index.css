@@ -1,17 +1,11 @@
-h1 {
-  font-family: Roboto,sans-serif;
-  font-weight: 900;
-  font-size: 60px;
-  text-transform: uppercase;
-}
-
 .hidden {
   display: none;
 }
 
 main {
-  margin: 1%;
+  margin:7% 24%;
   height: 60vh;
+  border-radius: 10px;
   position: relative;
   display: -webkit-flex;
   display: flex;
@@ -27,17 +21,25 @@ main {
   align-items: center;
   -webkit-align-content: stretch;
   align-content: stretch;
+  -webkit-box-shadow: 5px 3px 14px 5px rgba(163,163,163,0.63);
+  -moz-box-shadow: 5px 3px 14px 5px rgba(163,163,163,0.63);
+  box-shadow: 5px 3px 14px 5px rgba(163,163,163,0.63);
 }
 
-button {
+input[type="submit"] {
   margin: 2%;
-  padding: 2%;
-  width: 40%;
-  height: 20%;
-  font-size: 140%;
+  width: 35%;
+  background-color: lightGray;
+  color: black;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 160%;
 }
 
-button[name="createFormOption"] {
+input[name="createFormOption"] {
   display: block;
 }
 
@@ -68,15 +70,21 @@ label {
   font-size: 30px;
 }
 
-input {
-  width: 52%;
+input[type="text"] {
+  width: 80%;
   height: 50px;
   margin: 10px;
-  font-size: 50px;
+  font-size: 140%;
+  font-family: 'Open Sans', sans-serif;
   border: none;
-  border-bottom: 2px solid #40413d;
+  border-bottom: 2px solid lightGray;
 }
-
-input:hover {
+input[type="text"]:hover {
   border-bottom: 2px solid #090a09;
+}
+.message{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  color: red;
+  text-transform: uppercase;
 }

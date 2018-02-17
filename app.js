@@ -37,7 +37,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(lib.redirectJoinedPlayerToGame)
+app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));
 app.use('/game',ludo);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);

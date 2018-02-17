@@ -3,20 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Ludo</title>
-    <link rel="stylesheet" href="/css/master.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/joining.css">
     <script src="/js/joining.js" charset="utf-8"></script>
   </head>
   <body>
     <header>
-      <h1>Ludo</h1>
+      <img src="images/dice.jpg" alt="DICE" class="dice" height="45px" width="45px">
+      <h1 class="inline">LUDO</h1>
     </header>
     <button name="back">Back</button>
-    <div class="">
-      <h1>GAMES AVAILABLE</h1>
-      <label for="playerName">Give Player Name :</label>
-      <input type="text" name="playerName" required>
+    <main>
+      <h2>GAMES AVAILABLE</h2>
+      <input type="text" name='playerName' id="playername" placeholder="Enter Your Name" required>
       <span class="hide" id="errorMessage"></span>
-      <table></table>
-    </div>
+      <table align=center></table>
+    </main>
   </body>
 </html>
