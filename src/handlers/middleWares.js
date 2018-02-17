@@ -8,6 +8,19 @@ const checkCookie = function(req,res,next) {
   next();
 };
 
+const isPlayerValid = function(req){
+  let game = req.app.gamesManager.getGame(req.cookies.gameName);
+  return game && game.doesPlayerExist(req.cookies.playerName);
+}
+
+const redirectJoinedPlayerToGame = function(req,res,next){
+  if (isPlayerValid(req) && ['/','/index.html','/joining.html'].includes(req.url)){
+    res.redirect('/waiting.html');
+    return;
+  }
+  next();
+}
+
 const resWithBadReq = function(res,message) {
   res.statusCode = 400;
   res.send(message||'');
@@ -35,5 +48,6 @@ const verifyGameAndPlayer =function(req,res,next) {
 module.exports = {
   checkCookie,
   loadGame,
-  verifyGameAndPlayer
+  verifyGameAndPlayer,
+  redirectJoinedPlayerToGame
 };

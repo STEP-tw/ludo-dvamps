@@ -36,8 +36,9 @@ app.use(express.urlencoded({
   extended: false
 }));
 app.use(express.json());
-app.use(express.static('public'));
 app.use(cookieParser());
+app.use(lib.redirectJoinedPlayerToGame)
+app.use(express.static('public'));
 app.use('/game',ludo);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.post('/createGame', postHandlers.verifyCreateGameReq,
@@ -51,4 +52,5 @@ ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
 ludo.get('/board',lib.verifyGameAndPlayer,getHandlers.getBoard);
+
 module.exports = app;
