@@ -42,7 +42,7 @@ app.use(express.static('public'));
 app.use('/game',ludo);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.post('/createGame', postHandlers.verifyCreateGameReq,
-  postHandlers.createNewGame);
+  postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
 app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.delete('/player', deleteHandler.removePlayer);

@@ -86,6 +86,20 @@ describe('#App', () => {
         .expect(doesNotHaveCookies)
         .end(done);
     });
+    it('should redirect to waiting if user has already a game',function(done){
+      let gamesManager = new GamesManager(new ColorDistributer());
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame','lala');
+      app.initialize(gamesManager);
+      request(app)
+        .post('/createGame')
+        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .send('gameName=bad&playerName=dhana')
+        .expect(200)
+        .expect(/gameCreated/)
+        .expect(/true/)
+        .end(done);
+    });
   });
   describe('GET /gameName', () => {
     it('should send gameName', (done) => {

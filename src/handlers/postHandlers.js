@@ -15,6 +15,20 @@ const verifyCreateGameReq = function(req,res,next) {
   next();
 };
 
+const hasCreatedGame = function(req){
+  let game = req.app.gamesManager.getGame(req.cookies.gameName);
+  return game && game.doesPlayerExist(req.cookies.playerName);
+};
+
+const blockIfUserHasGame = function(req,res,next){
+  if(hasCreatedGame(req)) {
+    res.json({gameCreated:true});
+    res.end();
+    return;
+  }
+  next();
+}
+
 const resWithGameCreated = function(res,gameName,playerName) {
   res.cookie('gameName',gameName,{path:''});
   res.cookie('playerName',playerName,{path:''});
@@ -56,6 +70,7 @@ const joinPlayerToGame = function(req,res){
 };
 
 module.exports = {
+  blockIfUserHasGame,
   createNewGame,
   joinPlayerToGame,
   verifyCreateGameReq

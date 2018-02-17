@@ -1,5 +1,3 @@
-
-
 const showCreateForm = function() {
   let allElements = getAllElements('.hidden');
   allElements.forEach(element=>element.classList.remove('hidden'));
