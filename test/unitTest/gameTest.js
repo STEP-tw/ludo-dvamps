@@ -1,5 +1,6 @@
 const assert = require('chai').assert;
 const Game = require('../../src/models/game.js');
+const Coin = require('../../src/models/coin.js')
 let game;
 describe('#Game', () => {
   beforeEach(() => {
@@ -22,38 +23,20 @@ describe('#Game', () => {
   describe('#addPlayer()', () => {
     it('should addPlayer to game if player is not there', () => {
       assert.isOk(game.addPlayer('manish'));
-      assert.deepEqual(game.getPlayer('manish'), {
-        name: 'manish',
-        color:'red',
-        coins:[]
-      });
+      assert.isOk(game.doesPlayerExist('manish'));
     });
 
     it('should not addPlayer to game if player is in the game', () => {
       game.addPlayer('manish');
       assert.isNotOk(game.addPlayer('manish'));
-      assert.deepEqual(game.getPlayer('manish'), {
-        name: 'manish',color:'red',coins:[]
-      });
     });
   });
   describe('#removePlayer()', () => {
     it('should removePlayer from game', () => {
       game.addPlayer('manish');
-      assert.deepEqual(game.getPlayer('manish'), {name: 'manish',color:'red',coins:[]});
+      assert.isOk(game.doesPlayerExist('manish'));
       game.removePlayer('manish');
-      assert.isUndefined(game.getPlayer('manish'));
-    });
-  });
-  describe('#addPlayer()', () => {
-    it('should add player in games', () => {
-      game.addPlayer('john');
-      assert.deepEqual(game.players,[{name:'john',color:'red',coins:[]}]);
-    });
-    it('should add player in games', () => {
-      game.addPlayer('john');
-      game.addPlayer('alex');
-      assert.deepEqual(game.players,[{name:'john',color:'red',coins:[]},{name:'alex',color:'green',coins:[]}]);
+      assert.isNotOk(game.doesPlayerExist('manish'));
     });
   });
   describe('#hasEnoughPlayers()', () => {
@@ -91,7 +74,6 @@ describe('#Game', () => {
       assert.deepEqual(expected,game.getDetails());
     });
   });
-
   describe('#doesPlayerExist', () => {
     it('should return true if player name is in the game', () => {
       game.addPlayer('kaka');

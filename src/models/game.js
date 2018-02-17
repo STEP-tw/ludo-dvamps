@@ -1,4 +1,17 @@
 const Player = require('./player.js');
+const Coin = require('./coin.js');
+
+const generateCoins = function() {
+  let index = 0;
+  let homeId = -1;
+  let coins = [];
+  for(let count=0;count<16;count++,index++,homeId--){
+    let coinId = index%4+1;
+    coins.push(new Coin(coinId,homeId));
+  }
+  return coins;
+};
+
 class Game {
   constructor(name, colorDistributor) {
     this.name = name;
@@ -6,6 +19,14 @@ class Game {
     this.status = {};
     this.numberOfPlayers = 4;
     this.colorDistributor = colorDistributor;
+    this.coins = generateCoins();
+  }
+  getCoins(color){
+    let coins = this.coins.splice(0,4);
+    return coins.map(function(coin){
+      coin.setColor(color);
+      return coin;
+    });
   }
   getStatus() {
     return this.status;
@@ -29,7 +50,8 @@ class Game {
   addPlayer(playerName) {
     if (!this.doesPlayerExist(playerName) && !this.hasEnoughPlayers()) {
       let playerColor = this.colorDistributor.getColor();
-      let player = new Player(playerName, playerColor);
+      let coins = this.getCoins(playerColor);
+      let player = new Player(playerName, playerColor,coins);
       this.players.push(player);
       this.setStatus();
       return true;

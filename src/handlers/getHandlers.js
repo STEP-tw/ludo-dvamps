@@ -18,19 +18,13 @@ const serveGameStatus = (req, res) => {
   }
   res.send(lib.toS(game.getStatus()));
 };
-// const resWithBadReq = function(res) {
-//   res.statusCode = 400;
-//   res.end();
-// }
+
 const getBoardStatus = function(req, res) {
   let game = req.game;
   res.json(game.getBoardStatus());
 };
 const getBoard = function(req, res) {
   let game = req.game;
-  // if(!game) {
-  //   return resWithBadReq(res);
-  // }
   let board = req.app.fs.readFileSync('./public/board.html','utf8');
   let boardStatus = game.getBoardStatus();
   res.setHeader('Content-Type','text/html');
