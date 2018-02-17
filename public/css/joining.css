@@ -1,0 +1,74 @@
+main{
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-align-content: stretch;
+  align-content: stretch;
+}
+input[type="text"] {
+  width: 15%;
+  height: 50px;
+  margin: 10px;
+  font-size: 150%;
+  font-family: 'Open Sans', sans-serif;
+  border: none;
+  border-bottom: 2px solid lightGray;
+}
+input[type="text"]:hover {
+  border-bottom: 2px solid #090a09;
+}
+
+th{
+  width:20%;
+  height: 1%;
+  padding: 5px 3px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 120%;
+  background-color: lightGray;
+  color: black;
+  text-transform: uppercase;
+}
+td{
+  width:20%;
+  height: 1%;
+  padding: 5px 3px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 120%;
+  border-bottom: 1px solid lightGray;
+}
+table{
+  margin:1% 20%;
+  border-collapse: collapse;
+}
+tr:hover {background-color: #f5f5f5;}
+button{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 110%;
+  font-weight: 600;
+  padding: 2px 5px;
+  border:0px;
+  background-color: #e1e7e4;
+  border-radius: 5px;
+  width:35%;
+  margin: 0.5%;
+}
+button[name="back"]{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 110%;
+  font-weight: 600;
+  padding: 2px 2px;
+  border:0px;
+  background-color: #e1e7e4;
+  border-radius: 5px;
+  width:5.5%;
+  margin: 0.5%;
+}

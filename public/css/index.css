@@ -33,7 +33,7 @@ input[type="submit"] {
   color: black;
   padding: 15px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
   font-size: 160%;
