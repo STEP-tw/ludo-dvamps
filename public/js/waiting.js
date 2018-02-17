@@ -11,7 +11,7 @@ const exitGame = function() {
   goToHome();
 };
 const goToBoard = function() {
-  location.href = 'board.html';
+  location.href = '/game/board';
 };
 const goToHome = function() {
   location.href = 'index.html';

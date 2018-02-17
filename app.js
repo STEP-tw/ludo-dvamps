@@ -25,8 +25,9 @@ let accessLogStream = rfs(lognameGenerator, {
   interval: '1d',
   path: logDir
 });
-app.initialize = function(gamesManager) {
+app.initialize = function(gamesManager,fs) {
   app.gamesManager = gamesManager;
+  app.fs = fs;
 };
 app.use(logger('combined', {
   stream: accessLogStream
@@ -45,9 +46,9 @@ app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.delete('/player', deleteHandler.removePlayer);
 app.get('/getStatus', getHandlers.serveGameStatus);
-
 app.post('/joinGame',postHandlers.joinPlayerToGame);
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
+ludo.get('/board',lib.verifyGameAndPlayer,getHandlers.getBoard);
 module.exports = app;

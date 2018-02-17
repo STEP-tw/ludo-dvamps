@@ -8,7 +8,7 @@ const checkCookie = function(req,res,next) {
   next();
 };
 
-const resWithBadRequest = function(res,message) {
+const resWithBadReq = function(res,message) {
   res.statusCode = 400;
   res.send(message||'');
 };
@@ -17,13 +17,23 @@ const loadGame = function(req,res,next) {
   let gameName = req.cookies.gameName;
   let game = req.app.gamesManager.getGame(gameName);
   if(!game){
-    return resWithBadRequest(res);
+    return resWithBadReq(res);
   }
   req.game = game;
   next();
 };
 
+const verifyGameAndPlayer =function(req,res,next) {
+  let game = req.game;
+  let playerName = req.cookies.playerName;
+  if(!game||!game.getPlayer(playerName)) {
+    return resWithBadReq(res);
+  }
+  next();
+};
+
 module.exports = {
   checkCookie,
-  loadGame
+  loadGame,
+  verifyGameAndPlayer
 };
