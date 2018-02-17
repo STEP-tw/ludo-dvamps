@@ -29,7 +29,7 @@ class Game {
   }
 
   addPlayer(playerName) {
-    if (!this.doesPlayerExist(playerName)) {
+    if (!this.doesPlayerExist(playerName) && !this.hasEnoughPlayers()) {
       let playerColor = this.colorDistributor.getColor();
       let player = new Player(playerName, playerColor);
       this.players.push(player);
