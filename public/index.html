@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Ludo</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900|Ubuntu+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="/css/index.css">
-    <script src="/js/index.js" charset="utf-8"></script>
-    <script src="/js/commonScripts.js" charset="utf-8"></script>
-  </head>
-  <body>
-    <header>
-      <h1>Ludo</h1>
-    </header>
-    <main>
-      <button type="button" name="createFormOption">Create Game</button>
-      <div class="createForm hidden">
-        <span class="hidden">
-          <label for="playername">Enter Your Name :</label>
-          <input type="text" name='playerName' id="playername">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ludo</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Roboto:300,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/master.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="/js/index.js" charset="utf-8"></script>
+  <script src="/js/commonScripts.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <header>
+    <img src="images/dice.jpg" alt="DICE" class="dice" height="45px" width="45px">
+    <h1 class="inline">LUDO</h1>
+  </header>
+  <main>
+    <input type="submit" name="createFormOption" value="Create Game">
+    <div class="createForm hidden">
+      <span class="hidden">
+          <input type="text" name='playerName' id="playername" placeholder="Enter Your Name">
         </span>
-        <span class="hidden">
-          <label for="gamename">Enter Game Name :</label>
-          <input type="text" name='gameName' id="gamename">
+      <span class="hidden">
+          <input type="text" name='gameName' id="gamename" placeholder="Enter Game Name">
         </span>
-        <button class="hidden" type="button" name="createGame">Create Game</button>
-      </div>
-      <button type="button" name="joinGame" id="joinGame">Join Game</button>
       <div class="message"></div>
-    </main>
-  </body>
+      <input type="submit" class="hidden" name="createGame" value="Create Game">
+    </div>
+    <input type="submit" name="joinGame" id="joinGame" value="Join Game">
+  </main>
+</body>
+
 </html>

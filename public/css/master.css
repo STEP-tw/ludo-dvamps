@@ -1,28 +1,21 @@
 header {
   border-bottom: 2px solid darkGray;
 }
+.dice{
+  margin-top:  1%;
+}
+h1 {
+  margin: 0.5%;
+  font-family: 'Roboto',sans-serif;
+  font-weight:normal;
+  font-size: 50px;
+  text-transform: uppercase;
+}
 
 .inline{
   display: inline-block;
 }
-.playerNames{
-  margin:2% 2% 5% 2%;
-  border: 2px solid black;
-  height: 70px;
-  width:200px;
-  text-align: center;
-  font-weight:normal;
-  font-family: sans-serif;
-  font-size: 20px;
-}
-#errorMessage{
-  color: red;
-}
 
-.exit{
-  margin-top: 3.5%;
-  float: right;
-}
 main{
   margin: 2% 0% 0% 4%;
   text-align: center;
