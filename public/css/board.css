@@ -1,0 +1,171 @@
+header {
+  width:100%;
+  height: 15vh;
+  background-color: lightblue;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+header h1 {
+  font-size: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.playerName {
+  position: relative;
+  align-self: center;
+  padding: 0;
+  margin: 0;
+}
+
+.main {
+  width:100%;
+  height: 80vh;
+
+}
+
+.mainContainer {
+  float:left;
+  width:75vw;
+  height:80vh;
+}
+
+.board {
+  margin-left: 10%;
+  width:70%;
+  height: 100%;
+}
+
+.upperPart {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 40%;
+  width: 100%;
+}
+
+.pathVertical td {
+  border: 2px solid black;
+  width: 50px;
+  height: 35px;
+}
+
+.pathVertical {
+  height: 40%;
+  width: 20%;
+}
+
+.pathHorizontal {
+  width:40%;
+  height:20%;
+}
+
+.pathHorizontal td {
+  border: 2px solid black;
+  width: 50px;
+  height: 35px;
+}
+
+.castle {
+  width:150px;
+}
+
+.middlePart {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 20%;
+  width: 100%;
+}
+
+.lowerPart {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 40%;
+  width: 100%;
+}
+
+.greenHome {
+  border-bottom: 2px solid black;
+  height: 100%;
+  width:40%;
+  background-color: lightgreen;
+}
+
+.redHome {
+  border-bottom: 2px solid black;
+  height: 100%;
+  width:40%;
+  background-color: pink;
+}
+
+.yellowHome {
+  border-bottom: 2px solid black;
+  height: 100%;
+  width:40%;
+  background-color: lightyellow;
+}
+
+.blueHome {
+  border-bottom: 2px solid black;
+  height: 100%;
+  width:40%;
+  background-color: lightblue;
+}
+
+.logs {
+  float:right;
+  width:22.7vw;
+  height:80vh;
+  border: 1px solid black;
+}
+
+.coin {
+  background-color: black;
+  border: 1px solid black;
+  width:15px;
+  height: 15px;
+}
+
+.incline {
+  transform: rotate(25deg);
+}
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.R1Home {
+  margin-top: 0px;
+  margin-left: 15px;
+  float: left;
+}
+.R2Home {
+  margin-top: 0px;
+  margin-right: 15px;
+  float: right;
+}
+.R3Home {
+  margin-top: 160px;
+  margin-left: 15px;
+}
+.R4Home {
+  margin-top: -15px;
+  margin-left: 270px;
+}
+
+.safeCell {
+  border: 1px solid blue;
+}

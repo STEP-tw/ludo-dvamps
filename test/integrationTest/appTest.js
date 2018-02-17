@@ -3,6 +3,7 @@ const request = require('supertest');
 const path = require('path');
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
+const CustomFs = require(path.resolve('src/customFs.js'));
 
 let doesNotHaveCookies = (res)=>{
   const keys = Object.keys(res.headers);
@@ -11,6 +12,12 @@ let doesNotHaveCookies = (res)=>{
     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
   }
 };
+let board = [
+  "<div class='greenHome'><h1 class='playerName'>{{{GREEN}}}</h1>",
+  "<div class='yellowHome'><h1 class='playerName'>{{{YELLOW}}}</h1>",
+  "<div class='redHome'><h1 class='playerName'>{{{RED}}}</h1>",
+  "<div class='blueHome'><h1 class='playerName'>{{{BLUE}}}</h1>"
+].join();
 
 const ColorDistributer = function() {
   this.colors = ['red','green','blue','yellow'];
@@ -22,7 +29,9 @@ ColorDistributer.prototype = {
 }
 describe('#App', () => {
   beforeEach(function(){
-    app.initialize(new GamesManager(new ColorDistributer()));
+    let fs = new CustomFs();
+    fs.addFile('./public/board.html',board);
+    app.initialize(new GamesManager(new ColorDistributer()),fs);
   });
   describe('GET /', () => {
     it('should serve index page', done => {
@@ -220,6 +229,42 @@ describe('#App', () => {
         .expect(400)
         .expect(/status/)
         .expect(/false/)
+        .end(done)
+    });
+  });
+  describe('GET /game/board', () => {
+    beforeEach(function(){
+      let gamesManager = new GamesManager(new ColorDistributer());
+      let game = gamesManager.addGame('ludo');
+      game.addPlayer('ashish');
+      game.addPlayer('arvind');
+      game.addPlayer('debu');
+      game.addPlayer('ravinder');
+      let fs = new CustomFs();
+      fs.addFile('./public/board.html',board);
+      app.initialize(gamesManager,fs);
+    })
+    it('should give the game board with player names ', (done) => {
+      request(app)
+        .get('/game/board')
+        .set('Cookie',['gameName=ludo','playerName=ashish'])
+        .expect(200)
+        .expect(/ashish/)
+        .expect(/ravinder/)
+        .end(done)
+    });
+    it('should response with bad request if game does not exists', (done) => {
+      request(app)
+        .get('/game/board')
+        .set('Cookie',['gameName=cludo','playerName=ashish'])
+        .expect(400)
+        .end(done)
+    });
+    it('should response with bad request if player is registered', (done) => {
+      request(app)
+        .get('/game/board')
+        .set('Cookie',['gameName=ludo','playerName=unknown'])
+        .expect(400)
         .end(done)
     });
   });

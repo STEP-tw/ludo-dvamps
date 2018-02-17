@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="./board.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/board.css">
+    <title>Ludo</title>
+  </head>
+  <body>
+    <header>
+      <h1>LUDO</h1>
+    </header>
+    <div class="main">
+      <div class="mainContainer">
+        <div class="board">
+            <div class='upperPart'>
+              <div class='greenHome'>
+                <h1 class='playerName'>{{{GREEN}}}</h1>
+                <div id='R1' class='coin green R1Home'></div>
+                <div id='R2' class='coin green R2Home'></div>
+                <div id='R3' class='coin green R3Home'></div>
+                <div id='R4' class='coin green R4Home'></div>
+              </div>
+              <div class='pathVertical'>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td id='23'></td>
+                      <td id='24'></td>
+                      <td id='25'></td>
+                    </tr>
+                    <tr>
+                      <td id='22' class='safeCell'>X</td>
+                      <td id='124'></td>
+                      <td id='26' class='safeCell'>X</td>
+                    </tr>
+                    <tr>
+                      <td id='21'></td>
+                      <td id='125'></td>
+                      <td id='26'></td>
+                    </tr>
+                    <tr>
+                      <td id='20'></td>
+                      <td id='126'></td>
+                      <td id='27'></td>
+                    </tr>
+                    <tr>
+                      <td id='19'></td>
+                      <td id='127'></td>
+                      <td id='28'></td>
+                    </tr>
+                    <tr>
+                      <td id='18'></td>
+                      <td id='128'></td>
+                      <td id='29'></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class='yellowHome'>
+                <h1 class='playerName'>{{{YELLOW}}}</h1>
+                <div id='R1' class='coin yellow R1Home'></div>
+                <div id='R2' class='coin yellow R2Home'></div>
+                <div id='R3' class='coin yellow R3Home'></div>
+                <div id='R4' class='coin yellow R4Home'></div>
+              </div>
+            </div>
+            <div class='middlePart'>
+              <div class='pathHorizontal'>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td id='12'></td>
+                      <td id='13' class='saveCell'>X</td>
+                      <td id='14'></td>
+                      <td id='15'></td>
+                      <td id='16'></td>
+                      <td id='17'></td>
+                    </tr>
+                    <tr>
+                      <td id='11'></td>
+                      <td id='111'></td>
+                      <td id='112'></td>
+                      <td id='113'></td>
+                      <td id='114'></td>
+                      <td id='115'></td>
+                    </tr>
+                    <tr>
+                      <td id='10'></td>
+                      <td id='9' class='safeCell'>X</td>
+                      <td id='8'></td>
+                      <td id='7'></td>
+                      <td id='6'></td>
+                      <td id='5'></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class='castle'>CASTLE</div>
+              <div class='pathHorizontal'>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td id='31'></td>
+                      <td id='32'></td>
+                      <td id='33'></td>
+                      <td id='34'></td>
+                      <td id='35' class='safeCell'>X</td>
+                      <td id='36'></td>
+                    </tr>
+                    <tr>
+                      <td id='141'></td>
+                      <td id='140'></td>
+                      <td id='139'></td>
+                      <td id='138'></td>
+                      <td id='137'></td>
+                      <td id='37'></td>
+                    </tr>
+                    <tr>
+                      <td id='43'></td>
+                      <td id='42'></td>
+                      <td id='41'></td>
+                      <td id='40'></td>
+                      <td id='39' class='safeCell'>X</td>
+                      <td id='38'></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class='lowerPart'>
+              <div class='redHome'>
+                <h1 class='playerName'>{{{RED}}}</h1>
+                <div id='R1' class='coin red R1Home'></div>
+                <div id='R2' class='coin red R2Home'></div>
+                <div id='R3' class='coin red R3Home'></div>
+                <div id='R4' class='coin red R4Home'></div>
+              </div>
+              <div class='pathVertical'>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td id='4'></td>
+                      <td id='153'></td>
+                      <td id='43'></td>
+                    </tr>
+                    <tr>
+                      <td id='3'></td>
+                      <td id='152'></td>
+                      <td id='44'></td>
+                    </tr>
+                    <tr>
+                      <td id='2'></td>
+                      <td id='151'></td>
+                      <td id='45'></td>
+                    </tr>
+                    <tr>
+                      <td id='1'></td>
+                      <td id='150'></td>
+                      <td id='46'></td>
+                    </tr>
+                    <tr>
+                      <td id='0' class='safeCell'>X</td>
+                      <td id='149'></td>
+                      <td id='47' class='safeCell'>X</td>
+                    </tr>
+                    <tr>
+                      <td id='50'></td>
+                      <td id='49'></td>
+                      <td id='48'></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class='blueHome'>
+                <h1 class='playerName'>{{{BLUE}}}</h1>
+                <div id='R1' class='coin blue R1Home'></div>
+                <div id='R2' class='coin blue R2Home'></div>
+                <div id='R3' class='coin blue R3Home'></div>
+                <div id='R4' class='coin blue R4Home'></div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class='logs'>
+        hw
+      </div>
+    </div>
+  </body>
+</html>
