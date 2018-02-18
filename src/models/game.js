@@ -13,12 +13,12 @@ const generateCoins = function() {
 };
 
 class Game {
-  constructor(name, colorDistributor) {
+  constructor(name, ColorDistributor) {
     this.name = name;
     this.players = [];
     this.status = {};
     this.numberOfPlayers = 4;
-    this.colorDistributor = colorDistributor;
+    this.colorDistributor = new ColorDistributor();
     this.coins = generateCoins();
   }
   getCoins(color){
@@ -70,10 +70,11 @@ class Game {
     this.setStatus();
   }
   getBoardStatus() {
-    return this.players.reduce(function(boardStatus, player) {
+    let players= this.players.reduce(function(boardStatus, player) {
       boardStatus[player.getColor()] = player.getName();
       return boardStatus;
     }, {});
+    return players;
   }
   getNoOfPlayers() {
     return this.players.length;

@@ -28,10 +28,11 @@ ColorDistributer.prototype = {
   }
 }
 describe('#App', () => {
+  let gamesManager = new GamesManager(ColorDistributer);
   beforeEach(function(){
     let fs = new CustomFs();
     fs.addFile('./public/board.html',board);
-    app.initialize(new GamesManager(new ColorDistributer()),fs);
+    app.initialize(gamesManager,fs);
   });
   describe('GET /', () => {
     it('should serve index page', done => {
@@ -63,7 +64,6 @@ describe('#App', () => {
         .end(done);
     });
     it('should not create game', (done) => {
-      let gamesManager = new GamesManager();
       gamesManager.addGame('newGame');
       app.initialize(gamesManager);
       request(app)
@@ -96,15 +96,6 @@ describe('#App', () => {
         .end(done);
     });
   });
-  describe('GET /gameName', () => {
-    it('should send gameName', (done) => {
-      request(app)
-        .get('/gameName')
-        .set('Cookie','gameName=ludo')
-        .expect(200)
-        .end(done);
-    });
-  });
   describe('GET /userName', () => {
     it('should send userName', (done) => {
       request(app)
@@ -117,7 +108,6 @@ describe('#App', () => {
   });
   describe('DELETE /player', () => {
     it('should delete Player and game if all the players left', (done) => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('ludo');
       let game= gamesManager.getGame('ludo');
       game.addPlayer('player');
@@ -130,7 +120,6 @@ describe('#App', () => {
         .end(done);
     });
     it('should delete Player if a player lefts', (done) => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('ludo');
       let game= gamesManager.getGame('ludo');
       game.addPlayer('player1');
@@ -147,7 +136,6 @@ describe('#App', () => {
   });
   describe('get /getStatus', () => {
     it('should send gameStatus', (done) => {
-      let gamesManager = new GamesManager();
       gamesManager.addGame('ludo');
       app.initialize(gamesManager);
       request(app)
@@ -157,7 +145,6 @@ describe('#App', () => {
         .end(done);
     });
     it('should send empty response', (done) => {
-      let gamesManager = new GamesManager();
       gamesManager.addGame('ludo');
       app.initialize(gamesManager);
       request(app)
@@ -166,17 +153,14 @@ describe('#App', () => {
         .expect(200)
         .end(done);
     });
-
   });
   describe('get /game/boardStatus', () => {
     beforeEach(function(){
-      let gamesManager = new GamesManager(new ColorDistributer());
       let game = gamesManager.addGame('newGame');
       game.addPlayer('ashish');
       game.addPlayer('joy');
       app.initialize(gamesManager);
     });
-
     it('should give board status', (done) => {
       request(app)
         .get('/game/boardStatus')
@@ -221,7 +205,6 @@ describe('#App', () => {
         .expect(/false/)
         .end(done)
     });
-
     it('should return status false for bad request', done => {
       request(app)
         .post('/joinGame')
@@ -234,7 +217,7 @@ describe('#App', () => {
   });
   describe('GET /game/board', () => {
     beforeEach(function(){
-      let gamesManager = new GamesManager(new ColorDistributer());
+      let gamesManager = new GamesManager(ColorDistributer);
       let game = gamesManager.addGame('ludo');
       game.addPlayer('ashish');
       game.addPlayer('arvind');
@@ -270,7 +253,6 @@ describe('#App', () => {
   });
   describe('#GET /index.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
@@ -282,7 +264,6 @@ describe('#App', () => {
         .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
@@ -295,7 +276,6 @@ describe('#App', () => {
   });
   describe('#GET /joining.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
@@ -307,7 +287,6 @@ describe('#App', () => {
         .end(done);
     });
     it('should serve joining page if invalid cookies are present', done => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
@@ -320,7 +299,6 @@ describe('#App', () => {
   });
   describe('#GET /', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
@@ -332,7 +310,6 @@ describe('#App', () => {
         .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
-      let gamesManager = new GamesManager(new ColorDistributer());
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);

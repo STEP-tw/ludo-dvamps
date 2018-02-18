@@ -18,7 +18,6 @@ const serveGameStatus = (req, res) => {
   }
   res.send(lib.toS(game.getStatus()));
 };
-
 const getBoardStatus = function(req, res) {
   let game = req.game;
   res.json(game.getBoardStatus());
@@ -31,7 +30,6 @@ const getBoard = function(req, res) {
   res.send(setPlayersName(board,boardStatus));
   res.end();
 };
-
 const setPlayersName = function(board, boardStatus) {
   return board.replace('{{{GREEN}}}', boardStatus.green)
     .replace('{{{RED}}}', boardStatus.red)

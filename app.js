@@ -52,5 +52,4 @@ ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
 ludo.get('/board',lib.verifyGameAndPlayer,getHandlers.getBoard);
-
 module.exports = app;

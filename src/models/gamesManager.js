@@ -1,8 +1,8 @@
 const Game = require('./game.js');
 
 class GamesManager {
-  constructor(colorDistributor) {
-    this.colorDistributor = colorDistributor;
+  constructor(ColorDistributor) {
+    this.colorDistributor = ColorDistributor;
     this.allRunningGames = {};
   }
   getAvailableGames(){

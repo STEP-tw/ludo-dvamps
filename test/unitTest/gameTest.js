@@ -12,7 +12,7 @@ describe('#Game', () => {
         return this.colors.shift();
       }
     }
-    game = new Game('newGame',new ColorDistributer());
+    game = new Game('newGame',ColorDistributer);
   });
   describe('#getStatus()', () => {
     it('should return game status', () => {
