@@ -18,6 +18,14 @@ class Turn {
     return this.currentPlayerMoves.slice(-1)[0];
   }
 
+  increamentChances(){
+    return ++this.playerChances;
+  }
+
+  decrementChances(){
+    return --this.playerChances;
+  }
+
   hasThreeMoves(){
     return this.currentPlayerMoves.length >= 3;
   }
@@ -25,10 +33,6 @@ class Turn {
   has3ConsecutiveSixes(){
     return this.hasThreeMoves() &&
       this.currentPlayerMoves.slice(-3).every((move)=> move == 6);
-  }
-
-  decrementChances(){
-    return --this.playerChances;
   }
 
   shouldChangeTurn(){
@@ -45,19 +49,23 @@ class Turn {
     if (this.shouldChangeTurn()) {
       return this.updateTurn();
     }
+    if (this.lastMove == 6) {
+      this.increamentChances();
+    }
     return this.currentPlayer;
   }
 
   updateTurn(){
-    let currentPlayerIndex = this.players.indexOf(this.currentPlayer);
-    this.currentPlayer = this.players[++currentPlayerIndex % 4];
+    let currPlayerIndex = this.players.indexOf(this.currentPlayer);
+    this.currentPlayer = this.players[++currPlayerIndex % this.players.length];
     this.playerChances = 1;
     this.currentPlayerMoves = [];
     return this.currentPlayer;
   }
-
-  increamentChances(){
-    return ++this.playerChances;
+  rollDice(dice){
+    let move = dice.roll();
+    this.currentPlayerMoves.push(move);
+    return move;
   }
 }
 

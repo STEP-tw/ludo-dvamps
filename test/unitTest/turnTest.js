@@ -154,80 +154,103 @@ describe('#Turn', () => {
       turn.currentPlayerMoves = [1];
       turn.playerChances = 0;
       assert.equal(turn.decideTurn(),'green');
+      assert.equal(turn.currentPlayerChances,1);
+      assert.deepEqual(turn.currentPlayerMoves,[]);
     });
     it('should return red if player have chance and moves are [1]', () => {
       turn.currentPlayerMoves = [1];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,1);
     });
     it(`should return red if player have chance and move is [6]`, () => {
       turn.currentPlayerMoves = [6];
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,2);
     });
     it(`should return red if player have chance and moves are [6,2]`, () => {
       turn.currentPlayerMoves = [6,2];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,1);
     });
     it(`should return green if player don't have chance and moves are [6,1]`, () => {
       turn.currentPlayerMoves = [6,1];
       turn.playerChances = 0;
       assert.equal(turn.decideTurn(),'green');
+      assert.equal(turn.currentPlayerChances,1);
+      assert.deepEqual(turn.currentPlayerMoves,[]);
     });
     it(`should return red if player have chance and moves are [6,6]`, () => {
       turn.currentPlayerMoves = [6,6];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,2);
     });
     it(`should return green if player don't have chance and moves are [6,6,1]`, () => {
       turn.currentPlayerMoves = [6,6,1];
       turn.playerChances = 0;
       assert.equal(turn.decideTurn(),'green');
+      assert.equal(turn.currentPlayerChances,1);
+      assert.deepEqual(turn.currentPlayerMoves,[]);
     });
     it(`should return red if player have chance and moves are [6,6,1]`, () => {
       turn.currentPlayerMoves = [6,6,1];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,1);
     });
     it(`should return green if player have chance and moves are [6,6,6]`, () => {
       turn.currentPlayerMoves = [6,6,6];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'green');
+      assert.equal(turn.currentPlayerChances,1);
+      assert.deepEqual(turn.currentPlayerMoves,[]);
     });
     it(`should return green if player don't have chance and moves are [6,6,6]`, () => {
       turn.currentPlayerMoves = [6,6,6];
       turn.playerChances = 0;
       assert.equal(turn.decideTurn(),'green');
+      assert.equal(turn.currentPlayerChances,1);
+      assert.deepEqual(turn.currentPlayerMoves,[]);
     });
     it(`should return red if player have chance and moves are [6,6]`, () => {
       turn.currentPlayerMoves = [6,6];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,2);
     });
     it(`should return red if player have chance and moves are [2,6]`, () => {
       turn.currentPlayerMoves = [2,6];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,2);
     });
     it(`should return green if player don't have chance and moves are [2,6,6,2]`, () => {
       turn.currentPlayerMoves = [2,6,6,2];
       turn.playerChances = 0;
       assert.equal(turn.decideTurn(),'green');
+      assert.equal(turn.currentPlayerChances,1);
+      assert.deepEqual(turn.currentPlayerMoves,[]);
     });
     it(`should return red if player have chance and moves are [2,6,6,2]`, () => {
       turn.currentPlayerMoves = [2,6,6,2];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,1);
     });
     it(`should return red if player have chance and moves are [2,2]`, () => {
       turn.currentPlayerMoves = [2,2];
       turn.playerChances = 1;
       assert.equal(turn.decideTurn(),'red');
+      assert.equal(turn.currentPlayerChances,1);
     });
     it(`should return green if player don't have chance and moves are [2,2]`, () => {
       turn.currentPlayerMoves = [2,2];
       turn.playerChances = 0;
       assert.equal(turn.decideTurn(),'green');
+      assert.equal(turn.currentPlayerChances,1);
+      assert.deepEqual(turn.currentPlayerMoves,[]);
     });
   });
 });
