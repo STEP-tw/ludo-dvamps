@@ -16,7 +16,7 @@ ColorDistributer.prototype = {
     return this.colors[this.currentIndex++];
   }
 };
-app.initialize(new GamesManager(ColorDistributer,new Dice(Math.random),fs);
+app.initialize(new GamesManager(ColorDistributer,new Dice(Math.random)),fs);
 const server = http.createServer(app);
 server.listen(PORT);
 console.log(`server listening at ${PORT}`);
