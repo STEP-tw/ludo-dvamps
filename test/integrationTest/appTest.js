@@ -342,7 +342,7 @@ describe('#App', () => {
     });
   });
   describe('#GET /rollDice', () => {
-    it('should return a value', (done) => {
+    it('should roll the dice for currentPlayer', (done) => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
@@ -351,6 +351,18 @@ describe('#App', () => {
         .set('Cookie',['gameName=newGame','playerName=lala'])
         .expect(200)
         .expect("4")
+        .end(done);
+    });
+    it('shouldn\'t roll the dice for currentPlayer', (done) => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame','lalu');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/rollDice')
+        .set('Cookie',['gameName=newGame','playerName=lalu'])
+        .expect(200)
+        .expect('')
         .end(done);
     });
   });

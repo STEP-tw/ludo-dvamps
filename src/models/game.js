@@ -31,6 +31,9 @@ class Game {
       return coin;
     });
   }
+  getCurrentPlayerName(){
+    return this.players.find((player)=> player.color == this.turn.currentPlayer ).getName();
+  }
   getStatus() {
     return this.status;
   }

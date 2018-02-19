@@ -47,7 +47,7 @@ app.use('/game',ludo);
 app.use((req,res,next)=>{
   console.log(`${req.method} ${req.url} ${JSON.stringify(req.body)} ${JSON.stringify(req.cookies)}`);
   next();
-})
+});
 
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.get('/gameName', getHandlers.serveGameName);

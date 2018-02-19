@@ -41,6 +41,12 @@ const setPlayersName = function(board, boardStatus) {
 
 const rollDice = function(req,res,next){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
+  let currentPlayerName = game.getCurrentPlayerName();
+  let requestedPlayer = req.cookies.playerName;
+  if(currentPlayerName != requestedPlayer){
+    res.end();
+    return;
+  }
   let move = game.rollDice();
   res.send(lib.toS(move));
 }

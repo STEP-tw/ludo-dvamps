@@ -5,8 +5,8 @@ const showMove = function(){
   }
   let move = +this.responseText;
   let margin = (move - 1) * -50;
-  console.log(move);
   getElement('#dice').style.marginTop = `${margin}px`;
+  alert(move);
 }
 
 const requestRollDice = function(){
