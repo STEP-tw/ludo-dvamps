@@ -15,7 +15,7 @@ const serveGameStatus = (req, res) => {
     res.end();
     return;
   }
-  res.send(lib.toS(game.getStatus()));
+  res.json(game.getStatus());
 };
 
 const getBoardStatus = function(req, res) {
