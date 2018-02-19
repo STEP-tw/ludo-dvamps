@@ -1,6 +1,11 @@
 const assert = require('chai').assert;
 const Game = require('../../src/models/game.js');
-const Coin = require('../../src/models/coin.js')
+const Coin = require('../../src/models/coin.js');
+
+const dice = function(){
+  return 4;
+}
+
 let game;
 describe('#Game', () => {
   beforeEach(() => {
@@ -12,7 +17,7 @@ describe('#Game', () => {
         return this.colors.shift();
       }
     }
-    game = new Game('newGame',ColorDistributer);
+    game = new Game('newGame',ColorDistributer, dice);
   });
   describe('#getStatus()', () => {
     it('should return game status', () => {
@@ -96,5 +101,13 @@ describe('#Game', () => {
       game.addPlayer('joy');
       assert.equal(game.getNoOfPlayers(),2);
     })
+  });
+  describe('#rollDice', () => {
+    it('should return a number', () => {
+      game.addPlayer('salman');
+      let move = game.rollDice('salman');
+      assert.isNumber(move);
+      assert.equal(move,4);
+    });
   });
 });

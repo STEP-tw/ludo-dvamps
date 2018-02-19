@@ -19,5 +19,8 @@ class Player {
       coins: coinsPositions
     };
   }
+  rollDice(dice){
+    return dice();
+  }
 }
 module.exports = Player;

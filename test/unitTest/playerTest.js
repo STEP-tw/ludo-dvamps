@@ -2,6 +2,9 @@ const assert = require('chai').assert;
 const path = require('path');
 const Player = require(path.resolve('src/models/player.js'));
 const Coin = require(path.resolve('src/models/coin.js'));
+
+const dice = () => 4;
+
 describe('#Player', () => {
   let player;
   beforeEach(function(){
@@ -23,6 +26,13 @@ describe('#Player', () => {
         coins:[-2,-3]
       };
       assert.deepEqual(player.getStatus(),expectedStatus);
+    });
+  });
+  describe('#rollDice', () => {
+    it('should return a number', () => {
+      let move = player.rollDice(dice);
+      assert.isNumber(move);
+      assert.equal(move,4);
     });
   });
 });

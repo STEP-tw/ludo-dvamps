@@ -13,13 +13,14 @@ const generateCoins = function() {
 };
 
 class Game {
-  constructor(name, ColorDistributor) {
+  constructor(name, ColorDistributor, dice) {
     this.name = name;
     this.players = [];
     this.status = {};
     this.numberOfPlayers = 4;
     this.colorDistributor = new ColorDistributor();
     this.coins = generateCoins();
+    this.dice = dice;
   }
   getCoins(color){
     let coins = this.coins.splice(0,4);
@@ -81,6 +82,10 @@ class Game {
   }
   setStatus() {
     this.status.players = this.players.map(player => player.getStatus());
+  }
+  rollDice(playerName){
+    let currentPlayer = this.getPlayer(playerName);
+    return currentPlayer.rollDice(this.dice);
   }
 }
 module.exports = Game;

@@ -1,3 +1,6 @@
-let utility={};
-utility.toS=(data)=> JSON.stringify(data);
-module.exports=utility;
+let utility = {};
+
+utility.toS = (data) => JSON.stringify(data);
+utility.getRandomNumBetween = (min, max) => function(){return Math.floor(Math.random() * max) + min};
+
+module.exports = utility;
