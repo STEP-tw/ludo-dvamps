@@ -33,7 +33,7 @@ class Game {
   }
   getCurrentPlayerName(){
     let currentPlayer = this.players.find((player)=>{
-      player.color == this.turn.currentPlayer;
+      return player.color == this.turn.currentPlayer;
     });
     return currentPlayer.getName();
   }
