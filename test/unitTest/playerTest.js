@@ -1,6 +1,13 @@
 const assert = require('chai').assert;
 const path = require('path');
 const Player = require(path.resolve('src/models/player.js'));
+const Coin = require(path.resolve('src/models/coin.js'));
+
+const dice = {
+  roll : function(){
+    return 4;
+  }
+};
 
 describe('#Player', () => {
   let player;
@@ -13,28 +20,23 @@ describe('#Player', () => {
   it('should give color of player', () => {
     assert.equal(player.getColor(),'red');
   })
-  describe('#addCoin', () => {
-    it('should add new coin to player ', () => {
-      let player = new Player('ashish','red');
-      player.addCoin();
-      assert.equal(player.coins.length,1);
-      player.addCoin();
-      assert.equal(player.coins.length,2);
-    });
-  });
   describe('#getStatus', () => {
     it('should return playerStatus', () => {
-      let player = new Player('ashish','red');
-      player.addCoin();
-      player.addCoin();
-      player.addCoin();
-      player.addCoin();
+      let coins = [new Coin(1,-2),new Coin(2,-3)];
+      let player = new Player('ashish','red',coins);
       let expectedStatus={
         name:'ashish',
         color:'red',
-        coins:['home','home','home','home']
+        coins:[-2,-3]
       };
       assert.deepEqual(player.getStatus(),expectedStatus);
+    });
+  });
+  describe('#rollDice', () => {
+    it('should return a number', () => {
+      let move = player.rollDice(dice);
+      assert.isNumber(move);
+      assert.equal(move,4);
     });
   });
 });

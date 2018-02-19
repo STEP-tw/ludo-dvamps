@@ -1,10 +1,16 @@
 class Coin {
-  constructor(id) {
+  constructor(id,homePosition) {
     this.id = id;
-    this.position = "home";
+    this.position = homePosition;
+    this.homePosition = homePosition;
+    this.color;
   }
   getPosition(){
     return this.position;
+  }
+
+  setColor(color) {
+    this.color = color;
   }
 }
 
