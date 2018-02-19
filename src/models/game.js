@@ -32,7 +32,8 @@ class Game {
     });
   }
   getCurrentPlayerName(){
-    return this.players.find((player)=> player.color == this.turn.currentPlayer ).getName();
+    let currentPlayer = this.turn.currentPlayer;
+    return this.players.find(player=>player.color == currentPlayer).getName();
   }
   getStatus() {
     return this.status;
@@ -90,6 +91,9 @@ class Game {
   }
   rollDice(){
     return this.turn.rollDice(this.dice);
+  }
+  get currPlayerLastMove(){
+    return this.turn.lastMove;
   }
 }
 module.exports = Game;

@@ -5,9 +5,7 @@ class Turn {
     this.playerChances = 1;
     this.currentPlayerMoves = [];
   }
-  rollDice(dice){
-    return dice.roll();
-  }
+
   get currentPlayerColor(){
     return this.currentPlayer;
   }
@@ -22,6 +20,12 @@ class Turn {
 
   hasThreeMoves(){
     return this.currentPlayerMoves.length >= 3;
+  }
+
+  rollDice(dice){
+    let move = dice.roll();
+    this.currentPlayerMoves.push(move);
+    return move;
   }
 
   has3ConsecutiveSixes(){

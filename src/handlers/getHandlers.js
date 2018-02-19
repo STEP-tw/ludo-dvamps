@@ -49,7 +49,13 @@ const rollDice = function(req,res,next){
   }
   let move = game.rollDice();
   res.send(lib.toS(move));
-}
+};
+
+const getDiceStatus = function(req,res){
+  let game = req.app.gamesManager.getGame(req.cookies.gameName);
+  let lastMove = game.currPlayerLastMove;
+  res.send(lib.toS(lastMove));
+};
 
 module.exports = {
   serveAvailableGames,
@@ -58,5 +64,6 @@ module.exports = {
   serveGameStatus,
   getBoardStatus,
   getBoard,
-  rollDice
+  rollDice,
+  getDiceStatus
 };

@@ -44,16 +44,13 @@ app.use(cookieParser());
 app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));
 app.use('/game',ludo);
-app.use((req,res,next)=>{
-  console.log(`${req.method} ${req.url} ${JSON.stringify(req.body)} ${JSON.stringify(req.cookies)}`);
-  next();
-});
 
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.get('/getStatus', getHandlers.serveGameStatus);
 app.get('/rollDice',getHandlers.rollDice);
+app.get('/diceStatus',getHandlers.getDiceStatus);
 
 app.post('/createGame', postHandlers.verifyCreateGameReq,
   postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
