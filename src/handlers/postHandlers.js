@@ -27,7 +27,7 @@ const blockIfUserHasGame = function(req,res,next){
     return;
   }
   next();
-}
+};
 
 const resWithGameCreated = function(res,gameName,playerName) {
   res.cookie('gameName',gameName,{path:''});
