@@ -1,0 +1,30 @@
+main{
+  flex-flow: row nowrap;
+  display: flex;
+  width: 70%;
+  margin: auto;
+}
+
+main .sidebar{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;;
+}
+
+.board {
+  width: 80vh;
+  height: 80vh;
+}
+
+.logs {
+  flex-grow: 2;
+  margin-left: 20px;
+  border: 2px solid black;
+  margin-bottom: 10px;
+}
+.diceDiv {
+  margin-left: 20px;
+  margin-top: : 10px;
+  flex-grow: 1;
+  border: 2px solid black;
+}

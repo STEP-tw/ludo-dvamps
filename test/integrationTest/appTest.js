@@ -87,7 +87,7 @@ describe('#App', () => {
         .end(done);
     });
     it('should redirect to waiting if user has already a game',function(done){
-      let gamesManager = new GamesManager(new ColorDistributer());
+      let gamesManager = new GamesManager(ColorDistributer);
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
