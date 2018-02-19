@@ -32,11 +32,4 @@ describe('#Player', () => {
       assert.deepEqual(player.getStatus(),expectedStatus);
     });
   });
-  describe('#rollDice', () => {
-    it('should return a number', () => {
-      let move = player.rollDice(dice);
-      assert.isNumber(move);
-      assert.equal(move,4);
-    });
-  });
 });

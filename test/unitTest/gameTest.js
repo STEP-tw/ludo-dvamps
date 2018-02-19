@@ -107,7 +107,7 @@ describe('#Game', () => {
   describe('#rollDice', () => {
     it('should return a number', () => {
       game.addPlayer('salman');
-      let move = game.rollDice('salman');
+      let move = game.rollDice();
       assert.isNumber(move);
       assert.equal(move,4);
     });
