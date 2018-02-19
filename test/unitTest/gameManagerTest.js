@@ -10,23 +10,28 @@ ColorDistributor.prototype = {
     return this.colors.shift();
   }
 }
+
+const dice = function(){
+  return 4;
+}
+
 describe('GameManager', () => {
   let gameManager;
   let game;
   beforeEach(() => {
-    gameManager = new GameManager(ColorDistributor);
-    game = gameManager.addGame('newGame',ColorDistributor);
+    gameManager = new GameManager(ColorDistributor,dice);
+    game = gameManager.addGame('newGame');
   });
   describe('#addGame', () => {
     it('should create a new game with given name and store it', () => {
-      assert.deepEqual(game, new Game('newGame',ColorDistributor));
+      assert.deepEqual(game, new Game('newGame',ColorDistributor,dice));
       assert.instanceOf(game,Game);
     });
   });
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
-      let expectedGame = new Game('newGame',ColorDistributor);
+      let expectedGame = new Game('newGame',ColorDistributor,dice);
       expectedGame.addPlayer('john');
       assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
     });
@@ -61,7 +66,7 @@ describe('GameManager', () => {
   });
   describe('#getGame()', () => {
     it('should return Game', () => {
-      assert.deepEqual(gameManager.getGame('newGame'), new Game('newGame', ColorDistributor));
+      assert.deepEqual(gameManager.getGame('newGame'), new Game('newGame', ColorDistributor, dice));
       assert.isUndefined(gameManager.getGame('badGame'));
     });
   });

@@ -1,14 +1,3 @@
-const sendAjaxRequest = function(method,url,callBack,reqBody){
-  let ajax = new XMLHttpRequest();
-  ajax.onload=callBack;
-  ajax.open(method,url);
-  if(reqBody){
-    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    return ajax.send(reqBody);
-  }
-  ajax.send();
-};
-
 const showPlayers = function(){
   sendAjaxRequest('GET','/getStatus',function(){
     let colors = ['red','green','yellow','blue'];
@@ -23,15 +12,31 @@ const showPlayers = function(){
   });
 };
 
+const showMove = function(){
+  if(!this.responseText){
+    return;
+  }
+  let move = +this.responseText;
+  let margin = (move - 1) * -50;
+  getElement('#dice').style.marginTop = `${margin}px`;
+};
+
+const requestRollDice = function(){
+  sendAjaxRequest('GET',"/rollDice",showMove);
+};
+
+const setClickListeners = function() {
+  setClickListener('div[class="diceHolder"]',requestRollDice);
+};
+
 const load = function() {
   showPlayers();
+  setClickListeners();
   sendAjaxRequest('GET','/images/board.svg',function(){
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
 };
-
-const getElement = (selector) => document.querySelector(selector);
 
 const moveCoin = (coinId,cellId) => {
   let coin = document.getElementById(coinId);

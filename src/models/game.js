@@ -1,5 +1,6 @@
 const Player = require('./player.js');
 const Coin = require('./coin.js');
+const Turn = require('./turn.js');
 
 const generateCoins = function() {
   let index = 0;
@@ -13,13 +14,15 @@ const generateCoins = function() {
 };
 
 class Game {
-  constructor(name, ColorDistributor) {
+  constructor(name, ColorDistributor, dice) {
     this.name = name;
     this.players = [];
     this.status = {};
     this.numberOfPlayers = 4;
     this.colorDistributor = new ColorDistributor();
     this.coins = generateCoins();
+    this.dice = dice;
+    this.turn = new Turn(['red','green','blue','yellow']);
   }
   getCoins(color){
     let coins = this.coins.splice(0,4);
@@ -27,6 +30,12 @@ class Game {
       coin.setColor(color);
       return coin;
     });
+  }
+  getCurrentPlayerName(){
+    let currentPlayer = this.players.find((player)=>{
+      player.color == this.turn.currentPlayer;
+    });
+    return currentPlayer.getName();
   }
   getStatus() {
     return this.status;
@@ -81,6 +90,9 @@ class Game {
   }
   setStatus() {
     this.status.players = this.players.map(player => player.getStatus());
+  }
+  rollDice(){
+    return this.turn.rollDice(this.dice);
   }
 }
 module.exports = Game;

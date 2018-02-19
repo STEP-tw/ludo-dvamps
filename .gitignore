@@ -58,3 +58,4 @@ typings/
 .env
 
 cypress
+.DS_Store

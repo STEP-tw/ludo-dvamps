@@ -19,6 +19,12 @@ let board = [
   "<div class='blueHome'><h1 class='playerName'>{{{BLUE}}}</h1>"
 ].join();
 
+const dice = {
+  roll : function(){
+    return 4;
+  }
+};
+
 const ColorDistributer = function() {
   this.colors = ['red','green','blue','yellow'];
 }
@@ -27,8 +33,9 @@ ColorDistributer.prototype = {
     return this.colors.shift();
   }
 }
+
 describe('#App', () => {
-  let gamesManager = new GamesManager(ColorDistributer);
+  let gamesManager = new GamesManager(ColorDistributer,dice);
   beforeEach(function(){
     let fs = new CustomFs();
     fs.addFile('./public/board.html',board);
@@ -331,6 +338,31 @@ describe('#App', () => {
         .get('/')
         .set('Cookie',['gameName=badGame','playerName=badUser'])
         .expect(200)
+        .end(done);
+    });
+  });
+  describe('#GET /rollDice', () => {
+    it('should roll the dice for currentPlayer', (done) => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame','lala');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/rollDice')
+        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .expect(200)
+        .expect("4")
+        .end(done);
+    });
+    it('shouldn\'t roll the dice for currentPlayer', (done) => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame','lalu');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/rollDice')
+        .set('Cookie',['gameName=newGame','playerName=lalu'])
+        .expect(200)
+        .expect('')
         .end(done);
     });
   });

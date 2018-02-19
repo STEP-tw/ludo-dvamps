@@ -3,11 +3,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const rfs = require('rotating-file-stream');
+
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const getHandlers = require(path.resolve('src/handlers/getHandlers.js'));
 const postHandlers = require(path.resolve('src/handlers/postHandlers.js'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler.js'));
 const lib = require(path.resolve('src/handlers/middleWares.js'));
+
 const app = express();
 /*eslint-disable*/
 const ludo = express.Router();
@@ -25,10 +27,12 @@ let accessLogStream = rfs(lognameGenerator, {
   interval: '1d',
   path: logDir
 });
+
 app.initialize = function(gamesManager,fs) {
   app.gamesManager = gamesManager;
   app.fs = fs;
 };
+
 app.use(logger('combined', {
   stream: accessLogStream
 }));
@@ -40,16 +44,28 @@ app.use(cookieParser());
 app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));
 app.use('/game',ludo);
+/*eslint-disable*/
+app.use((req,res,next)=>{
+  console.log(`${req.method} ${req.url} ${JSON.stringify(req.body)} ${JSON.stringify(req.cookies)}`);
+  next();
+});
+/*eslint-enable*/
+
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
-app.post('/createGame', postHandlers.verifyCreateGameReq,
-  postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
 app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
-app.delete('/player', deleteHandler.removePlayer);
 app.get('/getStatus', getHandlers.serveGameStatus);
+app.get('/rollDice',getHandlers.rollDice);
+
+app.post('/createGame', postHandlers.verifyCreateGameReq,
+  postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
 app.post('/joinGame',postHandlers.joinPlayerToGame);
+
+app.delete('/player', deleteHandler.removePlayer);
+
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
 ludo.get('/board',lib.verifyGameAndPlayer,getHandlers.getBoard);
+
 module.exports = app;

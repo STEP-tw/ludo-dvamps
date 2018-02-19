@@ -1,3 +1,5 @@
-let utility={};
-utility.toS=(data)=> JSON.stringify(data);
-module.exports=utility;
+let utility = {};
+
+utility.toS = (data) => JSON.stringify(data);
+
+module.exports = utility;
