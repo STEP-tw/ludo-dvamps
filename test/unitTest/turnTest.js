@@ -2,6 +2,12 @@ const assert = require('chai').assert
 const path = require('path');
 const Turn= require(path.resolve('src/models/turn.js'));
 
+const dice = {
+  roll : function(){
+    return 4;
+  }
+}
+
 describe('#Turn', () => {
   beforeEach(()=>{
     turn = new Turn(['red','green','yellow','blue']);
@@ -251,6 +257,12 @@ describe('#Turn', () => {
       assert.equal(turn.decideTurn(),'green');
       assert.equal(turn.currentPlayerChances,1);
       assert.deepEqual(turn.currentPlayerMoves,[]);
+    });
+  });
+  describe('#rollDice', () => {
+    it('should roll the dice', () => {
+      let move = turn.rollDice(dice);
+      assert.equal(move,4);
     });
   });
 });

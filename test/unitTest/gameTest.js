@@ -2,6 +2,7 @@ const assert = require('chai').assert;
 const Game = require('../../src/models/game.js');
 const Coin = require('../../src/models/coin.js');
 
+
 const dice = {
   roll : function(){
     return 4;
@@ -107,9 +108,16 @@ describe('#Game', () => {
   describe('#rollDice', () => {
     it('should return a number', () => {
       game.addPlayer('salman');
-      let move = game.rollDice('salman');
+      let move = game.rollDice();
       assert.isNumber(move);
       assert.equal(move,4);
+    });
+  });
+  describe('#getCurrentPlayerName', () => {
+    it('should return the current player name', () => {
+      game.addPlayer('salman');
+      let currentPlayerName = game.getCurrentPlayerName();
+      assert.equal(currentPlayerName,'salman');
     });
   });
 });

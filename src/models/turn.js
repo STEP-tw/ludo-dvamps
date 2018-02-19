@@ -30,6 +30,12 @@ class Turn {
     return this.currentPlayerMoves.length >= 3;
   }
 
+  rollDice(dice){
+    let move = dice.roll();
+    this.currentPlayerMoves.push(move);
+    return move;
+  }
+
   has3ConsecutiveSixes(){
     return this.hasThreeMoves() &&
       this.currentPlayerMoves.slice(-3).every((move)=> move == 6);
