@@ -2,9 +2,11 @@ const assert = require('chai').assert;
 const Game = require('../../src/models/game.js');
 const Coin = require('../../src/models/coin.js');
 
-const dice = function(){
-  return 4;
-}
+const dice = {
+  roll : function(){
+    return 4;
+  }
+};
 
 let game;
 describe('#Game', () => {

@@ -3,7 +3,11 @@ const path = require('path');
 const Player = require(path.resolve('src/models/player.js'));
 const Coin = require(path.resolve('src/models/coin.js'));
 
-const dice = () => 4;
+const dice = {
+  roll : function(){
+    return 4;
+  }
+};
 
 describe('#Player', () => {
   let player;

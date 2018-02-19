@@ -8,14 +8,4 @@ describe('#utility', () => {
       assert.equal(utility.toS("hi"),'"hi"');
     });
   });
-  describe('#getRandomNumBetween', () => {
-    let randomNumber;
-    before(()=>{
-      randomNumber = utility.getRandomNumBetween(1,6)();
-    })
-    it('should return a number between 1 and 6', () => {
-      assert.isAtLeast(randomNumber,1);
-      assert.isAtMost(randomNumber,6);
-    });
-  });
 });

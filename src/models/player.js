@@ -20,7 +20,7 @@ class Player {
     };
   }
   rollDice(dice){
-    return dice();
+    return dice.roll();
   }
 }
 module.exports = Player;
