@@ -59,7 +59,7 @@ app.delete('/player', deleteHandler.removePlayer);
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.use(lib.verifyPlayer);
-ludo.use(express.static('/public'));
+ludo.use(express.static('public'));
 ludo.get('/rollDice',getHandlers.rollDice);
 ludo.get('/diceStatus',getHandlers.getDiceStatus);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
