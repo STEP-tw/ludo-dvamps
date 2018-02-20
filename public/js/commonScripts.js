@@ -53,7 +53,7 @@ const setInnerText = function(selector,text) {
   }
 };
 const goToBoard = function() {
-  location.href = 'game/board/';
+  location.href = 'game/board.html';
 };
 const goToHome = function() {
   location.href = '/index.html';
