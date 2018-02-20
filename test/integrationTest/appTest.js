@@ -24,6 +24,12 @@ const ColorDistributer = function() {
 ColorDistributer.prototype = {
   getColor: function() {
     return this.colors.shift();
+  },
+  addColor:function(color){
+    if(this.colors.includes(color)){
+      return;
+    }
+    this.colors.push(color);
   }
 }
 
@@ -141,7 +147,7 @@ describe('#App', () => {
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
-        .set('Cookie', ['playerName=player;', 'gameName=ludo;'])
+        .set('Cookie', ['playerName=player1;', 'gameName=ludo;'])
         .expect(200)
         .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()}`)
         .end(done);

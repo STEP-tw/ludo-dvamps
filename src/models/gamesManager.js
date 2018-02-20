@@ -2,7 +2,7 @@ const Game = require('./game.js');
 
 class GamesManager {
   constructor(ColorDistributor,dice) {
-    this.colorDistributor = ColorDistributor;
+    this.ColorDistributor = ColorDistributor;
     this.allRunningGames = {};
     this.dice = dice;
   }
@@ -12,7 +12,7 @@ class GamesManager {
     return availableGames.map(game => game.getDetails());
   }
   addGame(gameName) {
-    let game = new Game(gameName, this.colorDistributor, this.dice);
+    let game = new Game(gameName, this.ColorDistributor, this.dice);
     this.allRunningGames[gameName] = game;
     return game;
   }
