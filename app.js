@@ -60,7 +60,8 @@ app.delete('/player', deleteHandler.removePlayer);
 
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
+ludo.use(lib.verifyPlayer);
+ludo.use(express.static('public'));
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
-ludo.get('/board',lib.verifyGameAndPlayer,getHandlers.getBoard);
 
 module.exports = app;
