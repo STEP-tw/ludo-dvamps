@@ -23,10 +23,7 @@ const restrictValidPlayer = function(req,res,next){
 };
 
 const resWithBadReq = function(res,message) {
-  // res.statusCode = 400;
   res.redirect('/index.html');
-  // res.send(message||'');
-
 };
 
 const loadGame = function(req,res,next) {
@@ -39,10 +36,11 @@ const loadGame = function(req,res,next) {
   next();
 };
 
-const verifyGameAndPlayer =function(req,res,next) {
-  let game = req.game;
+
+const verifyPlayer =function(req,res,next) {
+  let game = req.app.gamesManager.getGame(req.cookies.gameName);
   let playerName = req.cookies.playerName;
-  if(!game||!game.getPlayer(playerName)) {
+  if(!game.getPlayer(playerName)) {
     return resWithBadReq(res);
   }
   next();
@@ -50,6 +48,6 @@ const verifyGameAndPlayer =function(req,res,next) {
 module.exports = {
   checkCookie,
   loadGame,
-  verifyGameAndPlayer,
-  restrictValidPlayer
+  restrictValidPlayer,
+  verifyPlayer
 };

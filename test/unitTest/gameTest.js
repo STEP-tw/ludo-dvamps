@@ -107,6 +107,7 @@ describe('#Game', () => {
   });
   describe('#rollDice', () => {
     it('should return a number', () => {
+      game.start();
       game.addPlayer('salman');
       let move = game.rollDice();
       assert.isNumber(move);
@@ -116,8 +117,31 @@ describe('#Game', () => {
   describe('#getCurrentPlayerName', () => {
     it('should return the current player name', () => {
       game.addPlayer('salman');
+      game.players[0].color = 'red';
+      game.start();
       let currentPlayerName = game.getCurrentPlayerName();
       assert.equal(currentPlayerName,'salman');
+    });
+  });
+  describe('#arrangePlayers', () => {
+    it('should arrange Players in required sequence', () => {
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      let expection = ['lala','kaka','ram','shyam'];
+      assert.deepEqual(expection,game.arrangePlayers());
+    });
+  });
+  describe('#start', () => {
+    it('should arrangePlayers in order and initiat turn object ', () => {
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.start();
+      assert.property(game,'turn');
+      assert.equal(game.getCurrentPlayerName(),'lala');
     });
   });
 });

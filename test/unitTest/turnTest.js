@@ -13,9 +13,9 @@ describe('#Turn', () => {
     turn = new Turn(['red','green','yellow','blue']);
   })
 
-  describe('#currentPlayerColor', () => {
+  describe('#currentPlayer', () => {
     it('should give current Player ', () => {
-      assert.equal(turn.currentPlayerColor,'red');
+      assert.equal(turn.currentPlayer,'red');
     });
   });
 

@@ -32,8 +32,9 @@ class Game {
     });
   }
   getCurrentPlayerName(){
+    let turn = this.turn;
     let currentPlayer = this.players.find((player)=>{
-      return player.color == this.turn.currentPlayer;
+      return player.name == turn.currentPlayer;
     });
     return currentPlayer.getName();
   }
@@ -96,6 +97,17 @@ class Game {
   }
   get currPlayerLastMove(){
     return this.turn.lastMove;
+  }
+  arrangePlayers(){
+    return this.players.reduce((sequence,player)=>{
+      let colorSequence = {red:0,green:1,blue:2,yellow:3};
+      sequence[colorSequence[player.color]] = player.name;
+      return sequence;
+    },[]);
+  }
+  start(){
+    let players = this.arrangePlayers();
+    this.turn =new Turn(players);
   }
 }
 module.exports = Game;
