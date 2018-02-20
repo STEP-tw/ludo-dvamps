@@ -46,7 +46,7 @@ const getDiceStatus = function(req, res) {
     return;
   }
   let lastMove = game.currPlayerLastMove;
-  res.json(move);
+  res.json(lastMove);
   res.end();
 };
 

@@ -22,7 +22,6 @@ class Game {
     this.colorDistributor = new ColorDistributor();
     this.coins = generateCoins();
     this.dice = dice;
-    this.turn = new Turn(['red','green','yellow','blue']);
   }
   getCoins(color){
     let coins = this.coins.splice(0,4);
