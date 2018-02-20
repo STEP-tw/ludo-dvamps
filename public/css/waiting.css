@@ -17,6 +17,10 @@
   float: right;
 }
 
+#Timer{
+  color: white;
+}
+
 .overlay {
     position: fixed;
     width: 100%;
@@ -28,22 +32,6 @@
     bottom: 0;
     z-index: 2;
     cursor: pointer;
-}
-
-.redBackground{
-  background-color: rgba(255,0,0,0.7);
-}
-
-.blueBackground{
-  background-color: rgba(0,0,255,0.7);
-}
-
-.greenBackground{
-  background-color: rgba(0,255,0,0.7);
-}
-
-.yellowBackground{
-  background-color: rgba(227, 255, 0, 0.7);
 }
 
 #text{
