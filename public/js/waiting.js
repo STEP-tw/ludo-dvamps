@@ -1,20 +1,20 @@
 let intervalID;
-const getElem= id => document.getElementById(`${id}`);
 const exitGame = function() {
   sendAjaxRequest('DELETE','/player');
   goToHome();
 };
+
 const updateSeconds = function() {
-  let secondBlock = getElem('sec');
+  let secondBlock = getElement('#sec');
   let seconds = +(secondBlock.innerText);
   seconds--;
   secondBlock.innerHTML = seconds;
 };
 
 const showColor = function(players){
-  let overlay = document.querySelector(".overlay");
-  let colorHolder = getElem('color');
-  let playerName = getElem('userName').innerText;
+  let overlay = getElement(".overlay");
+  let colorHolder = getElement('#color');
+  let playerName = getElement('#userName').innerText;
   let player = players.find((player)=>player.name == playerName);
   colorHolder.style.backgroundColor = player.color;
   overlay.classList.remove('hide');
@@ -34,36 +34,41 @@ const updatePlayers = function() {
     if(index>3) {
       return;
     }
-    if(getElem(`player${index+2}`)!=undefined){
-      getElem(`player${index+2}`).value ="";
+    if(getElement(`#player${index+2}`)!=undefined){
+      getElement(`#player${index+2}`).value ="";
     }
-    getElem(`player${index+1}`).value = player.name;
+    getElement(`#player${index+1}`).value = player.name;
   });
   if (players.length < 4) {
     return;
   }
-  let timer = getElem('Timer');
+  let timer = getElement('#Timer');
   showColor(players);
-  getElem('message').style.visibility = 'hidden';
+  getElement('#message').style.visibility = 'hidden';
   timer.style.visibility = 'visible';
   setInterval(updateSeconds, 1000);
   setTimeout(goToBoard, 3000);
   clearInterval(intervalID);
 };
+
 const updateGameName = function() {
   let gameName = this.responseText;
-  getElem('gameName').innerText = gameName;
+  getElement('#gameName').innerText = gameName;
 };
+
 const updateUserName = function() {
   let userName = this.responseText;
-  getElem('userName').innerText = userName;
+  getElement('#userName').innerText = userName;
 };
+
 const setGameName = function() {
   sendAjaxRequest('GET','/gameName',updateGameName);
 };
+
 const setUserName = function() {
   sendAjaxRequest('GET','/userName',updateUserName);
 };
+
 const getStatus = function() {
   sendAjaxRequest('GET','/getStatus',updatePlayers);
 };
@@ -74,4 +79,5 @@ const begin = function() {
   getStatus();
   intervalID = setInterval(getStatus, 1000);
 };
+
 window.onload = begin;

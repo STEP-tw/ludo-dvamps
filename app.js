@@ -51,7 +51,7 @@ app.get('/userName', getHandlers.serveUserName);
 app.get('/getStatus', getHandlers.serveGameStatus);
 
 app.post('/createGame', postHandlers.verifyCreateGameReq,
-postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
+  postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
 app.post('/joinGame',postHandlers.joinPlayerToGame);
 
 app.delete('/player', deleteHandler.removePlayer);

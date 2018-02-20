@@ -1,16 +1,3 @@
-const createRequest = function(method, url, action, data) {
-  let req = new XMLHttpRequest();
-  req.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      let response = JSON.parse(this.responseText);
-      action(response);
-    }
-  };
-  req.open(method, url);
-  req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  req.send(data || '');
-};
-
 const createElement = function(element, innerText, className) {
   let ele = document.createElement(element);
   ele.innerText = innerText || '';
@@ -22,10 +9,6 @@ const appendChilds = function(node, ...childs) {
   childs.forEach((child) => {
     node.appendChild(child);
   });
-};
-
-const getElement = function(selector) {
-  return document.querySelector(selector);
 };
 
 const createTrWithData = function(tag, ...args) {
@@ -57,7 +40,11 @@ const showErrorMessage = function(message) {
   messageBox.className = 'show';
 };
 
-const actionOnJoin = function(joiningStatus) {
+const actionOnJoin = function() {
+  if(!this.responseText){
+    return;
+  }
+  let joiningStatus = JSON.parse(this.responseText);
   if (joiningStatus.status) {
     window.location = '/waiting.html';
     return;
@@ -74,10 +61,14 @@ const joinGame = function(event) {
     return;
   }
   let query = `gameName=${gameName}&playerName=${playerName}`;
-  createRequest('POST', '/joinGame', actionOnJoin, query);
+  sendAjaxRequest('POST', '/joinGame', actionOnJoin, query);
 };
 
-const displayGamesToJoin = function(games) {
+const displayGamesToJoin = function() {
+  if(!this.responseText){
+    return;
+  }
+  let games = JSON.parse(this.responseText);
   let shownGames = document.querySelector('table');
   let updatedGames = createElement('table');
   let heading = createTrWithData('th', 'Game Name', 'Created By',
@@ -93,18 +84,7 @@ const displayGamesToJoin = function(games) {
 
 const getAvailableGames = function() {
   const url = '/getAvailableGames';
-  createRequest('GET', url, displayGamesToJoin);
-};
-
-const goToHome = function() {
-  window.location = "/index.html";
-};
-
-const setClickListener = function(selector, listener) {
-  let element = getElement(selector);
-  if (element) {
-    element.onclick = listener;
-  }
+  sendAjaxRequest('GET', url, displayGamesToJoin);
 };
 
 const updateAvailableGames = function() {
