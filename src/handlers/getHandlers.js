@@ -22,18 +22,27 @@ const getBoardStatus = function(req, res) {
   res.json(game.getBoardStatus());
 };
 
-
-const rollDice = function(req, res, next) {
-  let game = req.game;
-  let currentPlayerName = game.getCurrentPlayerName();
+const verifyCurrentPlayer = function(currentPlayerName){
   let requestedPlayer = req.cookies.playerName;
   if (currentPlayerName != requestedPlayer) {
     res.status(400);
     res.end();
     return;
   }
+};
+
+const rollDice = function(req, res, next) {
+  let game = req.game;
+  let currentPlayer = game.getCurrentPlayer();
+  let currentPlayerName = currentPlayer.getName();
+  verifyCurrentPlayer(currentPlayerName);
   let move = game.rollDice();
-  res.json(move);
+  let path = currentPlayer.getPath();
+  let coins = currentPlayer.getCoins();
+  let movableCoins = playerCoins.filter(function(coin) {
+    return path.isMovePossible(coin,move);
+  });
+  res.json({move:move,coins:movableCoins});
   next();
 };
 

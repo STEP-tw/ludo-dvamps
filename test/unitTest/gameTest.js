@@ -1,7 +1,8 @@
 const assert = require('chai').assert;
+const path = require('path');
 const Game = require('../../src/models/game.js');
+const Player = require(path.resolve('src/models/player.js'));
 const Coin = require('../../src/models/coin.js');
-
 
 const dice = {
   roll : function(){
@@ -114,13 +115,13 @@ describe('#Game', () => {
       assert.equal(move,4);
     });
   });
-  describe('#getCurrentPlayerName', () => {
+  describe('#getCurrentPlayer', () => {
     it('should return the current player name', () => {
-      game.addPlayer('salman');
+      game.addPlayer('ram');
       game.players[0].color = 'red';
       game.start();
-      let currentPlayerName = game.getCurrentPlayerName();
-      assert.equal(currentPlayerName,'salman');
+      assert.propertyVal(game.getCurrentPlayer(),'name','ram');
+      assert.propertyVal(game.getCurrentPlayer(),'color','red');
     });
   });
   describe('#arrangePlayers', () => {
@@ -141,7 +142,7 @@ describe('#Game', () => {
       game.addPlayer('shyam');
       game.start();
       assert.property(game,'turn');
-      assert.equal(game.getCurrentPlayerName(),'lala');
+      assert.propertyVal(game.getCurrentPlayer(),'name','lala');
     });
   });
 });

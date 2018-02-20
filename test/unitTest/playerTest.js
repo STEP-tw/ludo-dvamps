@@ -1,7 +1,8 @@
 const assert = require('chai').assert;
-const path = require('path');
-const Player = require(path.resolve('src/models/player.js'));
-const Coin = require(path.resolve('src/models/coin.js'));
+const _path = require('path');
+const Path = require(_path.resolve('src/models/path.js'));
+const Player = require(_path.resolve('src/models/player.js'));
+const Coin = require(_path.resolve('src/models/coin.js'));
 
 const dice = {
   roll : function(){
@@ -30,6 +31,22 @@ describe('#Player', () => {
         coins:[-2,-3]
       };
       assert.deepEqual(player.getStatus(),expectedStatus);
+    });
+  });
+  describe('#getCoins', () => {
+    it('should return the coins of the player', () => {
+      let coins = [new Coin(1,-2),new Coin(2,-3)];
+      let player = new Player('ashish','red',coins);
+      assert.deepEqual(player.getCoins(),coins);
+    });
+  });
+  describe('#getPath', () => {
+    it('should return ', () => {
+      let path = new Path();
+      path.addCell(1);
+      path.addCell(1);
+      let player = new Player('kaka','red',[],path);
+      assert.deepEqual(player.getPath(),path.getPath());
     });
   });
 });

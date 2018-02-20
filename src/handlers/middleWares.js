@@ -45,6 +45,7 @@ const verifyPlayer =function(req,res,next) {
   }
   next();
 };
+
 module.exports = {
   checkCookie,
   loadGame,

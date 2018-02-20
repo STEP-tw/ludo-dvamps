@@ -31,12 +31,12 @@ class Game {
       return coin;
     });
   }
-  getCurrentPlayerName(){
+  getCurrentPlayer(){
     let turn = this.turn;
     let currentPlayer = this.players.find((player)=>{
       return player.name == turn.currentPlayer;
     });
-    return currentPlayer.getName();
+    return currentPlayer;
   }
   getStatus() {
     return this.status;
