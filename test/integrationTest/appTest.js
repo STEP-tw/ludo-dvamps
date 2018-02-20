@@ -345,6 +345,10 @@ describe('#App', () => {
     it('should roll the dice for currentPlayer', (done) => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame','kaka');
+      gamesManager.addPlayerTo('newGame','ram');
+      gamesManager.addPlayerTo('newGame','shyam');
+      gamesManager.getGame('newGame').start();
       app.initialize(gamesManager);
       request(app)
         .get('/rollDice')
@@ -357,11 +361,14 @@ describe('#App', () => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','lalu');
+      gamesManager.addPlayerTo('newGame','ram');
+      gamesManager.addPlayerTo('newGame','shyam');
+      gamesManager.getGame('newGame').start();
       app.initialize(gamesManager);
       request(app)
         .get('/rollDice')
         .set('Cookie',['gameName=newGame','playerName=lalu'])
-        .expect(200)
+        .expect(400)
         .expect('')
         .end(done);
     });

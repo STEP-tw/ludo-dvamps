@@ -1,5 +1,3 @@
-const lib = require('../lib/utility.js');
-
 const serveAvailableGames = function(req, res) {
   let availableGames = req.app.gamesManager.getAvailableGames();
   res.send(availableGames);
@@ -41,21 +39,17 @@ const setPlayersName = function(board, boardStatus) {
 
 const rollDice = function(req,res,next){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  let currentPlayerName = game.getCurrentPlayerName();
   let requestedPlayer = req.cookies.playerName;
-  if(currentPlayerName != requestedPlayer){
+  if(game.getCurrentPlayerName() != requestedPlayer){
+    res.status(400);
     res.end();
     return;
   }
   let move = game.rollDice();
-  res.send(lib.toS(move));
+  res.json(move);
+  res.end();
 };
 
-const getDiceStatus = function(req,res){
-  let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  let lastMove = game.currPlayerLastMove;
-  res.send(lib.toS(lastMove));
-};
 
 module.exports = {
   serveAvailableGames,
@@ -65,5 +59,4 @@ module.exports = {
   getBoardStatus,
   getBoard,
   rollDice,
-  getDiceStatus
 };

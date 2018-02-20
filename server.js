@@ -1,5 +1,4 @@
 const http = require('http');
-const lib = require('./src/lib/utility.js');
 const app = require('./app.js');
 const Dice = require('./src/models/dice.js');
 const path = require('path');

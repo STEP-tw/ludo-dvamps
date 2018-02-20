@@ -13,9 +13,9 @@ describe('#Turn', () => {
     turn = new Turn(['red','green','yellow','blue']);
   })
 
-  describe('#currentPlayerColor', () => {
+  describe('#currentPlayer', () => {
     it('should give current Player ', () => {
-      assert.equal(turn.currentPlayerColor,'red');
+      assert.equal(turn.currentPlayer,'red');
     });
   });
 
@@ -263,6 +263,7 @@ describe('#Turn', () => {
     it('should roll the dice', () => {
       let move = turn.rollDice(dice);
       assert.equal(move,4);
+      assert.deepEqual(turn.currentPlayerMoves,[4]);
     });
   });
 });

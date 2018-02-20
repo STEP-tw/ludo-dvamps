@@ -1,13 +1,13 @@
 class Turn {
   constructor(players) {
     this.players = players;
-    this.currentPlayer = players[0];
+    this.presentPlayer = players[0];
     this.playerChances = 1;
     this.currentPlayerMoves = [];
   }
 
-  get currentPlayerColor(){
-    return this.currentPlayer;
+  get currentPlayer(){
+    return this.presentPlayer;
   }
 
   get currentPlayerChances(){
@@ -63,15 +63,10 @@ class Turn {
 
   updateTurn(){
     let currPlayerIndex = this.players.indexOf(this.currentPlayer);
-    this.currentPlayer = this.players[++currPlayerIndex % this.players.length];
+    this.presentPlayer = this.players[++currPlayerIndex % this.players.length];
     this.playerChances = 1;
     this.currentPlayerMoves = [];
     return this.currentPlayer;
-  }
-  rollDice(dice){
-    let move = dice.roll();
-    this.currentPlayerMoves.push(move);
-    return move;
   }
 }
 

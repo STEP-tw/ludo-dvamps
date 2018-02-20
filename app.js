@@ -50,7 +50,6 @@ app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.get('/getStatus', getHandlers.serveGameStatus);
 app.get('/rollDice',getHandlers.rollDice);
-app.get('/diceStatus',getHandlers.getDiceStatus);
 
 app.post('/createGame', postHandlers.verifyCreateGameReq,
   postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
