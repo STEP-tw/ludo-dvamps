@@ -68,11 +68,6 @@ class Turn {
     this.currentPlayerMoves = [];
     return this.currentPlayer;
   }
-  rollDice(dice){
-    let move = dice.roll();
-    this.currentPlayerMoves.push(move);
-    return move;
-  }
 }
 
 module.exports = Turn;

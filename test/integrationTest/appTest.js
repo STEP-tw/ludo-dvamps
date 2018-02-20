@@ -346,4 +346,17 @@ describe('#App', () => {
         .end(done);
     });
   });
+  describe('GET diceStatus', () => {
+    it('should give the dice status ', (done) => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame', 'lala');
+      gamesManager.addPlayerTo('newGame', 'lalu');
+      app.initialize(gamesManager);
+      request(app)
+      .get('/diceStatus')
+      .set('Cookie','gameName=newGame')
+      .expect(200)
+      .end(done);
+    });
+  });
 });
