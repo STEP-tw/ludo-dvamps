@@ -4,6 +4,7 @@ const serveAvailableGames = function(req, res) {
 };
 
 const serveGameName = (req, res) => res.send(req.cookies.gameName);
+
 const serveUserName = (req, res) => res.send(req.cookies.playerName);
 
 const serveGameStatus = (req, res) => {
@@ -17,9 +18,10 @@ const serveGameStatus = (req, res) => {
   res.json(game.getStatus());
 };
 
-const getBoardStatus = function(req, res) {
+const getGameStatus = function(req,res){
   let game = req.game;
-  res.json(game.getBoardStatus());
+  res.json(game.getGameStatus());
+  res.end();
 };
 
 
@@ -39,12 +41,6 @@ const rollDice = function(req, res, next) {
 
 const getDiceStatus = function(req, res) {
   let game = req.game;
-  let isvalidPlayer = game.doesPlayerExist(req.cookies.playerName);
-  if (!isvalidPlayer) {
-    res.statusCode = 400;
-    res.send('');
-    return;
-  }
   let lastMove = game.currPlayerLastMove;
   res.json(lastMove);
   res.end();
@@ -55,7 +51,7 @@ module.exports = {
   serveGameName,
   serveUserName,
   serveGameStatus,
-  getBoardStatus,
+  getGameStatus,
   getDiceStatus,
   rollDice
 };

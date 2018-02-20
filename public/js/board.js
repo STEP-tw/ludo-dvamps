@@ -34,6 +34,25 @@ const getDiceStatus = function() {
   sendAjaxRequest('GET',"/game/diceStatus",showMove);
 };
 
+const changeBgColor = function(color){
+  let board = document.querySelector('.mainContainer');
+  board.className = `mainContainer ${color}`;
+};
+
+const getCurrPlayerColor = function(gameStatus){
+  let currentPlayer = gameStatus.currentPlayerName;
+  let players = gameStatus.players;
+  return players.find(player=>player.name==currentPlayer).color;
+};
+
+const getGameStatus = function(){
+  sendAjaxRequest('GET','/game/gameStatus',function(){
+    let gameStatus = JSON.parse(this.responseText);
+    let currentPlayerColor = getCurrPlayerColor(gameStatus);
+    changeBgColor(currentPlayerColor);
+  });
+};
+
 const load = function() {
   showPlayers();
   setClickListeners();
@@ -41,6 +60,7 @@ const load = function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
+  setInterval(getGameStatus,2000);
   diceStatusRequest = setInterval(getDiceStatus,1000);
 };
 
