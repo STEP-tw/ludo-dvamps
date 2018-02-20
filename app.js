@@ -49,7 +49,6 @@ app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.get('/getStatus', getHandlers.serveGameStatus);
-app.get('/rollDice',getHandlers.rollDice);
 
 app.post('/createGame', postHandlers.verifyCreateGameReq,
   postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
@@ -61,6 +60,7 @@ ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.use(lib.verifyPlayer);
 ludo.use(express.static('public'));
+ludo.get('/rollDice',getHandlers.rollDice);
+ludo.get('/diceStatus',getHandlers.getDiceStatus);
 ludo.get('/boardStatus',getHandlers.getBoardStatus);
-
 module.exports = app;

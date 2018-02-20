@@ -10,7 +10,8 @@ const serveGameStatus = (req, res) => {
   let gameName = req.cookies.gameName;
   let game = req.app.gamesManager.getGame(gameName);
   if (game == undefined) {
-    res.end();
+    res.statusCode = 400;
+    res.send('');
     return;
   }
   res.json(game.getStatus());
@@ -22,19 +23,32 @@ const getBoardStatus = function(req, res) {
 };
 
 
-const rollDice = function(req,res,next){
-  let game = req.app.gamesManager.getGame(req.cookies.gameName);
+const rollDice = function(req, res, next) {
+  let game = req.game;
+  let currentPlayerName = game.getCurrentPlayerName();
   let requestedPlayer = req.cookies.playerName;
-  if(game.getCurrentPlayerName() != requestedPlayer){
+  if (currentPlayerName != requestedPlayer) {
     res.status(400);
     res.end();
     return;
   }
   let move = game.rollDice();
   res.json(move);
-  res.end();
+  next();
 };
 
+const getDiceStatus = function(req, res) {
+  let game = req.game;
+  let isvalidPlayer = game.doesPlayerExist(req.cookies.playerName);
+  if (!isvalidPlayer) {
+    res.statusCode = 400;
+    res.send('');
+    return;
+  }
+  let lastMove = game.currPlayerLastMove;
+  res.json(move);
+  res.end();
+};
 
 module.exports = {
   serveAvailableGames,
@@ -42,5 +56,6 @@ module.exports = {
   serveUserName,
   serveGameStatus,
   getBoardStatus,
-  rollDice,
+  getDiceStatus,
+  rollDice
 };

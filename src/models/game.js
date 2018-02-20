@@ -22,7 +22,7 @@ class Game {
     this.colorDistributor = new ColorDistributor();
     this.coins = generateCoins();
     this.dice = dice;
-    // this.turn = new Turn(['red','green','yellow','blue']);
+    this.turn = new Turn(['red','green','yellow','blue']);
   }
   getCoins(color){
     let coins = this.coins.splice(0,4);
@@ -94,6 +94,9 @@ class Game {
   }
   rollDice(){
     return this.turn.rollDice(this.dice);
+  }
+  get currPlayerLastMove(){
+    return this.turn.lastMove;
   }
   arrangePlayers(){
     return this.players.reduce((sequence,player)=>{
