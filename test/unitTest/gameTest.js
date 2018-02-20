@@ -4,7 +4,7 @@ const Game = require(path.resolve('src/models/game.js'));
 const Turn = require(path.resolve('src/models/turn.js'));
 
 const dice = {
-  roll : function(){
+  roll: function() {
     return 4;
   }
 };
@@ -13,14 +13,14 @@ describe('#Game', () => {
   let game;
   beforeEach(() => {
     let ColorDistributer = function() {
-      this.colors = ['red','green','blue','yellow'];
+      this.colors = ['red', 'green', 'blue', 'yellow'];
     }
     ColorDistributer.prototype = {
-      getColor:function() {
+      getColor: function() {
         return this.colors.shift();
       }
     }
-    game = new Game('newGame',ColorDistributer, dice);
+    game = new Game('newGame', ColorDistributer, dice);
   });
   describe('#getStatus()', () => {
     it('should return game status', () => {
@@ -43,8 +43,17 @@ describe('#Game', () => {
       game.addPlayer('manish');
       game.addPlayer('kaka');
       game.addPlayer('ram');
-      assert.property(game,'turn');
-      assert.instanceOf(game.turn,Turn);
+      assert.property(game, 'turn');
+      assert.instanceOf(game.turn, Turn);
+    });
+  });
+  describe('#getPlayer', () => {
+    it('should give the player with given player name', () => {
+      game.addPlayer('lala');
+      let player = game.getPlayer('lala');
+      assert.propertyVal(player,'name','lala');
+      assert.propertyVal(player,'color','red');
+      assert.property(player,'coins');
     });
   });
   describe('#removePlayer()', () => {
@@ -71,23 +80,23 @@ describe('#Game', () => {
   describe('#neededPlayers()', () => {
     it(`should give number of needed players to start the game`, () => {
       game.addPlayer('ram');
-      assert.equal(game.neededPlayers(),3);
+      assert.equal(game.neededPlayers(), 3);
 
       game.addPlayer('lala');
       game.addPlayer('shyam');
       game.addPlayer('kaka');
-      assert.equal(game.neededPlayers(),0);
+      assert.equal(game.neededPlayers(), 0);
     });
   });
   describe('#getDetails', () => {
     it(`should give name, creator and player's needed for game`, () => {
       game.addPlayer('ram');
       let expected = {
-        name:'newGame',
-        createdBy:'ram',
-        remain:3,
+        name: 'newGame',
+        createdBy: 'ram',
+        remain: 3,
       };
-      assert.deepEqual(expected,game.getDetails());
+      assert.deepEqual(expected, game.getDetails());
     });
   });
   describe('#doesPlayerExist', () => {
@@ -99,11 +108,11 @@ describe('#Game', () => {
       assert.isNotOk(game.doesPlayerExist('kaka'));
     });
   });
-  describe('#getNoOfPlayers',() => {
+  describe('#getNoOfPlayers', () => {
     it('should give total number of players in game', () => {
       game.addPlayer('ashish');
       game.addPlayer('joy');
-      assert.equal(game.getNoOfPlayers(),2);
+      assert.equal(game.getNoOfPlayers(), 2);
     })
   });
   describe('#rollDice', () => {
@@ -112,7 +121,7 @@ describe('#Game', () => {
       game.addPlayer('salman');
       let move = game.rollDice();
       assert.isNumber(move);
-      assert.equal(move,4);
+      assert.equal(move, 4);
     });
   });
   describe('#getCurrentPlayerName', () => {
@@ -121,7 +130,7 @@ describe('#Game', () => {
       game.players[0].color = 'red';
       game.start();
       let currentPlayerName = game.getCurrentPlayerName();
-      assert.equal(currentPlayerName,'salman');
+      assert.equal(currentPlayerName, 'salman');
     });
   });
   describe('#arrangePlayers', () => {
@@ -130,8 +139,8 @@ describe('#Game', () => {
       game.addPlayer('kaka');
       game.addPlayer('ram');
       game.addPlayer('shyam');
-      let expection = ['lala','kaka','ram','shyam'];
-      assert.deepEqual(expection,game.arrangePlayers());
+      let expection = ['lala', 'kaka', 'ram', 'shyam'];
+      assert.deepEqual(expection, game.arrangePlayers());
     });
   });
   describe('#start', () => {
@@ -141,8 +150,8 @@ describe('#Game', () => {
       game.addPlayer('ram');
       game.addPlayer('shyam');
       game.start();
-      assert.property(game,'turn');
-      assert.equal(game.getCurrentPlayerName(),'lala');
+      assert.property(game, 'turn');
+      assert.equal(game.getCurrentPlayerName(), 'lala');
     });
   });
   describe('#getGameStatus', () => {
@@ -153,8 +162,8 @@ describe('#Game', () => {
       game.addPlayer('shyam');
       game.start();
       let gameStatus = game.getGameStatus();
-      assert.equal(gameStatus.currentPlayerName,'lala');
-      assert.lengthOf(gameStatus.players,4);
+      assert.equal(gameStatus.currentPlayerName, 'lala');
+      assert.lengthOf(gameStatus.players, 4);
     });
   });
 });

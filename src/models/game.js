@@ -73,9 +73,7 @@ class Game {
     return false;
   }
   getPlayer(playerName) {
-    let player = this.players.find(player => player.name == playerName);
-    let playerIndex = this.players.indexOf(player);
-    return this.players[playerIndex];
+    return this.players.find(player => player.name == playerName);
   }
   removePlayer(playerName) {
     let player = this.players.find(player => player.name == playerName);
@@ -96,6 +94,9 @@ class Game {
   }
   rollDice(){
     return this.turn.rollDice(this.dice);
+  }
+  get currPlayerLastMove(){
+    return this.turn.lastMove;
   }
   arrangePlayers(){
     return this.players.reduce((sequence,player)=>{

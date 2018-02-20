@@ -1,22 +1,24 @@
 let intervalID;
-const getElem= id => document.getElementById(`${id}`);
 const exitGame = function() {
-  let xhr = new XMLHttpRequest();
-  xhr.open("DELETE", '/player');
-  xhr.send();
+  sendAjaxRequest('DELETE','/player');
   goToHome();
 };
-const goToBoard = function() {
-  location.href = 'game/board.html';
-};
-const goToHome = function() {
-  location.href = 'index.html';
-};
+
 const updateSeconds = function() {
-  let secondBlock = getElem('sec');
+  let secondBlock = getElement('#sec');
   let seconds = +(secondBlock.innerText);
   seconds--;
   secondBlock.innerHTML = seconds;
+};
+
+const showColor = function(players){
+  let overlay = getElement(".overlay");
+  let colorHolder = getElement('#color');
+  let playerName = getElement('#userName').innerText;
+  let player = players.find((player)=>player.name == playerName);
+  colorHolder.style.backgroundColor = player.color;
+  overlay.classList.remove('hide');
+  overlay.classList.add('show');
 };
 
 const updatePlayers = function() {
@@ -25,52 +27,50 @@ const updatePlayers = function() {
     return;
   }
   let players = JSON.parse(this.responseText).players;
-  if (players == undefined) return;
+  if (players == undefined) {
+    return;
+  }
   players.forEach((player, index) => {
     if(index>3) {
       return;
     }
-    if(getElem(`player${index+2}`)!=undefined){
-      getElem(`player${index+2}`).value ="";
+    if(getElement(`#player${index+2}`)!=undefined){
+      getElement(`#player${index+2}`).value ="";
     }
-    getElem(`player${index+1}`).value = player.name;
+    getElement(`#player${index+1}`).value = player.name;
   });
-  if (players.length == 4) {
-    let timer = getElem('Timer');
-    getElem('message').style.visibility = 'hidden';
-    timer.style.visibility = 'visible';
-    setInterval(updateSeconds, 1000);
-    setTimeout(goToBoard, 3000);
-    clearInterval(intervalID);
+  if (players.length < 4) {
+    return;
   }
+  let timer = getElement('#Timer');
+  showColor(players);
+  getElement('#message').style.visibility = 'hidden';
+  timer.style.visibility = 'visible';
+  setInterval(updateSeconds, 1000);
+  setTimeout(goToBoard, 3000);
+  clearInterval(intervalID);
 };
+
 const updateGameName = function() {
   let gameName = this.responseText;
-  getElem('gameName').innerText = gameName;
+  getElement('#gameName').innerText = gameName;
 };
+
 const updateUserName = function() {
   let userName = this.responseText;
-  getElem('userName').innerText = userName;
+  getElement('#userName').innerText = userName;
 };
+
 const setGameName = function() {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', updateGameName);
-  xhr.open("GET", '/gameName');
-  xhr.send();
+  sendAjaxRequest('GET','/gameName',updateGameName);
 };
+
 const setUserName = function() {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', updateUserName);
-  xhr.open("GET", '/userName');
-  xhr.send();
+  sendAjaxRequest('GET','/userName',updateUserName);
 };
+
 const getStatus = function() {
-  let gameName = getElem('gameName').innerText;
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", updatePlayers);
-  xhr.open("GET", '/getStatus');
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.send();
+  sendAjaxRequest('GET','/getStatus',updatePlayers);
 };
 
 const begin = function() {
@@ -79,4 +79,5 @@ const begin = function() {
   getStatus();
   intervalID = setInterval(getStatus, 1000);
 };
+
 window.onload = begin;

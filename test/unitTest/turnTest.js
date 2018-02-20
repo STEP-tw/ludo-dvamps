@@ -263,7 +263,7 @@ describe('#Turn', () => {
     it('should roll the dice', () => {
       let move = turn.rollDice(dice);
       assert.equal(move,4);
-      assert.deepEqual(turn.currentPlayerMoves,[4]);
+      assert.equal(turn.lastMove,4);
     });
   });
 });
