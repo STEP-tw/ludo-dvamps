@@ -3,7 +3,6 @@ const request = require('supertest');
 const path = require('path');
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
-const CustomFs = require(path.resolve('src/customFs.js'));
 
 let doesNotHaveCookies = (res)=>{
   const keys = Object.keys(res.headers);
@@ -12,12 +11,6 @@ let doesNotHaveCookies = (res)=>{
     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
   }
 };
-let board = [
-  "<div class='greenHome'><h1 class='playerName'>{{{GREEN}}}</h1>",
-  "<div class='yellowHome'><h1 class='playerName'>{{{YELLOW}}}</h1>",
-  "<div class='redHome'><h1 class='playerName'>{{{RED}}}</h1>",
-  "<div class='blueHome'><h1 class='playerName'>{{{BLUE}}}</h1>"
-].join();
 
 const dice = {
   roll : function(){
@@ -37,9 +30,7 @@ ColorDistributer.prototype = {
 describe('#App', () => {
   let gamesManager = new GamesManager(ColorDistributer,dice);
   beforeEach(function(){
-    let fs = new CustomFs();
-    fs.addFile('./public/board.html',board);
-    app.initialize(gamesManager,fs);
+    app.initialize(gamesManager);
   });
   describe('GET /', () => {
     it('should serve index page', done => {
@@ -236,7 +227,7 @@ describe('#App', () => {
         .end(done)
     });
   });
-  describe('GET /game/board', () => {
+  describe('GET /game/board.html', () => {
     beforeEach(function(){
       let gamesManager = new GamesManager(ColorDistributer);
       let game = gamesManager.addGame('ludo');
@@ -244,29 +235,18 @@ describe('#App', () => {
       game.addPlayer('arvind');
       game.addPlayer('debu');
       game.addPlayer('ravinder');
-      let fs = new CustomFs();
-      fs.addFile('./public/board.html',board);
-      app.initialize(gamesManager,fs);
+      app.initialize(gamesManager);
     })
-    it('should give the game board with player names ', (done) => {
-      request(app)
-        .get('/game/board')
-        .set('Cookie',['gameName=ludo','playerName=ashish'])
-        .expect(200)
-        .expect(/ashish/)
-        .expect(/ravinder/)
-        .end(done)
-    });
     it('should response with bad request if game does not exists', (done) => {
       request(app)
-        .get('/game/board')
+        .get('/game/board.html')
         .set('Cookie',['gameName=cludo','playerName=ashish'])
         .expect(400)
         .end(done)
     });
-    it('should response with bad request if player is registered', (done) => {
+    it('should response with bad request if player is not registered', (done) => {
       request(app)
-        .get('/game/board')
+        .get('/game/board.html')
         .set('Cookie',['gameName=ludo','playerName=unknown'])
         .expect(400)
         .end(done)
@@ -345,6 +325,10 @@ describe('#App', () => {
     it('should roll the dice for currentPlayer', (done) => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame','kaka');
+      gamesManager.addPlayerTo('newGame','ram');
+      gamesManager.addPlayerTo('newGame','shyam');
+      gamesManager.getGame('newGame').start();
       app.initialize(gamesManager);
       request(app)
         .get('/rollDice')
@@ -357,11 +341,14 @@ describe('#App', () => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','lalu');
+      gamesManager.addPlayerTo('newGame','ram');
+      gamesManager.addPlayerTo('newGame','shyam');
+      gamesManager.getGame('newGame').start();
       app.initialize(gamesManager);
       request(app)
         .get('/rollDice')
         .set('Cookie',['gameName=newGame','playerName=lalu'])
-        .expect(200)
+        .expect(400)
         .expect('')
         .end(done);
     });

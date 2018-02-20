@@ -1,5 +1,3 @@
-const lib = require('../lib/utility.js');
-
 const serveAvailableGames = function(req, res) {
   let availableGames = req.app.gamesManager.getAvailableGames();
   res.send(availableGames);
@@ -23,39 +21,20 @@ const getBoardStatus = function(req, res) {
   res.json(game.getBoardStatus());
 };
 
-const getBoard = function(req, res) {
-  let game = req.game;
-  let board = req.app.fs.readFileSync('./public/board.html','utf8');
-  let boardStatus = game.getBoardStatus();
-  res.setHeader('Content-Type','text/html');
-  res.send(setPlayersName(board,boardStatus));
-  res.end();
-};
-
-const setPlayersName = function(board, boardStatus) {
-  return board.replace('{{{GREEN}}}', boardStatus.green)
-    .replace('{{{RED}}}', boardStatus.red)
-    .replace('{{{BLUE}}}', boardStatus.blue)
-    .replace('{{{YELLOW}}}', boardStatus.yellow);
-};
 
 const rollDice = function(req,res,next){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  let currentPlayerName = game.getCurrentPlayerName();
   let requestedPlayer = req.cookies.playerName;
-  if(currentPlayerName != requestedPlayer){
+  if(game.getCurrentPlayerName() != requestedPlayer){
+    res.status(400);
     res.end();
     return;
   }
   let move = game.rollDice();
-  res.send(lib.toS(move));
+  res.json(move);
+  res.end();
 };
 
-const getDiceStatus = function(req,res){
-  let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  let lastMove = game.currPlayerLastMove;
-  res.send(lib.toS(lastMove));
-};
 
 module.exports = {
   serveAvailableGames,
@@ -63,7 +42,5 @@ module.exports = {
   serveUserName,
   serveGameStatus,
   getBoardStatus,
-  getBoard,
   rollDice,
-  getDiceStatus
 };
