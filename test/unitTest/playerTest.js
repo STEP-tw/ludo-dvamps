@@ -41,11 +41,12 @@ describe('#Player', () => {
     });
   });
   describe('#getPath', () => {
-    it('should return ', () => {
+    it('should return path of the player', () => {
       let path = new Path();
+      let coins = [];
       path.addCell(1);
       path.addCell(1);
-      let player = new Player('kaka','red',[],path);
+      let player = new Player('kaka','red',coins,path);
       assert.deepEqual(player.getPath(),path);
     });
   });

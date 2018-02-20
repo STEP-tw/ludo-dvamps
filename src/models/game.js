@@ -26,7 +26,9 @@ class Game {
     this.dice = dice;
   }
   getCoins(color){
-    let coins = this.coins.splice(0,4);
+    let colors = ['red','green','yellow','blue'];
+    let coinIndex = colors.indexOf(color);
+    let coins = this.coins.splice(coinIndex*4,4);
     return coins.map(function(coin){
       coin.setColor(color);
       return coin;

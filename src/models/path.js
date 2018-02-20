@@ -11,7 +11,10 @@ class Path {
   getNextMove(coin,move){
     let currentCell = coin.getPosition();
     let nextMovableCell = this.cells[this.cells.indexOf(currentCell)+move];
-    if (!nextMovableCell || currentCell<0) {
+    if (!nextMovableCell) {
+      return currentCell;
+    }
+    if(currentCell<0 && move!=6){
       return currentCell;
     }
     return nextMovableCell;

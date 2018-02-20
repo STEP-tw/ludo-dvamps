@@ -8,7 +8,7 @@ class ColorDistributer {
     if(color.length == 0){
       this.colors = ['red','green','blue','yellow'];
     }
-    return color;
+    return color.pop();
   }
   addColor(color){
     if(this.colors.includes(color)){

@@ -13,13 +13,19 @@ const showPlayers = function(){
   });
 };
 
+// const showMovableCoins = function(coins) {
+//
+// }
+
 const showMove = function(){
-  if(!this.responseText) {
+  let moveStatus = JSON.parse(this.responseText);
+  if(!moveStatus.move) {
     return;
   }
-  let move = +this.responseText;
-  let margin = (move - 1) * -50;
+  alert(JSON.stringify(moveStatus));
+  let margin = (+moveStatus.move - 1) * -50;
   getElement('#dice').style.marginTop = `${margin}px`;
+  showMovableCoins(moveStatus.coins);
 };
 
 const requestRollDice = function(){
@@ -28,10 +34,6 @@ const requestRollDice = function(){
 
 const setClickListeners = function() {
   setClickListener('div[class="diceHolder"]',requestRollDice);
-};
-
-const getDiceStatus = function() {
-  sendAjaxRequest('GET',"/game/diceStatus",showMove);
 };
 
 const changeBgColor = function(color){
@@ -61,7 +63,6 @@ const load = function() {
     main.innerHTML = this.responseText;
   });
   setInterval(getGameStatus,2000);
-  diceStatusRequest = setInterval(getDiceStatus,1000);
 };
 
 const moveCoin = (coinId,cellId) => {
