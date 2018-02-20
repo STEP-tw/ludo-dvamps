@@ -56,17 +56,8 @@ const updateGameName = function() {
   getElement('#gameName').innerText = gameName;
 };
 
-const updateUserName = function() {
-  let userName = this.responseText;
-  getElement('#userName').innerText = userName;
-};
-
 const setGameName = function() {
   sendAjaxRequest('GET','/gameName',updateGameName);
-};
-
-const setUserName = function() {
-  sendAjaxRequest('GET','/userName',updateUserName);
 };
 
 const getStatus = function() {

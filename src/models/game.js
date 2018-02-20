@@ -72,7 +72,7 @@ class Game {
       }
     }
     let specialCell = startingCell + 99;
-    for(let count=0;count<6;count++,specialCell++){
+    for(let count=0;count<5;count++,specialCell++){
       path.addCell(new Cell(specialCell));
     }
     return path;

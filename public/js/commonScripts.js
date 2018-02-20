@@ -58,3 +58,12 @@ const goToBoard = function() {
 const goToHome = function() {
   location.href = '/index.html';
 };
+
+const updateUserName = function() {
+  let userName = this.responseText;
+  getElement('#userName').innerText = userName;
+};
+
+const setUserName = function() {
+  sendAjaxRequest('GET','/userName',updateUserName);
+};

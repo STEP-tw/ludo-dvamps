@@ -4,6 +4,10 @@ main {
   margin-left: 1%;
 }
 
+ellipse.focus {
+  stroke: #c0d5c7;
+}
+
 .mainContainer {
   float: left;
   width: 127vh;

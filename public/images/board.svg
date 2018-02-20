@@ -85,38 +85,38 @@
   <rect fill="#aaffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="1" width="240" height="240" id="svg_129"></rect>
   <rect fill="#ffaaaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="361" width="240" height="240" id="svg_130"></rect>
   <rect fill="#aaffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="361" width="240" height="240" id="svg_131"></rect>
-  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="43.449997" width="63" height="63" id="GHome1"></rect>
-  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="137.449997" width="63" height="63" id="GHome4"></rect>
-  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="43" width="63" height="63" id="GHome2"></rect>
-  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="137" width="63" height="63" id="GHome3"></rect>
-  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="43.449997" width="63" height="63" id="YHome1"></rect>
-  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="137.449997" width="63" height="63" id="YHome4"></rect>
-  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="43" width="63" height="63" id="YHome2"></rect>
-  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="137" width="63" height="63" id="YHome3"></rect>
-  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="403.449997" width="63" height="63" id="BHome1"></rect>
-  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="497.449997" width="63" height="63" id="BHome4"></rect>
-  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="403" width="63" height="63" id="BHome2"></rect>
-  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="497" width="63" height="63" id="BHome3"></rect>
-  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="403.449997" width="63" height="63" id="RHome1"></rect>
-  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="497.449997" width="63" height="63" id="RHome4"></rect>
-  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="403" width="63" height="63" id="RHome2"></rect>
-  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="497" width="63" height="63" id="RHome3"></rect>
-  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" rx="10.5" ry="10.5" id="G1"></ellipse>
-  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" rx="10.5" ry="10.5" id="G2"></ellipse>
-  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" rx="10.5" ry="10.5" id="G3"></ellipse>
-  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" rx="10.5" ry="10.5" id="G4"></ellipse>
-  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" rx="10.5" ry="10.5" id="Y1"></ellipse>
-  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" rx="10.5" ry="10.5" id="Y2"></ellipse>
-  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" rx="10.5" ry="10.5" id="Y3"></ellipse>
-  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" rx="10.5" ry="10.5" id="Y4"></ellipse>
-  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" rx="10.5" ry="10.5" id="B1"></ellipse>
-  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" rx="10.5" ry="10.5" id="B2"></ellipse>
-  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" rx="10.5" ry="10.5" id="B3"></ellipse>
-  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" rx="10.5" ry="10.5" id="B4"></ellipse>
-  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" rx="10.5" ry="10.5" id="R1"></ellipse>
-  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" rx="10.5" ry="10.5" id="R2"></ellipse>
-  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" rx="10.5" ry="10.5" id="R3"></ellipse>
-  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" rx="10.5" ry="10.5" id="R4"></ellipse>
+  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="43.449997" width="63" height="63" id="home-5"></rect>
+  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="137.449997" width="63" height="63" id="home-8"></rect>
+  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="43" width="63" height="63" id="home-6"></rect>
+  <rect fill="#56ffaa" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="137" width="63" height="63" id="home-7"></rect>
+  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="43.449997" width="63" height="63" id="home-9"></rect>
+  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="137.449997" width="63" height="63" id="home-12"></rect>
+  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="43" width="63" height="63" id="home-10"></rect>
+  <rect fill="#ffff56" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="137" width="63" height="63" id="home-11"></rect>
+  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="403.449997" width="63" height="63" id="home-13"></rect>
+  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="497.449997" width="63" height="63" id="home-16"></rect>
+  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="403" width="63" height="63" id="home-14"></rect>
+  <rect fill="#56ffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="497" width="63" height="63" id="home-15"></rect>
+  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="403.449997" width="63" height="63" id="home-1"></rect>
+  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="497.449997" width="63" height="63" id="home-4"></rect>
+  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="403" width="63" height="63" id="home-2"></rect>
+  <rect fill="#ff5656" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="497" width="63" height="63" id="home-3"></rect>
+  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" rx="10.5" ry="10.5" id="green5"></ellipse>
+  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" rx="10.5" ry="10.5" id="green6"></ellipse>
+  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" rx="10.5" ry="10.5" id="green7"></ellipse>
+  <ellipse fill="#007f00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" rx="10.5" ry="10.5" id="green8"></ellipse>
+  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" rx="10.5" ry="10.5" id="yellow9"></ellipse>
+  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" rx="10.5" ry="10.5" id="yellow10"></ellipse>
+  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" rx="10.5" ry="10.5" id="yellow11"></ellipse>
+  <ellipse fill="#bfbf00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" rx="10.5" ry="10.5" id="yellow12"></ellipse>
+  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" rx="10.5" ry="10.5" id="blue13"></ellipse>
+  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" rx="10.5" ry="10.5" id="blue14"></ellipse>
+  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" rx="10.5" ry="10.5" id="blue15"></ellipse>
+  <ellipse fill="#00bfbf" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" rx="10.5" ry="10.5" id="blue16"></ellipse>
+  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" rx="10.5" ry="10.5" id="red1"></ellipse>
+  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" rx="10.5" ry="10.5" id="red2"></ellipse>
+  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" rx="10.5" ry="10.5" id="red3"></ellipse>
+  <ellipse fill="#bf0000" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" rx="10.5" ry="10.5" id="red4"></ellipse>
   <path id="svg_4" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#aaffff"></path>
   <path id="svg_5" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#aaffff"></path>
   <text transform="matrix(1.55331, 0, 0, 1.48633, -44.9029, -118.19)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_7" y="264.449997" x="56.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>

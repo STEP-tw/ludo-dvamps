@@ -13,16 +13,18 @@ const showPlayers = function(){
   });
 };
 
-// const showMovableCoins = function(coins) {
-//
-// }
+const showMovableCoins = function(coins) {
+  coins.forEach((coin) => {
+    let coinInBoard = document.querySelector(`#${coin.color}${coin.id}`);
+    coinInBoard.classList.add('focus');
+  });
+};
 
 const showMove = function(){
   let moveStatus = JSON.parse(this.responseText);
   if(!moveStatus.move) {
     return;
   }
-  alert(JSON.stringify(moveStatus));
   let margin = (+moveStatus.move - 1) * -50;
   getElement('#dice').style.marginTop = `${margin}px`;
   showMovableCoins(moveStatus.coins);
@@ -58,6 +60,7 @@ const getGameStatus = function(){
 const load = function() {
   showPlayers();
   setClickListeners();
+  setUserName();
   sendAjaxRequest('GET','/images/board.svg',function(){
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;

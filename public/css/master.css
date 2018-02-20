@@ -17,6 +17,11 @@ h1 {
   display: inline-block;
 }
 
+.exit{
+  margin-top: 3.5%;
+  float: right;
+}
+
 main{
   margin: 2% 0% 0% 4%;
   text-align: center;
