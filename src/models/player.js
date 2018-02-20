@@ -25,8 +25,11 @@ class Player {
       coins: coinsPositions
     };
   }
+  addPath(path){
+    this.path = path;
+  }
   getPath(){
-    return this.path.getPath();
+    return this.path;
   }
 }
 module.exports = Player;

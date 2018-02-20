@@ -4,6 +4,7 @@ const serveAvailableGames = function(req, res) {
 };
 
 const serveGameName = (req, res) => res.send(req.cookies.gameName);
+
 const serveUserName = (req, res) => res.send(req.cookies.playerName);
 
 const serveGameStatus = (req, res) => {
@@ -17,12 +18,13 @@ const serveGameStatus = (req, res) => {
   res.json(game.getStatus());
 };
 
-const getBoardStatus = function(req, res) {
+const getGameStatus = function(req,res){
   let game = req.game;
-  res.json(game.getBoardStatus());
+  res.json(game.getGameStatus());
+  res.end();
 };
 
-const verifyCurrentPlayer = function(currentPlayerName){
+const verifyCurrentPlayer = function(req,res,currentPlayerName){
   let requestedPlayer = req.cookies.playerName;
   if (currentPlayerName != requestedPlayer) {
     res.status(400);
@@ -35,11 +37,11 @@ const rollDice = function(req, res, next) {
   let game = req.game;
   let currentPlayer = game.getCurrentPlayer();
   let currentPlayerName = currentPlayer.getName();
-  verifyCurrentPlayer(currentPlayerName);
+  verifyCurrentPlayer(req,res,currentPlayerName);
   let move = game.rollDice();
   let path = currentPlayer.getPath();
   let coins = currentPlayer.getCoins();
-  let movableCoins = playerCoins.filter(function(coin) {
+  let movableCoins = coins.filter(function(coin) {
     return path.isMovePossible(coin,move);
   });
   res.json({move:move,coins:movableCoins});
@@ -48,14 +50,8 @@ const rollDice = function(req, res, next) {
 
 const getDiceStatus = function(req, res) {
   let game = req.game;
-  let isvalidPlayer = game.doesPlayerExist(req.cookies.playerName);
-  if (!isvalidPlayer) {
-    res.statusCode = 400;
-    res.send('');
-    return;
-  }
   let lastMove = game.currPlayerLastMove;
-  res.json(move);
+  res.json(lastMove);
   res.end();
 };
 
@@ -64,7 +60,7 @@ module.exports = {
   serveGameName,
   serveUserName,
   serveGameStatus,
-  getBoardStatus,
+  getGameStatus,
   getDiceStatus,
   rollDice
 };

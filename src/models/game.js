@@ -1,6 +1,8 @@
 const Player = require('./player.js');
 const Coin = require('./coin.js');
 const Turn = require('./turn.js');
+const Cell = require('./cell.js');
+const Path = require('./path.js');
 
 const generateCoins = function() {
   let index = 0;
@@ -22,7 +24,6 @@ class Game {
     this.colorDistributor = new ColorDistributor();
     this.coins = generateCoins();
     this.dice = dice;
-    this.turn = new Turn(['red','green','yellow','blue']);
   }
   getCoins(color){
     let coins = this.coins.splice(0,4);
@@ -57,34 +58,54 @@ class Game {
   doesPlayerExist(playerName) {
     return this.players.some((player) => player.name == playerName);
   }
+  givePathToPlayer(playerColor){
+    let color = ['red','green','yellow','blue'];
+    let path = new Path();
+    let startingCell = color.indexOf(playerColor)*13;
+    for(let count=0;count<51;count++){
+      path.addCell(new Cell(startingCell));
+      startingCell++;
+      if(startingCell>51) {
+        startingCell = 0;
+      }
+    }
+    let specialCell = startingCell + 99;
+    for(let count=0;count<6;count++,specialCell++){
+      path.addCell(new Cell(specialCell));
+    }
+    return path;
+  }
+  createPlayer(playerName){
+    let playerColor = this.colorDistributor.getColor();
+    let coins = this.getCoins(playerColor);
+    let path = this.givePathToPlayer(playerColor);
+    return new Player(playerName,playerColor,coins,path);
+  }
   addPlayer(playerName) {
     if (!this.doesPlayerExist(playerName) && !this.hasEnoughPlayers()) {
-      let playerColor = this.colorDistributor.getColor();
-      let coins = this.getCoins(playerColor);
-      let player = new Player(playerName, playerColor,coins);
-      this.players.push(player);
+      this.players.push(this.createPlayer(playerName));
       this.setStatus();
+      if (this.hasEnoughPlayers()) {
+        this.start();
+      }
       return true;
     }
     return false;
   }
   getPlayer(playerName) {
-    let player = this.players.find(player => player.name == playerName);
-    let playerIndex = this.players.indexOf(player);
-    return this.players[playerIndex];
+    return this.players.find(player => player.name == playerName);
   }
   removePlayer(playerName) {
     let player = this.players.find(player => player.name == playerName);
     let playerIndex = this.players.indexOf(player);
+    this.colorDistributor.addColor(player.getColor());
     this.players.splice(playerIndex, 1);
     this.setStatus();
   }
-  getBoardStatus() {
-    let players= this.players.reduce(function(boardStatus, player) {
-      boardStatus[player.getColor()] = player.getName();
-      return boardStatus;
-    }, {});
-    return players;
+  getGameStatus(){
+    let playerStatus = this.getStatus();
+    playerStatus.currentPlayerName = this.turn.currentPlayer;
+    return playerStatus;
   }
   getNoOfPlayers() {
     return this.players.length;
@@ -110,4 +131,5 @@ class Game {
     this.turn =new Turn(players);
   }
 }
+
 module.exports = Game;

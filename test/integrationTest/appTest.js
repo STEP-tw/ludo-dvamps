@@ -24,6 +24,12 @@ const ColorDistributer = function() {
 ColorDistributer.prototype = {
   getColor: function() {
     return this.colors.shift();
+  },
+  addColor:function(color){
+    if(this.colors.includes(color)){
+      return;
+    }
+    this.colors.push(color);
   }
 }
 
@@ -141,7 +147,7 @@ describe('#App', () => {
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
-        .set('Cookie', ['playerName=player;', 'gameName=ludo;'])
+        .set('Cookie', ['playerName=player1;', 'gameName=ludo;'])
         .expect(200)
         .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
@@ -167,34 +173,35 @@ describe('#App', () => {
         .end(done);
     });
   });
-  describe('get /game/boardStatus', () => {
+  describe('get /game/gameStatus', () => {
     beforeEach(function() {
       let game = gamesManager.addGame('newGame');
       game.addPlayer('ashish');
       game.addPlayer('joy');
+      game.addPlayer('pallabi');
+      game.addPlayer('lala');
       app.initialize(gamesManager);
     });
-    it('should give board status', (done) => {
+    it('should give game status', (done) => {
       request(app)
-        .get('/game/boardStatus')
-        .set('Cookie', ['gameName=newGame', 'playerName=ashish'])
+        .get('/game/gameStatus')
+        .set('Cookie',['gameName=newGame','playerName=ashish'])
         .expect(200)
-        .expect(JSON.stringify({
-          'red': 'ashish',
-          'green': 'joy'
-        }))
+        .expect(/ashish/)
+        .expect(/red/)
         .end(done);
     });
-    it('should redirect index  ', (done) => {
+    it('should redirect index', (done) => {
       request(app)
-        .get('/game/boardStatus')
-        .expect('Location', '/index.html')
+        .get('/game/gameStatus')
+        .expect('Location','/index.html')
         .end(done);
     });
     it('should redirect to landing page if game not exists', function(done) {
       request(app)
-        .get('/game/boardStatus')
-        .set('Cookie', ['gameName=badGame', 'playerName=badPlayer'])
+        .get('/game/gameStatus')
+        .set('Cookie',['gameName=badGame','playerName=badPlayer'])
+        .expect(302)
         .expect('Location','/index.html')
         .end(done);
     });
@@ -231,6 +238,34 @@ describe('#App', () => {
         .end(done)
     });
   });
+  describe('GET /game/board.html', () => {
+    beforeEach(function(){
+      let gamesManager = new GamesManager(ColorDistributer);
+      let game = gamesManager.addGame('ludo');
+      game.addPlayer('ashish');
+      game.addPlayer('arvind');
+      game.addPlayer('debu');
+      game.addPlayer('lala');
+      app.initialize(gamesManager);
+    })
+    it('should response with bad request if game does not exists', (done) => {
+      request(app)
+        .get('/game/board.html')
+        .set('Cookie',['gameName=cludo','playerName=ashish'])
+        .expect(302)
+        .expect('Location','/index.html')
+        .end(done)
+    });
+    it('should response with bad request if player is not registered', (done) => {
+      request(app)
+        .get('/game/board.html')
+        .set('Cookie',['gameName=ludo','playerName=unknown'])
+        .expect(302)
+        .expect('Location','/index.html')
+        .end(done)
+    });
+  });
+
   describe('#GET /index.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       gamesManager.addGame('newGame');
@@ -300,7 +335,7 @@ describe('#App', () => {
         .end(done);
     });
   });
-  describe.skip('#GET /game/rollDice', () => {
+  describe('#GET /game/rollDice', () => {
     it('should roll the dice for currentPlayer', (done) => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
@@ -313,23 +348,25 @@ describe('#App', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect("4")
+        .expect('{"move":4,"coins":[]}')
         .end(done);
     });
-    it('shouldn\'t roll the dice for currentPlayer', (done) => {
+    it('should response with bad request if player is not there', () => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame', 'lala');
-      gamesManager.addPlayerTo('newGame', 'lalu');
+      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame','kaka');
+      gamesManager.addPlayerTo('newGame','ram');
+      gamesManager.addPlayerTo('newGame','shyam');
+      gamesManager.getGame('newGame').start();
       app.initialize(gamesManager);
       request(app)
         .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=lalu'])
+        .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
         .expect(400)
-        .expect('')
-        .end(done);
+        .end();
     });
   });
-  describe.skip('#GET /game/diceStatus', () => {
+  describe('#GET /game/diceStatus', () => {
     it('should return Status of Dice', (done) => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame', 'lala');
@@ -339,7 +376,7 @@ describe('#App', () => {
       app.initialize(gamesManager);
       request(app)
         .get('/game/diceStatus')
-        .set('Cookie', ['gameName=newGame','playerName=lalu'])
+        .set('Cookie', ['gameName=newGame','playerName=lala'])
         .expect(200)
         .end(done);
     });
@@ -352,9 +389,9 @@ describe('#App', () => {
       app.initialize(gamesManager);
       request(app)
         .get('/game/diceStatus')
-        .set('Cookie', ['gameName=newGame','playerName=lilly'])
-        .expect(400)
-        .expect('')
+        .set('Cookie',['gameName=newGame','playerName=lilly'])
+        .expect(302)
+        .expect('Location','/index.html')
         .end(done);
     });
   });

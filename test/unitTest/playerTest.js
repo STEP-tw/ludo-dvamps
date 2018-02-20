@@ -46,7 +46,7 @@ describe('#Player', () => {
       path.addCell(1);
       path.addCell(1);
       let player = new Player('kaka','red',[],path);
-      assert.deepEqual(player.getPath(),path.getPath());
+      assert.deepEqual(player.getPath(),path);
     });
   });
 });
