@@ -5,10 +5,10 @@ const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const CustomFs = require(path.resolve('src/customFs.js'));
 
-let doesNotHaveCookies = (res)=>{
+let doesNotHaveCookies = (res) => {
   const keys = Object.keys(res.headers);
-  let key = keys.find(currentKey=>currentKey.match(/set-cookie/i));
-  if(key){
+  let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
+  if (key) {
     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
   }
 };
@@ -20,26 +20,26 @@ let board = [
 ].join();
 
 const dice = {
-  roll : function(){
+  roll: function() {
     return 4;
   }
 };
 
 const ColorDistributer = function() {
-  this.colors = ['red','green','blue','yellow'];
+  this.colors = ['red', 'green', 'blue', 'yellow'];
 }
 ColorDistributer.prototype = {
-  getColor:function() {
+  getColor: function() {
     return this.colors.shift();
   }
 }
 
 describe('#App', () => {
-  let gamesManager = new GamesManager(ColorDistributer,dice);
-  beforeEach(function(){
+  let gamesManager = new GamesManager(ColorDistributer, dice);
+  beforeEach(function() {
     let fs = new CustomFs();
-    fs.addFile('./public/board.html',board);
-    app.initialize(gamesManager,fs);
+    fs.addFile('./public/board.html', board);
+    app.initialize(gamesManager, fs);
   });
   describe('GET /', () => {
     it('should serve index page', done => {
@@ -66,8 +66,10 @@ describe('#App', () => {
         .post('/createGame')
         .send('gameName=newGame&playerName=dhana')
         .expect(200)
-        .expect('set-cookie','gameName=newGame,playerName=dhana')
-        .expect(JSON.stringify({gameCreated:true}))
+        .expect('set-cookie', 'gameName=newGame,playerName=dhana')
+        .expect(JSON.stringify({
+          gameCreated: true
+        }))
         .end(done);
     });
     it('should not create game', (done) => {
@@ -77,15 +79,14 @@ describe('#App', () => {
         .post('/createGame')
         .send('gameName=newGame&playerName=dhana')
         .expect(200)
-        .expect(JSON.stringify(
-          {
-            gameCreated:false,
-            message:'game name already taken'
-          }))
+        .expect(JSON.stringify({
+          gameCreated: false,
+          message: 'game name already taken'
+        }))
         .expect(doesNotHaveCookies)
         .end(done);
     });
-    it('should simply end the response if request body is not correctly formatted',function(done){
+    it('should simply end the response if request body is not correctly formatted', function(done) {
       request(app)
         .post('/createGame')
         .send('gamme=newGame&plaame=dhana')
@@ -93,14 +94,14 @@ describe('#App', () => {
         .expect(doesNotHaveCookies)
         .end(done);
     });
-    it('should redirect to waiting if user has already a game',function(done){
+    it('should redirect to waiting if user has already a game', function(done) {
       let gamesManager = new GamesManager(ColorDistributer);
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .post('/createGame')
-        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .send('gameName=bad&playerName=dhana')
         .expect(200)
         .expect(/gameCreated/)
@@ -112,7 +113,7 @@ describe('#App', () => {
     it('should send gameName', (done) => {
       request(app)
         .get('/gameName')
-        .set('Cookie','gameName=ludo')
+        .set('Cookie', 'gameName=ludo')
         .expect(200)
         .end(done);
     });
@@ -121,7 +122,7 @@ describe('#App', () => {
     it('should send userName', (done) => {
       request(app)
         .get('/userName')
-        .set('Cookie','playerName=player')
+        .set('Cookie', 'playerName=player')
         .expect("player")
         .expect(200)
         .end(done);
@@ -130,28 +131,28 @@ describe('#App', () => {
   describe('DELETE /player', () => {
     it('should delete Player and game if all the players left', (done) => {
       gamesManager.addGame('ludo');
-      let game= gamesManager.getGame('ludo');
+      let game = gamesManager.getGame('ludo');
       game.addPlayer('player');
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
-        .set('Cookie',['playerName=player;','gameName=ludo;'])
+        .set('Cookie', ['playerName=player;', 'gameName=ludo;'])
         .expect(200)
-        .expect('set-cookie',`playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()}`)
+        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
     });
     it('should delete Player if a player lefts', (done) => {
       gamesManager.addGame('ludo');
-      let game= gamesManager.getGame('ludo');
+      let game = gamesManager.getGame('ludo');
       game.addPlayer('player1');
       game.addPlayer('player2');
       game.addPlayer('player3');
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
-        .set('Cookie',['playerName=player;','gameName=ludo;'])
+        .set('Cookie', ['playerName=player;', 'gameName=ludo;'])
         .expect(200)
-        .expect('set-cookie',`playerName=; Expires=${new Date(1).toUTCString()}`)
+        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
     });
   });
@@ -161,7 +162,7 @@ describe('#App', () => {
       app.initialize(gamesManager);
       request(app)
         .get('/getStatus')
-        .set('Cookie','gameName=ludo')
+        .set('Cookie', 'gameName=ludo')
         .expect(200)
         .end(done);
     });
@@ -171,12 +172,12 @@ describe('#App', () => {
       request(app)
         .get('/getStatus')
         .expect("")
-        .expect(200)
+        .expect(400)
         .end(done);
     });
   });
   describe('get /game/boardStatus', () => {
-    beforeEach(function(){
+    beforeEach(function() {
       let game = gamesManager.addGame('newGame');
       game.addPlayer('ashish');
       game.addPlayer('joy');
@@ -185,29 +186,32 @@ describe('#App', () => {
     it('should give board status', (done) => {
       request(app)
         .get('/game/boardStatus')
-        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .set('Cookie', ['gameName=newGame', 'playerName=ashish'])
         .expect(200)
-        .expect(JSON.stringify({'red':'ashish','green':'joy'}))
+        .expect(JSON.stringify({
+          'red': 'ashish',
+          'green': 'joy'
+        }))
         .end(done);
     });
     it('should redirect index  ', (done) => {
       request(app)
         .get('/game/boardStatus')
-        .expect('Location','/index')
+        .expect('Location', '/index.html')
         .end(done);
     });
-    it('should response with bad request if game not exists',function(done){
+    it('should redirect to landing page if game not exists', function(done) {
       request(app)
         .get('/game/boardStatus')
-        .set('Cookie',['gameName=badGame','playerName=badPlayer'])
-        .expect(400)
+        .set('Cookie', ['gameName=badGame', 'playerName=badPlayer'])
+        .expect('Location','/index.html')
         .end(done);
     });
   });
   describe('POST /joinGame', () => {
-    beforeEach(function(){
+    beforeEach(function() {
       app.gamesManager.addGame('newGame');
-      app.gamesManager.addPlayerTo('newGame','lala');
+      app.gamesManager.addPlayerTo('newGame', 'lala');
 
     })
     it('should return joiningStatus as true', done => {
@@ -237,7 +241,7 @@ describe('#App', () => {
     });
   });
   describe('GET /game/board', () => {
-    beforeEach(function(){
+    beforeEach(function() {
       let gamesManager = new GamesManager(ColorDistributer);
       let game = gamesManager.addGame('ludo');
       game.addPlayer('ashish');
@@ -245,52 +249,52 @@ describe('#App', () => {
       game.addPlayer('debu');
       game.addPlayer('ravinder');
       let fs = new CustomFs();
-      fs.addFile('./public/board.html',board);
-      app.initialize(gamesManager,fs);
+      fs.addFile('./public/board.html', board);
+      app.initialize(gamesManager, fs);
     })
     it('should give the game board with player names ', (done) => {
       request(app)
         .get('/game/board')
-        .set('Cookie',['gameName=ludo','playerName=ashish'])
+        .set('Cookie', ['gameName=ludo', 'playerName=ashish'])
         .expect(200)
         .expect(/ashish/)
         .expect(/ravinder/)
         .end(done)
     });
-    it('should response with bad request if game does not exists', (done) => {
+    it('should redirect to landing page if game does not exists', (done) => {
       request(app)
         .get('/game/board')
-        .set('Cookie',['gameName=cludo','playerName=ashish'])
-        .expect(400)
+        .set('Cookie', ['gameName=cludo', 'playerName=ashish'])
+        .expect('Location','/index.html')
         .end(done)
     });
-    it('should response with bad request if player is registered', (done) => {
+    it('should redirect to landing page if player is registered', (done) => {
       request(app)
         .get('/game/board')
-        .set('Cookie',['gameName=ludo','playerName=unknown'])
-        .expect(400)
+        .set('Cookie', ['gameName=ludo', 'playerName=unknown'])
+        .expect('Location','/index.html')
         .end(done)
     });
   });
   describe('#GET /index.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .get('/index.html')
-        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(302)
-        .expect('Location','/waiting.html')
+        .expect('Location', '/waiting.html')
         .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .get('/index.html')
-        .set('Cookie',['gameName=badGame','playerName=badUser'])
+        .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
         .expect(200)
         .end(done);
     });
@@ -298,22 +302,22 @@ describe('#App', () => {
   describe('#GET /joining.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .get('/joining.html')
-        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(302)
-        .expect('Location','/waiting.html')
+        .expect('Location', '/waiting.html')
         .end(done);
     });
     it('should serve joining page if invalid cookies are present', done => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .get('/joining.html')
-        .set('Cookie',['gameName=badGame','playerName=badUser'])
+        .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
         .expect(200)
         .end(done);
     });
@@ -321,47 +325,76 @@ describe('#App', () => {
   describe('#GET /', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .get('/')
-        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(302)
-        .expect('Location','/waiting.html')
+        .expect('Location', '/waiting.html')
         .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .get('/')
-        .set('Cookie',['gameName=badGame','playerName=badUser'])
+        .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
         .expect(200)
         .end(done);
     });
   });
-  describe('#GET /rollDice', () => {
+  describe('#GET /game/rollDice', () => {
     it('should roll the dice for currentPlayer', (done) => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
-        .get('/rollDice')
-        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .get('/game/rollDice')
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
         .expect("4")
         .end(done);
     });
     it('shouldn\'t roll the dice for currentPlayer', (done) => {
       gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','lalu');
+      gamesManager.addPlayerTo('newGame', 'lala');
+      gamesManager.addPlayerTo('newGame', 'lalu');
       app.initialize(gamesManager);
       request(app)
-        .get('/rollDice')
-        .set('Cookie',['gameName=newGame','playerName=lalu'])
+        .get('/game/rollDice')
+        .set('Cookie', ['gameName=newGame', 'playerName=lalu'])
+        .expect(400)
+        .expect('')
+        .end(done);
+    });
+  });
+  describe('#GET /game/diceStatus', () => {
+    it('should return Status of Dice', (done) => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame', 'lala');
+      gamesManager.addPlayerTo('newGame', 'lalu');
+      gamesManager.addPlayerTo('newGame', 'lalo');
+      gamesManager.addPlayerTo('newGame', 'lali');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/game/diceStatus')
+        .set('Cookie', ['gameName=newGame','playerName=lalu'])
         .expect(200)
+        .end(done);
+    });
+    it('should return nothing if player is not from this game', (done) => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame', 'lala');
+      gamesManager.addPlayerTo('newGame', 'lalu');
+      gamesManager.addPlayerTo('newGame', 'lalo');
+      gamesManager.addPlayerTo('newGame', 'lali');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/game/diceStatus')
+        .set('Cookie', ['gameName=newGame','playerName=lilly'])
+        .expect(400)
         .expect('')
         .end(done);
     });

@@ -1,16 +1,8 @@
 let intervalID;
 const getElem= id => document.getElementById(`${id}`);
 const exitGame = function() {
-  let xhr = new XMLHttpRequest();
-  xhr.open("DELETE", '/player');
-  xhr.send();
+  sendAjaxRequest('DELETE','/player');
   goToHome();
-};
-const goToBoard = function() {
-  location.href = 'game/board/';
-};
-const goToHome = function() {
-  location.href = 'index.html';
 };
 const updateSeconds = function() {
   let secondBlock = getElem('sec');
@@ -55,24 +47,13 @@ const updateUserName = function() {
   getElem('userName').innerText = userName;
 };
 const setGameName = function() {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', updateGameName);
-  xhr.open("GET", '/gameName');
-  xhr.send();
+  sendAjaxRequest('GET','/gameName',updateGameName);
 };
 const setUserName = function() {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', updateUserName);
-  xhr.open("GET", '/userName');
-  xhr.send();
+  sendAjaxRequest('GET','/userName',updateUserName);
 };
 const getStatus = function() {
-  let gameName = getElem('gameName').innerText;
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", updatePlayers);
-  xhr.open("GET", '/getStatus');
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.send();
+  sendAjaxRequest('GET','/getStatus',updatePlayers);
 };
 
 const begin = function() {

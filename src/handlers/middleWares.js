@@ -2,7 +2,7 @@ const checkCookie = function(req,res,next) {
   let gameName = req.cookies.gameName;
   let playerName = req.cookies.playerName;
   if(!gameName || !playerName){
-    res.redirect('/index');
+    res.redirect('/index.html');
     return;
   }
   next();
@@ -23,8 +23,10 @@ const restrictValidPlayer = function(req,res,next){
 };
 
 const resWithBadReq = function(res,message) {
-  res.statusCode = 400;
-  res.send(message||'');
+  // res.statusCode = 400;
+  res.redirect('/index.html');
+  // res.send(message||'');
+
 };
 
 const loadGame = function(req,res,next) {
@@ -45,7 +47,6 @@ const verifyGameAndPlayer =function(req,res,next) {
   }
   next();
 };
-
 module.exports = {
   checkCookie,
   loadGame,

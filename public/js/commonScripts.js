@@ -52,3 +52,9 @@ const setInnerText = function(selector,text) {
     element.innerText = text;
   }
 };
+const goToBoard = function() {
+  location.href = 'game/board/';
+};
+const goToHome = function() {
+  location.href = '/index.html';
+};

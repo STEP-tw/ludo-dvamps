@@ -94,5 +94,8 @@ class Game {
   rollDice(){
     return this.turn.rollDice(this.dice);
   }
+  get currPlayerLastMove(){
+    return this.turn.lastMove;
+  }
 }
 module.exports = Game;

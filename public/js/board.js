@@ -1,3 +1,4 @@
+let diceStatusRequest;
 const showPlayers = function(){
   sendAjaxRequest('GET','/getStatus',function(){
     let colors = ['red','green','yellow','blue'];
@@ -13,16 +14,14 @@ const showPlayers = function(){
 };
 
 const showMove = function(){
-  if(!this.responseText){
-    return;
-  }
+  if(!this.responseText) return;
   let move = +this.responseText;
   let margin = (move - 1) * -50;
   getElement('#dice').style.marginTop = `${margin}px`;
 };
 
 const requestRollDice = function(){
-  sendAjaxRequest('GET',"/rollDice",showMove);
+  sendAjaxRequest('GET',"/game/rollDice",showMove);
 };
 
 const setClickListeners = function() {
@@ -30,10 +29,8 @@ const setClickListeners = function() {
 };
 
 const getDiceStatus = function() {
-  sendAjaxRequest('GET',"/diceStatus",showMove);
+  sendAjaxRequest('GET',"/game/diceStatus",showMove);
 };
-
-let diceStatusRequest = setInterval(getDiceStatus,1000);
 
 const load = function() {
   showPlayers();
@@ -42,6 +39,7 @@ const load = function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
+  diceStatusRequest = setInterval(getDiceStatus,1000);
 };
 
 const moveCoin = (coinId,cellId) => {
