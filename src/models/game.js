@@ -78,6 +78,7 @@ class Game {
   removePlayer(playerName) {
     let player = this.players.find(player => player.name == playerName);
     let playerIndex = this.players.indexOf(player);
+    this.colorDistributor.addColor(player.getColor());
     this.players.splice(playerIndex, 1);
     this.setStatus();
   }
