@@ -25,9 +25,7 @@ const updatePlayers = function() {
     return;
   }
   let players = JSON.parse(this.responseText).players;
-  if (players == undefined) {
-    return;
-  }
+  if (players == undefined) return;
   players.forEach((player, index) => {
     if(index>3) {
       return;

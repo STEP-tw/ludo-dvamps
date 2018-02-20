@@ -168,28 +168,31 @@ describe('#App', () => {
   });
   describe('get /game/boardStatus', () => {
     beforeEach(function(){
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('ashish');
-      game.addPlayer('joy');
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame','ashish');
+      gamesManager.addPlayerTo('newGame','joy');
+      gamesManager.addPlayerTo('newGame','kaka');
+      gamesManager.addPlayerTo('newGame','lala');
       app.initialize(gamesManager);
     });
-    it('should give board status', (done) => {
+    it('should give game status', (done) => {
       request(app)
-        .get('/game/boardStatus')
+        .get('/game/gameStatus')
         .set('Cookie',['gameName=newGame','playerName=ashish'])
         .expect(200)
-        .expect(JSON.stringify({'red':'ashish','green':'joy'}))
+        .expect(/ashish/)
+        .expect(/red/)
         .end(done);
     });
-    it('should redirect index  ', (done) => {
+    it('should redirect index ', (done) => {
       request(app)
-        .get('/game/boardStatus')
+        .get('/game/gameStatus')
         .expect('Location','/index')
         .end(done);
     });
     it('should response with bad request if game not exists',function(done){
       request(app)
-        .get('/game/boardStatus')
+        .get('/game/gameStatus')
         .set('Cookie',['gameName=badGame','playerName=badPlayer'])
         .expect(400)
         .end(done);
@@ -234,7 +237,6 @@ describe('#App', () => {
       game.addPlayer('ashish');
       game.addPlayer('arvind');
       game.addPlayer('debu');
-      game.addPlayer('ravinder');
       app.initialize(gamesManager);
     })
     it('should response with bad request if game does not exists', (done) => {
@@ -349,7 +351,6 @@ describe('#App', () => {
         .get('/rollDice')
         .set('Cookie',['gameName=newGame','playerName=lalu'])
         .expect(400)
-        .expect('')
         .end(done);
     });
   });

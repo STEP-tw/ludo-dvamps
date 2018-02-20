@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
-const Game = require('../../src/models/game.js');
-const Coin = require('../../src/models/coin.js');
-
+const path = require('path');
+const Game = require(path.resolve('src/models/game.js'));
+const Turn = require(path.resolve('src/models/turn.js'));
 
 const dice = {
   roll : function(){
@@ -9,8 +9,8 @@ const dice = {
   }
 };
 
-let game;
 describe('#Game', () => {
+  let game;
   beforeEach(() => {
     let ColorDistributer = function() {
       this.colors = ['red','green','blue','yellow'];
@@ -37,6 +37,14 @@ describe('#Game', () => {
     it('should not addPlayer to game if player is in the game', () => {
       game.addPlayer('manish');
       assert.isNotOk(game.addPlayer('manish'));
+    });
+    it('should initiate turn if four players are added ', () => {
+      game.addPlayer('lala');
+      game.addPlayer('manish');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      assert.property(game,'turn');
+      assert.instanceOf(game.turn,Turn);
     });
   });
   describe('#removePlayer()', () => {
@@ -91,13 +99,6 @@ describe('#Game', () => {
       assert.isNotOk(game.doesPlayerExist('kaka'));
     });
   });
-  describe('#getBoardStatus',() => {
-    it('should give the color-coin pair', () => {
-      game.addPlayer('ashish');
-      game.addPlayer('joy');
-      assert.deepEqual(game.getBoardStatus(),{'red':'ashish','green':'joy'});
-    })
-  });
   describe('#getNoOfPlayers',() => {
     it('should give total number of players in game', () => {
       game.addPlayer('ashish');
@@ -142,6 +143,18 @@ describe('#Game', () => {
       game.start();
       assert.property(game,'turn');
       assert.equal(game.getCurrentPlayerName(),'lala');
+    });
+  });
+  describe('#getGameStatus', () => {
+    it('should give game status', () => {
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.start();
+      let gameStatus = game.getGameStatus();
+      assert.equal(gameStatus.currentPlayerName,'lala');
+      assert.lengthOf(gameStatus.players,4);
     });
   });
 });

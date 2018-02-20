@@ -37,7 +37,6 @@ const loadGame = function(req,res,next) {
   next();
 };
 
-
 const verifyPlayer =function(req,res,next) {
   let game = req.game;
   let playerName = req.cookies.playerName;
@@ -51,5 +50,5 @@ module.exports = {
   checkCookie,
   loadGame,
   restrictValidPlayer,
-  verifyPlayer
+  verifyPlayer,
 };
