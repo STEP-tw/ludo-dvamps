@@ -82,6 +82,7 @@ input[type="text"] {
 input[type="text"]:hover {
   border-bottom: 2px solid #090a09;
 }
+
 .message{
   font-family: 'Open Sans', sans-serif;
   font-size: 100%;

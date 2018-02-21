@@ -23,13 +23,28 @@ const showMovableCoins = function(coins) {
   });
 };
 
+const showPopup = function(message){
+  let popup = document.querySelector('.popup');
+  popup.style.display = 'block';
+  let messageHolder = document.querySelector('.popup-content p');
+  messageHolder.innerText = message;
+  setTimeout(()=>{
+    popup.style.display = 'none';
+  },1000);
+};
+
+const showDice = function(move){
+  let margin = (move - 1) * -50;
+  getElement('#dice').style.marginTop = `${margin}px`;
+};
+
 const showMove = function(){
   let moveStatus = JSON.parse(this.responseText);
   if(!moveStatus.move) {
+    showPopup(moveStatus.message);
     return;
   }
-  let margin = (+moveStatus.move - 1) * -50;
-  getElement('#dice').style.marginTop = `${margin}px`;
+  showDice(+moveStatus.move);
   showMovableCoins(moveStatus.coins);
 };
 
@@ -58,6 +73,7 @@ const getGameStatus = function(){
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
+    showDice(gameStatus.move);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     changeBgColor(currentPlayerColor);
   });
@@ -71,7 +87,7 @@ const load = function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
-  setInterval(getGameStatus,2000);
+  setInterval(getGameStatus,1000);
 };
 
 const moveCoin = (coinId,cellId) => {

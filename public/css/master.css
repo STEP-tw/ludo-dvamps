@@ -13,6 +13,10 @@ h1 {
   text-transform: uppercase;
 }
 
+.errorMessage {
+  color: red;
+}
+
 .inline{
   display: inline-block;
 }
