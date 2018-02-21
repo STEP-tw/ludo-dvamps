@@ -278,6 +278,15 @@ describe('#App', () => {
         .expect(doesNotHaveCookies)
         .end(done)
     });
+    it('should return status false along with message "game dosen\'t exist"', (done) => {
+      request(app)
+      .post('/joinGame')
+      .send('gameName=helloWorld&playerName=lala')
+      .expect(400)
+      .expect(`{"status":false,"message":"game dosen\'t exist"}`)
+      .expect(doesNotHaveCookies)
+      .end(done);
+    });
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
