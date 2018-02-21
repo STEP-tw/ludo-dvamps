@@ -68,21 +68,6 @@ const updatePlayers = function() {
   removeIntervals();
 };
 
-const updatePlayers = function() {
-  if (this.responseText == "") {
-    goToHome();
-    return;
-  }
-  let players = JSON.parse(this.responseText).players;
-  if (players == undefined) {
-    return;
-  }
-  showPlayerName(players);
-  if (players.length == 4) {
-    takePlayerToBoard(players);
-  }
-};
-
 const updateGameName = function() {
   let gameName = this.responseText;
   getElement('#gameName').innerText = gameName;
