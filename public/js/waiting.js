@@ -21,15 +21,7 @@ const showColor = function(players){
   overlay.classList.add('show');
 };
 
-const updatePlayers = function() {
-  if (this.responseText == "") {
-    goToHome();
-    return;
-  }
-  let players = JSON.parse(this.responseText).players;
-  if (players == undefined) {
-    return;
-  }
+const showPlayerName = function(players){
   players.forEach((player, index) => {
     if(index>3) {
       return;
@@ -39,16 +31,30 @@ const updatePlayers = function() {
     }
     getElement(`#player${index+1}`).value = player.name;
   });
-  if (players.length < 4) {
-    return;
-  }
+};
+
+const takePlayerToBoard = function(players){
   let timer = getElement('#Timer');
-  showColor(players);
-  getElement('#message').style.visibility = 'hidden';
-  timer.style.visibility = 'visible';
   setInterval(updateSeconds, 1000);
+  showColor(players);
+  hideElement('#message');
   setTimeout(goToBoard, 3000);
   clearInterval(intervalID);
+};
+
+const updatePlayers = function() {
+  if (this.responseText == "") {
+    goToHome();
+    return;
+  }
+  let players = JSON.parse(this.responseText).players;
+  if (players == undefined) {
+    return;
+  }
+  showPlayerName(players);
+  if (players.length == 4) {
+    takePlayerToBoard(players);
+  }
 };
 
 const updateGameName = function() {
