@@ -19,13 +19,16 @@
     <input type="submit" name="createFormOption" value="Create Game">
     <div class="createForm hidden">
       <span class="hidden">
-          <input type="text" name='playerName' id="playername" placeholder="Enter Your Name">
+          <input type="text" name='playerName' id="playername" placeholder="Enter Your Name" maxlength="8">
         </span>
       <span class="hidden">
-          <input type="text" name='gameName' id="gamename" placeholder="Enter Game Name">
+          <input type="text" name='gameName' id="gamename" placeholder="Enter Game Name" maxlength="15">
         </span>
-      <div class="message errormessage"></div>
-      <input type="submit" class="hidden" name="createGame" value="Create Game">
+        <span class="hidden">
+          <input type="text" name='playerName' id="playername" placeholder="Enter Your Name">
+        </span>
+      <div class="message"></div>
+      <input type="submit" class="hidden" name="createGame" value="Create">
     </div>
     <input type="submit" name="joinGame" id="joinGame" value="Join Game">
   </main>

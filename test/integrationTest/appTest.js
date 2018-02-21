@@ -69,7 +69,7 @@ describe('#App', () => {
         }))
         .end(done);
     });
-    it('should not create game', (done) => {
+    it('should not create game if game name already exist', (done) => {
       gamesManager.addGame('newGame');
       app.initialize(gamesManager);
       request(app)
@@ -82,6 +82,30 @@ describe('#App', () => {
         }))
         .expect(doesNotHaveCookies)
         .end(done);
+    });
+    it('should not create game if player name exceeds 8 characters',(done)=>{
+      request(app)
+      .post('/createGame')
+      .send('gameName=newGame&playerName=dhanalakshmi')
+      .expect(400)
+      .expect(JSON.stringify({
+        gameCreated: false,
+        message: 'bad request'
+      }))
+      .expect(doesNotHaveCookies)
+      .end(done);
+    });
+    it('should not create game if game name exceeds 15 characters',(done)=>{
+      request(app)
+      .post('/createGame')
+      .send('gameName=dhanalakshmi\'sGame&playerName=dhana')
+      .expect(400)
+      .expect(JSON.stringify({
+        gameCreated: false,
+        message: 'bad request'
+      }))
+      .expect(doesNotHaveCookies)
+      .end(done);
     });
     it('should simply end the response if request body is not correctly formatted', function(done) {
       request(app)
@@ -236,11 +260,12 @@ describe('#App', () => {
         .expect(/false/)
         .end(done)
     });
-    it('should return status false for join with same name', done => {
+    it('should return status false for join with name which is previously in game', done => {
       request(app)
         .post('/joinGame')
         .send('gameName=newGame&playerName=lala')
         .expect(200)
+        .expect('{"status":false}')
         .expect(doesNotHaveCookies)
         .end(done)
     });
@@ -272,7 +297,6 @@ describe('#App', () => {
         .end(done)
     });
   });
-
   describe('#GET /index.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       gamesManager.addGame('newGame');
@@ -355,7 +379,7 @@ describe('#App', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect('{"move":4,"coins":[]}')
+        .expect('{"move":4}')
         .end(done);
     });
     it('should response with bad request if player is not there', () => {

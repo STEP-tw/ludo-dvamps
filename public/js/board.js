@@ -1,6 +1,9 @@
 let diceStatusRequest;
 const showPlayers = function(){
   sendAjaxRequest('GET','/getStatus',function(){
+    if(!this.responseText){
+      return;
+    }
     let colors = ['red','green','yellow','blue'];
     let status = JSON.parse(this.responseText);
     colors.forEach((color)=>{
@@ -62,6 +65,9 @@ const getCurrPlayerColor = function(gameStatus){
 
 const getGameStatus = function(){
   sendAjaxRequest('GET','/game/gameStatus',function(){
+    if(!this.responseText){
+      return;
+    }
     let gameStatus = JSON.parse(this.responseText);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     changeBgColor(currentPlayerColor);

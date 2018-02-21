@@ -24,24 +24,23 @@ const getGameStatus = function(req,res){
   res.end();
 };
 
-const isCurrentPlayer = function(req,res,currentPlayerName){
+const isCurrentPlayer = function(req,currentPlayerName){
   let requestedPlayer = req.cookies.playerName;
   return currentPlayerName == requestedPlayer;
 };
 
-const rollDice = function(req, res, next) {
+const rollDice = function(req, res) {
   let game = req.game;
   let currentPlayer = game.getCurrentPlayer();
   let currentPlayerName = currentPlayer.getName();
-  if(!isCurrentPlayer(req,res,currentPlayerName)){
+  if(!isCurrentPlayer(req,currentPlayerName)){
     res.statusCode = 400;
     res.send({move:false,message:'Not your turn!'});
     return;
   }
-  let move = game.rollDice();
-  let movableCoins = game.getMovableCoinsOf(move);
-  res.json({move:move,coins:movableCoins});
-  next();
+  let diceRollStatus = game.rollDice();
+  res.json(diceRollStatus);
+  res.end();
 };
 
 module.exports = {

@@ -74,4 +74,8 @@ button[name="back"]{
 }
 span.hide {
   color: red;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 120%;
+  font-weight: 600;
+  text-transform: uppercase;
 }

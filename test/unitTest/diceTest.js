@@ -1,5 +1,6 @@
 const assert = require('chai').assert;
-const Dice = require('../../src/models/Dice.js');
+const path = require('path');
+const Dice = require(path.resolve('src/models/dice.js'));
 const random = () => 0.45;
 
 describe('#Dice', () => {

@@ -1,9 +1,15 @@
-let intervalID;
+let intervalID, blinkID, removeBlinkID;
 const exitGame = function() {
-  sendAjaxRequest('DELETE','/player');
+  sendAjaxRequest('DELETE', '/player');
   goToHome();
 };
 
+const clearBlink = function() {
+  getElement('#message').classList.remove("blink");
+};
+const blinkText = function() {
+  getElement('#message').classList.add("blink");
+};
 const updateSeconds = function() {
   let secondBlock = getElement('#sec');
   let seconds = +(secondBlock.innerText);
@@ -11,35 +17,36 @@ const updateSeconds = function() {
   secondBlock.innerHTML = seconds;
 };
 
-const showColor = function(players){
+const showColor = function(players) {
   let overlay = getElement(".overlay");
   let colorHolder = getElement('#color');
   let playerName = getElement('#userName').innerText;
-  let player = players.find((player)=>player.name == playerName);
+  let player = players.find((player) => player.name == playerName);
   colorHolder.style.backgroundColor = player.color;
   overlay.classList.remove('hide');
   overlay.classList.add('show');
 };
 
-const showPlayerName = function(players){
+const removeIntervals = function() {
+  clearInterval(intervalID);
+  clearInterval(blinkID);
+  clearInterval(removeBlinkID);
+};
+
+const displayPlayerNames = function(players) {
   players.forEach((player, index) => {
-    if(index>3) {
-      return;
-    }
-    if(getElement(`#player${index+2}`)!=undefined){
-      getElement(`#player${index+2}`).value ="";
+    if (getElement(`#player${index+2}`) != undefined) {
+      getElement(`#player${index+2}`).value = "";
     }
     getElement(`#player${index+1}`).value = player.name;
   });
 };
 
-const takePlayerToBoard = function(players){
+const startTimer = function() {
   let timer = getElement('#Timer');
+  timer.style.visibility = 'visible';
   setInterval(updateSeconds, 1000);
-  showColor(players);
-  hideElement('#message');
   setTimeout(goToBoard, 3000);
-  clearInterval(intervalID);
 };
 
 const updatePlayers = function() {
@@ -51,10 +58,14 @@ const updatePlayers = function() {
   if (players == undefined) {
     return;
   }
-  showPlayerName(players);
-  if (players.length == 4) {
-    takePlayerToBoard(players);
+  displayPlayerNames(players);
+  if (players.length < 4) {
+    return;
   }
+  getElement('#message').style.visibility = 'hidden';
+  showColor(players);
+  startTimer();
+  removeIntervals();
 };
 
 const updateGameName = function() {
@@ -63,11 +74,11 @@ const updateGameName = function() {
 };
 
 const setGameName = function() {
-  sendAjaxRequest('GET','/gameName',updateGameName);
+  sendAjaxRequest('GET', '/gameName', updateGameName);
 };
 
 const getStatus = function() {
-  sendAjaxRequest('GET','/getStatus',updatePlayers);
+  sendAjaxRequest('GET', '/getStatus', updatePlayers);
 };
 
 const begin = function() {
@@ -75,6 +86,8 @@ const begin = function() {
   setUserName();
   getStatus();
   intervalID = setInterval(getStatus, 1000);
+  blinkID = setInterval(blinkText, 500);
+  removeBlinkID = setInterval(clearBlink, 1000);
 };
 
 window.onload = begin;

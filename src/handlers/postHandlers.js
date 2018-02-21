@@ -44,10 +44,16 @@ const resGameAlreadyExists = function(res) {
 const createNewGame = function(req,res) {
   let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;
+  let playerName = req.body.playerName;
+  if(gameName.length > 15 || playerName.length > 8){
+    res.statusCode = 400 ;
+    res.json({gameCreated:false,message:'bad request'});
+    res.end();
+    return;
+  }
   if(gamesManager.doesGameExists(gameName)){
     return resGameAlreadyExists(res);
   }
-  let playerName = req.body.playerName;
   let game = gamesManager.addGame(gameName);
   game.addPlayer(playerName);
   resWithGameCreated(res,gameName,playerName);
@@ -63,7 +69,7 @@ const joinPlayerToGame = function(req,res){
   let gameName = req.body.gameName;
   let playerName = req.body.playerName;
   let joiningStatus = req.app.gamesManager.addPlayerTo(gameName,playerName);
-  if(joiningStatus){
+  if (joiningStatus) {
     res.cookie('gameName',gameName,{path:''});
     res.cookie('playerName',playerName,{path:''});
   }
