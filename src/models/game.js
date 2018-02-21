@@ -31,7 +31,7 @@ class Game {
   getCoins(color){
     let colors = ['red','green','yellow','blue'];
     let coinIndex = colors.indexOf(color);
-    let coins = this.coins.slice(coinIndex*4,4);
+    let coins = this.coins.slice(coinIndex*4,(coinIndex+1)*4);
     return coins.map(function(coin){
       coin.setColor(color);
       return coin;

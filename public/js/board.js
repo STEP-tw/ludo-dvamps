@@ -33,14 +33,18 @@ const showPopup = function(message){
   },1000);
 };
 
+const showDice = function(move){
+  let margin = (move - 1) * -50;
+  getElement('#dice').style.marginTop = `${margin}px`;
+};
+
 const showMove = function(){
   let moveStatus = JSON.parse(this.responseText);
   if(!moveStatus.move) {
     showPopup(moveStatus.message);
     return;
   }
-  let margin = (+moveStatus.move - 1) * -50;
-  getElement('#dice').style.marginTop = `${margin}px`;
+  showDice(+moveStatus.move);
   showMovableCoins(moveStatus.coins);
 };
 
@@ -69,6 +73,7 @@ const getGameStatus = function(){
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
+    showDice(gameStatus.move);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     changeBgColor(currentPlayerColor);
   });

@@ -72,7 +72,7 @@ button[name="back"]{
   width:5.5%;
   margin: 0.5%;
 }
-span.hide {
+#errorMessage {
   color: red;
   font-family: 'Open Sans', sans-serif;
   font-size: 120%;
