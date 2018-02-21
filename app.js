@@ -62,6 +62,5 @@ ludo.use(lib.verifyPlayer);
 ludo.use(express.static('public'));
 ludo.get('/gameStatus',getHandlers.getGameStatus);
 ludo.get('/rollDice',getHandlers.rollDice);
-ludo.get('/diceStatus',getHandlers.getDiceStatus);
 
 module.exports = app;

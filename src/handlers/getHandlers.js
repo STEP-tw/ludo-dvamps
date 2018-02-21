@@ -39,20 +39,9 @@ const rollDice = function(req, res, next) {
     return;
   }
   let move = game.rollDice();
-  let path = currentPlayer.getPath();
-  let coins = currentPlayer.getCoins();
-  let movableCoins = coins.filter(function(coin) {
-    return path.isMovePossible(coin,move);
-  });
+  let movableCoins = game.getMovableCoinsOf(move);
   res.json({move:move,coins:movableCoins});
   next();
-};
-
-const getDiceStatus = function(req, res) {
-  let game = req.game;
-  let lastMove = game.currPlayerLastMove;
-  res.json(lastMove);
-  res.end();
 };
 
 module.exports = {
@@ -61,6 +50,5 @@ module.exports = {
   serveUserName,
   serveGameStatus,
   getGameStatus,
-  getDiceStatus,
   rollDice
 };

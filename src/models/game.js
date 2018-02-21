@@ -118,9 +118,6 @@ class Game {
   rollDice(){
     return this.turn.rollDice(this.dice);
   }
-  get currPlayerLastMove(){
-    return this.turn.lastMove;
-  }
   arrangePlayers(){
     return this.players.reduce((sequence,player)=>{
       let colorSequence = {red:0,green:1,blue:2,yellow:3};
@@ -131,6 +128,10 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
+  }
+  getMovableCoinsOf(move){
+    let currentPlayer = this.getCurrentPlayer();
+    return currentPlayer.getMovableCoins(move);
   }
 }
 

@@ -28,5 +28,10 @@ class Player {
   getPath(){
     return this.path;
   }
+  getMovableCoins(move){
+    return this.coins.filter((coin)=>{
+      return this.path.isMovePossible(coin,move);
+    });
+  }
 }
 module.exports = Player;
