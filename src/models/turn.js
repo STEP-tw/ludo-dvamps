@@ -33,6 +33,7 @@ class Turn {
   rollDice(dice){
     let move = dice.roll();
     this.currentPlayerMoves.push(move);
+    this.decrementChances();
     return move;
   }
 

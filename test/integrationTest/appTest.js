@@ -236,11 +236,12 @@ describe('#App', () => {
         .expect(/false/)
         .end(done)
     });
-    it('should return status false for join with same name', done => {
+    it('should return status false for join with name which is previously in game', done => {
       request(app)
         .post('/joinGame')
         .send('gameName=newGame&playerName=lala')
         .expect(200)
+        .expect('{"status":false}')
         .expect(doesNotHaveCookies)
         .end(done)
     });
@@ -272,7 +273,6 @@ describe('#App', () => {
         .end(done)
     });
   });
-
   describe('#GET /index.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       gamesManager.addGame('newGame');
@@ -355,7 +355,7 @@ describe('#App', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect('{"move":4,"coins":[]}')
+        .expect('{"move":4}')
         .end(done);
     });
     it('should response with bad request if player is not there', () => {

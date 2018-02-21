@@ -11,9 +11,9 @@ const dice = {
 };
 
 describe('#Game', () => {
-  let game;
+  let game,ColorDistributer;
   beforeEach(() => {
-    let ColorDistributer = function() {
+    ColorDistributer = function() {
       this.colors = ['red', 'green', 'blue', 'yellow'];
     }
     ColorDistributer.prototype = {
@@ -123,12 +123,34 @@ describe('#Game', () => {
     })
   });
   describe('#rollDice', () => {
-    it('should return a number', () => {
-      game.start();
+    it('should return a dice roll status with no movable coins and change turn ', () => {
       game.addPlayer('salman');
-      let move = game.rollDice();
-      assert.isNumber(move);
-      assert.equal(move, 4);
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      game.start();
+      let rollStatus = game.rollDice();
+      assert.equal(rollStatus.move, 4);
+      assert.notPropertyVal(rollStatus,'coins');
+      assert.equal(game.getCurrentPlayer().getName(),'lala')
+    });
+    it(`should return a dice roll status with movable coins and don't change turn`, () => {
+      let dice = {
+        roll:function(){
+          return 6;
+        }
+      };
+      game = new Game('newGame', ColorDistributer, dice);
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      game.start();
+      let rollStatus = game.rollDice();
+      assert.equal(rollStatus.move, 6);
+      assert.property(rollStatus,'coins');
+      assert.lengthOf(rollStatus.coins,4);
+      assert.equal(game.getCurrentPlayer().getName(),'salman')
     });
   });
   describe('#getCurrentPlayer', () => {
@@ -146,7 +168,7 @@ describe('#Game', () => {
       game.addPlayer('kaka');
       game.addPlayer('ram');
       game.addPlayer('shyam');
-      let expection = ['lala', 'kaka', 'ram', 'shyam'];
+      let expection = ['lala', 'kaka', 'shyam', 'ram'];
       assert.deepEqual(expection, game.arrangePlayers());
     });
   });
