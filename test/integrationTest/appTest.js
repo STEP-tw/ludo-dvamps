@@ -397,7 +397,7 @@ describe('#App', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect('{"move":4}')
+        .expect('{"move":4,"coins":[]}')
         .end(done);
     });
     it('should response with bad request if player is not there', () => {

@@ -5,11 +5,10 @@ const Cell = require('./cell.js');
 const Path = require('./path.js');
 
 const generateCoins = function() {
-  let index = 0;
   let homeId = -1;
   let coins = [];
-  for(let count=0;count<16;count++,index++,homeId--){
-    let coinId = index%4+1;
+  for(let count=0;count<16;count++,homeId--){
+    let coinId = count+1;
     coins.push(new Coin(coinId,homeId));
   }
   return coins;
@@ -123,9 +122,10 @@ class Game {
     let turn = this.turn;
     let move = turn.rollDice(this.dice);
     let currentPlayer = this.getCurrentPlayer();
+    this.status.move = move || this.status.move;
     if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
       turn.decideTurn();
-      return {move:move};
+      return {move:move,coins:this.getMovableCoinsOf(move)};
     }
     return {move:move,coins:this.getMovableCoinsOf(move)};
   }

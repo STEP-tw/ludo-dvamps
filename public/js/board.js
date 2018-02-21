@@ -41,7 +41,7 @@ const showDice = function(move){
 const showMove = function(){
   let moveStatus = JSON.parse(this.responseText);
   if(!moveStatus.move) {
-    showPopup(moveStatus.message);
+    moveStatus.message && showPopup(moveStatus.message);
     return;
   }
   showDice(+moveStatus.move);
@@ -73,9 +73,9 @@ const getGameStatus = function(){
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
-    showDice(gameStatus.move);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     changeBgColor(currentPlayerColor);
+    showDice(gameStatus.move);
   });
 };
 
