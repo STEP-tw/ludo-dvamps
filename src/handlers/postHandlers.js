@@ -66,7 +66,14 @@ const joinPlayerToGame = function(req,res){
     res.end();
     return;
   }
+  let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;
+  if(!gamesManager.doesGameExists(gameName)){
+    res.statusCode = 400 ;
+    res.json({status:false,message:'game dosen\'t exist'});
+    res.end();
+    return;
+  }
   let playerName = req.body.playerName;
   if(playerName.length > 8){
     res.statusCode = 400 ;
@@ -74,7 +81,7 @@ const joinPlayerToGame = function(req,res){
     res.end();
     return;
   }
-  let joiningStatus = req.app.gamesManager.addPlayerTo(gameName,playerName);
+  let joiningStatus = gamesManager.addPlayerTo(gameName,playerName);
   if (joiningStatus) {
     res.cookie('gameName',gameName,{path:''});
     res.cookie('playerName',playerName,{path:''});
