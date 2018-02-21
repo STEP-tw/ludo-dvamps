@@ -21,14 +21,14 @@ const showMovableCoins = function(coins) {
 };
 
 const showPopup = function(message){
-  var popup = document.querySelector('.popup');
+  let popup = document.querySelector('.popup');
   popup.style.display = 'block';
   let messageHolder = document.querySelector('.popup-content p');
   messageHolder.innerText = message;
   setTimeout(()=>{
     popup.style.display = 'none';
   },1000);
-}
+};
 
 const showMove = function(){
   let moveStatus = JSON.parse(this.responseText);
