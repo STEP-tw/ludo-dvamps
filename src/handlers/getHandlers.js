@@ -24,20 +24,20 @@ const getGameStatus = function(req,res){
   res.end();
 };
 
-const verifyCurrentPlayer = function(req,res,currentPlayerName){
+const isCurrentPlayer = function(req,res,currentPlayerName){
   let requestedPlayer = req.cookies.playerName;
-  if (currentPlayerName != requestedPlayer) {
-    res.status(400);
-    res.end();
-    return;
-  }
+  return currentPlayerName == requestedPlayer;
 };
 
 const rollDice = function(req, res, next) {
   let game = req.game;
   let currentPlayer = game.getCurrentPlayer();
   let currentPlayerName = currentPlayer.getName();
-  verifyCurrentPlayer(req,res,currentPlayerName);
+  if(!isCurrentPlayer(req,res,currentPlayerName)){
+    res.statusCode = 400;
+    res.send();
+    return;
+  }
   let move = game.rollDice();
   let path = currentPlayer.getPath();
   let coins = currentPlayer.getCoins();

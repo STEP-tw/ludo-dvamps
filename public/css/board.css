@@ -5,7 +5,8 @@ main {
 }
 
 ellipse.focus {
-  stroke: #c0d5c7;
+  stroke: #eefff4;
+  stroke-width: 3;
 }
 
 .mainContainer {
