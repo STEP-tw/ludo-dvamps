@@ -24,28 +24,23 @@ const getGameStatus = function(req,res){
   res.end();
 };
 
-const isCurrentPlayer = function(req,res,currentPlayerName){
+const isCurrentPlayer = function(req,currentPlayerName){
   let requestedPlayer = req.cookies.playerName;
   return currentPlayerName == requestedPlayer;
 };
 
-const rollDice = function(req, res, next) {
+const rollDice = function(req, res) {
   let game = req.game;
   let currentPlayer = game.getCurrentPlayer();
   let currentPlayerName = currentPlayer.getName();
-  if(!isCurrentPlayer(req,res,currentPlayerName)){
+  if(!isCurrentPlayer(req,currentPlayerName)){
     res.statusCode = 400;
     res.send();
     return;
   }
-  let move = game.rollDice();
-  let path = currentPlayer.getPath();
-  let coins = currentPlayer.getCoins();
-  let movableCoins = coins.filter(function(coin) {
-    return path.isMovePossible(coin,move);
-  });
-  res.json({move:move,coins:movableCoins});
-  next();
+  let diceRollStatus = game.rollDice();
+  res.json(diceRollStatus);
+  res.end();
 };
 
 const getDiceStatus = function(req, res) {

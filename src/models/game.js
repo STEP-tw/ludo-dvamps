@@ -25,6 +25,9 @@ class Game {
     this.coins = generateCoins();
     this.dice = dice;
   }
+  get currPlayerLastMove(){
+    return this.turn.lastMove;
+  }
   getCoins(color){
     let colors = ['red','green','yellow','blue'];
     let coinIndex = colors.indexOf(color);
@@ -36,10 +39,9 @@ class Game {
   }
   getCurrentPlayer(){
     let turn = this.turn;
-    let currentPlayer = this.players.find((player)=>{
+    return this.players.find((player)=>{
       return player.name == turn.currentPlayer;
     });
-    return currentPlayer;
   }
   getStatus() {
     return this.status;
@@ -116,14 +118,18 @@ class Game {
     this.status.players = this.players.map(player => player.getStatus());
   }
   rollDice(){
-    return this.turn.rollDice(this.dice);
-  }
-  get currPlayerLastMove(){
-    return this.turn.lastMove;
+    let turn = this.turn;
+    let move = turn.rollDice(this.dice);
+    let currentPlayer = this.getCurrentPlayer();
+    if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
+      turn.decideTurn();
+      return {move:move};
+    }
+    return {move:move,coins:this.getMovableCoinsOf(move)};
   }
   arrangePlayers(){
     return this.players.reduce((sequence,player)=>{
-      let colorSequence = {red:0,green:1,blue:2,yellow:3};
+      let colorSequence = {red:0,green:1,yellow:2,blue:3};
       sequence[colorSequence[player.color]] = player.name;
       return sequence;
     },[]);
@@ -131,6 +137,10 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
+  }
+  getMovableCoinsOf(move){
+    let currentPlayer = this.getCurrentPlayer();
+    return currentPlayer.getMovableCoins(move);
   }
 }
 

@@ -63,10 +63,8 @@ const joinPlayerToGame = function(req,res){
   let gameName = req.body.gameName;
   let playerName = req.body.playerName;
   let joiningStatus = req.app.gamesManager.addPlayerTo(gameName,playerName);
-  if(joiningStatus){
-    res.cookie('gameName',gameName,{path:''});
-    res.cookie('playerName',playerName,{path:''});
-  }
+  res.cookie('gameName',gameName,{path:''});
+  res.cookie('playerName',playerName,{path:''});
   res.json({status:joiningStatus});
   res.end();
 };
