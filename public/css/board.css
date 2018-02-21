@@ -26,6 +26,7 @@ ellipse.focus {
   align-items: stretch;
   -webkit-align-content: stretch;
   align-content: stretch;
+  background-color: lightGray;
 }
 
 .players {
