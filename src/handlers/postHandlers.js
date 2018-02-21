@@ -15,6 +15,10 @@ const verifyCreateGameReq = function(req,res,next) {
   next();
 };
 
+const hasEmptyField = function(list){
+  return list.some(ele=> ele == "");
+};
+
 const hasCreatedGame = function(req){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
   return game && game.doesPlayerExist(req.cookies.playerName);
@@ -43,9 +47,10 @@ const resGameAlreadyExists = function(res) {
 
 const createNewGame = function(req,res) {
   let gamesManager = req.app.gamesManager;
-  let gameName = req.body.gameName;
-  let playerName = req.body.playerName;
-  if(gameName.length > 15 || playerName.length > 8){
+  let gameName = req.body.gameName.trim();
+  let playerName = req.body.playerName.trim();
+  if(hasEmptyField([gameName,playerName])
+   || gameName.length > 15 || playerName.length > 8){
     res.statusCode = 400 ;
     res.json({gameCreated:false,message:'bad request'});
     res.end();
@@ -67,14 +72,20 @@ const joinPlayerToGame = function(req,res){
     return;
   }
   let gamesManager = req.app.gamesManager;
-  let gameName = req.body.gameName;
+  let gameName = req.body.gameName.trim();
+  let playerName = req.body.playerName.trim();
+  if(hasEmptyField([gameName,playerName])){
+    res.statusCode = 400 ;
+    res.json({status:false,message:'empty field'});
+    res.end();
+    return;
+  }
   if(!gamesManager.doesGameExists(gameName)){
     res.statusCode = 400 ;
     res.json({status:false,message:'game dosen\'t exist'});
     res.end();
     return;
   }
-  let playerName = req.body.playerName;
   if(playerName.length > 8){
     res.statusCode = 400 ;
     res.json({status:false,message:'player name is lengthy'});
