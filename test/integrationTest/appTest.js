@@ -269,6 +269,15 @@ describe('#App', () => {
         .expect(doesNotHaveCookies)
         .end(done)
     });
+    it('should return status false along with message "player name is lengthy"',(done)=>{
+      request(app)
+        .post('/joinGame')
+        .send('gameName=newGame&playerName=lalalalalala')
+        .expect(400)
+        .expect(`{"status":false,"message":"player name is lengthy"}`)
+        .expect(doesNotHaveCookies)
+        .end(done)
+    });
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
