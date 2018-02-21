@@ -96,7 +96,7 @@ svg{
 
 .logs {
   float: right;
-  width: 23vw;
+  width: 21vw;
   height: 70vh;
   border: 1px solid lightGray;
 }
@@ -111,7 +111,7 @@ svg{
 }
 
 .dice {
-  width: 22vw;
+  width: 20vw;
   height: 20vh;
   border: 1px solid lightGray;
   margin: 2%;
@@ -178,4 +178,9 @@ img[alt="DICE FACES"] {
   background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #FFFFFF), color-stop(100, #E0D207));
   background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #E0D207 100%);
   background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #E0D207 100%);
+}
+#userName{
+  font-weight:600;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 130%;
 }

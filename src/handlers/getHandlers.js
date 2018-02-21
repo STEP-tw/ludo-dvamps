@@ -43,19 +43,11 @@ const rollDice = function(req, res) {
   res.end();
 };
 
-const getDiceStatus = function(req, res) {
-  let game = req.game;
-  let lastMove = game.currPlayerLastMove;
-  res.json(lastMove);
-  res.end();
-};
-
 module.exports = {
   serveAvailableGames,
   serveGameName,
   serveUserName,
   serveGameStatus,
   getGameStatus,
-  getDiceStatus,
   rollDice
 };

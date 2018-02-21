@@ -1,47 +1,104 @@
-.playerNames{
-  margin:2% 2% 5% 2%;
-  border: 2px solid black;
-  height: 70px;
-  width:200px;
+.playerNames {
+  margin: 2% 2% 5% 2%;
+  border: 3px outset darkGray;
+  border-radius: 5px;
+  height: 10vh;
+  width: 15vw;
   text-align: center;
-  font-weight:normal;
+  font-weight: 400;
   font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
+  font-size: 170%;
 }
-#errorMessage{
+
+#errorMessage {
   color: red;
 }
 
-#Timer{
+#Timer {
+  position: absolute;
+  left: 39%;
+  text-align: center;
+  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 200%;
   color: white;
+  text-transform: uppercase;
 }
 
 .overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-    cursor: pointer;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  cursor: pointer;
 }
 
-#text{
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    font-size: 50px;
-    color: white;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
+#ColorText {
+  position: absolute;
+  top: 35%;
+  left: 53%;
+  color: white;
+  text-align: center;
+  font-weight: 400;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 300%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
-#color{
-	position:absolute;
-    top:50%;
-    right:45%;
-    height:100px;
-    width:100px;
+
+#color {
+  position: absolute;
+  top: 42%;
+  right: 45%;
+  height: 100px;
+  width: 100px;
+}
+
+#userName {
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 130%;
+}
+
+#leave {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  font-weight: 600;
+  border: 0px;
+  background-color: #e1e7e4;
+  border-radius: 5px;
+  height: 25px;
+  width: 72px;
+}
+
+#gameName {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 190%;
+  font-weight: 600;
+background-image: linear-gradient(to bottom, #d4b1ff, #d4aefa, #d4abf5, #d3a8f1, #d3a5ec);
+  border-radius: 10px;
+  padding: 4px 17px;
+}
+
+#message {
+  font-family: 'Open Sans', sans-serif;
+  color: rgb(96, 93, 97);
+  font-size: 150%;
+  font-weight: 600;
+}
+
+.blink {
+  text-shadow: 2px 2px 16px rgb(142, 145, 135);
+}
+
+#joinMessage {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 130%;
+  text-transform: uppercase;
+  font-weight: 600;
 }

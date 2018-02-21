@@ -210,9 +210,8 @@ describe('#App', () => {
     beforeEach(function() {
       app.gamesManager.addGame('newGame');
       app.gamesManager.addPlayerTo('newGame', 'lala');
-
     })
-    it('should return joiningStatus as true', done => {
+    it('should return joiningStatus as true if new player is joining', done => {
       request(app)
         .post('/joinGame')
         .send('gameName=newGame&playerName=ram')
@@ -220,7 +219,7 @@ describe('#App', () => {
         .expect(/true/)
         .end(done)
     });
-    it('should return joining Status as false', done => {
+    it('should return joining Status as false if the form is incomplete', done => {
       request(app)
         .post('/joinGame')
         .send('gameName=newGame')
@@ -235,6 +234,15 @@ describe('#App', () => {
         .expect(400)
         .expect(/status/)
         .expect(/false/)
+        .end(done)
+    });
+    it('should return status false for join with name which is previously in game', done => {
+      request(app)
+        .post('/joinGame')
+        .send('gameName=newGame&playerName=lala')
+        .expect(200)
+        .expect('{"status":false}')
+        .expect(doesNotHaveCookies)
         .end(done)
     });
   });
@@ -265,7 +273,6 @@ describe('#App', () => {
         .end(done)
     });
   });
-
   describe('#GET /index.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       gamesManager.addGame('newGame');
@@ -364,35 +371,6 @@ describe('#App', () => {
         .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
         .expect(400)
         .end();
-    });
-  });
-  describe('#GET /game/diceStatus', () => {
-    it('should return Status of Dice', (done) => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame', 'lala');
-      gamesManager.addPlayerTo('newGame', 'lalu');
-      gamesManager.addPlayerTo('newGame', 'lalo');
-      gamesManager.addPlayerTo('newGame', 'lali');
-      app.initialize(gamesManager);
-      request(app)
-        .get('/game/diceStatus')
-        .set('Cookie', ['gameName=newGame','playerName=lala'])
-        .expect(200)
-        .end(done);
-    });
-    it('should return nothing if player is not from this game', (done) => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame', 'lala');
-      gamesManager.addPlayerTo('newGame', 'lalu');
-      gamesManager.addPlayerTo('newGame', 'lalo');
-      gamesManager.addPlayerTo('newGame', 'lali');
-      app.initialize(gamesManager);
-      request(app)
-        .get('/game/diceStatus')
-        .set('Cookie',['gameName=newGame','playerName=lilly'])
-        .expect(302)
-        .expect('Location','/index.html')
-        .end(done);
     });
   });
 });

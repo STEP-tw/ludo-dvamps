@@ -2,6 +2,22 @@ const getElement = function(selector) {
   return document.querySelector(selector);
 };
 
+const hideElement = function(selector){
+  let element = getElement(selector);
+  if(!element){
+    return;
+  }
+  element.classList.add('hide');
+};
+
+const showHiddenElement = function(selector){
+  let element = getElement(selector);
+  if(!element){
+    return;
+  }
+  element.classList.remove('hide');
+};
+
 const getAllElements = function(selector) {
   return document.querySelectorAll(selector);
 };
