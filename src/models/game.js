@@ -28,7 +28,7 @@ class Game {
   getCoins(color){
     let colors = ['red','green','yellow','blue'];
     let coinIndex = colors.indexOf(color);
-    let coins = this.coins.splice(coinIndex*4,4);
+    let coins = this.coins.slice(coinIndex*4,4);
     return coins.map(function(coin){
       coin.setColor(color);
       return coin;
@@ -118,9 +118,6 @@ class Game {
   rollDice(){
     return this.turn.rollDice(this.dice);
   }
-  get currPlayerLastMove(){
-    return this.turn.lastMove;
-  }
   arrangePlayers(){
     return this.players.reduce((sequence,player)=>{
       let colorSequence = {red:0,green:1,blue:2,yellow:3};
@@ -131,6 +128,10 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
+  }
+  getMovableCoinsOf(move){
+    let currentPlayer = this.getCurrentPlayer();
+    return currentPlayer.getMovableCoins(move);
   }
 }
 
