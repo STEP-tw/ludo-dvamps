@@ -105,9 +105,11 @@ class Game {
     this.setStatus();
   }
   getGameStatus(){
-    let playerStatus = this.getStatus();
-    playerStatus.currentPlayerName = this.turn.currentPlayer;
-    return playerStatus;
+    let gameStatus = this.getStatus();
+    let lastMove = this.turn.lastMove;
+    gameStatus.currentPlayerName = this.turn.currentPlayer;
+    gameStatus.move = lastMove;
+    return gameStatus;
   }
   getNoOfPlayers() {
     return this.players.length;

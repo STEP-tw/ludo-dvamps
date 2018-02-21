@@ -35,7 +35,7 @@ const rollDice = function(req, res, next) {
   let currentPlayerName = currentPlayer.getName();
   if(!isCurrentPlayer(req,res,currentPlayerName)){
     res.statusCode = 400;
-    res.send();
+    res.send({move:false,message:'Not your turn!'});
     return;
   }
   let move = game.rollDice();

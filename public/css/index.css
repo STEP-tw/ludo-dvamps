@@ -85,6 +85,5 @@ input[type="text"]:hover {
 .message{
   font-family: 'Open Sans', sans-serif;
   font-size: 100%;
-  color: red;
   text-transform: uppercase;
 }

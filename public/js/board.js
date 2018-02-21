@@ -20,9 +20,20 @@ const showMovableCoins = function(coins) {
   });
 };
 
+const showPopup = function(message){
+  var popup = document.querySelector('.popup');
+  popup.style.display = 'block';
+  let messageHolder = document.querySelector('.popup-content p');
+  messageHolder.innerText = message;
+  setTimeout(()=>{
+    popup.style.display = 'none';
+  },1000);
+}
+
 const showMove = function(){
   let moveStatus = JSON.parse(this.responseText);
   if(!moveStatus.move) {
+    showPopup(moveStatus.message);
     return;
   }
   let margin = (+moveStatus.move - 1) * -50;
@@ -65,7 +76,7 @@ const load = function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
-  setInterval(getGameStatus,2000);
+  setInterval(getGameStatus,1000);
 };
 
 const moveCoin = (coinId,cellId) => {
