@@ -129,6 +129,14 @@ describe('#App', () => {
         .expect(/true/)
         .end(done);
     });
+    it('should response with error message if gamename or playername is empty',(done)=>{
+      request(app)
+        .post('/createGame')
+        .send('gameName=   &playerName=  ')
+        .expect(400)
+        .expect(JSON.stringify({status:false,message:'empty field'}))
+        .end(done);
+    });
   });
   describe('GET /gameName', () => {
     it('should send gameName', (done) => {
