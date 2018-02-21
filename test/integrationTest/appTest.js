@@ -69,7 +69,7 @@ describe('#App', () => {
         }))
         .end(done);
     });
-    it('should not create game', (done) => {
+    it('should not create game if game name already exist', (done) => {
       gamesManager.addGame('newGame');
       app.initialize(gamesManager);
       request(app)
@@ -82,6 +82,30 @@ describe('#App', () => {
         }))
         .expect(doesNotHaveCookies)
         .end(done);
+    });
+    it('should not create game if player name exceeds 8 characters',(done)=>{
+      request(app)
+      .post('/createGame')
+      .send('gameName=newGame&playerName=dhanalakshmi')
+      .expect(400)
+      .expect(JSON.stringify({
+        gameCreated: false,
+        message: 'bad request'
+      }))
+      .expect(doesNotHaveCookies)
+      .end(done);
+    });
+    it('should not create game if game name exceeds 15 characters',(done)=>{
+      request(app)
+      .post('/createGame')
+      .send('gameName=dhanalakshmi\'sGame&playerName=dhana')
+      .expect(400)
+      .expect(JSON.stringify({
+        gameCreated: false,
+        message: 'bad request'
+      }))
+      .expect(doesNotHaveCookies)
+      .end(done);
     });
     it('should simply end the response if request body is not correctly formatted', function(done) {
       request(app)
