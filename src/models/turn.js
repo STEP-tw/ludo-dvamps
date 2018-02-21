@@ -31,10 +31,12 @@ class Turn {
   }
 
   rollDice(dice){
-    let move = dice.roll();
-    this.currentPlayerMoves.push(move);
-    this.decrementChances();
-    return move;
+    if(this.currentPlayerChances){
+      let move = dice.roll();
+      this.currentPlayerMoves.push(move);
+      this.decrementChances();
+      return move;
+    }
   }
 
   has3ConsecutiveSixes(){
