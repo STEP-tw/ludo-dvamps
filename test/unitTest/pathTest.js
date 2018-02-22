@@ -4,18 +4,27 @@ const Path= require(path.resolve('src/models/path.js'));
 const Coin= require(path.resolve('src/models/coin.js'));
 
 describe('Path', () => {
+  let redPath;
+  beforeEach(()=>{
+    redPath = new Path();
+  })
   describe('#addCell', () => {
     it('should add a cell to the path ', () => {
-      let redPath = new Path();
       let cell = 10;
       assert.deepEqual(redPath.getPath(),[]);
       redPath.addCell(cell);
       assert.deepEqual(redPath.getPath(),[10]);
     });
   });
+  describe('#add', () => {
+    it('should add given path to itself', () => {
+      let route = [1,2,3,4,5,6,7,8,9];
+      redPath.add(route);
+      assert.deepEqual(redPath.cells,route);
+    });
+  });
   describe('#getNextMove', () => {
     it('should return next position of the coin if the coin is movable', () => {
-      let redPath = new Path();
       let coin = new Coin(1,5);
       redPath.addCell(5);
       redPath.addCell(6);
@@ -25,7 +34,6 @@ describe('Path', () => {
       assert.equal(redPath.getNextMove(coin,2),7);
     });
     it('should return same position of the coin if the coin is not movable', () => {
-      let redPath = new Path();
       let coin = new Coin(1,5);
       redPath.addCell(5);
       redPath.addCell(6);
@@ -36,7 +44,6 @@ describe('Path', () => {
   });
   describe('#isMovePossible', () => {
     it('should return true if move is possible', () => {
-      let redPath = new Path();
       let coin = new Coin(1,5);
       redPath.addCell(5);
       redPath.addCell(6);
@@ -45,7 +52,6 @@ describe('Path', () => {
       assert.isOk(redPath.isMovePossible(coin,3));
     });
     it('should return false if move is not possible', () => {
-      let redPath = new Path();
       let coin = new Coin(1,5);
       redPath.addCell(5);
       redPath.addCell(6);

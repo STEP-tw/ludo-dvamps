@@ -2,6 +2,9 @@ class Path {
   constructor() {
     this.cells = [];
   }
+  add(path){
+    this.cells = path;
+  }
   getPath() {
     return this.cells;
   }
@@ -10,7 +13,8 @@ class Path {
   }
   getNextMove(coin,move){
     let currentCell = coin.getPosition();
-    let nextMovableCell = this.cells[this.cells.indexOf(currentCell)+move];
+    let curretPos = this.cells.indexOf(currentCell);
+    let nextMovableCell = this.cells[curretPos+move];
     if (!nextMovableCell) {
       return currentCell;
     }

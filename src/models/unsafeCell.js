@@ -2,7 +2,7 @@ const Cell = require('./cell.js');
 
 class UnsafeCell extends Cell {
   constructor(position) {
-    super();
+    super(position);
   }
   removeCoin(coinId){
     let coinIndex = this.coins.findIndex(coin=>coin.id == coinId);

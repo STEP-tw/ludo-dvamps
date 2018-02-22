@@ -4,6 +4,7 @@ const Turn = require('./turn.js');
 const Cell = require('./cell.js');
 const Path = require('./path.js');
 const ActivityLog = require('./activityLog.js');
+const Board = require('./board.js');
 
 const generateCoins = function() {
   let homeId = -1;
@@ -25,6 +26,8 @@ class Game {
     this.coins = generateCoins();
     this.dice = dice;
     this.activityLog = new ActivityLog();
+    this.board = new Board(this.numberOfPlayers);
+    this.board.generate();
   }
   getCoins(color){
     let colors = ['red','green','yellow','blue'];
@@ -60,28 +63,10 @@ class Game {
   doesPlayerExist(playerName) {
     return this.players.some((player) => player.name == playerName);
   }
-  givePathToPlayer(playerColor){
-    let color = ['red','green','yellow','blue'];
-    let path = new Path();
-    let startingCell = color.indexOf(playerColor)*13;
-    for(let count=0;count<51;count++){
-      path.addCell(new Cell(startingCell));
-      startingCell++;
-      if(startingCell>51) {
-        startingCell = 0;
-      }
-    }
-    let specialCell = startingCell + 99;
-    for(let count=0;count<5;count++,specialCell++){
-      path.addCell(new Cell(specialCell));
-    }
-    return path;
-  }
   createPlayer(playerName){
     let playerColor = this.colorDistributor.getColor();
     let coins = this.getCoins(playerColor);
-    let path = this.givePathToPlayer(playerColor);
-    return new Player(playerName,playerColor,coins,path);
+    return new Player(playerName,playerColor,coins,new Path());
   }
   addPlayer(playerName) {
     if (!this.doesPlayerExist(playerName) && !this.hasEnoughPlayers()) {
@@ -140,6 +125,11 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
+    players.forEach((playerName,index)=>{
+      let player = this.getPlayer(playerName);
+      let path = this.board.getPathFor(index);
+      player.assignPath(path);
+    });
     this.activityLog.registerTurn(this.turn.currentPlayer);
   }
   getMovableCoinsOf(move){

@@ -38,5 +38,8 @@ class Player {
       return this.path.isMovePossible(coin,move);
     });
   }
+  assignPath(path){
+    this.path.add(path);
+  }
 }
 module.exports = Player;
