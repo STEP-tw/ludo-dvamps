@@ -15,7 +15,7 @@ class Turn {
   }
 
   get lastMove(){
-    return this.currentPlayerMoves.slice(-1)[0];
+    return this.currentPlayerMoves.slice(-1).pop();
   }
 
   increamentChances(){

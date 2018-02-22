@@ -152,6 +152,19 @@ describe('#Game', () => {
       assert.lengthOf(rollStatus.coins,4);
       assert.equal(game.getCurrentPlayer().getName(),'salman')
     });
+    it('should return dice status with move undefined if there are no player chances ', () => {
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      game.start();
+      game.turn.playerChances = 0;
+      assert.equal(game.getCurrentPlayer().getName(),'salman')
+      let rollStatus = game.rollDice();
+      assert.isUndefined(rollStatus.move);
+      assert.notPropertyVal(rollStatus,'coins');
+      assert.equal(game.getCurrentPlayer().getName(),'lala')
+    });
     it('should register move in activity log', () => {
       addPlayers(game);
       game.start();
@@ -201,23 +214,6 @@ describe('#Game', () => {
       let gameStatus = game.getGameStatus();
       assert.equal(gameStatus.currentPlayerName, 'lala');
       assert.lengthOf(gameStatus.players, 4);
-    });
-  });
-  describe('#currrentPlayerLastMove', () => {
-    it('should last move of the current player ', () => {
-      let dice = {
-        roll:function(){
-          return 6;
-        }
-      };
-      game = new Game('newGame', ColorDistributer, dice);
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.start();
-      let move = game.rollDice();
-      assert.equal(game.currPlayerLastMove,6);
     });
   });
 });

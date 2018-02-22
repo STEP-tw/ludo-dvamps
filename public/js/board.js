@@ -1,4 +1,3 @@
-let diceStatusRequest;
 const showPlayers = function(){
   sendAjaxRequest('GET','/getStatus',function(){
     if(!this.responseText){
@@ -13,6 +12,13 @@ const showPlayers = function(){
       let playerName = document.querySelector(`#${color}player`);
       playerName.value = player.name;
     });
+  });
+};
+
+const hideMovableCoins = function(coins) {
+  coins.forEach((coin) => {
+    let coinInBoard = document.querySelector(`#${coin.color}${coin.id}`);
+    coinInBoard.classList.remove('focus');
   });
 };
 

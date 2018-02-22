@@ -295,6 +295,15 @@ describe('#App', () => {
       .expect(doesNotHaveCookies)
       .end(done);
     });
+    it('should return status false along with message "empty field"', (done) => {
+      request(app)
+      .post('/joinGame')
+      .send('gameName=    &playerName=   ')
+      .expect(400)
+      .expect(`{"status":false,"message":"empty field"}`)
+      .expect(doesNotHaveCookies)
+      .end(done);
+    });
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
@@ -405,7 +414,7 @@ describe('#App', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect('{"move":4,"coins":[]}')
+        .expect('{"move":4}')
         .end(done);
     });
     it('should response with bad request if player is not there', () => {

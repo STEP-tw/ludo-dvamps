@@ -26,9 +26,6 @@ class Game {
     this.dice = dice;
     this.activityLog = new ActivityLog();
   }
-  get currPlayerLastMove(){
-    return this.turn.lastMove;
-  }
   getCoins(color){
     let colors = ['red','green','yellow','blue'];
     let coinIndex = colors.indexOf(color);
@@ -109,9 +106,7 @@ class Game {
   }
   getGameStatus(){
     let gameStatus = this.getStatus();
-    let lastMove = this.turn.lastMove;
     gameStatus.currentPlayerName = this.turn.currentPlayer;
-    gameStatus.move = lastMove;
     return gameStatus;
   }
   getNoOfPlayers() {
@@ -128,7 +123,7 @@ class Game {
     this.status.move = move || this.status.move;
     if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
       turn.decideTurn();
-      return {move:move,coins:this.getMovableCoinsOf(move)};
+      return {move:move};
     }
     return {move:move,coins:this.getMovableCoinsOf(move)};
   }
