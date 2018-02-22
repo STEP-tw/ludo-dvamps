@@ -260,10 +260,15 @@ describe('#Turn', () => {
     });
   });
   describe('#rollDice', () => {
-    it('should roll the dice', () => {
+    it('should roll the dice if there are chances', () => {
       let move = turn.rollDice(dice);
       assert.equal(move,4);
       assert.equal(turn.lastMove,4);
+    });
+    it('should not roll dice if no player chances remaining ', () => {
+      turn.playerChances = 0;
+      let move = turn.rollDice(dice);
+      assert.isUndefined(move);
     });
   });
 });

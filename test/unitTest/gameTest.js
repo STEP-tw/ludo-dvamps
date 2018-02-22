@@ -152,6 +152,19 @@ describe('#Game', () => {
       assert.lengthOf(rollStatus.coins,4);
       assert.equal(game.getCurrentPlayer().getName(),'salman')
     });
+    it('should return dice status with move undefined if there are no player chances ', () => {
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      game.start();
+      game.turn.playerChances = 0;
+      assert.equal(game.getCurrentPlayer().getName(),'salman')
+      let rollStatus = game.rollDice();
+      assert.isUndefined(rollStatus.move);
+      assert.notPropertyVal(rollStatus,'coins');
+      assert.equal(game.getCurrentPlayer().getName(),'lala')
+    });
   });
   describe('#getCurrentPlayer', () => {
     it('should return the current player name', () => {
