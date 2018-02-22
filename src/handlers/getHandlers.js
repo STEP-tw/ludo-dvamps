@@ -24,6 +24,12 @@ const getGameStatus = function(req,res){
   res.end();
 };
 
+const getLogs = function(req,res){
+  let game = req.game;
+  res.json(game.getLogs());
+  res.end();
+};
+
 const isCurrentPlayer = function(req,currentPlayerName){
   let requestedPlayer = req.cookies.playerName;
   return currentPlayerName == requestedPlayer;
@@ -49,5 +55,6 @@ module.exports = {
   serveUserName,
   serveGameStatus,
   getGameStatus,
-  rollDice
+  rollDice,
+  getLogs
 };

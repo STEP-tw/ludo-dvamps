@@ -79,6 +79,21 @@ const getGameStatus = function(){
   });
 };
 
+const showLogs = function(logs){
+  let logStatements = logs.map((log)=>{
+    return `<li><span>${log.time}</span>${log.statement}</li>`;
+  }).join('');
+  let activityLog = getElement('#logStatements');
+  activityLog.innerHTML = `<ul>${logStatements}</ul>`;
+};
+
+const getLogs = function(){
+  sendAjaxRequest('GET','/game/logs',function(){
+    let logs = JSON.parse(this.responseText);
+    showLogs(logs);
+  },null);
+};
+
 const load = function() {
   showPlayers();
   setClickListeners();
@@ -88,6 +103,7 @@ const load = function() {
     main.innerHTML = this.responseText;
   });
   setInterval(getGameStatus,1000);
+  setInterval(getLogs,1000);
 };
 
 const moveCoin = (coinId,cellId) => {

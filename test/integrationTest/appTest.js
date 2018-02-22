@@ -423,4 +423,25 @@ describe('#App', () => {
         .end();
     });
   });
+  describe('#GET /game/logs', () => {
+    beforeEach(()=>{
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.start();
+      game.rollDice();
+      app.initialize(gamesManager);
+    })
+    it('should give game activity log', (done) => {
+      request(app)
+        .get('/game/logs')
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+        .expect(200)
+        .expect(/4/)
+        .expect(/lala/)
+        .end(done);
+    });
+  });
 });
