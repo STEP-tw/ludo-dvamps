@@ -63,8 +63,9 @@ const setClickListeners = function() {
 };
 
 const changeBgColor = function(color){
-  let board = document.querySelector('.mainContainer');
-  board.className = `mainContainer ${color}`;
+  let player = document.querySelector(`#${color}player`);
+  player.style.backgroundColor = `${color}`;
+  player.focus();
 };
 
 const getCurrPlayerColor = function(gameStatus){
