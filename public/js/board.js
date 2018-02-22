@@ -1,4 +1,4 @@
-let diceStatusRequest;
+// let diceStatusRequest;
 const showPlayers = function(){
   sendAjaxRequest('GET','/getStatus',function(){
     if(!this.responseText){
@@ -73,6 +73,7 @@ const getGameStatus = function(){
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
+    // alert(this.responseText);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     changeBgColor(currentPlayerColor);
     showDice(gameStatus.move);
