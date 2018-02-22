@@ -171,7 +171,6 @@ describe('#Game', () => {
       game.rollDice();
       let logs = game.getLogs();
       assert.match(JSON.stringify(logs[0]),/salman/);
-      assert.match(JSON.stringify(logs[0]),/4/);
     });
   });
   describe('#getCurrentPlayer', () => {

@@ -88,10 +88,14 @@ const getGameStatus = function(){
 
 const showLogs = function(logs){
   let logStatements = logs.map((log)=>{
-    return `<li><span>${log.time}</span>${log.statement}</li>`;
+    let move = `<label>${log.move || ''}</label>`;
+    return `<li><span>${log.time}</span>${log.statement}${move}</li>`;
   }).join('');
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;
+  let lastLog = document.querySelector('ul').lastElementChild;
+  let lastPos = lastLog.getBoundingClientRect().y;
+  activityLog.scrollTo(0,lastPos);
 };
 
 const getLogs = function(){

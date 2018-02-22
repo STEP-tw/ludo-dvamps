@@ -192,6 +192,8 @@ p {
 #logStatements{
   font-size: 25px;
   text-align: left;
+  overflow-y: scroll;
+  height: 60vh;
 }
 
 li span{
@@ -226,4 +228,10 @@ li span{
 #blueplayer {
   background-color: blue;
   color: white;
+}
+
+li label{
+  font-weight:normal;
+  margin-left: 5px;
+  font-size: 32px;
 }
