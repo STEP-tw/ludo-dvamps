@@ -91,7 +91,9 @@ const showLogs = function(logs){
   }).join('');
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;
-  document.querySelector('ul').lastElementChild.focus();
+  let lastLog = document.querySelector('ul').lastElementChild;
+  let lastPos = lastLog.getBoundingClientRect().y;
+  activityLog.scrollTo(0,lastPos);
 };
 
 const getLogs = function(){
