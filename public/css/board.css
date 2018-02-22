@@ -224,6 +224,8 @@ p {
 #logStatements{
   font-size: 25px;
   text-align: left;
+  overflow-y: scroll;
+  height: 60vh;
 }
 
 li span{
