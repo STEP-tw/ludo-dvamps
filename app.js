@@ -41,26 +41,25 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(lib.trimRequestBody);
 app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));
 app.use('/game',ludo);
-
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
 app.get('/getStatus', getHandlers.serveGameStatus);
-
-app.post('/createGame', postHandlers.verifyCreateGameReq,
-  postHandlers.blockIfUserHasGame,postHandlers.createNewGame);
-app.post('/joinGame',postHandlers.joinPlayerToGame);
-
+app.post('/createGame',lib.verifyReqBody,postHandlers.verifyCreateGameReq,
+  lib.checkCharacterLimit,postHandlers.blockIfUserHasGame,
+  postHandlers.createNewGame);
+app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
 app.delete('/player', deleteHandler.removePlayer);
-
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.use(lib.verifyPlayer);
 ludo.use(express.static('public'));
 ludo.get('/gameStatus',getHandlers.getGameStatus);
+ludo.get('/logs',getHandlers.getLogs);
 ludo.get('/rollDice',getHandlers.rollDice);
 
 module.exports = app;

@@ -1,4 +1,3 @@
-let diceStatusRequest;
 const showPlayers = function(){
   sendAjaxRequest('GET','/getStatus',function(){
     if(!this.responseText){
@@ -13,6 +12,13 @@ const showPlayers = function(){
       let playerName = document.querySelector(`#${color}player`);
       playerName.value = player.name;
     });
+  });
+};
+
+const hideMovableCoins = function(coins) {
+  coins.forEach((coin) => {
+    let coinInBoard = document.querySelector(`#${coin.color}${coin.id}`);
+    coinInBoard.classList.remove('focus');
   });
 };
 
@@ -79,6 +85,22 @@ const getGameStatus = function(){
   });
 };
 
+const showLogs = function(logs){
+  let logStatements = logs.map((log)=>{
+    return `<li><span>${log.time}</span>${log.statement}</li>`;
+  }).join('');
+  let activityLog = getElement('#logStatements');
+  activityLog.innerHTML = `<ul>${logStatements}</ul>`;
+  document.querySelector('ul').lastElementChild.focus();
+};
+
+const getLogs = function(){
+  sendAjaxRequest('GET','/game/logs',function(){
+    let logs = JSON.parse(this.responseText);
+    showLogs(logs);
+  },null);
+};
+
 const load = function() {
   showPlayers();
   setClickListeners();
@@ -88,6 +110,7 @@ const load = function() {
     main.innerHTML = this.responseText;
   });
   setInterval(getGameStatus,1000);
+  setInterval(getLogs,1000);
 };
 
 const moveCoin = (coinId,cellId) => {

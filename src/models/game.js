@@ -3,6 +3,7 @@ const Coin = require('./coin.js');
 const Turn = require('./turn.js');
 const Cell = require('./cell.js');
 const Path = require('./path.js');
+const ActivityLog = require('./activityLog.js');
 
 const generateCoins = function() {
   let homeId = -1;
@@ -23,9 +24,7 @@ class Game {
     this.colorDistributor = new ColorDistributor();
     this.coins = generateCoins();
     this.dice = dice;
-  }
-  get currPlayerLastMove(){
-    return this.turn.lastMove;
+    this.activityLog = new ActivityLog();
   }
   getCoins(color){
     let colors = ['red','green','yellow','blue'];
@@ -107,9 +106,7 @@ class Game {
   }
   getGameStatus(){
     let gameStatus = this.getStatus();
-    let lastMove = this.turn.lastMove;
     gameStatus.currentPlayerName = this.turn.currentPlayer;
-    gameStatus.move = lastMove;
     return gameStatus;
   }
   getNoOfPlayers() {
@@ -122,11 +119,15 @@ class Game {
     let turn = this.turn;
     let move = turn.rollDice(this.dice);
     let currentPlayer = this.getCurrentPlayer();
+    this.activityLog.registerMove(currentPlayer.name,move);
     this.status.move = move || this.status.move;
     if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
       turn.decideTurn();
-      return {move:move,coins:this.getMovableCoinsOf(move)};
+      this.activityLog.registerTurn(this.getCurrentPlayer().name);
+      return {move:move};
     }
+    turn.decideTurn();
+    this.activityLog.registerTurn(this.getCurrentPlayer().name);
     return {move:move,coins:this.getMovableCoinsOf(move)};
   }
   arrangePlayers(){
@@ -139,10 +140,14 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
+    this.activityLog.registerTurn(this.turn.currentPlayer);
   }
   getMovableCoinsOf(move){
     let currentPlayer = this.getCurrentPlayer();
     return currentPlayer.getMovableCoins(move);
+  }
+  getLogs(){
+    return this.activityLog.getLogs();
   }
 }
 

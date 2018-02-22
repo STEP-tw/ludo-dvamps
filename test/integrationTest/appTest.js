@@ -129,6 +129,14 @@ describe('#App', () => {
         .expect(/true/)
         .end(done);
     });
+    it('should response with error message if gamename or playername is empty',(done)=>{
+      request(app)
+        .post('/createGame')
+        .send('gameName=   &playerName=  ')
+        .expect(400)
+        .expect(JSON.stringify({status:false,message:'empty field'}))
+        .end(done);
+    });
   });
   describe('GET /gameName', () => {
     it('should send gameName', (done) => {
@@ -290,7 +298,7 @@ describe('#App', () => {
     it('should return status false along with message "empty field"', (done) => {
       request(app)
       .post('/joinGame')
-      .send('gameName=    &playerName=lala')
+      .send('gameName=    &playerName=   ')
       .expect(400)
       .expect(`{"status":false,"message":"empty field"}`)
       .expect(doesNotHaveCookies)
@@ -406,7 +414,7 @@ describe('#App', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect('{"move":4,"coins":[]}')
+        .expect('{"move":4}')
         .end(done);
     });
     it('should response with bad request if player is not there', () => {
@@ -422,6 +430,27 @@ describe('#App', () => {
         .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
         .expect(400)
         .end();
+    });
+  });
+  describe('#GET /game/logs', () => {
+    beforeEach(()=>{
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.start();
+      game.rollDice();
+      app.initialize(gamesManager);
+    })
+    it('should give game activity log', (done) => {
+      request(app)
+        .get('/game/logs')
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+        .expect(200)
+        .expect(/4/)
+        .expect(/lala/)
+        .end(done);
     });
   });
 });

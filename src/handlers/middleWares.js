@@ -7,6 +7,27 @@ const checkCookie = function(req,res,next) {
   }
   next();
 };
+const isEmptyString = function(string) {
+  return string == '';
+};
+
+const verifyReqBody = function(req,res,next) {
+  let bodyFieldValues = Object.values(req.body);
+  if(bodyFieldValues.some(isEmptyString)){
+    res.statusCode = 400;
+    res.json({status:false,message:'empty field'});
+    return;
+  }
+  next();
+};
+
+const trimRequestBody = function(req,res,next) {
+  let bodyField = Object.keys(req.body);
+  bodyField.forEach(function(field){
+    req.body[field] = req.body[field].trim();
+  });
+  next();
+};
 
 const isPlayerValid = function(req){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
@@ -45,9 +66,23 @@ const verifyPlayer =function(req,res,next) {
   next();
 };
 
+const checkCharacterLimit = function(req,res,next) {
+  let gameName = req.body.gameName;
+  let playerName = req.body.playerName;
+  if(gameName.length>15 || playerName.length>8){
+    res.statusCode = 400 ;
+    res.json({gameCreated:false,message:'bad request'});
+    return;
+  }
+  next();
+};
+
 module.exports = {
   checkCookie,
   loadGame,
   restrictValidPlayer,
   verifyPlayer,
+  trimRequestBody,
+  verifyReqBody,
+  checkCharacterLimit
 };
