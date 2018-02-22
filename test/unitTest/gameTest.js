@@ -123,16 +123,19 @@ describe('#Game', () => {
     })
   });
   describe('#rollDice', () => {
-    it('should return a dice roll status with no movable coins and change turn ', () => {
+    let addPlayers = function(game) {
       game.addPlayer('salman');
       game.addPlayer('lala');
       game.addPlayer('lali');
       game.addPlayer('lalu');
+    }
+    it('should return a dice roll status with no movable coins and change turn ', () => {
+      addPlayers(game);
       game.start();
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 4);
       assert.notPropertyVal(rollStatus,'coins');
-      assert.equal(game.getCurrentPlayer().getName(),'lala')
+      assert.equal(game.getCurrentPlayer().getName(),'lala');
     });
     it(`should return a dice roll status with movable coins and don't change turn`, () => {
       let dice = {
@@ -141,16 +144,21 @@ describe('#Game', () => {
         }
       };
       game = new Game('newGame', ColorDistributer, dice);
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
+      addPlayers(game);
       game.start();
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 6);
       assert.property(rollStatus,'coins');
       assert.lengthOf(rollStatus.coins,4);
       assert.equal(game.getCurrentPlayer().getName(),'salman')
+    });
+    it('should register move in activity log', () => {
+      addPlayers(game);
+      game.start();
+      game.rollDice();
+      let logs = game.getLogs();
+      assert.match(logs[0],/salman/);
+      assert.match(logs[0],/4/);
     });
   });
   describe('#getCurrentPlayer', () => {
@@ -196,20 +204,20 @@ describe('#Game', () => {
     });
   });
   describe('#currrentPlayerLastMove', () => {
-   it('should last move of the current player ', () => {
-     let dice = {
-       roll:function(){
-         return 6;
-       }
-     };
-     game = new Game('newGame', ColorDistributer, dice);
-     game.addPlayer('lala');
-     game.addPlayer('kaka');
-     game.addPlayer('ram');
-     game.addPlayer('shyam');
-     game.start();
-     let move = game.rollDice();
-     assert.equal(game.currPlayerLastMove,6);
-   });
- });
+    it('should last move of the current player ', () => {
+      let dice = {
+        roll:function(){
+          return 6;
+        }
+      };
+      game = new Game('newGame', ColorDistributer, dice);
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.start();
+      let move = game.rollDice();
+      assert.equal(game.currPlayerLastMove,6);
+    });
+  });
 });
