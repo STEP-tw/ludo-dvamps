@@ -287,6 +287,15 @@ describe('#App', () => {
       .expect(doesNotHaveCookies)
       .end(done);
     });
+    it('should return status false along with message "empty field"', (done) => {
+      request(app)
+      .post('/joinGame')
+      .send('gameName=    &playerName=lala')
+      .expect(400)
+      .expect(`{"status":false,"message":"empty field"}`)
+      .expect(doesNotHaveCookies)
+      .end(done);
+    });
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
