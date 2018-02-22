@@ -125,6 +125,7 @@ class Game {
       turn.decideTurn();
       return {move:move};
     }
+    turn.decideTurn();
     return {move:move,coins:this.getMovableCoinsOf(move)};
   }
   arrangePlayers(){

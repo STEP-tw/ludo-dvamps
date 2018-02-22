@@ -48,18 +48,18 @@ class Turn {
     if (this.has3ConsecutiveSixes()) {
       return true;
     }
-    if( this.lastMove == 6 || this.currentPlayerChances){
+    if(this.currentPlayerChances){
       return false;
     }
     return true;
   }
 
   decideTurn(){
-    if (this.shouldChangeTurn()) {
-      return this.updateTurn();
-    }
     if (this.lastMove == 6) {
       this.increamentChances();
+    }
+    if (this.shouldChangeTurn()) {
+      return this.updateTurn();
     }
     return this.currentPlayer;
   }
