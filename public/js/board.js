@@ -63,8 +63,9 @@ const setClickListeners = function() {
 };
 
 const changeBgColor = function(color){
-  let board = document.querySelector('.mainContainer');
-  board.className = `mainContainer ${color}`;
+  let player = document.querySelector(`#${color}player`);
+  player.style.backgroundColor = `${color}`;
+  player.focus();
 };
 
 const getCurrPlayerColor = function(gameStatus){
@@ -87,11 +88,14 @@ const getGameStatus = function(){
 
 const showLogs = function(logs){
   let logStatements = logs.map((log)=>{
-    return `<li><span>${log.time}</span>${log.statement}</li>`;
+    let move = `<label>${log.move || ''}</label>`;
+    return `<li><span>${log.time}</span>${log.statement}${move}</li>`;
   }).join('');
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;
-  document.querySelector('ul').lastElementChild.focus();
+  let lastLog = document.querySelector('ul').lastElementChild;
+  let lastPos = lastLog.getBoundingClientRect().y;
+  activityLog.scrollTo(0,lastPos);
 };
 
 const getLogs = function(){

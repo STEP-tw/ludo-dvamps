@@ -19,7 +19,7 @@ describe('ActivityLog', () => {
       activityLog.registerMove('kaka',5);
       let logs = activityLog.getLogs();
       assert.match(JSON.stringify(logs[0]),/kaka/);
-      assert.match(JSON.stringify(logs[0]),/5/);
+      assert.match(JSON.stringify(logs[0]),/&#9860;/);
     });
   });
 });

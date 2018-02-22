@@ -448,7 +448,7 @@ describe('#App', () => {
         .get('/game/logs')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect(/4/)
+        .expect(/&#9859;/)
         .expect(/lala/)
         .end(done);
     });
