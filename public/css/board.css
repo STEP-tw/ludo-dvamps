@@ -232,3 +232,9 @@ li span{
   font-size: 20px;
   margin-right: 20px;
 }
+
+li label{
+  font-weight:normal;
+  margin-left: 5px;
+  font-size: 32px;
+}

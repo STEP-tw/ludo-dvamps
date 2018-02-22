@@ -12,10 +12,12 @@ class ActivityLog {
   }
   registerMove(playerName,move){
     let time = new Date().toLocaleTimeString();
-    let statement = `${playerName} got ${move}.`;
+    let dices = ['&#9856;','&#9857;','&#9858;','&#9859;','&#9860;','&#9861;'];
+    let statement = `${playerName} got`;
     this.logs.push({
       time:time,
-      statement:statement
+      statement:statement,
+      move:dices[move-1]
     });
   }
   getLogs(){
