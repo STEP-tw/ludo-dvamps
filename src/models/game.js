@@ -6,28 +6,29 @@ const Path = require('./path.js');
 const ActivityLog = require('./activityLog.js');
 const Board = require('./board.js');
 
-const generateCoins = function() {
+const generateCoins = function(eventEmitter) {
   let homeId = -1;
   let coins = [];
   for(let count=0;count<16;count++,homeId--){
     let coinId = count+1;
-    coins.push(new Coin(coinId,homeId));
+    coins.push(new Coin(coinId,homeId,eventEmitter));
   }
   return coins;
 };
 
 class Game {
-  constructor(name, ColorDistributor, dice) {
+  constructor(name, ColorDistributor, dice, eventEmitter) {
     this.name = name;
     this.players = [];
     this.status = {};
     this.numberOfPlayers = 4;
     this.colorDistributor = new ColorDistributor();
-    this.coins = generateCoins();
     this.dice = dice;
     this.activityLog = new ActivityLog();
     this.board = new Board(this.numberOfPlayers);
     this.board.generate();
+    this.eventEmitter = eventEmitter;
+    this.coins = generateCoins(this.eventEmitter);
   }
   getCoins(color){
     let colors = ['red','green','yellow','blue'];
@@ -127,6 +128,7 @@ class Game {
       let player = this.getPlayer(playerName);
       let path = this.board.getPathFor(index);
       player.assignPath(path);
+      player.listenDiedEvent(this.eventEmitter);
     });
     this.activityLog.registerTurn(this.turn.currentPlayer);
   }

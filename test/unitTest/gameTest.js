@@ -4,7 +4,7 @@ const Player = require(path.resolve('src/models/player.js'));
 const Game = require(path.resolve('src/models/game.js'));
 const Turn = require(path.resolve('src/models/turn.js'));
 const Coin = require(path.resolve('src/models/coin.js'));
-
+const EventEmitter = require(path.resolve('test/mockEventEmitter.js'));
 const dice = {
   roll: function() {
     return 4;
@@ -28,7 +28,7 @@ describe('#Game', () => {
         this.colors.push(color);
       }
     }
-    game = new Game('newGame', ColorDistributer, dice);
+    game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
   });
   describe('#getStatus()', () => {
     it('should return game status', () => {
@@ -129,6 +129,7 @@ describe('#Game', () => {
       game.addPlayer('lala');
       game.addPlayer('lali');
       game.addPlayer('lalu');
+      game.start();
     });
     it('should return a dice roll status with no movable coins and change turn ', () => {
       let rollStatus = game.rollDice();
@@ -142,7 +143,7 @@ describe('#Game', () => {
           return 6;
         }
       };
-      game = new Game('newGame', ColorDistributer, dice);
+      game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
       game.addPlayer('salman');
       game.addPlayer('lala');
       game.addPlayer('lali');
@@ -210,8 +211,6 @@ describe('#Game', () => {
     });
   });
   describe('#moveCoin', () => {
-    beforeEach(function() {
-    });
     it('should move coin of specific id if coin is valid of current player '+
     ' with specific moves, update game status, return true and should not change turn', () => {
       let dice = {
@@ -219,7 +218,7 @@ describe('#Game', () => {
           return 6;
         }
       };
-      game = new Game('newGame', ColorDistributer, dice);
+      game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
       game.addPlayer('salman');
       game.addPlayer('lala');
       game.addPlayer('lali');
@@ -241,7 +240,7 @@ describe('#Game', () => {
           return 4;
         }
       };
-      game = new Game('newGame', ColorDistributer, dice);
+      game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
       game.addPlayer('salman');
       game.addPlayer('lala');
       game.addPlayer('lali');

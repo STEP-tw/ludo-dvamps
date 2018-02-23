@@ -2,6 +2,7 @@ const assert = require('chai').assert;
 const path = require('path');
 const GameManager = require(path.resolve('src/models/gamesManager.js'));
 const Game = require(path.resolve('src/models/game.js'));
+const EventEmitter = require(path.resolve('test/mockEventEmitter.js'));
 const ColorDistributor = function() {
   this.colors = ['red','green','blue','yellow'];
 }
@@ -19,19 +20,21 @@ describe('GameManager', () => {
   let gameManager;
   let game;
   beforeEach(() => {
-    gameManager = new GameManager(ColorDistributor,dice);
-    game = gameManager.addGame('newGame');
+    gameManager = new GameManager(ColorDistributor,dice,EventEmitter);
+    game = gameManager.addGame('newGame',new EventEmitter());
   });
   describe('#addGame', () => {
     it('should create a new game with given name and store it', () => {
-      assert.deepEqual(game, new Game('newGame',ColorDistributor,dice));
+      let expected = new Game('newGame',ColorDistributor,dice,new EventEmitter());
+      assert.deepEqual(game,expected );
       assert.instanceOf(game,Game);
     });
   });
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
-      let expectedGame = new Game('newGame',ColorDistributor,dice);
+      let expectedGame = new Game('newGame',ColorDistributor,dice,
+        new EventEmitter());
       expectedGame.addPlayer('john');
       assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
     });
@@ -66,7 +69,8 @@ describe('GameManager', () => {
   });
   describe('#getGame()', () => {
     it('should return Game', () => {
-      assert.deepEqual(gameManager.getGame('newGame'), new Game('newGame', ColorDistributor, dice));
+      let expected = new Game('newGame', ColorDistributor, dice,new EventEmitter());
+      assert.deepEqual(gameManager.getGame('newGame'),expected);
       assert.isUndefined(gameManager.getGame('badGame'));
     });
   });

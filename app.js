@@ -33,9 +33,9 @@ app.initialize = function(gamesManager,fs) {
   app.fs = fs;
 };
 
-app.use(logger('combined', {
-  stream: accessLogStream
-}));
+// app.use(logger('combined', {
+//   stream: accessLogStream
+// }));
 app.use(express.urlencoded({
   extended: false
 }));
