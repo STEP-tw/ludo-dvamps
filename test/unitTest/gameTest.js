@@ -123,15 +123,13 @@ describe('#Game', () => {
     })
   });
   describe('#rollDice', () => {
-    let addPlayers = function(game) {
+    beforeEach(function() {
       game.addPlayer('salman');
       game.addPlayer('lala');
       game.addPlayer('lali');
       game.addPlayer('lalu');
-    }
+    });
     it('should return a dice roll status with no movable coins and change turn ', () => {
-      addPlayers(game);
-      game.start();
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 4);
       assert.notPropertyVal(rollStatus,'coins');
@@ -144,7 +142,10 @@ describe('#Game', () => {
         }
       };
       game = new Game('newGame', ColorDistributer, dice);
-      addPlayers(game);
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
       game.start();
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 6);
@@ -153,11 +154,6 @@ describe('#Game', () => {
       assert.equal(game.getCurrentPlayer().getName(),'salman')
     });
     it('should return dice status with move undefined if there are no player chances ', () => {
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
-      game.start();
       game.turn.playerChances = 0;
       assert.equal(game.getCurrentPlayer().getName(),'salman')
       let rollStatus = game.rollDice();
@@ -166,8 +162,6 @@ describe('#Game', () => {
       assert.equal(game.getCurrentPlayer().getName(),'lala')
     });
     it('should register move in activity log', () => {
-      addPlayers(game);
-      game.start();
       game.rollDice();
       let logs = game.getLogs();
       assert.match(JSON.stringify(logs[0]),/salman/);
@@ -175,10 +169,11 @@ describe('#Game', () => {
   });
   describe('#getCurrentPlayer', () => {
     it('should return the current player name', () => {
-      game.addPlayer('ram');
-      game.players[0].color = 'red';
-      game.start();
-      assert.propertyVal(game.getCurrentPlayer(),'name','ram');
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      assert.propertyVal(game.getCurrentPlayer(),'name','salman');
       assert.propertyVal(game.getCurrentPlayer(),'color','red');
     });
   });
@@ -198,7 +193,6 @@ describe('#Game', () => {
       game.addPlayer('kaka');
       game.addPlayer('ram');
       game.addPlayer('shyam');
-      game.start();
       assert.property(game, 'turn');
       assert.propertyVal(game.getCurrentPlayer(),'name','lala');
     });
@@ -209,10 +203,50 @@ describe('#Game', () => {
       game.addPlayer('kaka');
       game.addPlayer('ram');
       game.addPlayer('shyam');
-      game.start();
       let gameStatus = game.getGameStatus();
       assert.equal(gameStatus.currentPlayerName, 'lala');
       assert.lengthOf(gameStatus.players, 4);
+    });
+  });
+  describe('#moveCoin', () => {
+    beforeEach(function() {
+    });
+    it('should move coin of specific id if coin is valid of current player '+
+    ' with specific moves, update game status and return true', () => {
+      let dice = {
+        roll:function(){
+          return 6;
+        }
+      };
+      game = new Game('newGame', ColorDistributer, dice);
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      game.rollDice();
+      let currPlayer = game.getCurrentPlayer();
+      assert.isOk(game.moveCoin(1));
+      assert.equal(currPlayer.getCoin(1).position,0);
+      game.rollDice();
+      assert.isOk(game.moveCoin(1));
+      assert.equal(currPlayer.getCoin(1).position,6);
+    });
+    it('should not move coin of specific id if coin is not valid of current player '+
+    'and return false', () => {
+      let dice = {
+        roll:function(){
+          return 4;
+        }
+      };
+      game = new Game('newGame', ColorDistributer, dice);
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      game.rollDice();
+      let currPlayer = game.getPlayer('salman');
+      assert.isNotOk(game.moveCoin(1));
+      assert.equal(currPlayer.getCoin(1).position,-1);
     });
   });
 });
