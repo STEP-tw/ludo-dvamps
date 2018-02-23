@@ -7,6 +7,7 @@ const checkCookie = function(req,res,next) {
   }
   next();
 };
+
 const isEmptyString = function(string) {
   return string == '';
 };
@@ -54,6 +55,14 @@ const loadGame = function(req,res,next) {
     return redirectToHome(res);
   }
   req.game = game;
+  next();
+};
+
+const checkGame = function(req,res,next) {
+  if((req.url=='/board.html') && !(req.game)) {
+    res.redirect('/index.html');
+    return;
+  }
   next();
 };
 
@@ -109,5 +118,6 @@ module.exports = {
   verifyReqBody,
   checkCharacterLimit,
   checkCurrentPlayer,
-  checkIsGamePresent
+  checkIsGamePresent,
+  checkGame
 };

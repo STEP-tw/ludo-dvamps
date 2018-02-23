@@ -41,6 +41,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(lib.checkGame);
 app.use(lib.trimRequestBody);
 app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));

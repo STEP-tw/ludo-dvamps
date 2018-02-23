@@ -5,15 +5,22 @@ main {
 }
 
 ellipse.focus {
-  stroke: #eefff4;
+  stroke-dasharray: 3,3;
   stroke-width: 3;
+  animation: dash 5s linear infinite;
 }
-
+@keyframes dash{
+    to{
+      stroke-dashoffset:0;
+    }
+    from{
+      stroke-dashoffset:500;
+    }
+}
 .mainContainer {
   float: left;
   width: 127vh;
   height: 85vh;
-  /*border: 1px solid black;*/
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
@@ -43,6 +50,7 @@ ellipse.focus {
 
 input {
   text-align: center;
+  outline: none;
 }
 
 .left {
@@ -100,7 +108,7 @@ svg{
 
 .logs {
   float: right;
-  width: 21vw;
+  width: 45vh;
   height: 70vh;
   border: 1px solid lightGray;
 }
@@ -140,7 +148,7 @@ svg{
   width: 50px;
   height: 50px;
   overflow: hidden;
-  margin: 15% 0% 0% 45%;
+  margin: 10% 0% 0% 45%;
 }
 
 img[alt="DICE FACES"] {

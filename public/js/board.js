@@ -74,6 +74,11 @@ const getCurrPlayerColor = function(gameStatus){
   return players.find(player=>player.name==currentPlayer).color;
 };
 
+const hideDice = function() {
+  let dice = getElement('.dice');
+  dice.style.display = "none";
+};
+
 const getGameStatus = function(){
   sendAjaxRequest('GET','/game/gameStatus',function(){
     if(!this.responseText){
@@ -114,7 +119,7 @@ const load = function() {
     main.innerHTML = this.responseText;
   });
   setInterval(getGameStatus,1000);
-  setInterval(getLogs,1000);
+  setInterval(getLogs,2000);
 };
 
 const moveCoin = (coinId,cellId) => {

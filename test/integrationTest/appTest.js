@@ -69,7 +69,16 @@ describe('#App', () => {
         .end(done);
     });
   });
-  describe('GET /getAvailableGames', () => {
+  describe('GET /board.html', () => {
+    it('should serve index page', done => {
+      request(app)
+        .get('/board.html')
+        .expect(302)
+        .expect('Location','/index.html')
+        .end(done);
+    });
+  });
+  describe('GET getAvailableGames', () => {
     it('should give all available games', done => {
       gamesManager = new GamesManager(ColorDistributer,dice)
       app.initialize(gamesManager);
