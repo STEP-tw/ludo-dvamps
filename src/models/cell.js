@@ -4,6 +4,7 @@ class Cell {
     this.coins = [];
   }
   addCoin(coin){
+    coin.setPosition(this.position);
     this.coins.push(coin);
   }
 }

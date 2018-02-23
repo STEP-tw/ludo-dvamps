@@ -6,7 +6,7 @@ describe('Cell', () => {
     describe('#addCoin', () => {
       it('should add coin into cell ', () => {
         let cell = new Cell(1);
-        let coin = {id:1};
+        let coin = {id:1,setPosition:(pos)=>this.position=pos};
         cell.addCoin(coin);
         assert.include(cell.coins,coin);
       });

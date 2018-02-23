@@ -7,4 +7,11 @@ describe('#Coin', () => {
       assert.equal(coin.getPosition(),-1);
     });
   });
+  describe('#setPosition', () => {
+    it('should should set coin position to given position', () => {
+      let coin = new Coin(1,-1);
+      coin.setPosition(10);
+      assert.equal(coin.getPosition(),10);
+    });
+  });
 });

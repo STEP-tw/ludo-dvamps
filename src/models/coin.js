@@ -12,6 +12,9 @@ class Coin {
   setColor(color) {
     this.color = color;
   }
+  setPosition(pos){
+    this.position = pos;
+  }
 }
 
 module.exports = Coin;
