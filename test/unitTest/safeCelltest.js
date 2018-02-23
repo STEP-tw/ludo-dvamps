@@ -6,12 +6,8 @@ describe('SafeCell', () => {
   describe('#removeCoin', () => {
     it('should remove coin from cell and return it ', () => {
       let safeCell = new SafeCell(1);
-      let firstCoin = {
-        id: 1
-      }
-      let secondCoin = {
-        id: 2
-      }
+      let firstCoin = {id:1,setPosition:(pos)=>this.position=pos};
+      let secondCoin = {id:2,setPosition:(pos)=>this.position=pos};
       safeCell.addCoin(firstCoin);
       safeCell.addCoin(secondCoin);
       assert.deepEqual(safeCell.removeCoin(1), firstCoin);

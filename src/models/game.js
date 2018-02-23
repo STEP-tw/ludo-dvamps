@@ -66,7 +66,7 @@ class Game {
   createPlayer(playerName){
     let playerColor = this.colorDistributor.getColor();
     let coins = this.getCoins(playerColor);
-    return new Player(playerName,playerColor,coins,new Path());
+    return new Player(playerName,playerColor,coins,new Path(coins.length));
   }
   addPlayer(playerName) {
     if (!this.doesPlayerExist(playerName) && !this.hasEnoughPlayers()) {
@@ -106,13 +106,11 @@ class Game {
     let currentPlayer = this.getCurrentPlayer();
     this.activityLog.registerMove(currentPlayer.name,move);
     this.status.move = move || this.status.move;
-    if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
-      turn.decideTurn();
-      this.activityLog.registerTurn(this.getCurrentPlayer().name);
-      return {move:move};
-    }
     turn.decideTurn();
     this.activityLog.registerTurn(this.getCurrentPlayer().name);
+    if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
+      return {move:move};
+    }
     return {move:move,coins:this.getMovableCoinsOf(move)};
   }
   arrangePlayers(){
@@ -138,6 +136,18 @@ class Game {
   }
   getLogs(){
     return this.activityLog.getLogs();
+  }
+  moveCoin(coinId){
+    let currentPlayer = this.getCurrentPlayer();
+    let move = this.turn.lastMove;
+    let movablecoins = currentPlayer.getMovableCoins(move);
+    let isCoinValid = movablecoins.some((coin=>coin.id==coinId));
+    if (isCoinValid) {
+      currentPlayer.moveCoin(coinId,move);
+      this.setStatus();
+      return true;
+    }
+    return false;
   }
 }
 

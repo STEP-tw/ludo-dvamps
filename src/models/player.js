@@ -11,6 +11,9 @@ class Player {
   getName() {
     return this.name;
   }
+  getCoin(id){
+    return this.coins.find(coin=>coin.id==id);
+  }
   getColor() {
     return this.color;
   }
@@ -40,6 +43,11 @@ class Player {
   }
   assignPath(path){
     this.path.add(path);
+  }
+  moveCoin(coinId,move){
+    let coin = this.coins.find(coin=>coin.id==coinId);
+    let nextCoin = this.path.moveCoin(coin,move);
+    coin.setPosition(nextCoin);
   }
 }
 module.exports = Player;

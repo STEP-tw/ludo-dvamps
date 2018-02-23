@@ -3,6 +3,7 @@ const _path = require('path');
 const Path = require(_path.resolve('src/models/path.js'));
 const Player = require(_path.resolve('src/models/player.js'));
 const Coin = require(_path.resolve('src/models/coin.js'));
+const Cell = require(_path.resolve('src/models/safeCell.js'));
 
 const dice = {
   roll : function(){
@@ -11,10 +12,16 @@ const dice = {
 };
 
 describe('#Player', () => {
-  let player,coins,path;
+  let player,coins,path,firstCoin,secondCoin;
   beforeEach(function(){
-    path = new Path();
-    coins = [new Coin(1,-2),new Coin(2,-3)];
+    path = new Path(2);
+    firstCoin = new Coin(1,-2);
+    secondCoin = new Coin(2,-3);
+    firstCoin.setPosition(-2)
+    secondCoin.setPosition(-3)
+    coins = [firstCoin,secondCoin];
+    path.addCell(new Cell(-2));
+    path.addCell(new Cell(-3));
     player = new Player('ashish','red',coins,path);
   })
   describe('#getName', () => {
@@ -55,11 +62,13 @@ describe('#Player', () => {
     });
   });
   describe('#getMovableCoins', () => {
+    beforeEach(()=>{
+      player.path.addCell(new Cell(1));
+      player.path.addCell(new Cell(2));
+      player.path.addCell(new Cell(3));
+      player.path.addCell(new Cell(4));
+    })
     it('should return empty list if there are no movable coins', () => {
-      player.path.addCell(1);
-      player.path.addCell(2);
-      player.path.addCell(3);
-      player.path.addCell(4);
       let expected = [];
       assert.deepEqual(player.getMovableCoins(3),expected);
     });
@@ -93,6 +102,30 @@ describe('#Player', () => {
     });
     it('should return false if there are no movable coins', () => {
       assert.isNotOk(player.hasMovableCoins(3));
+    });
+  });
+  describe('#moveCoin', () => {
+    beforeEach(()=>{
+      player.path.addCell(new Cell(1));
+      player.path.addCell(new Cell(2));
+      player.path.addCell(new Cell(3));
+      player.path.addCell(new Cell(4));
+      player.path.addCell(new Cell(5));
+      player.path.addCell(new Cell(6));
+    })
+    it('should move given coin by given specific moves', () => {
+      player.path.getCell(-2).addCoin(firstCoin);
+      player.moveCoin(1,6);
+      assert.equal(player.getCoin(1).position,1);
+      assert.lengthOf(player.path.getCell(-2).coins,0);
+      assert.lengthOf(player.path.getCell(1).coins,1);
+    });
+    it('should not move given coin by given specific moves if move is not posible', () => {
+      player.path.getCell(-2).addCoin(firstCoin);
+      player.moveCoin(1,3);
+      assert.equal(player.getCoin(1).position,-2)
+      assert.lengthOf(player.path.getCell(-2).coins,1);
+      assert.lengthOf(player.path.getCell(1).coins,0);
     });
   });
 });
