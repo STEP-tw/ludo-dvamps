@@ -213,7 +213,7 @@ describe('#Game', () => {
     beforeEach(function() {
     });
     it('should move coin of specific id if coin is valid of current player '+
-    ' with specific moves, update game status and return true', () => {
+    ' with specific moves, update game status, return true and should not change turn', () => {
       let dice = {
         roll:function(){
           return 6;
@@ -228,12 +228,14 @@ describe('#Game', () => {
       let currPlayer = game.getCurrentPlayer();
       assert.isOk(game.moveCoin(1));
       assert.equal(currPlayer.getCoin(1).position,0);
+      assert.equal(game.getCurrentPlayer().name,'salman');
       game.rollDice();
       assert.isOk(game.moveCoin(1));
       assert.equal(currPlayer.getCoin(1).position,6);
+      assert.equal(game.getCurrentPlayer().name,'salman');
     });
     it('should not move coin of specific id if coin is not valid of current player '+
-    'and return false', () => {
+    ', return false and update turn', () => {
       let dice = {
         roll:function(){
           return 4;
@@ -248,6 +250,7 @@ describe('#Game', () => {
       let currPlayer = game.getPlayer('salman');
       assert.isNotOk(game.moveCoin(1));
       assert.equal(currPlayer.getCoin(1).position,-1);
+      assert.equal(game.getCurrentPlayer().name,'lala');
     });
   });
   describe('#hasWon',()=>{

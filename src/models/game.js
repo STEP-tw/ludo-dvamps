@@ -106,7 +106,7 @@ class Game {
     let currentPlayer = this.getCurrentPlayer();
     this.activityLog.registerMove(currentPlayer.name,move);
     this.status.move = move || this.status.move;
-    turn.decideTurn();
+    turn.decideTurnAsPerMove(currentPlayer.hasMovableCoins(move));
     this.activityLog.registerTurn(this.getCurrentPlayer().name);
     if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
       return {move:move};
@@ -141,10 +141,11 @@ class Game {
     let currentPlayer = this.getCurrentPlayer();
     let move = this.turn.lastMove;
     let movablecoins = currentPlayer.getMovableCoins(move);
-    let isCoinValid = movablecoins.some((coin=>coin.id==coinId));
-    if (isCoinValid) {
+    let isValidMovable = movablecoins.some((coin=>coin.id==coinId));
+    if (isValidMovable) {
       currentPlayer.moveCoin(coinId,move);
       this.setStatus();
+      this.turn.decideTurnOnChance();
       return true;
     }
     return false;
