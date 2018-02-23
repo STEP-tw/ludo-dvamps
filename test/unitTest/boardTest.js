@@ -6,13 +6,10 @@ let UnsafeCell = require(path.resolve('src/models/unsafeCell.js'));
 let DestinationCell = require(path.resolve('src/models/destinationCell.js'));
 
 describe('Board', () => {
-  let board;
-  beforeEach(() => {
-    board = new Board(4);
-  })
   describe('#generateCommonRoute', () => {
     it('should generate and return route for number of Player given, ' +
       'where specific cells will be safe cells', () => {
+        let board = new Board(4);
         let commonRoute = board.generateCommonRoute();
         let expectedSafeCells = [0, 8, 13, 21, 26, 34, 39, 47];
         assert.lengthOf(commonRoute, 52);
@@ -26,6 +23,7 @@ describe('Board', () => {
   });
   describe('#generateHomeCells', () => {
     it('should generate and return home(safe) cells for number of Players given ', () => {
+      let board = new Board(4);
       let homeCells = board.generateHomeCells();
       assert.lengthOf(homeCells, 16);
       homeCells.forEach((cell, index) => {
@@ -36,6 +34,7 @@ describe('Board', () => {
   });
   describe('#generateFinalPaths', () => {
     it('should generate and return final paths for each player', () => {
+      let board = new Board(4);
       let finalPaths = board.generateFinalPaths();
       assert.lengthOf(Object.keys(finalPaths), 4);
       Object.values(finalPaths).forEach((path) => {
@@ -49,6 +48,7 @@ describe('Board', () => {
   });
   describe('#generateDestinations', () => {
     it('should generate and return destination cells for given number of players', () => {
+      let board = new Board(4);
       let destinations = board.generateDestinations();
       Object.values(destinations).forEach(cell=>{
         assert.instanceOf(cell,DestinationCell);
@@ -61,6 +61,7 @@ describe('Board', () => {
   });
   describe('#generate', () => {
     it('should generate all board cells for given number of players', () => {
+      let board = new Board(4);
       board.generate();
       assert.property(board,'commonRoute');
       assert.lengthOf(board.commonRoute,52);
@@ -74,6 +75,7 @@ describe('Board', () => {
   });
   describe('#getCommonPathFor', () => {
     it('should return common path for specific player', () => {
+      let board = new Board(4);
       board.generate();
       let path = board.getCommonPathFor(0);
       assert.lengthOf(path,51);
@@ -82,6 +84,7 @@ describe('Board', () => {
   });
   describe('#getPathFor', () => {
     it('should return path for specific player', () => {
+      let board = new Board(4);
       board.generate();
       assert.lengthOf(board.getPathFor(0),61);
       assert.lengthOf(board.getPathFor(1),61);

@@ -5,6 +5,7 @@ const Player = require(_path.resolve('src/models/player.js'));
 const Coin = require(_path.resolve('src/models/coin.js'));
 const SafeCell = require(_path.resolve('src/models/safeCell.js'));
 const MockEventEmitter = require(_path.resolve('test/mockEventEmitter.js'));
+const DestinationCell = require(_path.resolve('src/models/destinationCell.js'));
 const dice = {
   roll : function(){
     return 4;
@@ -20,14 +21,18 @@ const generateSafeCells = function(from,to) {
 };
 
 describe('#Player', () => {
-  let player,coins,path,firstCoin,secondCoin,eventEmitter;
+  let player,coins,path,firstCoin,secondCoin,thirdCoin,fourthCoin,eventEmitter;
   beforeEach(function(){
     path = new Path(2);
     eventEmitter = new MockEventEmitter();
     firstCoin = new Coin(1,-2,eventEmitter);
     secondCoin = new Coin(2,-3,eventEmitter);
+    thirdCoin = new Coin(3,-4,eventEmitter);
+    fourthCoin = new Coin(4,-5,eventEmitter);
     firstCoin.setPosition(-2)
     secondCoin.setPosition(-3)
+    thirdCoin.setPosition(-4)
+    fourthCoin.setPosition(-5)
     coins = [firstCoin,secondCoin];
     path.addCell(new SafeCell(-2));
     path.addCell(new SafeCell(-3));
@@ -167,6 +172,24 @@ describe('#Player', () => {
       player.listenDiedEvent(eventEmitter);
       assert.isOk(eventEmitter.isRegisteredEvent('died'));
       assert.equal(eventEmitter.getCallBackOf('died'),player.entertainDiedEvent);
+    });
+  });
+  describe('#getNoOfCoinsInDest', () => {
+    beforeEach(()=>{
+      player.path.addCell(new DestinationCell(61));
+    })
+    it('should give number of coins in destination', () => {
+      player.path.getCell(61).addCoin(firstCoin);
+      player.path.getCell(61).addCoin(secondCoin);
+      player.path.getCell(61).addCoin(thirdCoin);
+      assert.equal(player.getNoOfCoinsInDest(),3);
+    });
+    it('should give number of coins in destination', () => {
+      player.path.getCell(61).addCoin(firstCoin);
+      player.path.getCell(61).addCoin(secondCoin);
+      player.path.getCell(61).addCoin(thirdCoin);
+      player.path.getCell(61).addCoin(fourthCoin);
+      assert.equal(player.getNoOfCoinsInDest(),4);
     });
   });
 });

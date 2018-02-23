@@ -61,5 +61,9 @@ class Player {
     let coin = this.coins.find((coin)=>coin.id == coinId);
     this.path.putAtHome(coin);
   }
+  getNoOfCoinsInDest(){
+    let path = this.getPath();
+    return path.getCoinsInDest();
+  }
 }
 module.exports = Player;
