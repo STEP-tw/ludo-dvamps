@@ -1,9 +1,10 @@
 class Coin {
-  constructor(id,homePosition) {
+  constructor(id,homePosition,eventEmitter) {
     this.id = id;
     this.position = homePosition;
     this.homePosition = homePosition;
     this.color;
+    this.eventEmitter = eventEmitter;
   }
   getPosition(){
     return this.position;
@@ -14,6 +15,9 @@ class Coin {
   }
   setPosition(pos){
     this.position = pos;
+  }
+  die(){
+    this.eventEmitter.emit('died',{id:this.id,color:this.color});
   }
 }
 

@@ -47,6 +47,11 @@ class Path {
     currentCell.removeCoin(coin) && nextCell.addCoin(coin);
     return nextCell.position;
   }
+  putAtHome(coin){
+    let homePosition = coin.homePosition;
+    let homeCell = this.cells.find((cell)=> cell.getPosition()==homePosition);
+    homeCell.addCoin(coin);
+  }
 }
 
 module.exports = Path;

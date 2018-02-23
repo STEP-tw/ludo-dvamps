@@ -130,4 +130,17 @@ describe('Path', () => {
       assert.include(cellWithCoin.coins,coin);
     });
   });
+  describe('#putAtHome', () => {
+    it('should put coin in homeCell ', () => {
+      let cell1 = new Cell(-1);
+      let cell2 = new Cell(-2);
+      let cell3 = new Cell(-3);
+      let coin = new Coin(1,-2,{});
+      coin.setPosition(4);
+      assert.equal(coin.getPosition(),4);
+      redPath.add([cell1,cell2,cell3]);
+      redPath.putAtHome(coin);
+      assert.equal(coin.getPosition(),-2);
+    });
+  });
 });

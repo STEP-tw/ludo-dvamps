@@ -49,5 +49,17 @@ class Player {
     let nextPosCoin = this.path.moveCoin(coin,move);
     coin.setPosition(nextPosCoin);
   }
+  entertainDiedEvent(coinDetail){
+    if(coinDetail.color == this.color){
+      this.moveCoinToHome(coinDetail.id);
+    }
+  }
+  listenDiedEvent(eventEmitter){
+    eventEmitter.on('died',this.entertainDiedEvent);
+  }
+  moveCoinToHome(coinId){
+    let coin = this.coins.find((coin)=>coin.id == coinId);
+    this.path.putAtHome(coin);
+  }
 }
 module.exports = Player;
