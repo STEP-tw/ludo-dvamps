@@ -3,6 +3,7 @@ const path = require('path');
 const Path= require(path.resolve('src/models/path.js'));
 const Coin= require(path.resolve('src/models/coin.js'));
 const Cell= require(path.resolve('src/models/safeCell.js'));
+const DestinationCell= require(path.resolve('src/models/destinationCell.js'));
 
 describe('Path', () => {
   let redPath;
@@ -128,6 +129,35 @@ describe('Path', () => {
       redPath.moveCoin(coin,5);
       assert.lengthOf(cellWithCoin.coins,1);
       assert.include(cellWithCoin.coins,coin);
+    });
+  });
+  describe('#getDestination', () => {
+    it('should give destinationCell back', () => {
+      let destinationCell = new DestinationCell(61);
+      redPath.addCell(new Cell(3));
+      redPath.addCell(new Cell(4));
+      redPath.addCell(destinationCell);
+      assert.deepEqual(redPath.getDestination(),destinationCell);
+    });
+  });
+  describe('#getCoinsInDestination', () => {
+    it('should give number of coins in destinationCell', () => {
+      let destinationCell = new DestinationCell(61);
+      redPath.addCell(new Cell(3));
+      redPath.addCell(new Cell(4));
+      redPath.addCell(destinationCell);
+      destinationCell.addCoin(new Coin(1,-1));
+      assert.equal(redPath.getCoinsInDest(),1);
+    });
+    it('should give number of coins in destinationCell', () => {
+      let destinationCell = new DestinationCell(61);
+      redPath.addCell(new Cell(3));
+      redPath.addCell(new Cell(4));
+      redPath.addCell(destinationCell);
+      destinationCell.addCoin(new Coin(1,-1));
+      destinationCell.addCoin(new Coin(2,-2));
+      destinationCell.addCoin(new Coin(3,-3));
+      assert.equal(redPath.getCoinsInDest(),3);
     });
   });
 });

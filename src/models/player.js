@@ -49,5 +49,9 @@ class Player {
     let nextCoin = this.path.moveCoin(coin,move);
     coin.setPosition(nextCoin);
   }
+  getNoOfCoinsInDest(){
+    let path = this.getPath();
+    return path.getCoinsInDest();
+  }
 }
 module.exports = Player;

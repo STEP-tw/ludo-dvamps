@@ -3,6 +3,7 @@ const path = require('path');
 const Player = require(path.resolve('src/models/player.js'));
 const Game = require(path.resolve('src/models/game.js'));
 const Turn = require(path.resolve('src/models/turn.js'));
+const Coin = require(path.resolve('src/models/coin.js'));
 
 const dice = {
   roll: function() {
@@ -249,4 +250,21 @@ describe('#Game', () => {
       assert.equal(currPlayer.getCoin(1).position,-1);
     });
   });
+  describe('#hasWon',()=>{
+    it('should return true if player has 4 coins in destination cell',()=>{
+      game.addPlayer('kaka');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
+      let currentPlayer = game.getCurrentPlayer();
+      let path = currentPlayer.getPath();
+      let destination = path.getDestination();
+      destination.addCoin(new Coin(1));
+      destination.addCoin(new Coin(2));
+      assert.isNotOk(game.hasWon());
+      destination.addCoin(new Coin(3));
+      destination.addCoin(new Coin(4));
+      assert.isOk(game.hasWon());
+    })
+  })
 });

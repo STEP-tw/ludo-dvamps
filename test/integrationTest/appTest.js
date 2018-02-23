@@ -442,7 +442,7 @@ describe('#App', () => {
     });
   });
   describe('#GET /game/logs', () => {
-    beforeEach(()=>{
+    it('should give game activity log', (done) => {
       let game = gamesManager.addGame('newGame');
       game.addPlayer('lala');
       game.addPlayer('kaka');
@@ -451,8 +451,6 @@ describe('#App', () => {
       game.start();
       game.rollDice();
       app.initialize(gamesManager);
-    })
-    it('should give game activity log', (done) => {
       request(app)
         .get('/game/logs')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])

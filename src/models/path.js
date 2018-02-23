@@ -47,6 +47,13 @@ class Path {
     currentCell.removeCoin(coin) && nextCell.addCoin(coin);
     return nextCell.position;
   }
+  getDestination(){
+    return this.cells[this.cells.length-1];
+  }
+  getCoinsInDest(){
+    let destinationCell = this.getDestination();
+    return destinationCell.getNumberOfCoins();
+  }
 }
 
 module.exports = Path;

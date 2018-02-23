@@ -4,6 +4,7 @@ const Path = require(_path.resolve('src/models/path.js'));
 const Player = require(_path.resolve('src/models/player.js'));
 const Coin = require(_path.resolve('src/models/coin.js'));
 const Cell = require(_path.resolve('src/models/safeCell.js'));
+const DestinationCell = require(_path.resolve('src/models/destinationCell.js'));
 
 const dice = {
   roll : function(){
@@ -12,13 +13,17 @@ const dice = {
 };
 
 describe('#Player', () => {
-  let player,coins,path,firstCoin,secondCoin;
+  let player,coins,path,firstCoin,secondCoin,thirdCoin,fourthCoin;
   beforeEach(function(){
     path = new Path(2);
     firstCoin = new Coin(1,-2);
     secondCoin = new Coin(2,-3);
+    thirdCoin = new Coin(3,-4);
+    fourthCoin = new Coin(4,-5);
     firstCoin.setPosition(-2)
     secondCoin.setPosition(-3)
+    thirdCoin.setPosition(-4)
+    fourthCoin.setPosition(-5)
     coins = [firstCoin,secondCoin];
     path.addCell(new Cell(-2));
     path.addCell(new Cell(-3));
@@ -126,6 +131,26 @@ describe('#Player', () => {
       assert.equal(player.getCoin(1).position,-2)
       assert.lengthOf(player.path.getCell(-2).coins,1);
       assert.lengthOf(player.path.getCell(1).coins,0);
+    });
+  });
+
+
+  describe('#getNoOfCoinsInDest', () => {
+    beforeEach(()=>{
+      player.path.addCell(new DestinationCell(61));
+    })
+    it('should give number of coins in destination', () => {
+      player.path.getCell(61).addCoin(firstCoin);
+      player.path.getCell(61).addCoin(secondCoin);
+      player.path.getCell(61).addCoin(thirdCoin);
+      assert.equal(player.getNoOfCoinsInDest(),3);
+    });
+    it('should give number of coins in destination', () => {
+      player.path.getCell(61).addCoin(firstCoin);
+      player.path.getCell(61).addCoin(secondCoin);
+      player.path.getCell(61).addCoin(thirdCoin);
+      player.path.getCell(61).addCoin(fourthCoin);
+      assert.equal(player.getNoOfCoinsInDest(),4);
     });
   });
 });

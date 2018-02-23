@@ -149,6 +149,13 @@ class Game {
     }
     return false;
   }
+  hasWon() {
+    let currentPlayer = this.getCurrentPlayer();
+    if(currentPlayer.getNoOfCoinsInDest()==4){
+      return true;
+    }
+    return false;
+  }
 }
 
 module.exports = Game;
