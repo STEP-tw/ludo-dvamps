@@ -32,14 +32,25 @@ ColorDistributer.prototype = {
     this.colors.push(color);
   }
 }
-
-describe.skip('#App', () => {
-  let gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
-  beforeEach(function(done) {
+const initGameAndRollDice = function(dice) {
+  let gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter)
+  let game = gamesManager.addGame('newGame');
+  game.addPlayer('lala');
+  game.addPlayer('kaka');
+  game.addPlayer('ram');
+  game.addPlayer('shyam');
+  game.start();
+  game.rollDice();
+  return gamesManager;
+}
+describe('#App', () => {
+  let gamesManager = {};
+  beforeEach(function() {
+    gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
     app.initialize(gamesManager);
-    done();
   });
   describe('#GET /', () => {
+    //app.initialize(gamesManager);
     it('should serve index page', done => {
       request(app)
       .get('/')
@@ -384,50 +395,37 @@ describe.skip('#App', () => {
   });
   describe('#GET /game/rollDice', () => {
     it('should roll the dice for currentPlayer', (done) => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      gamesManager.getGame('newGame').start();
+      let gamesManager = initGameAndRollDice(dice);
       app.initialize(gamesManager);
       request(app)
         .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+        .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
         .expect(200)
         .expect('{"move":4}')
         .end(done);
     });
     it('should response with bad request if player is not there', () => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      gamesManager.getGame('newGame').start();
+      let gamesManager = initGameAndRollDice(dice);
       app.initialize(gamesManager);
       request(app)
         .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(400)
         .end();
     });
   });
   describe('get /game/gameStatus', () => {
-    beforeEach(function() {
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('ashish');
-      game.addPlayer('joy');
-      game.addPlayer('pallabi');
-      game.addPlayer('lala');
+    beforeEach(function(done) {
+      let gamesManager = initGameAndRollDice(dice);
       app.initialize(gamesManager);
+      done();
     });
     it('should give game status', (done) => {
       request(app)
         .get('/game/gameStatus')
-        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .set('Cookie',['gameName=newGame','playerName=lala'])
         .expect(200)
-        .expect(/ashish/)
+        .expect(/lala/)
         .expect(/red/)
         .end(done);
     });
@@ -446,15 +444,9 @@ describe.skip('#App', () => {
         .end(done);
     });
   });
-  describe.skip('#GET /game/logs', () => {
+  describe('#GET /game/logs', () => {
     it('should give game activity log', (done) => {
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.start();
-      game.rollDice();
+      let gamesManager = initGameAndRollDice(dice);
       app.initialize(gamesManager);
       request(app)
         .get('/game/logs')
@@ -470,13 +462,7 @@ describe.skip('#App', () => {
       let dice = {
         roll:()=>6
       }
-      gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter)
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.rollDice();
+      let gamesManager = initGameAndRollDice(dice);
       app.initialize(gamesManager);
       request(app)
         .post('/game/moveCoin')
@@ -494,13 +480,8 @@ describe.skip('#App', () => {
           return moves.shift();
         }
       }
-      gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter)
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.rollDice();
+      let gamesManager = initGameAndRollDice(dice);
+      let game = gamesManager.getGame('newGame');
       game.moveCoin(1);
       game.rollDice();
       app.initialize(gamesManager);
@@ -518,13 +499,7 @@ describe.skip('#App', () => {
       let dice = {
         roll:()=>6
       }
-      gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter)
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.rollDice();
+      let gamesManager = initGameAndRollDice(dice);
       app.initialize(gamesManager);
       request(app)
         .post('/game/moveCoin')
