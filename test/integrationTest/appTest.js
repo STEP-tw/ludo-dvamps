@@ -33,9 +33,10 @@ ColorDistributer.prototype = {
   }
 }
 
-describe.skip('#App', () => {
-  let gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
+describe('#App', () => {
+  let gamesManager = {};
   beforeEach(function(done) {
+    gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
     app.initialize(gamesManager);
     done();
   });
@@ -446,7 +447,7 @@ describe.skip('#App', () => {
         .end(done);
     });
   });
-  describe.skip('#GET /game/logs', () => {
+  describe('#GET /game/logs', () => {
     it('should give game activity log', (done) => {
       let game = gamesManager.addGame('newGame');
       game.addPlayer('lala');
