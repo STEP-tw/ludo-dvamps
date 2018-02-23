@@ -108,6 +108,13 @@ const checkIsGamePresent = function(req,res,next){
   next();
 };
 
+const logger = function(req,res,next) {
+  console.log(`${req.method} ${req.url}`);
+  console.log(`   cookies are ${JSON.stringify(req.cookies)}`);
+  console.log(`   reqBody is ${JSON.stringify(req.body)}\n`);
+  next();
+};
+
 
 module.exports = {
   checkCookie,
@@ -119,5 +126,6 @@ module.exports = {
   checkCharacterLimit,
   checkCurrentPlayer,
   checkIsGamePresent,
-  checkGame
+  checkGame,
+  logger
 };
