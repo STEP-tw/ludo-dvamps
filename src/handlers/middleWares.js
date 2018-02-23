@@ -77,6 +77,29 @@ const checkCharacterLimit = function(req,res,next) {
   next();
 };
 
+const checkCurrentPlayer= function(req,res,next){
+  let currentPlayer = req.game.getCurrentPlayer().name;
+  if (currentPlayer != req.cookies.playerName) {
+    res.status(400);
+    res.send({status:false,message:'Not your turn!'});
+    res.end();
+    return;
+  }
+  next();
+};
+
+const checkIsGamePresent = function(req,res,next){
+  let gameName = req.cookies.gameName;
+  if (!req.app.gamesManager.doesGameExists(gameName)) {
+    res.statusCode = 400;
+    res.send('');
+    res.end();
+    return;
+  }
+  next();
+};
+
+
 module.exports = {
   checkCookie,
   loadGame,
@@ -84,5 +107,7 @@ module.exports = {
   verifyPlayer,
   trimRequestBody,
   verifyReqBody,
-  checkCharacterLimit
+  checkCharacterLimit,
+  checkCurrentPlayer,
+  checkIsGamePresent
 };

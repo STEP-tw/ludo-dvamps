@@ -38,18 +38,41 @@ describe('#App', () => {
   beforeEach(function() {
     app.initialize(gamesManager);
   });
-  describe('GET /', () => {
+  describe('#GET /', () => {
     it('should serve index page', done => {
       request(app)
+      .get('/')
+      .expect(200)
+      .expect(/createGame/)
+      .expect(/joinGame/)
+      .end(done);
+    });
+    it('should redirect to waiting page if valid cookies are present', done => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame', 'lala');
+      app.initialize(gamesManager);
+      request(app)
         .get('/')
+        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+        .expect(302)
+        .expect('Location', '/waiting.html')
+        .end(done);
+    });
+    it('should serve index page if invalid cookies are present', done => {
+      gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame', 'lala');
+      app.initialize(gamesManager);
+      request(app)
+        .get('/')
+        .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
         .expect(200)
-        .expect(/createGame/)
-        .expect(/joinGame/)
         .end(done);
     });
   });
-  describe('GET getAvailableGames', () => {
+  describe('GET /getAvailableGames', () => {
     it('should give all available games', done => {
+      gamesManager = new GamesManager(ColorDistributer,dice)
+      app.initialize(gamesManager);
       request(app)
         .get('/getAvailableGames')
         .expect(200)
@@ -187,7 +210,11 @@ describe('#App', () => {
   });
   describe('get /getStatus', () => {
     it('should send gameStatus', (done) => {
-      gamesManager.addGame('ludo');
+      gamesManager.addGame('ludo')
+      gamesManager.addPlayerTo('ludo','salman');
+      gamesManager.addPlayerTo('ludo','lala');
+      gamesManager.addPlayerTo('ludo','lali');
+      gamesManager.addPlayerTo('ludo','lalu');
       app.initialize(gamesManager);
       request(app)
         .get('/getStatus')
@@ -202,39 +229,6 @@ describe('#App', () => {
         .get('/getStatus')
         .expect("")
         .expect(400)
-        .end(done);
-    });
-  });
-  describe('get /game/gameStatus', () => {
-    beforeEach(function() {
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('ashish');
-      game.addPlayer('joy');
-      game.addPlayer('pallabi');
-      game.addPlayer('lala');
-      app.initialize(gamesManager);
-    });
-    it('should give game status', (done) => {
-      request(app)
-        .get('/game/gameStatus')
-        .set('Cookie',['gameName=newGame','playerName=ashish'])
-        .expect(200)
-        .expect(/ashish/)
-        .expect(/red/)
-        .end(done);
-    });
-    it('should redirect index', (done) => {
-      request(app)
-        .get('/game/gameStatus')
-        .expect('Location','/index.html')
-        .end(done);
-    });
-    it('should redirect to landing page if game not exists', function(done) {
-      request(app)
-        .get('/game/gameStatus')
-        .set('Cookie',['gameName=badGame','playerName=badPlayer'])
-        .expect(302)
-        .expect('Location','/index.html')
         .end(done);
     });
   });
@@ -378,29 +372,6 @@ describe('#App', () => {
         .end(done);
     });
   });
-  describe('#GET /', () => {
-    it('should redirect to waiting page if valid cookies are present', done => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame', 'lala');
-      app.initialize(gamesManager);
-      request(app)
-        .get('/')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
-        .expect(302)
-        .expect('Location', '/waiting.html')
-        .end(done);
-    });
-    it('should serve index page if invalid cookies are present', done => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame', 'lala');
-      app.initialize(gamesManager);
-      request(app)
-        .get('/')
-        .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
-        .expect(200)
-        .end(done);
-    });
-  });
   describe('#GET /game/rollDice', () => {
     it('should roll the dice for currentPlayer', (done) => {
       gamesManager.addGame('newGame');
@@ -432,6 +403,39 @@ describe('#App', () => {
         .end();
     });
   });
+  describe('get /game/gameStatus', () => {
+    beforeEach(function() {
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('ashish');
+      game.addPlayer('joy');
+      game.addPlayer('pallabi');
+      game.addPlayer('lala');
+      app.initialize(gamesManager);
+    });
+    it('should give game status', (done) => {
+      request(app)
+        .get('/game/gameStatus')
+        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .expect(200)
+        .expect(/ashish/)
+        .expect(/red/)
+        .end(done);
+    });
+    it('should redirect index', (done) => {
+      request(app)
+        .get('/game/gameStatus')
+        .expect('Location','/index.html')
+        .end(done);
+    });
+    it('should redirect to landing page if game not exists', function(done) {
+      request(app)
+        .get('/game/gameStatus')
+        .set('Cookie',['gameName=badGame','playerName=badPlayer'])
+        .expect(302)
+        .expect('Location','/index.html')
+        .end(done);
+    });
+  });
   describe('#GET /game/logs', () => {
     beforeEach(()=>{
       let game = gamesManager.addGame('newGame');
@@ -451,6 +455,77 @@ describe('#App', () => {
         .expect(/&#9859;/)
         .expect(/lala/)
         .end(done);
+    });
+  });
+  describe('#POST /game/moveCoin', () => {
+    it('should return move coin status if valid player gives valid coin Id', done => {
+      let dice = {
+        roll:()=>6
+      }
+      gamesManager = new GamesManager(ColorDistributer,dice)
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.rollDice();
+      app.initialize(gamesManager);
+      request(app)
+        .post('/game/moveCoin')
+        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .send('coinId=1')
+        .expect(200)
+        .expect(/"status":true/)
+        .expect(/players/)
+        .end(done)
+    });
+    it('should return move coin status as false if valid player gives invalid coin Id', done => {
+      let moves = [6,4];
+      let dice = {
+        roll:()=>{
+          return moves.shift();
+        }
+      }
+      gamesManager = new GamesManager(ColorDistributer,dice)
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.rollDice();
+      game.moveCoin(1);
+      game.rollDice();
+      app.initialize(gamesManager);
+      request(app)
+        .post('/game/moveCoin')
+        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .send('coinId=2')
+        .expect(200)
+        .expect(/"status":false/)
+        .expect(/"message":"Coin/)
+        .end(done)
+    });
+    it('should return status false and message as not your turn if invalid '+
+    ' player gives invalid coin Id', done => {
+      let dice = {
+        roll:()=>6
+      }
+      gamesManager = new GamesManager(ColorDistributer,dice)
+      let game = gamesManager.addGame('newGame');
+      game.addPlayer('lala');
+      game.addPlayer('kaka');
+      game.addPlayer('ram');
+      game.addPlayer('shyam');
+      game.rollDice();
+      app.initialize(gamesManager);
+      request(app)
+        .post('/game/moveCoin')
+        .set('Cookie',['gameName=newGame','playerName=kaka'])
+        .send('coinId=6')
+        .expect(400)
+        .expect(/"status":false/)
+        .expect(/"message":"Not/)
+        .end(done)
     });
   });
 });

@@ -44,21 +44,18 @@ class Turn {
       this.currentPlayerMoves.slice(-3).every((move)=> move == 6);
   }
 
-  shouldChangeTurn(){
-    if (this.has3ConsecutiveSixes()) {
-      return true;
-    }
+  decideTurnOnChance(){
     if(this.currentPlayerChances){
-      return false;
+      return this.currentPlayer;
     }
-    return true;
+    return this.updateTurn();
   }
 
-  decideTurn(){
+  decideTurnAsPerMove(haveMovablecoins){
     if (this.lastMove == 6) {
       this.increamentChances();
     }
-    if (this.shouldChangeTurn()) {
+    if (this.has3ConsecutiveSixes() || !haveMovablecoins) {
       return this.updateTurn();
     }
     return this.currentPlayer;

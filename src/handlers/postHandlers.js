@@ -15,7 +15,6 @@ const verifyCreateGameReq = function(req,res,next) {
   next();
 };
 
-
 const hasCreatedGame = function(req){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
   return game && game.doesPlayerExist(req.cookies.playerName);
@@ -85,9 +84,21 @@ const joinPlayerToGame = function(req,res){
   res.end();
 };
 
+const moveCoin = function(req,res){
+  let coinToMove = req.body.coinId;
+  if (req.game.moveCoin(coinToMove)) {
+    let status = req.game.getStatus();
+    status.status = true;
+    res.send(status);
+    return;
+  }
+  res.send({status:false,message:`Coin can't be moved`});
+};
+
 module.exports = {
   blockIfUserHasGame,
   createNewGame,
   joinPlayerToGame,
-  verifyCreateGameReq
+  verifyCreateGameReq,
+  moveCoin
 };

@@ -48,10 +48,11 @@ app.use('/game',ludo);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.get('/gameName', getHandlers.serveGameName);
 app.get('/userName', getHandlers.serveUserName);
-app.get('/getStatus', getHandlers.serveGameStatus);
+app.get('/getStatus',lib.checkIsGamePresent,getHandlers.serveGameStatus);
 app.post('/createGame',lib.verifyReqBody,postHandlers.verifyCreateGameReq,
   lib.checkCharacterLimit,postHandlers.blockIfUserHasGame,
   postHandlers.createNewGame);
+
 app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
 app.delete('/player', deleteHandler.removePlayer);
 ludo.use(lib.checkCookie);
@@ -60,6 +61,7 @@ ludo.use(lib.verifyPlayer);
 ludo.use(express.static('public'));
 ludo.get('/gameStatus',getHandlers.getGameStatus);
 ludo.get('/logs',getHandlers.getLogs);
-ludo.get('/rollDice',getHandlers.rollDice);
+ludo.get('/rollDice',lib.checkCurrentPlayer,getHandlers.rollDice);
+ludo.post('/moveCoin',lib.checkCurrentPlayer,postHandlers.moveCoin);
 
 module.exports = app;

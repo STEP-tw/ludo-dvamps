@@ -10,11 +10,6 @@ const serveUserName = (req, res) => res.send(req.cookies.playerName);
 const serveGameStatus = (req, res) => {
   let gameName = req.cookies.gameName;
   let game = req.app.gamesManager.getGame(gameName);
-  if (game == undefined) {
-    res.statusCode = 400;
-    res.send('');
-    return;
-  }
   res.json(game.getStatus());
 };
 
@@ -30,20 +25,8 @@ const getLogs = function(req,res){
   res.end();
 };
 
-const isCurrentPlayer = function(req,currentPlayerName){
-  let requestedPlayer = req.cookies.playerName;
-  return currentPlayerName == requestedPlayer;
-};
-
 const rollDice = function(req, res) {
   let game = req.game;
-  let currentPlayer = game.getCurrentPlayer();
-  let currentPlayerName = currentPlayer.getName();
-  if(!isCurrentPlayer(req,currentPlayerName)){
-    res.statusCode = 400;
-    res.send({move:false,message:'Not your turn!'});
-    return;
-  }
   let diceRollStatus = game.rollDice();
   res.json(diceRollStatus);
   res.end();
