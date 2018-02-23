@@ -80,7 +80,7 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 190%;
   font-weight: 600;
-background-image: linear-gradient(to bottom, #d4b1ff, #d4aefa, #d4abf5, #d3a8f1, #d3a5ec);
+  background-image: linear-gradient(to bottom, #d4b1ff, #d4aefa, #d4abf5, #d3a8f1, #d3a5ec);
   border-radius: 10px;
   padding: 4px 17px;
 }

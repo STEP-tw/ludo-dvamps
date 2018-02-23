@@ -57,6 +57,14 @@ const loadGame = function(req,res,next) {
   next();
 };
 
+const checkGame = function(req,res,next) {
+  if((req.url=='/board.html') && !(req.game)) {
+    res.redirect('/index.html');
+    return;
+  }
+  next();
+};
+
 const verifyPlayer =function(req,res,next) {
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
   let playerName = req.cookies.playerName;
@@ -84,5 +92,6 @@ module.exports = {
   verifyPlayer,
   trimRequestBody,
   verifyReqBody,
-  checkCharacterLimit
+  checkCharacterLimit,
+  checkGame
 };
