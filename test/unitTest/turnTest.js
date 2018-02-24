@@ -1,7 +1,7 @@
 const assert = require('chai').assert
 const path = require('path');
 const Turn= require(path.resolve('src/models/turn.js'));
-
+const EventEmitter= require(path.resolve('test/mockEventEmitter.js'));
 const dice = {
   roll : function(){
     return 4;
@@ -113,6 +113,15 @@ describe('#Turn', () => {
       turn.playerChances = 0;
       let move = turn.rollDice(dice);
       assert.isUndefined(move);
+    });
+  });
+  describe('#kill event', () => {
+    it('should increment chance of current player by one ', () => {
+      let eventEmitter = new EventEmitter();
+      turn.listenDiedEvent(eventEmitter);
+      assert.equal(turn.currentPlayerChances,1);
+      eventEmitter.emit('died');
+      assert.equal(turn.currentPlayerChances,2);
     });
   });
 });

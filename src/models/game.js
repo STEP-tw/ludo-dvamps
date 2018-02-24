@@ -93,6 +93,7 @@ class Game {
   getGameStatus(){
     let gameStatus = this.getStatus();
     gameStatus.currentPlayerName = this.turn.currentPlayer;
+    gameStatus.won = this.hasWon();
     return gameStatus;
   }
   getNoOfPlayers() {
@@ -124,6 +125,7 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
+    this.turn.listenDiedEvent(this.eventEmitter);
     players.forEach((playerName,index)=>{
       let player = this.getPlayer(playerName);
       let path = this.board.getPathFor(index);
@@ -143,9 +145,11 @@ class Game {
     let currentPlayer = this.getCurrentPlayer();
     let move = this.turn.lastMove;
     let movablecoins = currentPlayer.getMovableCoins(move);
-    let isValidMovable = movablecoins.some((coin=>coin.id==coinId));
-    if (isValidMovable) {
+    let isCoinMovable = movablecoins.some((coin=>coin.id==coinId));
+    if (isCoinMovable) {
+      let playerName = currentPlayer.getName();
       currentPlayer.moveCoin(coinId,move);
+      this.activityLog.registerCoinMoved(playerName,currentPlayer.getColor());
       this.setStatus();
       this.turn.decideTurnOnChance();
       return true;

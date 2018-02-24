@@ -21,7 +21,7 @@ class Player {
     return this.coins;
   }
   getStatus(){
-    let coinsPositions = this.coins.map(coin => coin.getPosition());
+    let coinsPositions = this.coins.map(coin => coin.getStatus());
     return {
       name:this.name,
       color:this.color,
@@ -49,13 +49,17 @@ class Player {
     let nextPosCoin = this.path.moveCoin(coin,move);
     coin.setPosition(nextPosCoin);
   }
-  entertainDiedEvent(coinDetail){
-    if(coinDetail.color == this.color){
-      this.moveCoinToHome(coinDetail.id);
+  listenDiedEvent(){
+    for(let count=0;count<this.coins.length;count++){
+      let coin = this.coins[count];
+      let self = this;
+      coin.on('died',function(coinDetail){
+        console.log(coinDetail);  
+        if(coinDetail.color == self.color){
+          self.moveCoinToHome(coinDetail.id);
+        }
+      });
     }
-  }
-  listenDiedEvent(eventEmitter){
-    eventEmitter.on('died',this.entertainDiedEvent);
   }
   moveCoinToHome(coinId){
     let coin = this.coins.find((coin)=>coin.id == coinId);

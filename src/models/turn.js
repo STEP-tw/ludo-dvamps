@@ -68,6 +68,10 @@ class Turn {
     this.currentPlayerMoves = [];
     return this.currentPlayer;
   }
+
+  listenDiedEvent(eventEmitter){
+    eventEmitter.on('died',this.increamentChances.bind(this));
+  }
 }
 
 module.exports = Turn;

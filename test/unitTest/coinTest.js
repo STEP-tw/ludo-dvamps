@@ -1,13 +1,10 @@
 const path = require('path');
 const Coin = require(path.resolve('src/models/coin.js'));
 const assert = require('chai').assert;
-const MockEventEmitter = require(path.resolve('test/mockEventEmitter.js'));
 describe('#Coin', () => {
   let coin = {};
-  let eventEmitter = {};
   beforeEach(()=>{
-    eventEmitter = new MockEventEmitter();
-    coin = new Coin(1,-1,eventEmitter);
+    coin = new Coin(1,-1);
   })
   describe('#getPosition', () => {
     it('should return position of coin', () => {
@@ -22,9 +19,11 @@ describe('#Coin', () => {
   });
   describe('#die', () => {
     it('should fire a died event', () => {
-      assert.isNotOk(eventEmitter.isFired('died'));
+      let person = {};
+      coin.on('died',()=>person.firedEvent='died');
+      assert.isUndefined(person.fired);
       coin.die();
-      assert.isOk(eventEmitter.isFired('died'));
+      assert.equal(person.firedEvent,'died');
     });
   });
 });
