@@ -50,12 +50,17 @@ describe('#Player', () => {
   });
   describe('#getStatus', () => {
     it('should return playerStatus', () => {
-      let coins = [new Coin(1,-2),new Coin(2,-3)];
+      let firstCoin = new Coin(1,-2);
+      let secondCoin = new Coin(2,-3);
+      firstCoin.color = 'red';
+      secondCoin.color = 'red';
+      let coins = [firstCoin,secondCoin];
       let player = new Player('ashish','red',coins);
       let expectedStatus={
         name:'ashish',
         color:'red',
-        coins:[-2,-3]
+        coins:[{id:1,color:'red',position:-2},
+          {id:2,color:'red',position:-3}]
       };
       assert.deepEqual(player.getStatus(),expectedStatus);
     });

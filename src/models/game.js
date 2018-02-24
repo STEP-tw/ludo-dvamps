@@ -144,8 +144,8 @@ class Game {
     let currentPlayer = this.getCurrentPlayer();
     let move = this.turn.lastMove;
     let movablecoins = currentPlayer.getMovableCoins(move);
-    let isValidMovable = movablecoins.some((coin=>coin.id==coinId));
-    if (isValidMovable) {
+    let isCoinMovable = movablecoins.some((coin=>coin.id==coinId));
+    if (isCoinMovable) {
       let playerName = currentPlayer.getName();
       currentPlayer.moveCoin(coinId,move);
       this.activityLog.registerCoinMoved(playerName,move);

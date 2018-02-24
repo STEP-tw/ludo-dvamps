@@ -21,7 +21,7 @@ class Player {
     return this.coins;
   }
   getStatus(){
-    let coinsPositions = this.coins.map(coin => coin.getPosition());
+    let coinsPositions = this.coins.map(coin => coin.getStatus());
     return {
       name:this.name,
       color:this.color,

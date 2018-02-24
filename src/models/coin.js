@@ -9,7 +9,9 @@ class Coin {
   getPosition(){
     return this.position;
   }
-
+  getStatus(){
+    return {id:this.id,position:this.position,color:this.color};
+  }
   setColor(color) {
     this.color = color;
   }
