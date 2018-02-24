@@ -33,6 +33,15 @@ ColorDistributer.prototype = {
   }
 }
 
+const initGamesManager = function(playerNames){
+  let gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
+  gamesManager.addGame('ludo');
+  playerNames.forEach(function(playerName){
+    gamesManager.addPlayerTo('ludo',playerName);
+  });
+  return gamesManager;
+};
+
 describe('#App', () => {
   let gamesManager = {};
   beforeEach(function(done) {
@@ -193,9 +202,7 @@ describe('#App', () => {
   });
   describe('DELETE /player', () => {
     it('should delete Player and game if all the players left', (done) => {
-      gamesManager.addGame('ludo');
-      let game = gamesManager.getGame('ludo');
-      game.addPlayer('player');
+      let gamesManager = initGamesManager(['player']);
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
@@ -205,11 +212,7 @@ describe('#App', () => {
         .end(done);
     });
     it('should delete Player if a player lefts', (done) => {
-      gamesManager.addGame('ludo');
-      let game = gamesManager.getGame('ludo');
-      game.addPlayer('player1');
-      game.addPlayer('player2');
-      game.addPlayer('player3');
+      let gamesManager = initGamesManager(['player1','player2','player3']);
       app.initialize(gamesManager);
       request(app)
         .delete('/player')
@@ -221,11 +224,7 @@ describe('#App', () => {
   });
   describe('get /getStatus', () => {
     it('should send gameStatus', (done) => {
-      gamesManager.addGame('ludo')
-      gamesManager.addPlayerTo('ludo','salman');
-      gamesManager.addPlayerTo('ludo','lala');
-      gamesManager.addPlayerTo('ludo','lali');
-      gamesManager.addPlayerTo('ludo','lalu');
+      let gamesManager = initGamesManager(['salman','lala','lali','lalu']);
       app.initialize(gamesManager);
       request(app)
         .get('/getStatus')
@@ -245,13 +244,13 @@ describe('#App', () => {
   });
   describe('POST /joinGame', () => {
     beforeEach(function() {
-      app.gamesManager.addGame('newGame');
-      app.gamesManager.addPlayerTo('newGame', 'lala');
+      let gamesManager=initGamesManager(['player1','player2','player3']);
+      app.initialize(gamesManager);
     })
     it('should return joiningStatus as true if new player is joining', done => {
       request(app)
         .post('/joinGame')
-        .send('gameName=newGame&playerName=ram')
+        .send('gameName=ludo&playerName=player4')
         .expect(/status/)
         .expect(/true/)
         .end(done)
@@ -259,7 +258,7 @@ describe('#App', () => {
     it('should return joining Status as false if the form is incomplete', done => {
       request(app)
         .post('/joinGame')
-        .send('gameName=newGame')
+        .send('gameName=ludo')
         .expect(/status/)
         .expect(/false/)
         .end(done)
@@ -276,7 +275,7 @@ describe('#App', () => {
     it('should return status false for join with name which is previously in game', done => {
       request(app)
         .post('/joinGame')
-        .send('gameName=newGame&playerName=lala')
+        .send('gameName=ludo&playerName=player1')
         .expect(200)
         .expect('{"status":false}')
         .expect(doesNotHaveCookies)
@@ -285,7 +284,7 @@ describe('#App', () => {
     it('should return status false along with message "player name is lengthy"',(done)=>{
       request(app)
         .post('/joinGame')
-        .send('gameName=newGame&playerName=lalalalalala')
+        .send('gameName=ludo&playerName=lalalalalala')
         .expect(400)
         .expect(`{"status":false,"message":"player name is lengthy"}`)
         .expect(doesNotHaveCookies)
@@ -312,18 +311,13 @@ describe('#App', () => {
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
-      let gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
-      let game = gamesManager.addGame('ludo');
-      game.addPlayer('ashish');
-      game.addPlayer('arvind');
-      game.addPlayer('debu');
-      game.addPlayer('lala');
+      let gamesManager=initGamesManager(['player1','player2','player3','player4']);
       app.initialize(gamesManager);
     })
     it('should response with bad request if game does not exists', (done) => {
       request(app)
         .get('/game/board.html')
-        .set('Cookie',['gameName=cludo','playerName=ashish'])
+        .set('Cookie',['gameName=cludo','playerName=player1'])
         .expect(302)
         .expect('Location','/index.html')
         .end(done)
@@ -382,37 +376,6 @@ describe('#App', () => {
         .end(done);
     });
   });
-  describe('#GET /game/rollDice', () => {
-    it('should roll the dice for currentPlayer', (done) => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      gamesManager.getGame('newGame').start();
-      app.initialize(gamesManager);
-      request(app)
-        .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
-        .expect(200)
-        .expect('{"move":4}')
-        .end(done);
-    });
-    it('should response with bad request if player is not there', () => {
-      gamesManager.addGame('newGame');
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      gamesManager.getGame('newGame').start();
-      app.initialize(gamesManager);
-      request(app)
-        .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
-        .expect(400)
-        .end();
-    });
-  });
   describe('get /game/gameStatus', () => {
     beforeEach(function() {
       let game = gamesManager.addGame('newGame');
@@ -448,17 +411,12 @@ describe('#App', () => {
   });
   describe('#GET /game/logs', () => {
     it('should give game activity log', (done) => {
-      let game = gamesManager.addGame('newGame');
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.start();
-      game.rollDice();
+      let gamesManager = initGamesManager(['lala','kaka','ram','shyam']);
+      gamesManager.getGame('ludo').rollDice();
       app.initialize(gamesManager);
       request(app)
         .get('/game/logs')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+        .set('Cookie', ['gameName=ludo', 'playerName=lala'])
         .expect(200)
         .expect(/&#9859;/)
         .expect(/lala/)

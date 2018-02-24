@@ -1,0 +1,7 @@
+Dice should not be avialable to player who is not current player.
+logs should of same color.
+Coin color should shown it got killed.
+Logs scroll able.
+Contrast for name on red.
+Pk gots. color.
+Persistance with game.
