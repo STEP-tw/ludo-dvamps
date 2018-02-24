@@ -31,7 +31,9 @@ const moveCoin = function(event) {
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);
     updateCoinPosition(status.players);
-    console.log(status);
+    status.players.forEach((player)=>{
+      hideMovableCoins(player.coins);
+    });
   }, `coinId=${coinToMove}`);
 };
 
@@ -115,6 +117,10 @@ const getGameStatus = function() {
     let gameStatus = JSON.parse(this.responseText);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     updateCoinPosition(gameStatus.players);
+    if(gameStatus.won){
+      let winningMsg = gameStatus.currentPlayerName;
+      getElement('.message').innerText = `${winningMsg} has won`;
+    }
     changeBgColor(currentPlayerColor);
     showDice(gameStatus.move);
   });
@@ -123,8 +129,7 @@ const getGameStatus = function() {
 const showLogs = function(logs) {
   let logStatements = logs.map((log) => {
     let move = `<label>${log.move || ''}</label>`;
-    let symbol = log.color && `<span class="${log.color}">&#9673;</span>`||'';  
-    return `<li><span>${log.time}</span>${log.statement}${move}${symbol}</li>`;
+    return `<li><span>${log.time}</span>${log.statement}${move}</li>`;
   }).join('');
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;

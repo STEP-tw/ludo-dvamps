@@ -4,9 +4,15 @@ main {
   margin-left: 1%;
 }
 
+.message {
+  width: 80vh;
+  height: 5vh;
+  margin-left: 47vh;
+}
+
 ellipse.focus {
   stroke-dasharray: 3,3;
-  stroke-width: 3;
+  stroke-width: 4;
   animation: dash 5s linear infinite;
 }
 @keyframes dash{
@@ -14,7 +20,7 @@ ellipse.focus {
       stroke-dashoffset:0;
     }
     from{
-      stroke-dashoffset:500;
+      stroke-dashoffset:300;
     }
 }
 .mainContainer {

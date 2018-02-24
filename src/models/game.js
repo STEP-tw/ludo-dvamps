@@ -93,6 +93,7 @@ class Game {
   getGameStatus(){
     let gameStatus = this.getStatus();
     gameStatus.currentPlayerName = this.turn.currentPlayer;
+    gameStatus.won = this.hasWon();
     return gameStatus;
   }
   getNoOfPlayers() {
