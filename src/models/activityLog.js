@@ -20,12 +20,13 @@ class ActivityLog {
       move:dices[move-1]
     });
   }
-  registerCoinMoved(playerName,steps){
+  registerCoinMoved(playerName,coinColor){
     let time = new Date().toLocaleTimeString();
-    let statement = `${playerName} moved its coin by ${steps} steps.`;
+    let statement = `${playerName} moved its`;
     this.logs.push({
       time:time,
-      statement:statement
+      statement:statement,
+      color:coinColor
     });
   }
   getLogs(){

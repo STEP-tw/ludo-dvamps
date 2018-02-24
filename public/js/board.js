@@ -123,7 +123,8 @@ const getGameStatus = function() {
 const showLogs = function(logs) {
   let logStatements = logs.map((log) => {
     let move = `<label>${log.move || ''}</label>`;
-    return `<li><span>${log.time}</span>${log.statement}${move}</li>`;
+    let symbol = log.color && `<span class="${log.color}">&#9673;</span>`||'';  
+    return `<li><span>${log.time}</span>${log.statement}${move}${symbol}</li>`;
   }).join('');
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;

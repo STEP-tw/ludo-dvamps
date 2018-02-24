@@ -148,7 +148,7 @@ class Game {
     if (isCoinMovable) {
       let playerName = currentPlayer.getName();
       currentPlayer.moveCoin(coinId,move);
-      this.activityLog.registerCoinMoved(playerName,move);
+      this.activityLog.registerCoinMoved(playerName,currentPlayer.getColor());
       this.setStatus();
       this.turn.decideTurnOnChance();
       return true;

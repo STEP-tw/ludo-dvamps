@@ -24,10 +24,18 @@ describe('ActivityLog', () => {
   });
   describe('#registerCoinMove', () => {
     it('should register move of the player', () => {
-      activityLog.registerCoinMoved('player',5);
+      activityLog.registerMove('player',5);
       let logs = activityLog.getLogs();
       assert.match(JSON.stringify(logs[0]),/player/);
-      assert.match(JSON.stringify(logs[0]),/5/);
+      assert.match(JSON.stringify(logs[0]),/&#9860;/);
+    });
+  });
+  describe('#registerCoinMoved', () => {
+    it('should register coin of the player with color', () => {
+      activityLog.registerCoinMoved('player','red');
+      let logs = activityLog.getLogs();
+      assert.match(JSON.stringify(logs[0]),/player/);
+      assert.match(JSON.stringify(logs[0]),/red/);
     });
   });
 });

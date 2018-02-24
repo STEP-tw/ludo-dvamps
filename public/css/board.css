@@ -243,3 +243,15 @@ li label{
   margin-left: 5px;
   font-size: 32px;
 }
+.red{
+  color: red;
+}
+.green{
+  color: green;
+}
+.yellow{
+  color: yellow;
+}
+.blue{
+  color: blue;
+}
