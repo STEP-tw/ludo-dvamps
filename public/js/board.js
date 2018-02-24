@@ -15,18 +15,22 @@ const showPlayers = function() {
   });
 };
 
-const moveCoin = function() {
+const updateCoinPosition = function(players){
+  players.forEach((player)=>{
+    player.coins.forEach((coin)=>{
+      if (+coin.position < 0) {
+        coin.position = `home${coin.position}`;
+      }
+      changeCoinPosition(`${coin.color}-${coin.id}`,coin.position);
+    });
+  });
+};
+
+const moveCoin = function(event) {
   let coinToMove = event.target.id.split('-')[1];
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);
-    status.players.forEach((player)=>{
-      player.coins.forEach((coin)=>{
-        if (+coin.position < 0) {
-          coin.position = `home${coin.position}`;
-        }
-        changeCoinPosition(`${coin.color}-${coin.id}`,coin.position);
-      });
-    });
+    updateCoinPosition(status.players);
     console.log(status);
   }, `coinId=${coinToMove}`);
 };
@@ -110,6 +114,7 @@ const getGameStatus = function() {
     }
     let gameStatus = JSON.parse(this.responseText);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
+    updateCoinPosition(gameStatus.players);
     changeBgColor(currentPlayerColor);
     showDice(gameStatus.move);
   });
