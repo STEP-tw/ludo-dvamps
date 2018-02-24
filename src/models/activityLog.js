@@ -21,8 +21,12 @@ class ActivityLog {
     });
   }
   registerCoinMoved(playerName,steps){
+    let time = new Date().toLocaleTimeString();
     let statement = `${playerName} moved its coin by ${steps} steps.`;
-    this.logs.push(statement);
+    this.logs.push({
+      time:time,
+      statement:statement
+    });
   }
   getLogs(){
     return this.logs;
