@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const rfs = require('rotating-file-stream');
 
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const getHandlers = require(path.resolve('src/handlers/getHandlers.js'));
@@ -14,28 +12,13 @@ const app = express();
 /*eslint-disable*/
 const ludo = express.Router();
 /*eslint-enable*/
-let logDir = path.resolve('logs/');
-
-let lognameGenerator = function() {
-  let time = new Date();
-  let month = (time.getMonth() + 1) + "-" + time.getFullYear();
-  let day = time.getDate();
-  return day + '-' + month + '-file.log';
-};
-
-let accessLogStream = rfs(lognameGenerator, {
-  interval: '1d',
-  path: logDir
-});
 
 app.initialize = function(gamesManager,fs) {
   app.gamesManager = gamesManager;
   app.fs = fs;
 };
 
-app.use(logger('combined', {
-  stream: accessLogStream
-}));
+app.use(lib.logger);
 app.use(express.urlencoded({
   extended: false
 }));
