@@ -398,7 +398,7 @@ describe('#App', () => {
         .expect('{"move":4}')
         .end(done);
     });
-    it('should response with bad request if player is not there', () => {
+    it('should response with bad request if player is not there', (done) => {
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');
@@ -410,7 +410,7 @@ describe('#App', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
         .expect(400)
-        .end();
+        .end(done);
     });
   });
   describe('get /game/gameStatus', () => {

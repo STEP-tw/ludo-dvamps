@@ -23,6 +23,7 @@ const updateCoinPosition = function(players){
       }
       changeCoinPosition(`${coin.color}-${coin.id}`,coin.position);
     });
+    hideMovableCoins(player.coins);
   });
 };
 
@@ -31,7 +32,6 @@ const moveCoin = function(event) {
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);
     updateCoinPosition(status.players);
-    console.log(status);
   }, `coinId=${coinToMove}`);
 };
 
@@ -115,6 +115,10 @@ const getGameStatus = function() {
     let gameStatus = JSON.parse(this.responseText);
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     updateCoinPosition(gameStatus.players);
+    if(gameStatus.won){
+      let winningMsg = gameStatus.currentPlayerName;
+      getElement('.message').innerText = `${winningMsg} has won`;
+    }
     changeBgColor(currentPlayerColor);
     showDice(gameStatus.move);
   });

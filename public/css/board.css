@@ -4,6 +4,12 @@ main {
   margin-left: 1%;
 }
 
+.message {
+  width: 80vh;
+  height: 5vh;
+  margin-left: 47vh;
+}
+
 ellipse.focus {
   stroke-dasharray: 3,3;
   stroke-width: 3;
