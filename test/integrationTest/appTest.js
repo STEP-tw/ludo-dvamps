@@ -332,8 +332,7 @@ describe('#App', () => {
       request(app)
         .get('/game/board.html')
         .set('Cookie',['gameName=ludo','playerName=unknown'])
-        .expect(302)
-        .expect('Location','/index.html')
+        .expect(400)
         .end(done)
     });
   });

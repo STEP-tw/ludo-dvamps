@@ -60,7 +60,7 @@ const loadGame = function(req,res,next) {
 
 const checkGame = function(req,res,next) {
   if((req.url=='/board.html') && !(req.game)) {
-    res.redirect('/index.html');
+    redirectToHome(res);
     return;
   }
   next();
@@ -70,7 +70,9 @@ const verifyPlayer =function(req,res,next) {
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
   let playerName = req.cookies.playerName;
   if(!game.doesPlayerExist(playerName)){
-    return redirectToHome(res);
+    res.statusCode = 400;
+    res.json({status:false,message:'invalid cookie'});
+    return;
   }
   next();
 };
