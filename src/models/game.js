@@ -124,6 +124,7 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
+    this.turn.listenDiedEvent(this.eventEmitter);
     players.forEach((playerName,index)=>{
       let player = this.getPlayer(playerName);
       let path = this.board.getPathFor(index);
