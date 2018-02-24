@@ -7,6 +7,7 @@ describe('#Coin', () => {
   let eventEmitter = {};
   beforeEach(()=>{
     eventEmitter = new MockEventEmitter();
+    eventEmitter.on('died',()=>{});
     coin = new Coin(1,-1,eventEmitter);
   })
   describe('#getPosition', () => {

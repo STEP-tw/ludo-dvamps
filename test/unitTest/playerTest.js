@@ -167,13 +167,7 @@ describe('#Player', () => {
       assert.equal(coin4.getPosition(),5);
     });
   });
-  describe('#listenDiedEvent', () => {
-    it('should add entertainDiedEvent as eventListener to died event ', () => {
-      player.listenDiedEvent(eventEmitter);
-      assert.isOk(eventEmitter.isRegisteredEvent('died'));
-      assert.equal(eventEmitter.getCallBackOf('died'),player.entertainDiedEvent);
-    });
-  });
+  
   describe('#getNoOfCoinsInDest', () => {
     beforeEach(()=>{
       player.path.addCell(new DestinationCell(61));
@@ -190,6 +184,30 @@ describe('#Player', () => {
       player.path.getCell(61).addCoin(thirdCoin);
       player.path.getCell(61).addCoin(fourthCoin);
       assert.equal(player.getNoOfCoinsInDest(),4);
+    });
+  });
+  describe('#kill Event',() => {
+    let coin1;
+    beforeEach(function(){
+      coin1 = new Coin(1,-1,eventEmitter);
+      coin1.setPosition(10);
+      let coin2 = new Coin(2,-2,eventEmitter);
+      let coin3 = new Coin(3,-3,eventEmitter);
+      path = new Path(1);
+      eventEmitter = new MockEventEmitter();
+      path.add(generateSafeCells(-1,20));
+      player = new Player('player','red',[coin1,coin2,coin3],path);
+      player.listenDiedEvent(eventEmitter);
+    })
+    it('player should put coin to home if died event is fired by coin is his coin',() => {
+      assert.equal(coin1.getPosition(),10);
+      eventEmitter.emit('died',{id:1,color:'red'});
+      assert.equal(coin1.getPosition(),-1);
+    });
+    it('player should not put coin to home if died event is fired by someother player',() => {
+      assert.equal(coin1.getPosition(),10);
+      eventEmitter.emit('died',{id:1,color:'green'});
+      assert.equal(coin1.getPosition(),10);
     });
   });
 });

@@ -5,6 +5,8 @@ class MockEventEmitter {
   }
   emit(eventName,message){
     this.firedEvents[eventName]=message;
+    let callBack = this.eventListeners[eventName];
+    callBack(message);
   }
   isFired(eventName){
     return eventName in this.firedEvents;

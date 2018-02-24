@@ -55,7 +55,13 @@ class Player {
     }
   }
   listenDiedEvent(eventEmitter){
-    eventEmitter.on('died',this.entertainDiedEvent);
+    // let self = this;
+    // eventEmitter.on('died',function(coinDetail){
+    //   if(coinDetail.color == self.color){
+    //     self.moveCoinToHome(coinDetail.id);
+    //   }
+    // });
+    eventEmitter.on('died',this.entertainDiedEvent.bind(this));
   }
   moveCoinToHome(coinId){
     let coin = this.coins.find((coin)=>coin.id == coinId);
