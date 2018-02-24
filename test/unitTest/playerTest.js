@@ -167,7 +167,6 @@ describe('#Player', () => {
       assert.equal(coin4.getPosition(),5);
     });
   });
-  
   describe('#getNoOfCoinsInDest', () => {
     beforeEach(()=>{
       player.path.addCell(new DestinationCell(61));

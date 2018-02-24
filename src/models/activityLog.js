@@ -20,6 +20,10 @@ class ActivityLog {
       move:dices[move-1]
     });
   }
+  registerCoinMoved(playerName,steps){
+    let statement = `${playerName} moved its coin by ${steps} steps.`;
+    this.logs.push(statement);
+  }
   getLogs(){
     return this.logs;
   }

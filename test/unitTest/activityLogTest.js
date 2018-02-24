@@ -22,4 +22,12 @@ describe('ActivityLog', () => {
       assert.match(JSON.stringify(logs[0]),/&#9860;/);
     });
   });
+  describe('#registerCoinMove', () => {
+    it('should register move of the player', () => {
+      activityLog.registerCoinMoved('player',5);
+      let logs = activityLog.getLogs();
+      assert.match(JSON.stringify(logs[0]),/player/);
+      assert.match(JSON.stringify(logs[0]),/5/);
+    });
+  });
 });

@@ -146,7 +146,9 @@ class Game {
     let movablecoins = currentPlayer.getMovableCoins(move);
     let isValidMovable = movablecoins.some((coin=>coin.id==coinId));
     if (isValidMovable) {
+      let playerName = currentPlayer.getName();
       currentPlayer.moveCoin(coinId,move);
+      this.activityLog.registerCoinMoved(playerName,move);
       this.setStatus();
       this.turn.decideTurnOnChance();
       return true;
