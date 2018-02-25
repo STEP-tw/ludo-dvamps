@@ -41,7 +41,7 @@ const initGamesManager = function(playerNames){
   });
   return gamesManager;
 };
-describe('#AppTest2', () => {
+describe.skip('#AppTest2', () => {
   let gamesManager = {};
   beforeEach(function(done) {
     gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
