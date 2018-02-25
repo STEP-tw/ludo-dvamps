@@ -108,13 +108,14 @@ class Game {
     if(move==6){
       this.turn.increamentChances();
     }
-    let currentPlayer = this.getCurrentPlayer();
-    this.activityLog.registerMove(currentPlayer.name,move);
+    let currPlayer = this.getCurrentPlayer();
+    this.activityLog.registerMove(currPlayer.getName(),currPlayer.getColor()
+      ,move);
     this.status.move = move || this.status.move;
-    let movablecoins = currentPlayer.getMovableCoins(move);
-    this.activityLog.registerTurn(this.getCurrentPlayer().name);
-    if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
+    let movablecoins = currPlayer.getMovableCoins(move);
+    if(turn.has3ConsecutiveSixes() || !currPlayer.hasMovableCoins(move)){
       this.turn.updateTurn();
+      this.activityLog.registerTurn(this.getCurrentPlayer().name);
       return {move:move};
     }
     return {move:move,coins:this.getMovableCoinsOf(move)};
@@ -162,9 +163,9 @@ class Game {
       oppPlayer.moveCoinToHome(status.diedCoin);
       //this.activityLog.registerCoinKilled(killBy,killed);
     }
-    console.log(currentPlayer.coins);
     this.setStatus();
     this.turn.next();
+    this.activityLog.registerTurn(this.getCurrentPlayer().getName());
   }
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();

@@ -16,18 +16,20 @@ describe('ActivityLog', () => {
   });
   describe('#registerMove', () => {
     it('should register move of the player', () => {
-      activityLog.registerMove('kaka',5);
+      activityLog.registerMove('kaka','red',5);
       let logs = activityLog.getLogs();
       assert.match(JSON.stringify(logs[0]),/kaka/);
       assert.match(JSON.stringify(logs[0]),/&#9860;/);
+      assert.match(JSON.stringify(logs[0]),/red/);
     });
   });
   describe('#registerCoinMove', () => {
     it('should register move of the player', () => {
-      activityLog.registerMove('player',5);
+      activityLog.registerMove('player','red',5);
       let logs = activityLog.getLogs();
       assert.match(JSON.stringify(logs[0]),/player/);
       assert.match(JSON.stringify(logs[0]),/&#9860;/);
+      assert.match(JSON.stringify(logs[0]),/red/);
     });
   });
   describe('#registerCoinMoved', () => {
