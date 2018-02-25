@@ -6,6 +6,7 @@ class Cell {
   addCoin(coin){
     coin.setPosition(this.position);
     this.coins.push(coin);
+    return {killedOppCoin:false};
   }
   getPosition(){
     return this.position;

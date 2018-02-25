@@ -3,7 +3,7 @@ const request = require('supertest');
 const path = require('path');
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
-const EventEmitter = require(path.resolve('test/mockEventEmitter.js'));
+const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
 let doesNotHaveCookies = (res) => {
   const keys = Object.keys(res.headers);
   let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
@@ -18,33 +18,18 @@ const dice = {
   }
 };
 
-const ColorDistributer = function() {
-  this.colors = ['red', 'green', 'blue', 'yellow'];
-}
-ColorDistributer.prototype = {
-  getColor: function() {
-    return this.colors.shift();
-  },
-  addColor:function(color){
-    if(this.colors.includes(color)){
-      return;
-    }
-    this.colors.push(color);
-  }
-}
-
 const initGamesManager = function(playerNames){
-  let gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
+  let gamesManager = new GamesManager(ColorDistributer,dice);
   gamesManager.addGame('ludo');
   playerNames.forEach(function(playerName){
     gamesManager.addPlayerTo('ludo',playerName);
   });
   return gamesManager;
 };
-describe.skip('#AppTest2', () => {
+describe('#AppTest2', () => {
   let gamesManager = {};
   beforeEach(function(done) {
-    gamesManager = new GamesManager(ColorDistributer,dice,EventEmitter);
+    gamesManager = new GamesManager(ColorDistributer,dice);
     app.initialize(gamesManager);
     done();
   });

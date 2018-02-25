@@ -49,19 +49,9 @@ class Player {
     let status = this.path.moveCoin(coin,move);
     return status;
   }
-  listenDiedEvent(){
-    for(let count=0;count<this.coins.length;count++){
-      let coin = this.coins[count];
-      let self = this;
-      coin.on('died',function(coinDetail){  
-        if(coinDetail.color == self.color){
-          self.moveCoinToHome(coinDetail.id);
-        }
-      });
-    }
-  }
-  moveCoinToHome(coinId){
-    let coin = this.coins.find((coin)=>coin.id == coinId);
+  moveCoinToHome(coinDetail){
+    console.log(coinDetail.id);
+    let coin = this.coins.find((coin)=>coin.id == coinDetail.id);
     this.path.putAtHome(coin);
   }
   getNoOfCoinsInDest(){

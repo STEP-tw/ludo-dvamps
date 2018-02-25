@@ -1,6 +1,7 @@
-const SafeCell = require('./safeCell.js');
-const UnsafeCell = require('./unsafeCell.js');
-const DestinationCell = require('./destinationCell.js');
+const path = require('path');
+const SafeCell = require(path.resolve('src/models/safeCell.js'));
+const UnsafeCell = require(path.resolve('src/models/unsafeCell.js'));
+const DestinationCell = require(path.resolve('src/models/destinationCell.js'));
 
 class Board {
   constructor(numOfPlayers) {

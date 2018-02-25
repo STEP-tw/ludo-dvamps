@@ -14,7 +14,6 @@ const showPlayers = function() {
     });
   });
 };
-
 const updateCoinPosition = function(players){
   players.forEach((player)=>{
     player.coins.forEach((coin)=>{
@@ -78,8 +77,8 @@ const showMove = function() {
     moveStatus.message && showPopup(moveStatus.message);
     return;
   }
-  console.log(moveStatus);
   showDice(+moveStatus.move);
+  console.log(moveStatus.move);
   showMovableCoins(moveStatus.coins);
   addListenerTOCoin(moveStatus.coins);
 };
@@ -111,7 +110,8 @@ const hideDice = function() {
 
 const getGameStatus = function() {
   sendAjaxRequest('GET', '/game/gameStatus', function() {
-    if (!this.responseText) {
+    console.log(this.responseText);
+    if(!this.responseText) {
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
@@ -135,7 +135,7 @@ const showLogs = function(logs) {
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;
   let lastLog = document.querySelector('ul').lastElementChild;
   let lastPos = lastLog.getBoundingClientRect().y;
-  activityLog.scrollTo(0, lastPos);
+  // activityLog.scrollTo(0, lastPos);
 };
 
 const getLogs = function() {

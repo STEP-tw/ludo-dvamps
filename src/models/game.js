@@ -105,12 +105,16 @@ class Game {
   rollDice(){
     let turn = this.turn;
     let move = turn.rollDice(this.dice);
+    if(move==6){
+      this.turn.increamentChances();
+    }
     let currentPlayer = this.getCurrentPlayer();
     this.activityLog.registerMove(currentPlayer.name,move);
     this.status.move = move || this.status.move;
-    turn.decideTurnAsPerMove(currentPlayer.hasMovableCoins(move));
+    let movablecoins = currentPlayer.getMovableCoins(move);
     this.activityLog.registerTurn(this.getCurrentPlayer().name);
     if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
+      this.turn.updateTurn();
       return {move:move};
     }
     return {move:move,coins:this.getMovableCoinsOf(move)};
@@ -125,12 +129,12 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
-    this.turn.listenDiedEvent(this.eventEmitter);
+    //this.turn.listenDiedEvent(this.eventEmitter);
     players.forEach((playerName,index)=>{
       let player = this.getPlayer(playerName);
       let path = this.board.getPathFor(index);
       player.assignPath(path);
-      player.listenDiedEvent(this.eventEmitter);
+      //player.listenDiedEvent(this.eventEmitter);
     });
     this.activityLog.registerTurn(this.turn.currentPlayer);
   }
@@ -143,6 +147,7 @@ class Game {
   }
   isMovableCoin(coinId){
     let move = this.turn.lastMove;
+    let currentPlayer = this.getCurrentPlayer();
     let movablecoins = currentPlayer.getMovableCoins(move);
     return movablecoins.some((coin=>coin.id==coinId));
   }
@@ -153,11 +158,13 @@ class Game {
     if(status.killedOppCoin){
       this.turn.increamentChances();
       let oppPlayer = this.players.find((player) =>
-        player.getColor()==status.diedCoin.getColor());
+        player.getColor()==status.diedCoin.color);
       oppPlayer.moveCoinToHome(status.diedCoin);
       //this.activityLog.registerCoinKilled(killBy,killed);
-      return;
     }
+    console.log(currentPlayer.coins);
+    this.setStatus();
+    this.turn.next();
   }
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();

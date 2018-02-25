@@ -14,7 +14,6 @@ class UnsafeCell extends Cell {
     this.coins.push(coin);
     if (this.coins.length > 1) {
       let oldCoin = this.coins.shift();
-      oldCoin.die();
       status.killedOppCoin = true;
       status.diedCoin = oldCoin.getStatus();
     }

@@ -18,7 +18,7 @@ app.initialize = function(gamesManager,fs) {
   app.fs = fs;
 };
 
-app.use(lib.logger);
+//app.use(lib.logger);
 app.use(express.urlencoded({
   extended: false
 }));
@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(lib.checkGame);
 app.use(lib.trimRequestBody);
-app.use(lib.logger);
+//app.use(lib.logger);
 app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));
 app.use('/game',ludo);
@@ -37,7 +37,10 @@ app.get('/getStatus',lib.checkIsGamePresent,getHandlers.serveGameStatus);
 app.post('/createGame',lib.verifyReqBody,postHandlers.verifyCreateGameReq,
   lib.checkCharacterLimit,postHandlers.blockIfUserHasGame,
   postHandlers.createNewGame);
-
+app.get('/debug',function(req,res,next){
+  debugger;
+  res.end();
+});
 app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
 app.delete('/player', deleteHandler.removePlayer);
 ludo.use(lib.checkCookie);

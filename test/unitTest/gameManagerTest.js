@@ -2,15 +2,7 @@ const assert = require('chai').assert;
 const path = require('path');
 const GameManager = require(path.resolve('src/models/gamesManager.js'));
 const Game = require(path.resolve('src/models/game.js'));
-const EventEmitter = require(path.resolve('test/mockEventEmitter.js'));
-const ColorDistributor = function() {
-  this.colors = ['red','green','blue','yellow'];
-}
-ColorDistributor.prototype = {
-  getColor:function() {
-    return this.colors.shift();
-  }
-}
+const ColorDistributor = require(path.resolve('test/colorDistributer.js'));
 
 const dice = function(){
   return 4;
@@ -20,12 +12,12 @@ describe('GameManager', () => {
   let gameManager;
   let game;
   beforeEach(() => {
-    gameManager = new GameManager(ColorDistributor,dice,EventEmitter);
-    game = gameManager.addGame('newGame',new EventEmitter());
+    gameManager = new GameManager(ColorDistributor,dice);
+    game = gameManager.addGame('newGame');
   });
   describe('#addGame', () => {
     it('should create a new game with given name and store it', () => {
-      let expected = new Game('newGame',ColorDistributor,dice,new EventEmitter());
+      let expected = new Game('newGame',ColorDistributor,dice);
       assert.deepEqual(game,expected );
       assert.instanceOf(game,Game);
     });
@@ -33,8 +25,7 @@ describe('GameManager', () => {
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
-      let expectedGame = new Game('newGame',ColorDistributor,dice,
-        new EventEmitter());
+      let expectedGame = new Game('newGame',ColorDistributor,dice);
       expectedGame.addPlayer('john');
       assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
     });
@@ -69,7 +60,7 @@ describe('GameManager', () => {
   });
   describe('#getGame()', () => {
     it('should return Game', () => {
-      let expected = new Game('newGame', ColorDistributor, dice,new EventEmitter());
+      let expected = new Game('newGame', ColorDistributor, dice);
       assert.deepEqual(gameManager.getGame('newGame'),expected);
       assert.isUndefined(gameManager.getGame('badGame'));
     });

@@ -84,15 +84,21 @@ const joinPlayerToGame = function(req,res){
   res.end();
 };
 
-const moveCoin = function(req,res){
-  let coinToMove = req.body.coinId;
-  if (req.game.moveCoin(coinToMove)) {
-    let status = req.game.getStatus();
-    status.status = true;
-    res.send(status);
+const checkCanMoveCoin = function(req,res,next) {
+  let game = req.game;
+  if(!game.isMovableCoin(req.body.coinId)){
+    res.json({status:false,message:`Coin can't be moved`});
     return;
   }
-  res.send({status:false,message:`Coin can't be moved`});
+  next();
+};
+
+const moveCoin = function(req,res){
+  let coinToMove = req.body.coinId;
+  req.game.moveCoin(coinToMove);
+  let status = req.game.getStatus();
+  status.status = true;
+  res.json(status);
 };
 
 module.exports = {
@@ -100,5 +106,5 @@ module.exports = {
   createNewGame,
   joinPlayerToGame,
   verifyCreateGameReq,
-  moveCoin
+  moveCoin:[checkCanMoveCoin,moveCoin]
 };

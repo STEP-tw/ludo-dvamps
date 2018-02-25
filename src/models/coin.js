@@ -1,7 +1,5 @@
-let EventEmitter = require('events');
-class Coin extends EventEmitter{
+class Coin {
   constructor(id,homePosition) {
-    super();
     this.id = id;
     this.position = homePosition;
     this.homePosition = homePosition;
@@ -10,7 +8,7 @@ class Coin extends EventEmitter{
   getPosition(){
     return this.position;
   }
-  getStatus(){
+  getStatus(){//name should be changed to getDetail.
     return {id:this.id,position:this.position,color:this.color};
   }
   setColor(color) {
@@ -18,9 +16,6 @@ class Coin extends EventEmitter{
   }
   setPosition(pos){
     this.position = pos;
-  }
-  die(){
-    this.emit('died',{id:this.id,color:this.color});
   }
 }
 

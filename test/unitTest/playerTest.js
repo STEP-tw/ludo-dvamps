@@ -136,13 +136,6 @@ describe('#Player', () => {
       assert.lengthOf(player.path.getCell(1).coins,0);
     });
   });
-  describe('#putAtHome', () => {
-    it('should put coin at homePosition', () => {
-      player.path.add(generateSafeCells(-4,4));
-      player.moveCoinToHome(1);
-      assert.equal(player.getCoins()[0].getPosition(),-2);
-    });
-  });
   describe('#getNoOfCoinsInDest', () => {
     beforeEach(()=>{
       player.path.addCell(new DestinationCell(61));
@@ -156,30 +149,6 @@ describe('#Player', () => {
     it('should give number of coins in destination', () => {
       player.path.getCell(61).addCoin(fourthCoin);
       assert.equal(player.getNoOfCoinsInDest(),4);
-    });
-  });
-  describe('#kill Event',() => {
-    let coin1;
-    beforeEach(function(){
-      coin1 = new Coin(1,-1);
-      coin1.setColor('red')
-      coin1.setPosition(10);
-      let coin2 = new Coin(2,-2);
-      let coin3 = new Coin(3,-3);
-      path = new Path(1);
-      path.add(generateSafeCells(-1,20));
-      player = new Player('player','red',[coin1,coin2,coin3],path);
-      player.listenDiedEvent();
-    })
-    it('player should put coin to home if died event is fired by coin is his coin',() => {
-      assert.equal(coin1.getPosition(),10);
-      coin1.die();
-      assert.equal(coin1.getPosition(),-1);
-    });
-    it('player should not put coin to home if died event is fired by someother player',() => {
-      assert.equal(coin1.getPosition(),10);
-      coin1.emit('died',{id:1,color:'green'});
-      assert.equal(coin1.getPosition(),10);
     });
   });
 });

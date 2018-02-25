@@ -21,14 +21,11 @@ describe('UnsafeCell', () => {
       assert.deepEqual(unsafeCell.coins[0], coin);
     });
     it('should remove existing coin if new coin comes', () => {
-      let death = {status:false};
-      coin.on('died',()=>death.status=true);
       unsafeCell.addCoin(coin);
       assert.deepEqual(unsafeCell.coins[0], coin);
       let coin2 = new Coin(2);
       unsafeCell.addCoin(coin2);
       assert.deepEqual(unsafeCell.coins[0],coin2);
-      assert.isOk(death.status);
     });
     it('should give status of what happened when a coin is added', () => {
       let status = unsafeCell.addCoin(coin);

@@ -5,6 +5,7 @@ describe('#Coin', () => {
   let coin = {};
   beforeEach(()=>{
     coin = new Coin(1,-1);
+    coin.setColor('red');
   })
   describe('#getPosition', () => {
     it('should return position of coin', () => {
@@ -17,13 +18,9 @@ describe('#Coin', () => {
       assert.equal(coin.getPosition(),10);
     });
   });
-  describe('#die', () => {
-    it('should fire a died event', () => {
-      let person = {};
-      coin.on('died',()=>person.firedEvent='died');
-      assert.isUndefined(person.fired);
-      coin.die();
-      assert.equal(person.firedEvent,'died');
+  describe('#getStatus',() => {
+    it('should give coin id,position,homePosition and color of coin',function(){
+      assert.deepEqual(coin.getStatus(),{id:1,color:'red',position:-1});
     });
   });
 });
