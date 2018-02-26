@@ -48,6 +48,7 @@ class Player {
     let coin = this.coins.find(coin=>coin.id==coinId);
     let nextPosCoin = this.path.moveCoin(coin,move);
     coin.setPosition(nextPosCoin);
+    return nextPosCoin;
   }
   entertainDiedEvent(coinDetail){
     if(coinDetail.color == this.color){
@@ -60,6 +61,10 @@ class Player {
   moveCoinToHome(coinId){
     let coin = this.coins.find((coin)=>coin.id == coinId);
     this.path.putAtHome(coin);
+  }
+  isDestination(position){
+    let destination = this.path.getDestination();
+    return destination.getPosition() == position;
   }
   getNoOfCoinsInDest(){
     let path = this.getPath();
