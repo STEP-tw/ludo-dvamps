@@ -19,8 +19,10 @@ const updateCoinPosition = function(players){
     player.coins.forEach((coin)=>{
       if (+coin.position < 0) {
         coin.position = `home${coin.position}`;
+        changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,31.5);
+        return;
       }
-      changeCoinPosition(`${coin.color}-${coin.id}`,coin.position);
+      changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,17.35);
     });
   });
 };
@@ -162,9 +164,6 @@ const showLogs = function(logs) {
   }).join('');
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;
-  let lastLog = document.querySelector('ul').lastElementChild;
-  let lastPos = lastLog.getBoundingClientRect().y;
-  // activityLog.scrollTo(0, lastPos);
 };
 
 const getLogs = function() {
@@ -186,11 +185,11 @@ const load = function() {
   foo = setInterval(getLogs, 2000);
 };
 
-const changeCoinPosition = (coinId,cellId) => {
+const changeCoinPosition = (coinId,cellId,margin) => {
   let coin = document.getElementById(coinId);
   let cell = document.getElementById(cellId);
-  coin.setAttribute('cx',cell.x.animVal.value + 17.375);
-  coin.setAttribute('cy',cell.y.animVal.value + 17.375);
+  coin.setAttribute('cx',cell.x.animVal.value + margin);
+  coin.setAttribute('cy',cell.y.animVal.value + margin);
 };
 
 window.onload = load;

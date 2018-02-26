@@ -1,6 +1,5 @@
 <svg viewBox="0 0 602 602" xmlns="http://www.w3.org/2000/svg">
  <g>
-  <title>background</title>
   <rect x="0" y="0" width="600" height="600" id="canvas_background" fill="#fff"></rect>
   <g id="canvasGrid" display="none">
    <rect id="svg_1" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"></rect>
@@ -8,7 +7,6 @@
  </g>
 
  <g>
-  <title>Layer 1</title>
   <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="1" width="40" height="40" id="23"></rect>
   <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="1" width="40" height="40" id="24"></rect>
   <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="1" width="40" height="40" id="25"></rect>
@@ -111,10 +109,14 @@
   <text transform="matrix(1.51351, 0, 0, 1.55859, -143.351, -46.7459)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_12" y="100.16679" x="259" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
   <text transform="matrix(1.51306, 0, 0, 1.52693, -287.403, -170.257)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_13" y="340.449997" x="538.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
   <text transform="matrix(1.71503, 0, 0, 1.73319, -375.455, -174.369)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_14" y="257" x="503" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <polygon points="240,240 240,360 300,300" stroke="black" stroke-width="1.5" fill="#0b9d22" id="116"/>
-  <polygon points="240,360 300,300 360,360" stroke="black" stroke-width="1.5" fill="#f21010" id="155"/>
-  <polygon points="360,240 300,300 360,360" stroke="black" stroke-width="1.5" fill="#1436e9" id="142"/>
-  <polygon points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#ffff00" id="129"/>
+  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="321" width="40" height="40" id="155"></rect>
+  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="281" width="40" height="40" id="116"></rect>
+  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="281" width="40" height="40" id="142"></rect>
+  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="241" width="40" height="40" id="129"></rect>
+  <polygon points="240,240 240,360 300,300" stroke="black" stroke-width="1.5" fill="#0b9d22"/>
+  <polygon points="240,360 300,300 360,360" stroke="black" stroke-width="1.5" fill="#f21010"/>
+  <polygon points="360,240 300,300 360,360" stroke="black" stroke-width="1.5" fill="#1436e9"/>
+  <polygon points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#ffff00"/>
   <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" rx="10.5" ry="10.5" id="green-5"></ellipse>
   <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" rx="10.5" ry="10.5" id="green-6"></ellipse>
   <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" rx="10.5" ry="10.5" id="green-7"></ellipse>

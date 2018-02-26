@@ -35,8 +35,12 @@ class Turn {
     this.movedCoin = false;
   }
 
+  markAsMovedCoin(){
+    this.movedCoin = true;
+  }
+
   rollDice(dice){
-    if(this.currentPlayerChances && this.movedCoin){
+    if(this.currentPlayerChances && this.hasMovedCoin()){
       let move = dice.roll();
       this.currentPlayerMoves.push(move);
       this.decrementChances();
@@ -59,10 +63,6 @@ class Turn {
 
   hasMovedCoin(){
     return this.movedCoin;
-  }
-
-  markAsMovedCoin(){
-    this.movedCoin = true;
   }
 
   decideTurnAsPerMove(haveMovablecoins){

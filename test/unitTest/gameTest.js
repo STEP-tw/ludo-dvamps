@@ -50,9 +50,9 @@ describe('#Game', () => {
     it('should give the player with given player name', () => {
       game.addPlayer('lala');
       let player = game.getPlayer('lala');
-      assert.propertyVal(player,'name','lala');
-      assert.propertyVal(player,'color','red');
-      assert.property(player,'coins');
+      assert.propertyVal(player, 'name', 'lala');
+      assert.propertyVal(player, 'color', 'red');
+      assert.property(player, 'coins');
     });
   });
   describe('#removePlayer()', () => {
@@ -122,29 +122,29 @@ describe('#Game', () => {
     it('should return a dice roll status with no movable coins and change turn ', () => {
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 4);
-      assert.notPropertyVal(rollStatus,'coins');
-      assert.equal(game.getCurrentPlayer().getName(),'lala');
+      assert.notPropertyVal(rollStatus, 'coins');
+      assert.equal(game.getCurrentPlayer().getName(), 'lala');
     });
     it(`should return a dice roll status with movable coins and don't change turn`, () => {
       game.dice = sixPointDice;
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 6);
-      assert.property(rollStatus,'coins');
-      assert.lengthOf(rollStatus.coins,4);
-      assert.equal(game.getCurrentPlayer().getName(),'salman')
+      assert.property(rollStatus, 'coins');
+      assert.lengthOf(rollStatus.coins, 4);
+      assert.equal(game.getCurrentPlayer().getName(), 'salman')
     });
     it('should return dice status with move undefined if there are no player chances ', () => {
       game.turn.playerChances = 0;
-      assert.equal(game.getCurrentPlayer().getName(),'salman')
+      assert.equal(game.getCurrentPlayer().getName(), 'salman')
       let rollStatus = game.rollDice();
       assert.isUndefined(rollStatus.move);
-      assert.notPropertyVal(rollStatus,'coins');
-      assert.equal(game.getCurrentPlayer().getName(),'lala')
+      assert.notPropertyVal(rollStatus, 'coins');
+      assert.equal(game.getCurrentPlayer().getName(), 'lala')
     });
     it('should register move in activity log', () => {
       game.rollDice();
       let logs = game.getLogs();
-      assert.match(JSON.stringify(logs[0]),/salman/);
+      assert.match(JSON.stringify(logs[0]), /salman/);
     });
   });
   describe('#getCurrentPlayer', () => {
@@ -169,7 +169,7 @@ describe('#Game', () => {
       game.addPlayer('ram');
       game.addPlayer('shyam');
       assert.property(game, 'turn');
-      assert.propertyVal(game.getCurrentPlayer(),'name','lala');
+      assert.propertyVal(game.getCurrentPlayer(), 'name', 'lala');
     });
   });
   describe('#getGameStatus', () => {
@@ -184,32 +184,83 @@ describe('#Game', () => {
     });
   });
   describe('#moveCoin', () => {
-    it('should move coin of specific id if coin is valid of current player '+
-    ' with specific moves, update game status, return true and should not change turn', () => {
-      let game = initGame(['salman','lala','lali','lalu'],sixPointDice);
+    it('should move coin of specific id if coin is valid of current player ' +
+      ' with specific moves, update game status, return true and should not change turn', () => {
+        let dice = {
+          roll: function() {
+            return 6;
+          }
+        };
+        game = new Game('newGame', ColorDistributer, dice);
+        game.addPlayer('salman');
+        game.addPlayer('lala');
+        game.addPlayer('lali');
+        game.addPlayer('lalu');
+        game.rollDice();
+        let currPlayer = game.getCurrentPlayer();
+        assert.isOk(game.moveCoin(1));
+        assert.equal(currPlayer.getCoin(1).position, 0);
+        assert.equal(game.getCurrentPlayer().name, 'salman');
+        game.rollDice();
+        assert.isOk(game.moveCoin(1));
+        assert.equal(currPlayer.getCoin(1).position, 6);
+        assert.equal(game.getCurrentPlayer().name, 'salman');
+      });
+    it('should not move coin more than once for a single dice roll', () => {
+      let dice = {
+        roll: function() {
+          return 6;
+        }
+      };
+      game = new Game('newGame', ColorDistributer, dice );
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
       game.rollDice();
+      assert.isOk(game.moveCoin(1));
+      assert.isNotOk(game.moveCoin(1));
+      // let currPlayer = game.getCurrentPlayer();
+      // assert.equal(currPlayer.getCoin(1).position, 0);
+      // assert.equal(game.getCurrentPlayer().name, 'salman');
+    });
+    it('should get one more chance to roll the dice if coin moves to destination ', () => {
+      let dice = {
+        roll:function(){
+          return 4;
+        }
+      };
+      game = new Game('newGame', ColorDistributer, dice);
+      game.addPlayer('salman');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
       let currPlayer = game.getCurrentPlayer();
-      game.moveCoin(1);
-      assert.equal(currPlayer.getCoin(1).position,0);
-      assert.equal(game.getCurrentPlayer().name,'salman');
+      let coin = currPlayer.getCoin(1);
+      coin.setPosition(151);
+      let playerChance = game.turn.currentPlayerChances;
       game.rollDice();
       game.moveCoin(1);
-      assert.equal(currPlayer.getCoin(1).position,6);
-      assert.equal(game.getCurrentPlayer().name,'salman');
+      assert.equal(game.turn.currentPlayerChances,playerChance);
     });
   });
-  describe('#hasWon',()=>{
-    it('should return true if player has 4 coins in destination cell',()=>{
-      let game = initGame(['kaka','lala','lali','lalu'],fourPointDice );
+  describe('#hasWon', () => {
+    it('should return true if player has 4 coins in destination cell', () => {
+      game.addPlayer('kaka');
+      game.addPlayer('lala');
+      game.addPlayer('lali');
+      game.addPlayer('lalu');
       let currentPlayer = game.getCurrentPlayer();
       let path = currentPlayer.getPath();
       let destination = path.getDestination();
-      [1,2,3].forEach((coinId)=>destination.addCoin(new Coin(coinId)));
+      destination.addCoin(new Coin(1));
+      destination.addCoin(new Coin(2));
       assert.isNotOk(game.hasWon());
+      destination.addCoin(new Coin(3));
       destination.addCoin(new Coin(4));
       assert.isOk(game.hasWon());
     })
-  });
+  })
   describe('killing of coin',function(){
     it('opp player coin should die when current player coin reach same unsafe cell in which opp coin is present',function(){
       let biasDice = {moves:[6,1,6,40],roll:()=>biasDice.moves.shift()}

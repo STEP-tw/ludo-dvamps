@@ -153,17 +153,25 @@ class Game {
   moveCoin(coinId){
     let currentPlayer = this.getCurrentPlayer();
     let move = this.turn.lastMove;
-    let status = currentPlayer.moveCoin(coinId,move);
-    if(status.killedOppCoin){
-      this.turn.increamentChances();
-      let oppPlayer = this.players.find((player) =>
-        player.getColor()==status.diedCoin.color);
-      oppPlayer.moveCoinToHome(status.diedCoin);
+    if(!this.turn.hasMovedCoin()){
+      let status = currentPlayer.moveCoin(coinId,move);
+      if(status.killedOppCoin){
+        this.turn.increamentChances();
+        let oppPlayer = this.players.find((player) =>
+          player.getColor()==status.diedCoin.color);
+        oppPlayer.moveCoinToHome(status.diedCoin);
+      }
+      if(status.reachedDestination){
+        this.turn.increamentChances();
+      }
+      this.activityLog.registerCoinMoved(currentPlayer.getName(),
+        currentPlayer.getColor());
+      this.setStatus();
+      this.turn.next();
+      this.turn.markAsMovedCoin();
+      return true;
     }
-    this.turn.markAsMovedCoin();
-    this.setStatus();
-    this.turn.next();
-    this.activityLog.registerTurn(this.getCurrentPlayer().getName());
+    return false;
   }
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();

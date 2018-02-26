@@ -53,6 +53,7 @@ class Player {
     let coin = this.coins.find((coin)=>coin.id == coinDetail.id);
     this.path.putAtHome(coin);
   }
+  
   getNoOfCoinsInDest(){
     let path = this.getPath();
     return path.getCoinsInDest();
