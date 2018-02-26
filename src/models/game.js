@@ -130,12 +130,10 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
-    //this.turn.listenDiedEvent(this.eventEmitter);
     players.forEach((playerName,index)=>{
       let player = this.getPlayer(playerName);
       let path = this.board.getPathFor(index);
       player.assignPath(path);
-      //player.listenDiedEvent(this.eventEmitter);
     });
     this.activityLog.registerTurn(this.turn.currentPlayer);
   }
@@ -161,7 +159,6 @@ class Game {
       let oppPlayer = this.players.find((player) =>
         player.getColor()==status.diedCoin.color);
       oppPlayer.moveCoinToHome(status.diedCoin);
-      //this.activityLog.registerCoinKilled(killBy,killed);
     }
     this.turn.markAsMovedCoin();
     this.setStatus();

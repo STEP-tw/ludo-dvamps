@@ -50,7 +50,6 @@ class Player {
     return status;
   }
   moveCoinToHome(coinDetail){
-    console.log(coinDetail.id);
     let coin = this.coins.find((coin)=>coin.id == coinDetail.id);
     this.path.putAtHome(coin);
   }

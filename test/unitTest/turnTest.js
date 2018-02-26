@@ -115,4 +115,10 @@ describe('#Turn', () => {
       assert.isUndefined(move);
     });
   });
+  describe('#hasMovedCoin', () => {
+    it('should give false if no coin has been moved', () => {
+      turn.rollDice(dice);
+      assert.isNotOk(turn.hasMovedCoin());
+    });
+  });
 });
