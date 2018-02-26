@@ -166,7 +166,8 @@ class Game {
       this.setStatus();
       this.turn.next();
       currentPlayer = this.getCurrentPlayer();
-      this.activityLog.registerTurn(currentPlayer.getName());
+      this.activityLog.registerTurn(currentPlayer.getName()
+        ,currentPlayer.getColor());
       this.turn.markAsMovedCoin();
       return true;
     }
