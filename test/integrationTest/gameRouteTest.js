@@ -1,6 +1,7 @@
 const assert = require('chai').assert;
 const request = require('supertest');
 const path = require('path');
+const Coin = require(path.resolve('src/models/coin.js'));
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 let doesNotHaveCookies = (res) => {
@@ -111,6 +112,25 @@ describe('GameRoute', () => {
         .expect(200)
         .expect(/ashish/)
         .expect(/red/)
+        .end(done);
+    });
+    it('should give game status with won as true',(done)=>{
+      let game = gamesManager.getGame('newGame');
+      let currentPlayer = game.getCurrentPlayer();
+      let path = currentPlayer.getPath();
+      let destination = path.getDestination();
+      destination.addCoin(new Coin(1));
+      destination.addCoin(new Coin(2));
+      destination.addCoin(new Coin(3));
+      destination.addCoin(new Coin(4));
+
+      request(app)
+        .get('/game/gameStatus')
+        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .expect(200)
+        .expect(/ashish/)
+        .expect(/red/)
+        .expect(/"won":true/)
         .end(done);
     });
     it('should redirect index', (done) => {
