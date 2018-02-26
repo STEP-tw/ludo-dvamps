@@ -1,3 +1,5 @@
+const path = require('path');
+const lib = require(path.resolve('src/handlers/middleWares.js'));
 const resWithGameJoined = function(res,gameName,playerName) {
   res.cookie('gameName',gameName,{path:''});
   res.cookie('playerName',playerName,{path:''});
@@ -37,19 +39,32 @@ const joinPlayerToGame = function(req,res){
   res.end();
 };
 
-const moveCoin = function(req,res){
-  let coinToMove = req.body.coinId;
-  if (req.game.moveCoin(coinToMove)) {
-    let status = req.game.getStatus();
-    status.status = true;
-    res.send(status);
+const checkCanMoveCoin = function(req,res,next) {
+  let game = req.game;
+  if(!game.isMovableCoin(req.body.coinId)){
+    res.json({status:false,message:`Coin can't be moved`});
     return;
   }
-  res.send({status:false,message:`Coin can't be moved`});
+  next();
 };
 
-module.exports = {
-  createNewGame,
+const moveCoin = function(req,res){
+  let coinToMove = req.body.coinId;
+  req.game.moveCoin(coinToMove);
+  let status = req.game.getStatus();
+  status.status = true;
+  res.json(status);
+};
+
+let joinGameRoute = [
+  lib.verifyCreateGameReq,
+  lib.verifyReqBody,
+  lib.checkCharacterLimit,
+  lib.doesGameExists,
   joinPlayerToGame,
-  moveCoin
+];
+module.exports = {
+  createNewGame:[lib.verifyReqBody,lib.checkCharacterLimit,createNewGame],
+  joinPlayerToGame:joinGameRoute,
+  moveCoin:[checkCanMoveCoin,moveCoin]
 };

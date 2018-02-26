@@ -2,7 +2,7 @@ const assert = require('chai').assert
 const path = require('path');
 const Path= require(path.resolve('src/models/path.js'));
 const Coin= require(path.resolve('src/models/coin.js'));
-const Cell= require(path.resolve('src/models/safeCell.js'));
+const UnsafeCell= require(path.resolve('src/models/unsafeCell.js'));
 const DestinationCell= require(path.resolve('src/models/destinationCell.js'));
 
 describe('Path', () => {
@@ -99,43 +99,42 @@ describe('Path', () => {
     });
   });
   describe('#moveCoin', () => {
-    let coin;
+    let myCoin,oppCoin,firstCell,thirdCell;
     beforeEach(()=>{
-      coin = new Coin(1,1);
+      myCoin = new Coin(1,1);
+      myCoin.setColor('red');
+      oppCoin = new Coin(4,3);
+      oppCoin.setColor('green');
+      [1,2,3,4,5].forEach((pos)=>redPath.addCell(new UnsafeCell(pos)));
+      firstCell = redPath.cells[0];
+      thirdCell = redPath.cells[2];
     })
     it('should remove coin from first cell and add it to next specific cell moves', () => {
-      let cellWithCoin = new Cell(1);
-      let CellWhereCoinWillGo = new Cell(4);
-      cellWithCoin.addCoin(coin);
-      redPath.addCell(cellWithCoin);
-      redPath.addCell(new Cell(2));
-      redPath.addCell(new Cell(3));
-      redPath.addCell(CellWhereCoinWillGo);
-      redPath.addCell(new Cell(5));
-      redPath.moveCoin(coin,3);
-      assert.lengthOf(cellWithCoin.coins,0);
-      assert.notInclude(cellWithCoin.coins,coin);
-      assert.equal(coin.position,4);
-      assert.lengthOf(CellWhereCoinWillGo.coins,1);
-      assert.include(CellWhereCoinWillGo.coins,coin);
+      firstCell.addCoin(myCoin);
+      let moveStatus = redPath.moveCoin(myCoin,2);
+      assert.deepEqual(firstCell.coins,[]);
+      assert.deepEqual(thirdCell.coins,[myCoin]);
+      assert.isNotOk(moveStatus.killedOppCoin);
     });
     it('should not move coin if move is not possible', () => {
-      let cellWithCoin = new Cell(1);
-      cellWithCoin.addCoin(coin);
-      redPath.addCell(cellWithCoin);
-      redPath.addCell(new Cell(2));
-      redPath.addCell(new Cell(3));
-      redPath.addCell(new Cell(4));
-      redPath.moveCoin(coin,5);
-      assert.lengthOf(cellWithCoin.coins,1);
-      assert.include(cellWithCoin.coins,coin);
+      firstCell.addCoin(myCoin);
+      redPath.moveCoin(myCoin,5);
+      assert.deepEqual(firstCell.coins,[myCoin]);
     });
+    it('should give detail of opp coin which got killed while moving coin in unsafe cell', ()=> {
+      firstCell.addCoin(myCoin);
+      thirdCell.addCoin(oppCoin);
+      let moveStatus = redPath.moveCoin(myCoin,2);
+      assert.isOk(moveStatus.killedOppCoin);
+      assert.deepEqual(moveStatus.diedCoin,oppCoin.getStatus());
+    });
+
   });
   describe('#getDestination', () => {
     it('should give destinationCell back', () => {
       let destinationCell = new DestinationCell(61);
-      redPath.addCell(new Cell(3));
-      redPath.addCell(new Cell(4));
+      redPath.addCell(new UnsafeCell(3));
+      redPath.addCell(new UnsafeCell(4));
       redPath.addCell(destinationCell);
       assert.deepEqual(redPath.getDestination(),destinationCell);
     });
@@ -143,16 +142,16 @@ describe('Path', () => {
   describe('#getCoinsInDestination', () => {
     it('should give number of coins in destinationCell', () => {
       let destinationCell = new DestinationCell(61);
-      redPath.addCell(new Cell(3));
-      redPath.addCell(new Cell(4));
+      redPath.addCell(new UnsafeCell(3));
+      redPath.addCell(new UnsafeCell(4));
       redPath.addCell(destinationCell);
       destinationCell.addCoin(new Coin(1,-1));
       assert.equal(redPath.getCoinsInDest(),1);
     });
     it('should give number of coins in destinationCell', () => {
       let destinationCell = new DestinationCell(61);
-      redPath.addCell(new Cell(3));
-      redPath.addCell(new Cell(4));
+      redPath.addCell(new UnsafeCell(3));
+      redPath.addCell(new UnsafeCell(4));
       redPath.addCell(destinationCell);
       destinationCell.addCoin(new Coin(1,-1));
       destinationCell.addCoin(new Coin(2,-2));
@@ -162,9 +161,9 @@ describe('Path', () => {
   });
   describe('#putAtHome', () => {
     it('should put coin in homeCell ', () => {
-      let cell1 = new Cell(-1);
-      let cell2 = new Cell(-2);
-      let cell3 = new Cell(-3);
+      let cell1 = new UnsafeCell(-1);
+      let cell2 = new UnsafeCell(-2);
+      let cell3 = new UnsafeCell(-3);
       let coin = new Coin(1,-2,{});
       coin.setPosition(4);
       assert.equal(coin.getPosition(),4);

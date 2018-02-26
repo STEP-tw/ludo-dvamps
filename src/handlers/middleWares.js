@@ -9,9 +9,8 @@ const checkCookie = function(req,res,next) {
 };
 
 const isEmptyString = function(string) {
-  return string.trim() == '';
+  return string.trim()=='';
 };
-
 const verifyReqBody = function(req,res,next) {
   let bodyFieldValues = Object.values(req.body);
   if(bodyFieldValues.some(isEmptyString)){
@@ -114,7 +113,7 @@ const isValidReqBodyFormat = function(paramsKeys,req) {
   });
 };
 
-const verifyCreateGameReq = function(req,res,next) {
+const verifyCreateGameReq = function(req,res,next) {//should be rename
   if(!isValidReqBodyFormat(['gameName','playerName'],req)){
     res.statusCode = 400 ;
     res.json({status:false,message:'bad request'});
@@ -162,7 +161,23 @@ const checkPlayerNameLimit = function(req,res,next){
   next();
 };
 
+const trimRequestBody = function(req,res,next) {
+  let bodyField = Object.keys(req.body);
+  bodyField.forEach(function(field){
+    req.body[field] = req.body[field].trim();
+  });
+  next();
+};
 
+const doesGameExists = function(req,res,next){
+  let game = req.app.gamesManager.getGame(req.body.gameName);
+  if(!game){
+    res.statusCode = 400;
+    res.json({status:false,message:"game dosen\'t exist"});
+    return;
+  }
+  next();
+};
 module.exports = {
   checkCookie,
   loadGame,
@@ -178,4 +193,6 @@ module.exports = {
   blockIfUserHasGame,
   checkGamesExists,
   checkPlayerNameLimit,
+  trimRequestBody,
+  doesGameExists
 };

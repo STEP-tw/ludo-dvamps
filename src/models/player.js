@@ -46,19 +46,12 @@ class Player {
   }
   moveCoin(coinId,move){
     let coin = this.coins.find(coin=>coin.id==coinId);
-    let nextPosCoin = this.path.moveCoin(coin,move);
-    coin.setPosition(nextPosCoin);
+    let status = this.path.moveCoin(coin,move);
+    return status;
   }
-  entertainDiedEvent(coinDetail){
-    if(coinDetail.color == this.color){
-      this.moveCoinToHome(coinDetail.id);
-    }
-  }
-  listenDiedEvent(eventEmitter){
-    eventEmitter.on('died',this.entertainDiedEvent.bind(this));
-  }
-  moveCoinToHome(coinId){
-    let coin = this.coins.find((coin)=>coin.id == coinId);
+  moveCoinToHome(coinDetail){
+    console.log(coinDetail.id);
+    let coin = this.coins.find((coin)=>coin.id == coinDetail.id);
     this.path.putAtHome(coin);
   }
   getNoOfCoinsInDest(){

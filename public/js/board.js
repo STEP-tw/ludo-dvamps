@@ -14,7 +14,6 @@ const showPlayers = function() {
     });
   });
 };
-
 const updateCoinPosition = function(players){
   players.forEach((player)=>{
     player.coins.forEach((coin)=>{
@@ -50,11 +49,42 @@ const hideMovableCoins = function(coins) {
   });
 };
 
+const coinsId = [
+  'red-1','red-2','red-3','red-4',
+  'green-5','green-6','green-7','green-8',
+  'yellow-9','yellow-10','yellow-11','yellow-12',
+  'blue-13','blue-14','blue-15','blue-16'
+];
+
+const hasSameCoords = function(coin1,coin2){
+  let coin1XCoord = coin1.cx.animVal.value;
+  let coin1YCoord = coin1.cy.animVal.value;
+  let coin2XCoord = coin2.cx.animVal.value;
+  let coin2YCoord = coin2.cy.animVal.value;
+  return coin1XCoord==coin2XCoord&&coin1YCoord==coin2YCoord;
+};
+
+const arrOverlappingCoins = function(){
+  for(let count=0;count<coinsId.length-1;count++){
+    let currentCoin = document.getElementById(coinsId[count]);
+    for(let index=count+1;index<coinsId.length;index++){
+      let nextCoin = document.getElementById(coinsId[index]);
+      if(hasSameCoords(currentCoin,nextCoin)){
+        currentCoin.setAttribute('cx',currentCoin.cx.animVal.value-8);//14
+        currentCoin.setAttribute('cy',currentCoin.cy.animVal.value-8);//8
+        nextCoin.setAttribute('cx',nextCoin.cx.animVal.value+6);//8
+        nextCoin.setAttribute('cy',nextCoin.cy.animVal.value+7);//4
+      }
+    }
+  }
+};
+
 const showMovableCoins = function(coins) {
   coins.forEach((coin) => {
     let coinInBoard = document.querySelector(`#${coin.color}-${coin.id}`);
     coinInBoard.classList.add('focus');
   });
+  arrOverlappingCoins();
 };
 
 const showPopup = function(message) {
@@ -78,7 +108,6 @@ const showMove = function() {
     moveStatus.message && showPopup(moveStatus.message);
     return;
   }
-  console.log(moveStatus);
   showDice(+moveStatus.move);
   showMovableCoins(moveStatus.coins);
   addListenerTOCoin(moveStatus.coins);
@@ -111,7 +140,7 @@ const hideDice = function() {
 
 const getGameStatus = function() {
   sendAjaxRequest('GET', '/game/gameStatus', function() {
-    if (!this.responseText) {
+    if(!this.responseText) {
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
@@ -128,14 +157,14 @@ const getGameStatus = function() {
 
 const showLogs = function(logs) {
   let logStatements = logs.map((log) => {
-    let move = `<label>${log.move || ''}</label>`;
+    let move = `<label class="${log.color}">${log.move || ''}</label>`;
     return `<li><span>${log.time}</span>${log.statement}${move}</li>`;
   }).join('');
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;
   let lastLog = document.querySelector('ul').lastElementChild;
   let lastPos = lastLog.getBoundingClientRect().y;
-  activityLog.scrollTo(0, lastPos);
+  // activityLog.scrollTo(0, lastPos);
 };
 
 const getLogs = function() {
@@ -144,7 +173,7 @@ const getLogs = function() {
     showLogs(logs);
   }, null);
 };
-
+let foo;
 const load = function() {
   showPlayers();
   setClickListeners();
@@ -154,7 +183,7 @@ const load = function() {
     main.innerHTML = this.responseText;
   });
   setInterval(getGameStatus, 1000);
-  setInterval(getLogs, 2000);
+  foo = setInterval(getLogs, 2000);
 };
 
 const changeCoinPosition = (coinId,cellId) => {

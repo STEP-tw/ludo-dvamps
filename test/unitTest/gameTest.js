@@ -4,31 +4,23 @@ const Player = require(path.resolve('src/models/player.js'));
 const Game = require(path.resolve('src/models/game.js'));
 const Turn = require(path.resolve('src/models/turn.js'));
 const Coin = require(path.resolve('src/models/coin.js'));
-const EventEmitter = require(path.resolve('test/mockEventEmitter.js'));
-const dice = {
-  roll: function() {
-    return 4;
-  }
+const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
+const fourPointDice = {
+  roll:()=> 4
 };
+const sixPointDice ={
+  roll:()=> 6
+};
+const initGame = function(players,dice) {
+  let game = new Game('ludo',ColorDistributer,dice);
+  players.forEach((player)=> game.addPlayer(player));
+  return game;
+}
 
 describe('#Game', () => {
-  let game,ColorDistributer;
+  let game;
   beforeEach(() => {
-    ColorDistributer = function() {
-      this.colors = ['red', 'green', 'blue', 'yellow'];
-    }
-    ColorDistributer.prototype = {
-      getColor: function() {
-        return this.colors.shift();
-      },
-      addColor:function(color){
-        if(this.colors.includes(color)){
-          return;
-        }
-        this.colors.push(color);
-      }
-    }
-    game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
+    game = new Game('newGame', ColorDistributer, fourPointDice);
   });
   describe('#getStatus()', () => {
     it('should return game status', () => {
@@ -41,7 +33,6 @@ describe('#Game', () => {
       assert.isOk(game.addPlayer('manish'));
       assert.isOk(game.doesPlayerExist('manish'));
     });
-
     it('should not addPlayer to game if player is in the game', () => {
       game.addPlayer('manish');
       assert.isNotOk(game.addPlayer('manish'));
@@ -125,10 +116,7 @@ describe('#Game', () => {
   });
   describe('#rollDice', () => {
     beforeEach(function() {
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
+      game = initGame(['salman','lala','lali','lalu'],fourPointDice);
       game.start();
     });
     it('should return a dice roll status with no movable coins and change turn ', () => {
@@ -138,17 +126,7 @@ describe('#Game', () => {
       assert.equal(game.getCurrentPlayer().getName(),'lala');
     });
     it(`should return a dice roll status with movable coins and don't change turn`, () => {
-      let dice = {
-        roll:function(){
-          return 6;
-        }
-      };
-      game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
-      game.start();
+      game.dice = sixPointDice;
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 6);
       assert.property(rollStatus,'coins');
@@ -171,20 +149,15 @@ describe('#Game', () => {
   });
   describe('#getCurrentPlayer', () => {
     it('should return the current player name', () => {
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
+      game = initGame(['salman','lala','lali','lalu'],fourPointDice);
+      game.start();
       assert.propertyVal(game.getCurrentPlayer(),'name','salman');
       assert.propertyVal(game.getCurrentPlayer(),'color','red');
     });
   });
   describe('#arrangePlayers', () => {
     it('should arrange Players in required sequence', () => {
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
+      game = initGame(['lala','kaka','ram','shyam'],fourPointDice);
       let expection = ['lala', 'kaka', 'shyam', 'ram'];
       assert.deepEqual(expection, game.arrangePlayers());
     });
@@ -213,60 +186,44 @@ describe('#Game', () => {
   describe('#moveCoin', () => {
     it('should move coin of specific id if coin is valid of current player '+
     ' with specific moves, update game status, return true and should not change turn', () => {
-      let dice = {
-        roll:function(){
-          return 6;
-        }
-      };
-      game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
+      let game = initGame(['salman','lala','lali','lalu'],sixPointDice);
       game.rollDice();
       let currPlayer = game.getCurrentPlayer();
-      assert.isOk(game.moveCoin(1));
+      game.moveCoin(1);
       assert.equal(currPlayer.getCoin(1).position,0);
       assert.equal(game.getCurrentPlayer().name,'salman');
       game.rollDice();
-      assert.isOk(game.moveCoin(1));
+      game.moveCoin(1);
       assert.equal(currPlayer.getCoin(1).position,6);
       assert.equal(game.getCurrentPlayer().name,'salman');
-    });
-    it('should not move coin of specific id if coin is not valid of current player '+
-    ', return false and update turn', () => {
-      let dice = {
-        roll:function(){
-          return 4;
-        }
-      };
-      game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
-      game.rollDice();
-      let currPlayer = game.getPlayer('salman');
-      assert.isNotOk(game.moveCoin(1));
-      assert.equal(currPlayer.getCoin(1).position,-1);
-      assert.equal(game.getCurrentPlayer().name,'lala');
     });
   });
   describe('#hasWon',()=>{
     it('should return true if player has 4 coins in destination cell',()=>{
-      game.addPlayer('kaka');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
+      let game = initGame(['kaka','lala','lali','lalu'],fourPointDice );
       let currentPlayer = game.getCurrentPlayer();
       let path = currentPlayer.getPath();
       let destination = path.getDestination();
-      destination.addCoin(new Coin(1));
-      destination.addCoin(new Coin(2));
+      [1,2,3].forEach((coinId)=>destination.addCoin(new Coin(coinId)));
       assert.isNotOk(game.hasWon());
-      destination.addCoin(new Coin(3));
       destination.addCoin(new Coin(4));
       assert.isOk(game.hasWon());
     })
-  })
+  });
+  describe('killing of coin',function(){
+    it('opp player coin should die when current player coin reach same unsafe cell in which opp coin is present',function(){
+      let biasDice = {moves:[6,1,6,40],roll:()=>biasDice.moves.shift()}
+      game = initGame(['salman','lala','lali','lalu'],biasDice);
+      game.rollDice();
+      game.moveCoin(1);
+      game.rollDice();
+      game.moveCoin(1);
+      game.rollDice();
+      game.moveCoin(5);
+      game.rollDice();
+      game.moveCoin(5)
+      assert.equal(game.players[0].coins[0].getPosition(),-1);
+      assert.equal(game.getCurrentPlayer().getName(),'lala');
+    });
+  });
 });

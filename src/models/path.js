@@ -44,8 +44,9 @@ class Path {
   moveCoin(coin,move){
     let currentCell = this.getCell(coin.position);
     let nextCell = this.getNextMove(coin,move);
-    currentCell.removeCoin(coin) && nextCell.addCoin(coin);
-    return nextCell.position;
+    currentCell.removeCoin(coin);
+    let status = nextCell.addCoin(coin);
+    return status;
   }
   getDestination(){
     return this.cells[this.cells.length-1];

@@ -105,12 +105,17 @@ class Game {
   rollDice(){
     let turn = this.turn;
     let move = turn.rollDice(this.dice);
-    let currentPlayer = this.getCurrentPlayer();
-    this.activityLog.registerMove(currentPlayer.name,move);
+    if(move==6){
+      this.turn.increamentChances();
+    }
+    let currPlayer = this.getCurrentPlayer();
+    this.activityLog.registerMove(currPlayer.getName(),currPlayer.getColor()
+      ,move);
     this.status.move = move || this.status.move;
-    turn.decideTurnAsPerMove(currentPlayer.hasMovableCoins(move));
-    this.activityLog.registerTurn(this.getCurrentPlayer().name);
-    if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
+    let movablecoins = currPlayer.getMovableCoins(move);
+    if(turn.has3ConsecutiveSixes() || !currPlayer.hasMovableCoins(move)){
+      this.turn.updateTurn();
+      this.activityLog.registerTurn(this.getCurrentPlayer().name);
       return {move:move};
     }
     return {move:move,coins:this.getMovableCoinsOf(move)};
@@ -125,12 +130,12 @@ class Game {
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
-    this.turn.listenDiedEvent(this.eventEmitter);
+    //this.turn.listenDiedEvent(this.eventEmitter);
     players.forEach((playerName,index)=>{
       let player = this.getPlayer(playerName);
       let path = this.board.getPathFor(index);
       player.assignPath(path);
-      player.listenDiedEvent(this.eventEmitter);
+      //player.listenDiedEvent(this.eventEmitter);
     });
     this.activityLog.registerTurn(this.turn.currentPlayer);
   }
@@ -141,21 +146,27 @@ class Game {
   getLogs(){
     return this.activityLog.getLogs();
   }
+  isMovableCoin(coinId){
+    let move = this.turn.lastMove;
+    let currentPlayer = this.getCurrentPlayer();
+    let movablecoins = currentPlayer.getMovableCoins(move);
+    return movablecoins.some((coin=>coin.id==coinId));
+  }
   moveCoin(coinId){
     let currentPlayer = this.getCurrentPlayer();
     let move = this.turn.lastMove;
-    let movablecoins = currentPlayer.getMovableCoins(move);
-    let isCoinMovable = movablecoins.some((coin=>coin.id==coinId));
-    if (!this.turn.hasMovedCoin() && isCoinMovable) {
-      let playerName = currentPlayer.getName();
-      currentPlayer.moveCoin(coinId,move);
-      this.activityLog.registerCoinMoved(playerName,currentPlayer.getColor());
-      this.setStatus();
-      this.turn.decideTurnOnChance();
-      this.turn.markAsMovedCoin();
-      return true;
+    let status = currentPlayer.moveCoin(coinId,move);
+    if(status.killedOppCoin){
+      this.turn.increamentChances();
+      let oppPlayer = this.players.find((player) =>
+        player.getColor()==status.diedCoin.color);
+      oppPlayer.moveCoinToHome(status.diedCoin);
+      //this.activityLog.registerCoinKilled(killBy,killed);
     }
-    return false;
+    this.turn.markAsMovedCoin();
+    this.setStatus();
+    this.turn.next();
+    this.activityLog.registerTurn(this.getCurrentPlayer().getName());
   }
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();

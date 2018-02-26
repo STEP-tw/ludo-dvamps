@@ -1,29 +1,13 @@
 const assert = require('chai').assert;
 const path = require('path');
 let UnsafeCell = require(path.resolve('src/models/unsafeCell.js'));
-
+const Coin = require(path.resolve('src/models/coin.js'));
 describe('UnsafeCell', () => {
   let unsafeCell = {};
-  class Coin {
-    constructor(id) {
-      this.id = id;
-      this.died = false;
-      this.position;
-    }
-    die(){
-      this.died = true;
-    }
-    isDead(){
-      return this.died;
-    }
-    setPosition(position){
-      this.position = position;
-    }
-  }
   let coin = {}
   beforeEach(()=>{
     unsafeCell = new UnsafeCell(1);
-    coin = new Coin(1);
+    coin = new Coin(1,-1);
   })
   describe('#removeCoin', () => {
     it('should remove coin from cell and return it ', () => {
@@ -42,7 +26,14 @@ describe('UnsafeCell', () => {
       let coin2 = new Coin(2);
       unsafeCell.addCoin(coin2);
       assert.deepEqual(unsafeCell.coins[0],coin2);
-      assert.isOk(coin.isDead());
+    });
+    it('should give status of what happened when a coin is added', () => {
+      let status = unsafeCell.addCoin(coin);
+      assert.isNotOk(status.killedOppCoin);
+      let coin2 = new Coin(2);
+      status = unsafeCell.addCoin(coin2);
+      assert.isOk(status.killedOppCoin);
+      assert.deepEqual(status.diedCoin,coin.getStatus());
     });
   });
 });

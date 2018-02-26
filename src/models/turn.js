@@ -84,8 +84,10 @@ class Turn {
     return this.currentPlayer;
   }
 
-  listenDiedEvent(eventEmitter){
-    eventEmitter.on('died',this.increamentChances.bind(this));
+  next(){
+    if(!this.playerChances){
+      return this.updateTurn();
+    }
   }
 }
 

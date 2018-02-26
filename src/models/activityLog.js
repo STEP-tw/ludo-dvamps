@@ -10,14 +10,15 @@ class ActivityLog {
       statement:statement
     });
   }
-  registerMove(playerName,move){
+  registerMove(playerName,playerColor,move){
     let time = new Date().toLocaleTimeString();
     let dices = ['&#9856;','&#9857;','&#9858;','&#9859;','&#9860;','&#9861;'];
     let statement = `${playerName} got`;
     this.logs.push({
       time:time,
       statement:statement,
-      move:dices[move-1]
+      move:dices[move-1],
+      color:playerColor
     });
   }
   registerCoinMoved(playerName,coinColor){
