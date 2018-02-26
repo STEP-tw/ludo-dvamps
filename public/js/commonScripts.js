@@ -76,10 +76,9 @@ const goToHome = function() {
 };
 
 const updateUserName = function() {
-  let userName = this.responseText;
-  getElement('#userName').innerText = userName;
+  getElement('#userName').innerText = document.cookie.playerName;
 };
 
-const setUserName = function() {
-  sendAjaxRequest('GET','/userName',updateUserName);
-};
+// const setUserName = function() {
+//   sendAjaxRequest('GET','/userName',updateUserName);
+// };

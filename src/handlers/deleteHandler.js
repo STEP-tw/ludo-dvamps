@@ -5,7 +5,7 @@ const removePlayer=(req,res)=>{
   game.removePlayer(player);
   res.clearCookie('playerName',{path:''});
   let totalPlayers=game.getNoOfPlayers();
-  if(totalPlayers==0){
+  if(!totalPlayers){
     req.app.gamesManager.removeGame(gameName);
     res.clearCookie('gameName',{path:''});
   }

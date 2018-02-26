@@ -158,10 +158,7 @@ class Game {
   }
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();
-    if(currentPlayer.getNoOfCoinsInDest()==4){
-      return true;
-    }
-    return false;
+    return currentPlayer.getNoOfCoinsInDest()==4;
   }
 }
 

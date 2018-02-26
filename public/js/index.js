@@ -5,7 +5,7 @@ const showCreateForm = function() {
 };
 
 const handleServerResponse = function(serverResponse) {
-  if(serverResponse.gameCreated){
+  if(serverResponse.status){
     window.location.href = '/waiting.html';
     return;
   }

@@ -69,16 +69,16 @@ const updatePlayers = function() {
 };
 
 const updateGameName = function() {
-  let gameName = this.responseText;
+  let gameName = document.cookie.gameName;
   getElement('#gameName').innerText = gameName;
 };
 
-const setGameName = function() {
-  sendAjaxRequest('GET', '/gameName', updateGameName);
-};
+// const setGameName = function() {
+//   sendAjaxRequest('GET', '/gameName', updateGameName);
+// };
 
 const getStatus = function() {
-  sendAjaxRequest('GET', '/getStatus', updatePlayers);
+  sendAjaxRequest('GET', '/waitingStatus', updatePlayers);
 };
 
 const begin = function() {

@@ -7,6 +7,7 @@ const getHandlers = require(path.resolve('src/handlers/getHandlers.js'));
 const postHandlers = require(path.resolve('src/handlers/postHandlers.js'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler.js'));
 const lib = require(path.resolve('src/handlers/middleWares.js'));
+const GameRoute = require(path.resolve('src/handlers/gameRoute.js'));
 
 const app = express();
 /*eslint-disable*/
@@ -25,27 +26,19 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cookieParser());
 app.use(lib.checkGame);
-app.use(lib.trimRequestBody);
 app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));
-app.use('/game',ludo);
-app.get('/getAvailableGames', getHandlers.serveAvailableGames);
-app.get('/gameName', getHandlers.serveGameName);
-app.get('/userName', getHandlers.serveUserName);
-app.get('/getStatus',lib.checkIsGamePresent,getHandlers.serveGameStatus);
-app.post('/createGame',lib.verifyReqBody,postHandlers.verifyCreateGameReq,
-  lib.checkCharacterLimit,postHandlers.blockIfUserHasGame,
-  postHandlers.createNewGame);
+app.use('/game',GameRoute);
 
-app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
+app.get('/getAvailableGames', getHandlers.serveAvailableGames);
+app.get('/waitingStatus',lib.checkIsGamePresent,getHandlers.serveWaitingStatus);
+
+app.post('/createGame',lib.verifyReqBody,lib.verifyCreateGameReq,
+  lib.checkCharacterLimit,lib.blockIfUserHasGame,
+  postHandlers.createNewGame);
+app.post('/joinGame',lib.verifyReqBody,lib.verifyCreateGameReq,
+  lib.checkPlayerNameLimit,lib.checkGamesExists,postHandlers.joinPlayerToGame);
+
 app.delete('/player', deleteHandler.removePlayer);
-ludo.use(lib.checkCookie);
-ludo.use(lib.loadGame);
-ludo.use(lib.verifyPlayer);
-ludo.use(express.static('public'));
-ludo.get('/gameStatus',getHandlers.getGameStatus);
-ludo.get('/logs',getHandlers.getLogs);
-ludo.get('/rollDice',lib.checkCurrentPlayer,getHandlers.rollDice);
-ludo.post('/moveCoin',lib.checkCurrentPlayer,postHandlers.moveCoin);
 
 module.exports = app;

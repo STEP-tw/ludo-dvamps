@@ -9,7 +9,7 @@ const checkCookie = function(req,res,next) {
 };
 
 const isEmptyString = function(string) {
-  return string == '';
+  return string.trim() == '';
 };
 
 const verifyReqBody = function(req,res,next) {
@@ -19,14 +19,6 @@ const verifyReqBody = function(req,res,next) {
     res.json({status:false,message:'empty field'});
     return;
   }
-  next();
-};
-
-const trimRequestBody = function(req,res,next) {
-  let bodyField = Object.keys(req.body);
-  bodyField.forEach(function(field){
-    req.body[field] = req.body[field].trim();
-  });
   next();
 };
 
@@ -72,6 +64,7 @@ const verifyPlayer =function(req,res,next) {
   if(!game.doesPlayerExist(playerName)){
     res.statusCode = 400;
     res.json({status:false,message:'invalid cookie'});
+    res.end();
     return;
   }
   next();
@@ -82,7 +75,8 @@ const checkCharacterLimit = function(req,res,next) {
   let playerName = req.body.playerName;
   if(gameName.length>15 || playerName.length>8){
     res.statusCode = 400 ;
-    res.json({gameCreated:false,message:'bad request'});
+    res.json({status:false,message:'bad request'});
+    res.end();
     return;
   }
   next();
@@ -93,7 +87,6 @@ const checkCurrentPlayer= function(req,res,next){
   if (currentPlayer != req.cookies.playerName) {
     res.status(400);
     res.send({status:false,message:'Not your turn!'});
-    res.end();
     return;
   }
   next();
@@ -104,7 +97,6 @@ const checkIsGamePresent = function(req,res,next){
   if (!req.app.gamesManager.doesGameExists(gameName)) {
     res.statusCode = 400;
     res.send('');
-    res.end();
     return;
   }
   next();
@@ -115,17 +107,75 @@ const logger = function(req,res,next){
   next();
 };
 
+const isValidReqBodyFormat = function(paramsKeys,req) {
+  let reqParams = Object.keys(req.body);
+  return paramsKeys.every(function(key){
+    return reqParams.includes(key) && req.body[key];
+  });
+};
+
+const verifyCreateGameReq = function(req,res,next) {
+  if(!isValidReqBodyFormat(['gameName','playerName'],req)){
+    res.statusCode = 400 ;
+    res.json({status:false,message:'bad request'});
+    res.end();
+    return;
+  }
+  next();
+};
+
+const hasCreatedGame = function(req){
+  let game = req.app.gamesManager.getGame(req.cookies.gameName);
+  return game && game.doesPlayerExist(req.cookies.playerName);
+};
+
+const blockIfUserHasGame = function(req,res,next){
+  if(hasCreatedGame(req)) {
+    res.json({status:true});
+    res.end();
+    return;
+  }
+  next();
+};
+
+const checkGamesExists = function(req,res,next){
+  let gamesManager = req.app.gamesManager;
+  let gameName = req.body.gameName.trim();
+  let playerName = req.body.playerName.trim();
+  if(!gamesManager.doesGameExists(gameName)){
+    res.statusCode = 400 ;
+    res.json({status:false,message:'game dosen\'t exist'});
+    res.end();
+    return;
+  }
+  next();
+};
+
+const checkPlayerNameLimit = function(req,res,next){
+  let playerName = req.body.playerName;
+  if(playerName.length > 8){
+    res.statusCode = 400 ;
+    res.json({status:false,message:'player name is lengthy'});
+    res.end();
+    return;
+  }
+  next();
+};
+
 
 module.exports = {
   checkCookie,
   loadGame,
   restrictValidPlayer,
   verifyPlayer,
-  trimRequestBody,
   verifyReqBody,
   checkCharacterLimit,
   checkCurrentPlayer,
   checkIsGamePresent,
   checkGame,
-  logger
+  logger,
+  verifyCreateGameReq,
+  blockIfUserHasGame,
+  checkGamesExists,
+  checkPlayerNameLimit,
 };

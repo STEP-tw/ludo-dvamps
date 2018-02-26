@@ -1,5 +1,5 @@
 const showPlayers = function() {
-  sendAjaxRequest('GET', '/getStatus', function() {
+  sendAjaxRequest('GET', '/waitingStatus', function() {
     if (!this.responseText) {
       return;
     }
