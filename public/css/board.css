@@ -12,7 +12,7 @@ main {
 
 ellipse.focus {
   stroke-dasharray: 3,3;
-  stroke-width: 4;
+  stroke-width: 2;
   animation: dash 5s linear infinite;
 }
 @keyframes dash{
@@ -228,6 +228,7 @@ li span{
 
 #redplayer {
   background-color: red;
+  color: white;
 }
 
 #greenplayer {
