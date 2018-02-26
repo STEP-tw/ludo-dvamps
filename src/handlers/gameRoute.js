@@ -14,6 +14,7 @@ ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.use(lib.verifyPlayer);
 ludo.use(express.static('public'));
+ludo.use(express.static('templates'));
 ludo.get('/gameStatus',getHandlers.getGameStatus);
 ludo.get('/logs',getHandlers.getLogs);
 ludo.get('/rollDice',lib.checkCurrentPlayer,getHandlers.rollDice);
