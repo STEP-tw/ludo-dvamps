@@ -6,6 +6,7 @@ const serveAvailableGames = function(req, res) {
 const serveWaitingStatus = (req, res) => {
   let gameName = req.cookies.gameName;
   let game = req.app.gamesManager.getGame(gameName);
+  console.log(game.getStatus());
   res.json(game.getStatus());
 };
 

@@ -137,30 +137,6 @@ const blockIfUserHasGame = function(req,res,next){
   next();
 };
 
-const checkGamesExists = function(req,res,next){
-  let gamesManager = req.app.gamesManager;
-  let gameName = req.body.gameName.trim();
-  let playerName = req.body.playerName.trim();
-  if(!gamesManager.doesGameExists(gameName)){
-    res.statusCode = 400 ;
-    res.json({status:false,message:'game dosen\'t exist'});
-    res.end();
-    return;
-  }
-  next();
-};
-
-const checkPlayerNameLimit = function(req,res,next){
-  let playerName = req.body.playerName;
-  if(playerName.length > 8){
-    res.statusCode = 400 ;
-    res.json({status:false,message:'player name is lengthy'});
-    res.end();
-    return;
-  }
-  next();
-};
-
 const trimRequestBody = function(req,res,next) {
   let bodyField = Object.keys(req.body);
   bodyField.forEach(function(field){
@@ -191,8 +167,6 @@ module.exports = {
   logger,
   verifyCreateGameReq,
   blockIfUserHasGame,
-  checkGamesExists,
-  checkPlayerNameLimit,
   trimRequestBody,
   doesGameExists
 };

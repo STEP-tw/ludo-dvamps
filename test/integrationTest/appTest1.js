@@ -336,7 +336,23 @@ describe('#App', () => {
         .end(done);
     });
   });
-  // describe('GET /getAvailableGames', () => {
-  //   it('should give all available games', done => {
-  //     gamesManager = new GamesManager(ColorDistributer,dice)
+  describe('#waitingStatus', () => {
+    it('should give the joining status', (done) => {
+      let gamesManager = initGamesManager(['ashish','joy']);
+      app.initialize(gamesManager);
+      request(app)
+        .get('/waitingStatus')
+        .set('Cookie',['gameName=ludo','playerName=joy'])
+        .expect(200)
+        .expect(/ashish/)
+        .end(done)
+    });
+    it('should response with 400 if game is not present',function(done){
+      request(app)
+        .get('/waitingStatus')
+        .set('Cookie',['gameName=cludo','playerName=joy'])
+        .expect(400)
+        .end(done)
+    })
+  });
 });
