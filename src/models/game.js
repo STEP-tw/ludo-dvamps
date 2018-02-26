@@ -105,7 +105,6 @@ class Game {
   rollDice(){
     let turn = this.turn;
     let move = turn.rollDice(this.dice);
-
     let currentPlayer = this.getCurrentPlayer();
     this.activityLog.registerMove(currentPlayer.name,currentPlayer.color,move);
     this.status.move = move || this.status.move;

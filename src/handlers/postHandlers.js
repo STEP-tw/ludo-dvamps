@@ -31,8 +31,6 @@ const joinPlayerToGame = function(req,res){
   let joiningStatus = gamesManager.addPlayerTo(gameName,playerName);
   if (joiningStatus) {
     resWithGameJoined(res,gameName,playerName);
-    // res.cookie('gameName',gameName,{path:''});
-    // res.cookie('playerName',playerName,{path:''});
     return;
   }
   res.json({status:joiningStatus});
