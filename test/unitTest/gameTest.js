@@ -251,6 +251,24 @@ describe('#Game', () => {
       assert.equal(currPlayer.getCoin(1).position,-1);
       assert.equal(game.getCurrentPlayer().name,'lala');
     });
+    it('should not move coin more than once for a single dice roll',()=>{
+    let dice = {
+      roll:function(){
+        return 6;
+      }
+    };
+    game = new Game('newGame', ColorDistributer, dice,new EventEmitter());
+    game.addPlayer('salman');
+    game.addPlayer('lala');
+    game.addPlayer('lali');
+    game.addPlayer('lalu');
+    game.rollDice();
+    assert.isOk(game.moveCoin(1));
+    assert.isNotOk(game.moveCoin(1));
+    let currPlayer = game.getCurrentPlayer();
+    assert.equal(currPlayer.getCoin(1).position,0);
+    assert.equal(game.getCurrentPlayer().name,'salman');
+  })
   });
   describe('#hasWon',()=>{
     it('should return true if player has 4 coins in destination cell',()=>{
