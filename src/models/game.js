@@ -146,12 +146,13 @@ class Game {
     let move = this.turn.lastMove;
     let movablecoins = currentPlayer.getMovableCoins(move);
     let isCoinMovable = movablecoins.some((coin=>coin.id==coinId));
-    if (isCoinMovable) {
+    if (!this.turn.hasMovedCoin() && isCoinMovable) {
       let playerName = currentPlayer.getName();
       currentPlayer.moveCoin(coinId,move);
       this.activityLog.registerCoinMoved(playerName,currentPlayer.getColor());
       this.setStatus();
       this.turn.decideTurnOnChance();
+      this.turn.markAsMovedCoin();
       return true;
     }
     return false;

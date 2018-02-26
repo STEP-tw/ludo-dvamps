@@ -93,7 +93,7 @@ describe('#Turn', () => {
       turn.currentPlayerMoves = [1];
       assert.equal(turn.decideTurnAsPerMove(false),'green');
     });
-    it('should return same player if last move is 6 and chances should be increament', () => {
+    it('should return same player if last move is 6', () => {
       turn.currentPlayerMoves = [6];
       assert.equal(turn.decideTurnAsPerMove(true),'red');
       assert.equal(turn.currentPlayerChances,2);

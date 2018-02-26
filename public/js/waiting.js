@@ -69,21 +69,17 @@ const updatePlayers = function() {
 };
 
 const updateGameName = function() {
-  let gameName = document.cookie.gameName;
-  getElement('#gameName').innerText = gameName;
+  let cookies = keyValParse(document.cookie);
+  getElement('#gameName').innerText = cookies.gameName;
 };
-
-// const setGameName = function() {
-//   sendAjaxRequest('GET', '/gameName', updateGameName);
-// };
 
 const getStatus = function() {
   sendAjaxRequest('GET', '/waitingStatus', updatePlayers);
 };
 
 const begin = function() {
-  setGameName();
-  setUserName();
+  updateGameName();
+  updateUserName();
   getStatus();
   intervalID = setInterval(getStatus, 1000);
   blinkID = setInterval(blinkText, 500);

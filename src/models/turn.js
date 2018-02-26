@@ -4,6 +4,7 @@ class Turn {
     this.presentPlayer = players[0];
     this.playerChances = 1;
     this.currentPlayerMoves = [];
+    this.movedCoin = true;
   }
 
   get currentPlayer(){
@@ -30,11 +31,16 @@ class Turn {
     return this.currentPlayerMoves.length >= 3;
   }
 
+  markAsNotMovedCoin(){
+    this.movedCoin = false;
+  }
+
   rollDice(dice){
-    if(this.currentPlayerChances){
+    if(this.currentPlayerChances && this.movedCoin){
       let move = dice.roll();
       this.currentPlayerMoves.push(move);
       this.decrementChances();
+      this.markAsNotMovedCoin();
       return move;
     }
   }
@@ -49,6 +55,14 @@ class Turn {
       return this.currentPlayer;
     }
     return this.updateTurn();
+  }
+
+  hasMovedCoin(){
+    return this.movedCoin;
+  }
+
+  markAsMovedCoin(){
+    this.movedCoin = true;
   }
 
   decideTurnAsPerMove(haveMovablecoins){
@@ -66,6 +80,7 @@ class Turn {
     this.presentPlayer = this.players[++currPlayerIndex % this.players.length];
     this.playerChances = 1;
     this.currentPlayerMoves = [];
+    this.markAsMovedCoin();
     return this.currentPlayer;
   }
 

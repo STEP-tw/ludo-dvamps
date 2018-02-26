@@ -148,7 +148,7 @@ const getLogs = function() {
 const load = function() {
   showPlayers();
   setClickListeners();
-  setUserName();
+  updateUserName();
   sendAjaxRequest('GET', '/images/board.svg', function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;

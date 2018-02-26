@@ -75,10 +75,15 @@ const goToHome = function() {
   location.href = '/index.html';
 };
 
-const updateUserName = function() {
-  getElement('#userName').innerText = document.cookie.playerName;
+const keyValParse = function(text){
+  return text.split(";").reduce((parsedText,keyVal)=>{
+    let seperatedKeyVal = keyVal.trim().split('=');
+    parsedText[seperatedKeyVal[0]] = seperatedKeyVal[1];
+    return parsedText;
+  },{});
 };
 
-// const setUserName = function() {
-//   sendAjaxRequest('GET','/userName',updateUserName);
-// };
+const updateUserName = function() {
+  let cookies = keyValParse(document.cookie);
+  getElement('#userName').innerText = cookies.playerName;
+};
