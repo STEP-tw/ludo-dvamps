@@ -105,17 +105,14 @@ class Game {
   rollDice(){
     let turn = this.turn;
     let move = turn.rollDice(this.dice);
-    if(move==6){
-      this.turn.increamentChances();
-    }
-    let currPlayer = this.getCurrentPlayer();
-    this.activityLog.registerMove(currPlayer.getName(),currPlayer.getColor()
-      ,move);
+
+    let currentPlayer = this.getCurrentPlayer();
+    this.activityLog.registerMove(currentPlayer.name,currentPlayer.color,move);
     this.status.move = move || this.status.move;
-    let movablecoins = currPlayer.getMovableCoins(move);
-    if(turn.has3ConsecutiveSixes() || !currPlayer.hasMovableCoins(move)){
-      this.turn.updateTurn();
-      this.activityLog.registerTurn(this.getCurrentPlayer().name);
+    turn.decideTurnAsPerMove(currentPlayer.hasMovableCoins(move));
+    currentPlayer = this.getCurrentPlayer();
+    this.activityLog.registerTurn(currentPlayer.name,currentPlayer.color);
+    if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
       return {move:move};
     }
     return {move:move,coins:this.getMovableCoinsOf(move)};
@@ -135,7 +132,7 @@ class Game {
       let path = this.board.getPathFor(index);
       player.assignPath(path);
     });
-    this.activityLog.registerTurn(this.turn.currentPlayer);
+    this.activityLog.registerTurn(this.turn.currentPlayer,'red');
   }
   getMovableCoinsOf(move){
     let currentPlayer = this.getCurrentPlayer();

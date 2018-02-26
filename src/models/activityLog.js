@@ -2,12 +2,13 @@ class ActivityLog {
   constructor() {
     this.logs = [];
   }
-  registerTurn(playerName){
+  registerTurn(playerName,playerColor){
     let time = new Date().toLocaleTimeString();
-    let statement = `${playerName}'s turn.`;
+    let statement = `${playerName}'s turn`;
     this.logs.push({
       time:time,
-      statement:statement
+      statement:statement,
+      pColor:playerColor
     });
   }
   registerMove(playerName,playerColor,move){
@@ -18,16 +19,17 @@ class ActivityLog {
       time:time,
       statement:statement,
       move:dices[move-1],
-      color:playerColor
+      pColor:playerColor
     });
   }
   registerCoinMoved(playerName,coinColor){
     let time = new Date().toLocaleTimeString();
-    let statement = `${playerName} moved its`;
+    let statement = `${playerName} moved `;
     this.logs.push({
       time:time,
       statement:statement,
-      color:coinColor
+      color:coinColor,
+      pColor:coinColor
     });
   }
   getLogs(){

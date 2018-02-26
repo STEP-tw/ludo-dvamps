@@ -157,11 +157,29 @@ const getGameStatus = function() {
   });
 };
 
-const showLogs = function(logs) {
+const getCoin = function(color){
+  return color &&`<span class="${color} coin">&#x25C9;</span>` || '';
+};
+
+const getPlayer = function(color){
+  return color && `<span class="fa ${color}">&#xf2be;</span>` || '';
+};
+
+const getLogStatements =function(logs) {
   let logStatements = logs.map((log) => {
-    let move = `<label class="${log.color}">${log.move || ''}</label>`;
-    return `<li><span>${log.time}</span>${log.statement}${move}</li>`;
+    let playerColor = getPlayer(log.pColor);
+    let move = log.move && `<label class ="redDice">${log.move}</label>` || '';
+    let coinColor = getCoin(log.color);
+    let time = `<label class="time">${log.time}</label>`;
+    let statement = `<span class="log">${log.statement}</span>`;
+    return `<p class="logItems">${time}${playerColor}
+    ${statement}${move}${coinColor} </p>`;
   }).join('');
+  return logStatements;
+};
+
+const showLogs = function(logs) {
+  let logStatements = getLogStatements(logs);
   let activityLog = getElement('#logStatements');
   activityLog.innerHTML = `<ul>${logStatements}</ul>`;
 };
