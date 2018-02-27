@@ -15,12 +15,12 @@ const serveWaitingStatus = (req, res) => {
 const getGameStatus = function(req,res){
   let game = req.game;
   let gameStatus = game.getGameStatus();
-  if (gameStatus.won) {
-    clearCookies(res);
-    res.json(gameStatus);
-    delPlayerFromGame(req);
-    return;
-  }
+  // if (gameStatus.won) {
+  //   clearCookies(res);
+  //   res.json(gameStatus);
+  //   delPlayerFromGame(req);
+  //   return;
+  // }
   res.json(gameStatus);
 };
 

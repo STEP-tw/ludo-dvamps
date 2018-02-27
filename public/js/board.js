@@ -28,7 +28,7 @@ const updateCoinPosition = function(players){
   arrOverlappingCoins();
 };
 
-const moveCoin = function(event) {
+let moveCoin = function(event) {
   let coinToMove = event.target.id.split('-')[1];
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);
@@ -131,7 +131,7 @@ const showMove = function(response,event) {
   }
 };
 
-const requestRollDice = function(event) {
+let requestRollDice = function(event) {
   sendAjaxRequest('GET', "/game/rollDice", function(){
     let response = this.responseText;
     showMove(response,event);
@@ -246,6 +246,7 @@ const endGame = function() {
   clearInterval(logStatusReqInterval);
   moveCoin=null;
   requestRollDice = null;
+  sendAjaxRequest('DELETE', '/player');
 };
 
 const changeCoinPosition = (coinId,cellId,margin) => {
