@@ -5,7 +5,7 @@
 main {
   margin:7% 24%;
   height: 60vh;
-  border-radius: 10px;
+  border-radius: 40px;
   position: relative;
   display: -webkit-flex;
   display: flex;
@@ -29,8 +29,8 @@ main {
 input[type="submit"] {
   margin: 2%;
   width: 35%;
-  background-color: lightGray;
-  color: black;
+  color: white;
+  background-color: #787878;
   padding: 15px 20px;
   border: none;
   border-radius: 6px;
@@ -78,6 +78,7 @@ input[type="text"] {
   font-family: 'Open Sans', sans-serif;
   border: none;
   border-bottom: 2px solid lightGray;
+  background-color:#d6d6d600;
 }
 input[type="text"]:hover {
   border-bottom: 2px solid #090a09;

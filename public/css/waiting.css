@@ -8,6 +8,7 @@
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
   font-size: 170%;
+  background-color: #d6d6d600;
 }
 
 #errorMessage {
@@ -79,21 +80,22 @@
 #gameName {
   font-family: 'Open Sans', sans-serif;
   font-size: 190%;
-  font-weight: 600;
-  background-image: linear-gradient(to bottom, #d4b1ff, #d4aefa, #d4abf5, #d3a8f1, #d3a5ec);
+  font-weight: 500;
+  background-color: #484848;
+  color: white;
   border-radius: 10px;
   padding: 4px 17px;
 }
 
 #message {
   font-family: 'Open Sans', sans-serif;
-  color: rgb(96, 93, 97);
+  color: black;
   font-size: 150%;
   font-weight: 600;
 }
 
 .blink {
-  text-shadow: 2px 2px 16px rgb(142, 145, 135);
+  text-shadow: 2px 2px 16px #787878;
 }
 
 #joinMessage {

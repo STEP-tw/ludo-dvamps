@@ -2,6 +2,11 @@ header {
   border-bottom: 2px solid darkGray;
   margin-bottom: 1%;
 }
+body {
+  background-image: url("../images/back2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .dice{
   margin-top: 1%;
 }
@@ -19,6 +24,11 @@ h1 {
 
 .inline{
   display: inline-block;
+}
+
+
+.heading {
+  color: #ffffff;
 }
 
 .exit{

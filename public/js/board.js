@@ -240,7 +240,6 @@ const load = function() {
   gameStatusReqInterval=setInterval(getGameStatus, 1000);
   logStatusReqInterval=setInterval(getLogs, 2000);
 };
-/*eslint-enable*/
 const endGame = function() {
   clearInterval(gameStatusReqInterval);
   clearInterval(logStatusReqInterval);
