@@ -25,6 +25,7 @@ const updateCoinPosition = function(players){
       changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,17.35);
     });
   });
+  arrOverlappingCoins();
 };
 
 const moveCoin = function(event) {
@@ -66,16 +67,26 @@ const hasSameCoords = function(coin1,coin2){
   return coin1XCoord==coin2XCoord&&coin1YCoord==coin2YCoord;
 };
 
+const hasDiffColor = function(currentCoin,nextCoin){
+  let currentCoinColor = currentCoin.id.split('-')[0];
+  let nextCoinColor = nextCoin.id.split('-')[0];
+  return currentCoinColor != nextCoinColor;
+};
+
+const isOverlapped = function(currCoin,nextCoin) {
+  return hasSameCoords(currCoin,nextCoin)&&hasDiffColor(currCoin,nextCoin);
+};
+
 const arrOverlappingCoins = function(){
   for(let count=0;count<coinsId.length-1;count++){
     let currentCoin = document.getElementById(coinsId[count]);
     for(let index=count+1;index<coinsId.length;index++){
       let nextCoin = document.getElementById(coinsId[index]);
-      if(hasSameCoords(currentCoin,nextCoin)){
-        currentCoin.setAttribute('cx',currentCoin.cx.animVal.value-8);//14
-        currentCoin.setAttribute('cy',currentCoin.cy.animVal.value-8);//8
-        nextCoin.setAttribute('cx',nextCoin.cx.animVal.value+6);//8
-        nextCoin.setAttribute('cy',nextCoin.cy.animVal.value+7);//4
+      if(isOverlapped(currentCoin,nextCoin)){
+        currentCoin.setAttribute('cx',currentCoin.cx.animVal.value-6);//14
+        currentCoin.setAttribute('cy',currentCoin.cy.animVal.value-6);//8
+        nextCoin.setAttribute('cx',nextCoin.cx.animVal.value+12);//8
+        nextCoin.setAttribute('cy',nextCoin.cy.animVal.value+12);//4
       }
     }
   }
@@ -86,7 +97,6 @@ const showMovableCoins = function(coins) {
     let coinInBoard = document.querySelector(`#${coin.color}-${coin.id}`);
     coinInBoard.classList.add('focus');
   });
-  arrOverlappingCoins();
 };
 
 const showPopup = function(message) {
