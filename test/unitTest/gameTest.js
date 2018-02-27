@@ -146,6 +146,13 @@ describe('#Game', () => {
       let logs = game.getLogs();
       assert.match(JSON.stringify(logs[0]), /salman/);
     });
+    it('should give first move coin message',function(){
+      game.dice = sixPointDice;
+      game.rollDice();
+      game.dice = fourPointDice;
+      let message = game.rollDice();
+      assert.deepEqual(message,{message:"first move your coin"});
+    })
   });
   describe('#getCurrentPlayer', () => {
     it('should return the current player name', () => {

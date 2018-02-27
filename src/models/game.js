@@ -105,7 +105,7 @@ class Game {
   rollDice(){
     let turn = this.turn;
     if(!turn.hasMovedCoin()) {
-      return false;
+      return {message:"first move your coin"};
     }
     let move = turn.rollDice(this.dice);
     let currentPlayer = this.getCurrentPlayer();
