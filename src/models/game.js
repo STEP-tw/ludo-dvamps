@@ -115,9 +115,13 @@ class Game {
     currentPlayer = this.getCurrentPlayer();
     this.activityLog.registerTurn(currentPlayer.name,currentPlayer.color);
     if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
-      return {move:move};
+      return {move:move,currentPlayer:this.getCurrentPlayer().name};
     }
-    return {move:move,coins:this.getMovableCoinsOf(move)};
+    return {
+      move:move,
+      coins:this.getMovableCoinsOf(move),
+      currentPlayer:this.getCurrentPlayer().name
+    };
   }
   arrangePlayers(){
     return this.players.reduce((sequence,player)=>{

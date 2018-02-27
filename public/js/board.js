@@ -114,14 +114,18 @@ const showDice = function(event,move) {
   getElement(`#${event.target.id}`).style.marginTop = `${margin}px`;
 };
 
+const isSamePlayer = function(currentPlayer){
+  return keyValParse(document.cookie).playerName == currentPlayer;
+};
+
 const showMove = function(response,event) {
   let moveStatus = JSON.parse(response);
   if (!moveStatus.move) {
     moveStatus.message && showPopup(moveStatus.message);
-    return;color;
+    return;
   }
   showDice(event,+moveStatus.move);
-  if(moveStatus.coins){
+  if(moveStatus.coins && isSamePlayer(moveStatus.currentPlayer)){
     showMovableCoins(moveStatus.coins);
     addListenerTOCoin(moveStatus.coins);
   }
@@ -169,12 +173,12 @@ const getGameStatus = function() {
     let gameStatus = JSON.parse(this.responseText);
     let currentPlayerName = gameStatus.currentPlayerName;
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
-    if (keyValParse(document.cookie).playerName == currentPlayerName){
+    if (isSamePlayer(currentPlayerName)){
       uncoverDice(currentPlayerColor);
     }else{
       let allColors = ["red","yellow","green","blue"];
       allColors.forEach((color)=>{
-        coverDice(color);
+        setTimeout(()=>coverDice(color),1000);
       });
     }
     updateCoinPosition(gameStatus.players);
