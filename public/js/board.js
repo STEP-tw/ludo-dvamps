@@ -132,6 +132,7 @@ const showMove = function(response,event) {
 };
 
 let requestRollDice = function(event) {
+
   sendAjaxRequest('GET', "/game/rollDice", function(){
     let response = this.responseText;
     showMove(response,event);
@@ -140,7 +141,6 @@ let requestRollDice = function(event) {
 
 const changeBgColor = function(color) {
   let player = document.querySelector(`#${color}player`);
-  player.style.backgroundColor = `${color}`;
   player.focus();
 };
 

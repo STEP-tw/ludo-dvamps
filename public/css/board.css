@@ -46,9 +46,7 @@ ellipse.focus {
 .players {
   height: 13%;
   width: 65%;
-  border: 1px solid lightGray;
   font-size: 100%;
-  border-radius: 5%;
   background: transparent;
   border: none;
 }
@@ -218,31 +216,13 @@ li span{
 #redplayer,#blueplayer,#greenplayer,#yellowplayer {
   transition-property: width, height, font-size;
   transition-duration: 2s;
+  font-weight: 600;
 }
 
 #redplayer:focus,#blueplayer:focus,#greenplayer:focus,#yellowplayer:focus {
   width: 100%;
   height: 25%;
   font-size: 200%;
-}
-
-#redplayer {
-  background-color: red;
-  color: white;
-}
-
-#greenplayer {
-  background-color: green;
-  color: white;
-}
-
-#yellowplayer {
-  background-color: yellow;
-}
-
-#blueplayer {
-  background-color: blue;
-  color: white;
 }
 
 .logItems{
