@@ -40,4 +40,13 @@ describe('ActivityLog', () => {
       assert.match(JSON.stringify(logs[0]),/red/);
     });
   });
+  describe('#registerKilledCoin', () => {
+    it('should register current player killed other players coin  ', () => {
+      activityLog.registerKilledCoin('player','red','yellow');
+      let logs = activityLog.getLogs();
+      assert.match(JSON.stringify(logs[0]),/player/);
+      assert.match(JSON.stringify(logs[0]),/yellow/);
+      assert.match(JSON.stringify(logs[0]),/red/);
+    });
+  });
 });

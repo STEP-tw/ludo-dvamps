@@ -32,6 +32,16 @@ class ActivityLog {
       pColor:coinColor
     });
   }
+  registerKilledCoin(playerName,playerColor,killedCoinColor){
+    let time = new Date().toLocaleTimeString();
+    let statement = `${playerName} killed`;
+    this.logs.push({
+      time:time,
+      statement:statement,
+      color:killedCoinColor,
+      pColor:playerColor
+    });
+  }
   getLogs(){
     return this.logs;
   }

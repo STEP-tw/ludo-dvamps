@@ -140,14 +140,14 @@ class Game {
   }
   getLogs(){
     return this.activityLog.getLogs();
-  }
-  isMovableCoin(coinId){
+
+  } isMovableCoin(coinId){
     let move = this.turn.lastMove;
     let currentPlayer = this.getCurrentPlayer();
     let movablecoins = currentPlayer.getMovableCoins(move);
     return movablecoins.some((coin=>coin.id==coinId));
   }
-  moveCoin(coinId){
+  moveCoin(coinId){//have to refactor this code.
     let currentPlayer = this.getCurrentPlayer();
     let move = this.turn.lastMove;
     if(!this.turn.hasMovedCoin()){
@@ -157,6 +157,8 @@ class Game {
         let oppPlayer = this.players.find((player) =>
           player.getColor()==status.diedCoin.color);
         oppPlayer.moveCoinToHome(status.diedCoin);
+        this.activityLog.registerKilledCoin(currentPlayer.name,
+          currentPlayer.color,oppPlayer.color);
       }
       if(status.reachedDestination){
         this.turn.increamentChances();
