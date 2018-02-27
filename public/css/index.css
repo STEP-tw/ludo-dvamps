@@ -21,16 +21,16 @@ main {
   align-items: center;
   -webkit-align-content: stretch;
   align-content: stretch;
-  -webkit-box-shadow: 5px 3px 14px 5px rgba(163,163,163,0.63);
-  -moz-box-shadow: 5px 3px 14px 5px rgba(163,163,163,0.63);
-  box-shadow: 5px 3px 14px 5px rgba(163,163,163,0.63);
+  -webkit-box-shadow: 3px 3px 14px 5px #444444;
+  -moz-box-shadow: 3px 3px 14px 5px #444444;
+  box-shadow: 3px 3px 14px 5px #444444;
 }
 
 input[type="submit"] {
   margin: 2%;
   width: 35%;
   color: white;
-  background-color: #787878;
+  background-color: #605d5d;
   padding: 15px 20px;
   border: none;
   border-radius: 6px;
@@ -77,11 +77,11 @@ input[type="text"] {
   font-size: 140%;
   font-family: 'Open Sans', sans-serif;
   border: none;
-  border-bottom: 2px solid lightGray;
+  border-bottom: 2px solid #605d5d;
   background-color:#d6d6d600;
 }
 input[type="text"]:hover {
-  border-bottom: 2px solid #090a09;
+  border-bottom: 2px solid #605d5d;
 }
 
 .message{

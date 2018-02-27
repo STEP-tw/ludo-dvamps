@@ -4,7 +4,6 @@ main {
   margin-left: 1%;
 }
 
-
 .message {
   width: 80vh;
   height: 5vh;
@@ -115,6 +114,7 @@ svg{
   width: 50vh;
   height: 100%;
   border: 1px solid lightgrey;
+  margin-right: 10px;
 }
 
 #logHeading{
@@ -198,6 +198,7 @@ p {
   font-family: 'Open Sans', sans-serif;
   font-size: 130%;
   color: white;
+  text-shadow: 2px 2px black;
 }
 
 #logStatements{
@@ -205,6 +206,8 @@ p {
   text-align: left;
   overflow-y: scroll;
   height: 94%;
+  background: rgba(255,255,255,0.7);
+  padding: 10px;
 }
 
 li span{
