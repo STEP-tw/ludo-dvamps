@@ -111,8 +111,10 @@ const showMove = function() {
     return;
   }
   showDice(+moveStatus.move);
-  showMovableCoins(moveStatus.coins);
-  addListenerTOCoin(moveStatus.coins);
+  if(moveStatus.coins){
+    showMovableCoins(moveStatus.coins);
+    addListenerTOCoin(moveStatus.coins);
+  }
 };
 
 const requestRollDice = function() {

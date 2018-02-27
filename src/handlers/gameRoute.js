@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-// const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const getHandlers = require(path.resolve('src/handlers/getHandlers.js'));
 const postHandlers = require(path.resolve('src/handlers/postHandlers.js'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler.js'));
