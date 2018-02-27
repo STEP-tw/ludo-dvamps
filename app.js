@@ -47,5 +47,4 @@ ludo.get('/gameStatus',getHandlers.getGameStatus);
 ludo.get('/logs',getHandlers.getLogs);
 ludo.get('/rollDice',lib.checkCurrentPlayer,getHandlers.rollDice);
 ludo.post('/moveCoin',lib.checkCurrentPlayer,postHandlers.moveCoin);
-
 module.exports = app;

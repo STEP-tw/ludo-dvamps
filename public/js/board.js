@@ -179,7 +179,9 @@ const getGameStatus = function() {
     }
     updateCoinPosition(gameStatus.players);
     if(gameStatus.won){
-      getElement('.message').innerText = `${currentPlayerName} has won`;
+      let playerName = gameStatus.currentPlayerName;
+      getElement('.message').innerText = `${playerName} has won`;
+      endGame();
     }
     changeDiceBg();
     changeBgColor(currentPlayerColor);
@@ -220,6 +222,10 @@ const getLogs = function() {
   }, null);
 };
 
+/*eslint-disable*/
+//have to give a sorter name to variable and enable eslint.
+let gameStatusReqInterval;
+let logStatusReqInterval;
 const load = function() {
   showPlayers();
   updateUserName();
@@ -227,8 +233,15 @@ const load = function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
-  setInterval(getGameStatus, 1000);
-  setInterval(getLogs, 2000);
+  gameStatusReqInterval=setInterval(getGameStatus, 1000);
+  logStatusReqInterval=setInterval(getLogs, 2000);
+};
+/*eslint-enable*/
+const endGame = function() {
+  clearInterval(gameStatusReqInterval);
+  clearInterval(logStatusReqInterval);
+  moveCoin=null;
+  requestRollDice = null;
 };
 
 const changeCoinPosition = (coinId,cellId,margin) => {

@@ -123,7 +123,6 @@ describe('GameRoute', () => {
       destination.addCoin(new Coin(2));
       destination.addCoin(new Coin(3));
       destination.addCoin(new Coin(4));
-
       request(app)
         .get('/game/gameStatus')
         .set('Cookie',['gameName=newGame','playerName=ashish'])

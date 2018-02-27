@@ -1,3 +1,6 @@
+const delPlayerFromGame = require('./deleteHandler.js').delPlayerFromGame;
+const clearCookies = require('./deleteHandler.js').clearCookies;
+
 const serveAvailableGames = function(req, res) {
   let availableGames = req.app.gamesManager.getAvailableGames();
   res.send(availableGames);
@@ -11,8 +14,14 @@ const serveWaitingStatus = (req, res) => {
 
 const getGameStatus = function(req,res){
   let game = req.game;
-  res.json(game.getGameStatus());
-  res.end();
+  let gameStatus = game.getGameStatus();
+  if (gameStatus.won) {
+    clearCookies(res);
+    res.json(gameStatus);
+    delPlayerFromGame(req);
+    return;
+  }
+  res.json(gameStatus);
 };
 
 const getLogs = function(req,res){

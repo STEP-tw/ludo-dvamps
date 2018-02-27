@@ -308,7 +308,7 @@ describe('#App', () => {
         .delete('/player')
         .set('Cookie', ['playerName=player1;', 'gameName=ludo;'])
         .expect(200)
-        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()}`)
+        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
     });
   });

@@ -154,6 +154,8 @@ const doesGameExists = function(req,res,next){
   }
   next();
 };
+
+
 module.exports = {
   checkCookie,
   loadGame,
@@ -168,5 +170,5 @@ module.exports = {
   verifyCreateGameReq,
   blockIfUserHasGame,
   trimRequestBody,
-  doesGameExists
+  doesGameExists,
 };
