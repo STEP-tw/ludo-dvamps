@@ -24,27 +24,51 @@
   <main>
     <div class="mainContainer">
       <div class="playerGroup left">
-        <input class="players" id="greenplayer" type="text" readonly>
-        <input class="players" id="redplayer" type="text" readonly>
+        <div class="greenSec holder">
+          <input class="players" id="greenplayer" type="text" readonly>
+          <div class="dice hide">
+            <div class="diceHolder">
+              <img src="/images/diceFaces.png" alt="DICE FACES" id="dice1">
+            </div>
+          </div>
+        </div>
+
+        <div class="redSec holder">
+          <div class="dice hide">
+            <div class="diceHolder">
+              <img src="/images/diceFaces.png" alt="DICE FACES" id="dice2">
+            </div>
+          </div>
+          <input class="players" id="redplayer" type="text" readonly>
+        </div>
       </div>
       <div class="board">
 
       </div>
       <div class="playerGroup right">
-        <input class="players" id="yellowplayer" type="text" readonly>
-        <input class="players" id="blueplayer" type="text" readonly>
+        <div class="yellowSec holder">
+          <input class="players" id="yellowplayer" type="text" readonly>
+          <div class="dice hide">
+            <div class="diceHolder">
+              <img src="/images/diceFaces.png" alt="DICE FACES" id="dice3">
+            </div>
+          </div>
+        </div>
+
+        <div class="blueSec holder">
+          <div class="dice hide">
+            <div class="diceHolder">
+              <img src="/images/diceFaces.png" alt="DICE FACES" id="dice4">
+            </div>
+          </div>
+          <input class="players" id="blueplayer" type="text" readonly>
+        </div>
       </div>
     </div>
     <div class="nav inline">
       <div class='logs'>
         <h4 id="logHeading">GAME LOG</h4>
         <div id='logStatements'></div>
-      </div>
-      <div class="dice">
-        <h4 id="rollDice">ROLL DICE</h4>
-        <div class="diceHolder">
-          <img src="/images/diceFaces.png" alt="DICE FACES" id="dice">
-        </div>
       </div>
     </div>
     <div class="popup">

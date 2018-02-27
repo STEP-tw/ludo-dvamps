@@ -99,30 +99,29 @@ const showPopup = function(message) {
   }, 1000);
 };
 
-const showDice = function(move) {
+const showDice = function(event,move) {
   let margin = (move - 1) * -50;
-  getElement('#dice').style.marginTop = `${margin}px`;
+  getElement(`#${event.target.id}`).style.marginTop = `${margin}px`;
 };
 
-const showMove = function() {
-  let moveStatus = JSON.parse(this.responseText);
+const showMove = function(response,event) {
+  let moveStatus = JSON.parse(response);
   if (!moveStatus.move) {
     moveStatus.message && showPopup(moveStatus.message);
-    return;
+    return;color;
   }
-  showDice(+moveStatus.move);
+  showDice(event,+moveStatus.move);
   if(moveStatus.coins){
     showMovableCoins(moveStatus.coins);
     addListenerTOCoin(moveStatus.coins);
   }
 };
 
-const requestRollDice = function() {
-  sendAjaxRequest('GET', "/game/rollDice", showMove);
-};
-
-const setClickListeners = function() {
-  setClickListener('div[class="diceHolder"]', requestRollDice);
+const requestRollDice = function(event) {
+  sendAjaxRequest('GET', "/game/rollDice", function(){
+    let response = this.responseText;
+    showMove(response,event);
+  });
 };
 
 const changeBgColor = function(color) {
@@ -137,9 +136,19 @@ const getCurrPlayerColor = function(gameStatus) {
   return players.find(player => player.name == currentPlayer).color;
 };
 
-const hideDice = function() {
-  let dice = getElement('.dice');
-  dice.style.display = "none";
+const coverDice = function(color) {
+  let dice = getElement(`.${color}Sec .dice`);
+  dice.classList.replace('show','hide');
+};
+
+const uncoverDice = function(color) {
+  let dice = getElement(`.${color}Sec .dice`);
+  dice.onclick = requestRollDice;
+  dice.classList.replace('hide','show');
+};
+
+const changeDiceBg = function(color){
+  let dice = getElement(`.${color}Sec .dice`);
 };
 
 const getGameStatus = function() {
@@ -148,14 +157,22 @@ const getGameStatus = function() {
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
+    let currentPlayerName = gameStatus.currentPlayerName;
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
+    if (keyValParse(document.cookie).playerName == currentPlayerName){
+      uncoverDice(currentPlayerColor);
+    }else{
+      let allColors = ["red","yellow","green","blue"];
+      allColors.forEach((color)=>{
+        coverDice(color);
+      });
+    }
     updateCoinPosition(gameStatus.players);
     if(gameStatus.won){
-      let winningMsg = gameStatus.currentPlayerName;
-      getElement('.message').innerText = `${winningMsg} has won`;
+      getElement('.message').innerText = `${currentPlayerName} has won`;
     }
+    changeDiceBg();
     changeBgColor(currentPlayerColor);
-    showDice(gameStatus.move);
   });
 };
 
@@ -192,17 +209,16 @@ const getLogs = function() {
     showLogs(logs);
   }, null);
 };
-let foo;
+
 const load = function() {
   showPlayers();
-  setClickListeners();
   updateUserName();
   sendAjaxRequest('GET', '/images/board.svg', function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
   setInterval(getGameStatus, 1000);
-  foo = setInterval(getLogs, 2000);
+  setInterval(getLogs, 2000);
 };
 
 const changeCoinPosition = (coinId,cellId,margin) => {
