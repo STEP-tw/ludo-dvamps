@@ -6,7 +6,7 @@ const EventEmitter = require('events');
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const ColorDistributer = require('./src/models/colorDistributer.js');
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.initialize(new GamesManager(ColorDistributer,new Dice(Math.random)));
 const server = http.createServer(app);
