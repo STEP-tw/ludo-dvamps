@@ -121,7 +121,6 @@ const isSamePlayer = function(currentPlayer){
 const showMove = function(response,event) {
   let moveStatus = JSON.parse(response);
   if (!moveStatus.move) {
-    moveStatus.message && showPopup(moveStatus.message);
     return;
   }
   showDice(event,+moveStatus.move);
@@ -209,14 +208,18 @@ const getLogStatements =function(logs) {
     let statement = `<span class="log">${log.statement}</span>`;
     return `<p class="logItems">${time}${playerColor}
     ${statement}${move}${coinColor} </p>`;
-  }).join('');
+  }).reverse().join('');
   return logStatements;
 };
 
 const showLogs = function(logs) {
-  let logStatements = getLogStatements(logs);
   let activityLog = getElement('#logStatements');
-  activityLog.innerHTML = `<ul>${logStatements}</ul>`;
+  let newLogCount = logs.length - activityLog.childElementCount;
+  if (newLogCount) {
+    let newLogs = logs.slice(newLogCount*(-1));
+    let logStatements = getLogStatements(newLogs);
+    activityLog.innerHTML = logStatements+activityLog.innerHTML;
+  }
 };
 
 const getLogs = function() {
