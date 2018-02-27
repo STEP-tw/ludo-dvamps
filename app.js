@@ -10,9 +10,6 @@ const lib = require(path.resolve('src/handlers/middleWares.js'));
 const GameRoute = require(path.resolve('src/handlers/gameRoute.js'));
 
 const app = express();
-/*eslint-disable*/
-const ludo = express.Router();
-/*eslint-enable*/
 
 app.initialize = function(gamesManager,fs) {
   app.gamesManager = gamesManager;
@@ -38,13 +35,4 @@ app.post('/createGame',lib.verifyReqBody,lib.verifyCreateGameReq,
   postHandlers.createNewGame);
 app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
 app.delete('/player', deleteHandler.removePlayer);
-ludo.use(lib.checkCookie);
-ludo.use(lib.loadGame);
-ludo.use(lib.verifyPlayer);
-ludo.use(express.static('public'));
-ludo.use(express.static('templates'));
-ludo.get('/gameStatus',getHandlers.getGameStatus);
-ludo.get('/logs',getHandlers.getLogs);
-ludo.get('/rollDice',lib.checkCurrentPlayer,getHandlers.rollDice);
-ludo.post('/moveCoin',lib.checkCurrentPlayer,postHandlers.moveCoin);
 module.exports = app;

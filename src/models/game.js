@@ -104,6 +104,9 @@ class Game {
   }
   rollDice(){
     let turn = this.turn;
+    if(!turn.hasMovedCoin()) {
+      return false;
+    }
     let move = turn.rollDice(this.dice);
     let currentPlayer = this.getCurrentPlayer();
     this.activityLog.registerMove(currentPlayer.name,currentPlayer.color,move);
