@@ -8,6 +8,7 @@ describe('UnsafeCell', () => {
   beforeEach(()=>{
     unsafeCell = new UnsafeCell(1);
     coin = new Coin(1,-1);
+    coin.setColor('red');
   })
   describe('#removeCoin', () => {
     it('should remove coin from cell and return it ', () => {
@@ -34,6 +35,14 @@ describe('UnsafeCell', () => {
       status = unsafeCell.addCoin(coin2);
       assert.isOk(status.killedOppCoin);
       assert.deepEqual(status.diedCoin,coin.getStatus());
+    });
+  });
+  describe('#canPlace', () => {
+    it('should return true if there is no coin of same color in the cell',()=>{
+      let secondCoin =new Coin(2,-2);
+      secondCoin.setColor('blue');
+      unsafeCell.addCoin(coin);
+      assert.isOk(unsafeCell.canPlace(secondCoin));
     });
   });
 });

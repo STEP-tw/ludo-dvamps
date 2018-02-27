@@ -19,6 +19,9 @@ class UnsafeCell extends Cell {
     }
     return status;
   }
+  canPlace(coin){
+    return !this.coins.some(prevCoin=>prevCoin.getColor()==coin.getColor());
+  }
 }
 
 module.exports = UnsafeCell;

@@ -11,6 +11,9 @@ class Cell {
   getPosition(){
     return this.position;
   }
+  canPlace(coin){
+    return true;
+  }
 }
 
 module.exports = Cell;

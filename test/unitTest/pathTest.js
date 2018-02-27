@@ -3,12 +3,14 @@ const path = require('path');
 const Path= require(path.resolve('src/models/path.js'));
 const Coin= require(path.resolve('src/models/coin.js'));
 const UnsafeCell= require(path.resolve('src/models/unsafeCell.js'));
+const SafeCell= require(path.resolve('src/models/safeCell.js'));
 const DestinationCell= require(path.resolve('src/models/destinationCell.js'));
 
 describe('Path', () => {
-  let redPath;
+  let redPath,coin;
   beforeEach(()=>{
     redPath = new Path(1);
+    coin = new Coin(1,-1);
   })
   describe('#addCell', () => {
     it('should add a cell to the path ', () => {
@@ -34,10 +36,10 @@ describe('Path', () => {
   });
   describe('#isAbleToStart', () => {
     it('should return true if coin is in home and move is 6', () => {
-      assert.isOk(redPath.isAbleToStart(-1,6));
+      assert.isOk(redPath.isAbleToStart(coin,6));
     });
     it('should return false if coin is in home and move is not 6', () => {
-      assert.isNotOk(redPath.isAbleToStart(-1,2));
+      assert.isNotOk(redPath.isAbleToStart(coin,2));
     });
   });
   describe('#getNextMove', () => {
@@ -47,12 +49,14 @@ describe('Path', () => {
     })
     it('should return next position of the coin if the coin is movable', () => {
       coin = new Coin(1,5);
-      redPath.addCell({position:5});
-      redPath.addCell({position:6});
-      redPath.addCell({position:7});
-      redPath.addCell({position:11});
-      assert.deepEqual(redPath.getNextMove(coin,3),{position:11});
-      assert.deepEqual(redPath.getNextMove(coin,2),{position:7});
+      let initCell = new SafeCell(5);
+      let finalCell = new SafeCell(8);
+      initCell.addCoin(coin);
+      redPath.addCell(initCell);
+      redPath.addCell(new SafeCell(6));
+      redPath.addCell(new SafeCell(7));
+      redPath.addCell(finalCell);
+      assert.deepEqual(redPath.getNextMove(coin,3),finalCell);
     });
     it('should return same position of the coin if the coin is not movable', () => {
       coin = new Coin(1,5);
@@ -63,12 +67,13 @@ describe('Path', () => {
       assert.deepEqual(redPath.getNextMove(coin,5),{position:5});
     });
     it('should return same position of coin if Coin is in home and move is less than 6', () => {
-      coin = new Coin(1,-1);
-      redPath.addCell({position:-1});
-      redPath.addCell({position:1});
-      redPath.addCell({position:2});
-      redPath.addCell({position:3});
-      assert.deepEqual(redPath.getNextMove(coin,3),{position:-1});
+      let home =new SafeCell(-1);
+      home.addCoin(coin)
+      redPath.addCell(home);
+      redPath.addCell(new UnsafeCell(1));
+      redPath.addCell(new UnsafeCell(2));
+      redPath.addCell(new UnsafeCell(3));
+      assert.deepEqual(redPath.getNextMove(coin,3),home);
     });
     it('should return first position after home of coin if Coin is in home and move is 6', () => {
       redPath.addCell({position:-1});
@@ -77,6 +82,22 @@ describe('Path', () => {
       redPath.addCell({position:3});
       assert.deepEqual(redPath.getNextMove(coin,6),{position:1});
     });
+    it('should return same position if there is coin of same color in next cell', () => {
+      let firstCoin = new Coin(1,1);
+      let secondCoin = new Coin(2,3);
+      firstCoin.setColor('red');
+      secondCoin.setColor('red');
+
+      let initCell= new UnsafeCell(1);
+      let finalCell= new UnsafeCell(3);
+      initCell.addCoin(firstCoin);
+      finalCell.addCoin(secondCoin);
+
+      redPath.addCell(initCell);
+      redPath.addCell(new UnsafeCell(2));
+      // redPath.addCell(finalCell);
+      assert.deepEqual(redPath.getNextMove(firstCoin,2),initCell);
+    });
   });
   describe('#isMovePossible', () => {
     let coin;
@@ -84,17 +105,18 @@ describe('Path', () => {
       coin = new Coin(1,5);
     })
     it('should return true if move is possible', () => {
-      redPath.addCell({position:5});
-      redPath.addCell({position:6});
-      redPath.addCell({position:7});
-      redPath.addCell({position:11});
+      coin.setColor('red');
+      redPath.addCell(new UnsafeCell(5));
+      redPath.addCell(new UnsafeCell(6));
+      redPath.addCell(new UnsafeCell(7));
+      redPath.addCell(new UnsafeCell(11));
       assert.isOk(redPath.isMovePossible(coin,3));
     });
     it('should return false if move is not possible', () => {
-      redPath.addCell({position:5});
-      redPath.addCell({position:6});
-      redPath.addCell({position:7});
-      redPath.addCell({position:11});
+      redPath.addCell(new UnsafeCell(5));
+      redPath.addCell(new UnsafeCell(6));
+      redPath.addCell(new UnsafeCell(7));
+      redPath.addCell(new UnsafeCell(11));
       assert.isNotOk(redPath.isMovePossible(coin,5));
     });
   });

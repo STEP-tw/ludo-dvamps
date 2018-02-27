@@ -18,28 +18,29 @@ class Path {
   isPositionHome(pos){
     return pos < 0;
   }
-  isAbleToStart(pos,move){
-    return this.isPositionHome(pos) && move==6;
+  isAbleToStart(coin,move){
+    return this.isPositionHome(coin.getPosition()) && move==6;
   }
-  isNotMovable(currentCell,move,nextMovableCell){
-    let notMovableFromHome = this.isPositionHome(currentCell) && move < 6;
-    return notMovableFromHome || !nextMovableCell;
+  isNotMovable(coin,move,nextMovableCell){
+    let notMovableFromHome = this.isPositionHome(coin.getPosition())&&move < 6;
+    let canMove = nextMovableCell && nextMovableCell.canPlace(coin);
+    return notMovableFromHome || !canMove;
   }
   getNextMove(coin,move){
     let currentCell = coin.getPosition();
     let currentPos = this.cells.findIndex(cell=>cell.position == currentCell);
     let nextMovableCell = this.cells[currentPos+move];
-    if(this.isAbleToStart(currentCell,move)){
+    if(this.isAbleToStart(coin,move)){
       return this.cells[this.numberOfHomes];
     }
-    if (this.isNotMovable(currentCell,move,nextMovableCell)) {
+    if (this.isNotMovable(coin,move,nextMovableCell)) {
       return this.cells[currentPos];
     }
     return nextMovableCell;
   }
   isMovePossible(coin,move) {
     let cellHoldingCoin = this.getCell(coin.getPosition());
-    return cellHoldingCoin.position != this.getNextMove(coin,move).position;
+    return cellHoldingCoin.position!=this.getNextMove(coin,move).getPosition();
   }
   moveCoin(coin,move){
     let currentCell = this.getCell(coin.position);
