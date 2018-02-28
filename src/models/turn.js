@@ -88,7 +88,6 @@ class Turn {
   endGame(){
     this.markAsNotMovedCoin();
     this.playerChances = 0;
-    this.presentPlayer = 'end Game';
     this.players = [];
   }
 }

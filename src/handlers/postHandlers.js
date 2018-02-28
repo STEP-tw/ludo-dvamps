@@ -50,7 +50,8 @@ const moveCoin = function(req,res){
   let coinToMove = req.body.coinId;
   req.game.moveCoin(coinToMove);
   let status = req.game.getGameStatus();
-  if (status.won) {
+  if (req.game.hasWon()) {
+    status.won = true;
     let finishedGameName = req.game.getName();
     req.app.gamesManager.finishGame(finishedGameName,10);
   }

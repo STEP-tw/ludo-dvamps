@@ -34,6 +34,8 @@ let moveCoin = function(event) {
     let status = JSON.parse(this.responseText);
     if (status.won) {
       endGame();
+      let playerName = status.currentPlayerName;
+      getElement('.message').innerText = `${playerName} has won`;
     }
     updateCoinPosition(status.players);
     status.players.forEach((player)=>{
@@ -176,7 +178,9 @@ const getGameStatus = function() {
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
-
+    if (gameStatus.won) {
+      endGame();
+    }
     let currentPlayerName = gameStatus.currentPlayerName;
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     if (isSamePlayer(currentPlayerName)){
@@ -254,7 +258,7 @@ const endGame = function() {
   clearInterval(logStatusReqInterval);
   moveCoin=null;
   requestRollDice = null;
-  sendAjaxRequest('DELETE', '/player');
+  // sendAjaxRequest('DELETE', '/player');
 };
 
 const changeCoinPosition = (coinId,cellId,margin) => {

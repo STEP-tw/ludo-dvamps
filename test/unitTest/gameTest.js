@@ -291,7 +291,6 @@ describe('#Game', () => {
       let biasDice = {moves:[6,1,6],roll:()=>biasDice.moves.shift()}
       game = initGame(['salman','lala','lali','lalu'],biasDice);
       game.finish();
-      assert.equal(game.turn.currentPlayer,'end Game');
       assert.equal(game.turn.currentPlayerChances,0);
       assert.deepEqual(game.turn.players,[]);
       assert.isNotOk(game.turn.hasMovedCoin());

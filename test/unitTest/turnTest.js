@@ -129,7 +129,6 @@ describe('#Turn', () => {
   describe('#endGame', () => {
     it('should remove current player, set playerChances to zero should change players list to empty', () => {
       turn.endGame();
-      assert.equal(turn.currentPlayer,'end Game');
       assert.equal(turn.currentPlayerChances,0);
       assert.deepEqual(turn.players,[]);
       assert.isNotOk(turn.hasMovedCoin());
