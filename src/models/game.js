@@ -110,11 +110,9 @@ class Game {
     let move = turn.rollDice(this.dice);
     let currentPlayer = this.getCurrentPlayer();
     this.activityLog.registerMove(currentPlayer.name,currentPlayer.color,move);
-    this.status.move = move || this.status.move;
-    turn.decideTurnAsPerMove(currentPlayer.hasMovableCoins(move));
-    currentPlayer = this.getCurrentPlayer();
-    this.activityLog.registerTurn(currentPlayer.name,currentPlayer.color);
-    if(turn.has3ConsecutiveSixes() || !currentPlayer.hasMovableCoins(move)){
+    if (turn.decideTurnAsPerMove(currentPlayer.hasMovableCoins(move))){
+      let changedPlayer = this.getCurrentPlayer();
+      this.activityLog.registerTurn(changedPlayer.name,changedPlayer.color);
       return {move:move,currentPlayer:this.getCurrentPlayer().name};
     }
     return {
@@ -158,6 +156,8 @@ class Game {
     let move = this.turn.lastMove;
     if(!this.turn.hasMovedCoin()){
       let status = currentPlayer.moveCoin(coinId,move);
+      this.activityLog.registerCoinMoved(currentPlayer.getName(),
+        currentPlayer.getColor());
       if(status.killedOppCoin){
         this.turn.increamentChances();
         let oppPlayer = this.players.find((player) =>
@@ -169,10 +169,9 @@ class Game {
       if(status.reachedDestination){
         this.turn.increamentChances();
       }
-      this.activityLog.registerCoinMoved(currentPlayer.getName(),
-        currentPlayer.getColor());
+
       this.setStatus();
-      this.turn.next();
+      this.turn.decideTurnOnChance();
       currentPlayer = this.getCurrentPlayer();
       this.activityLog.registerTurn(currentPlayer.getName()
         ,currentPlayer.getColor());

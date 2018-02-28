@@ -1,3 +1,0 @@
-isValidPlayer && validPlayer
-checkCookie
-checkGame && loadGame  && checkIsGamePresent

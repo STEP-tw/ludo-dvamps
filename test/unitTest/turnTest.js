@@ -87,20 +87,25 @@ describe('#Turn', () => {
   describe('#decideTurnAsPerMove', () => {
     it('should return current Player if there are movable coin', () => {
       turn.currentPlayerMoves = [1];
-      assert.equal(turn.decideTurnAsPerMove(true),'red');
+      assert.isNotOk(turn.decideTurnAsPerMove(true));
+      assert.equal(turn.currentPlayer,'red')
     });
     it('should return next player if there are no movable coin', () => {
       turn.currentPlayerMoves = [1];
-      assert.equal(turn.decideTurnAsPerMove(false),'green');
+      assert.isOk(turn.decideTurnAsPerMove(false));
+      assert.equal(turn.currentPlayer,'green')
     });
     it('should return same player if last move is 6', () => {
       turn.currentPlayerMoves = [6];
-      assert.equal(turn.decideTurnAsPerMove(true),'red');
+      assert.isNotOk(turn.decideTurnAsPerMove(true));
+      assert.equal(turn.currentPlayer,'red')
       assert.equal(turn.currentPlayerChances,2);
     });
     it('should return next player if last three consecutive moves are 6', () => {
       turn.currentPlayerMoves = [6,6,6];
-      assert.equal(turn.decideTurnAsPerMove(true),'green');
+      assert.isOk(turn.decideTurnAsPerMove(true));
+      assert.equal(turn.currentPlayer,'green')
+
     });
   });
   describe('#rollDice', () => {

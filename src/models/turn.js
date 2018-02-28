@@ -70,9 +70,10 @@ class Turn {
       this.increamentChances();
     }
     if (this.has3ConsecutiveSixes() || !haveMovablecoins) {
-      return this.updateTurn();
+      this.updateTurn();
+      return true;
     }
-    return this.currentPlayer;
+    return false;
   }
 
   updateTurn(){
