@@ -180,12 +180,13 @@ const getGameStatus = function() {
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     if (isSamePlayer(currentPlayerName)){
       uncoverDice(currentPlayerColor);
-    }else{
-      let allColors = ["red","yellow","green","blue"];
-      allColors.forEach((color)=>{
-        setTimeout(()=>coverDice(color),2000);
-      });
     }
+    let allColors = ["red","yellow","green","blue"];
+    allColors.splice(allColors.indexOf(currentPlayerColor),1);
+    allColors.forEach((color)=>{
+      setTimeout(()=>coverDice(color),2000);
+    });
+    updateCoinPosition(gameStatus.players);
     if(gameStatus.won){
       let playerName = gameStatus.currentPlayerName;
       getElement('.message').innerText = `${playerName} has won`;

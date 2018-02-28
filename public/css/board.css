@@ -117,7 +117,7 @@ svg{
 
 .logs {
   float: right;
-  width: 45vh;
+  width: 100%;
   height: 100%;
   border: 1px solid lightgrey;
   margin-right: 10px;
@@ -237,15 +237,15 @@ li span{
 .logItems{
   font-family: 'Open sans',sans-serif;
   font-weight:normal;
-  font-size: 25px;
+  font-size: 90%;
 }
 .time {
   font-size: 2.5vh;
   width: 28%;
 }
 .fa {
-  width: 12%;
-  padding-left: 6%;
+  width: 8%;
+  padding-left: 3%;
 }
 .redDice {
   color: red;
@@ -254,7 +254,7 @@ li span{
 }
 .coin {
   width: 10%;
-  padding-left: 3%;
+  padding-left: 2%;
   font-size: 20px;
 }
 

@@ -49,8 +49,8 @@ const checkCanMoveCoin = function(req,res,next) {
 const moveCoin = function(req,res){
   let coinToMove = req.body.coinId;
   req.game.moveCoin(coinToMove);
-  let status = req.game.getStatus();
-  if (status.hasWon) {
+  let status = req.game.getGameStatus();
+  if (status.won) {
     let finishedGameName = req.game.getName();
     req.app.gamesManager.finishGame(finishedGameName,10);
   }
