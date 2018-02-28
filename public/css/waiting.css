@@ -58,6 +58,7 @@
   right: 45%;
   height: 100px;
   width: 100px;
+  border-radius: 20%;
 }
 
 #userName {

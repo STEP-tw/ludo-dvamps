@@ -4,6 +4,10 @@ main {
   margin-left: 1%;
 }
 
+#dice1,#dice2,#dice3,#dice4 {
+  cursor: pointer;
+}
+
 .message {
   width: 80vh;
   height: 5vh;
@@ -14,7 +18,9 @@ ellipse.focus {
   stroke-dasharray: 3,3;
   stroke-width: 4;
   animation: dash 5s linear infinite;
+  cursor: pointer;
 }
+
 @keyframes dash{
     to{
       stroke-dashoffset:0;
@@ -46,9 +52,10 @@ ellipse.focus {
 .players {
   height: 13%;
   width: 65%;
-  font-size: 100%;
+  font-size: 90%;
   background: transparent;
   border: none;
+  cursor: none;
 }
 
 input {
@@ -109,7 +116,7 @@ svg{
 
 .logs {
   float: right;
-  width: 50vh;
+  width: 45vh;
   height: 100%;
   border: 1px solid lightgrey;
   margin-right: 10px;
@@ -214,25 +221,22 @@ li span{
 }
 
 #redplayer,#blueplayer,#greenplayer,#yellowplayer {
-  transition-property: width, height, font-size;
-  transition-duration: 2s;
+  transition-property: width, height, font-size, outline;
+  transition-duration: 1s;
   font-weight: 600;
 }
 
 #redplayer:focus,#blueplayer:focus,#greenplayer:focus,#yellowplayer:focus {
   width: 100%;
   height: 25%;
-  font-size: 200%;
+  font-size: 180%;
+  outline: none;
 }
 
 .logItems{
+  font-family: 'Open sans',sans-serif;
   font-weight:normal;
-  font-size: 30px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
+  font-size: 25px;
 }
 .time {
   font-size: 2.5vh;
@@ -240,6 +244,7 @@ li span{
 }
 .fa {
   width: 12%;
+  padding-left: 6%;
 }
 .redDice {
   color: red;
