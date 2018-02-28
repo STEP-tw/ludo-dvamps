@@ -176,6 +176,7 @@ const getGameStatus = function() {
       return;
     }
     let gameStatus = JSON.parse(this.responseText);
+
     let currentPlayerName = gameStatus.currentPlayerName;
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
     if (isSamePlayer(currentPlayerName)){
@@ -236,7 +237,6 @@ const getLogs = function() {
 };
 
 /*eslint-disable*/
-//have to give a sorter name to variable and enable eslint.
 let gameStatusReqInterval;
 let logStatusReqInterval;
 const load = function() {
