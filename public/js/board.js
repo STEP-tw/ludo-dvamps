@@ -115,7 +115,8 @@ const showDice = function(event,move) {
 };
 
 const isSamePlayer = function(currentPlayer){
-  return keyValParse(document.cookie).playerName == currentPlayer;
+  let cookiePlayer = decodeURIComponent(document.cookie);
+  return keyValParse(cookiePlayer).playerName == currentPlayer;
 };
 
 const showMove = function(response,event) {

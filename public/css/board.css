@@ -253,7 +253,8 @@ li span{
 }
 .coin {
   width: 10%;
-  padding-left: 5%;
+  padding-left: 3%;
+  font-size: 20px;
 }
 
 .red{
