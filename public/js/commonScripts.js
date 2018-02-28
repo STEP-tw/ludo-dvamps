@@ -84,6 +84,6 @@ const keyValParse = function(text){
 };
 
 const updateUserName = function() {
-  let cookies = keyValParse(document.cookie);
+  let cookies = keyValParse(decodeURIComponent(document.cookie));
   getElement('#userName').innerText = cookies.playerName;
 };

@@ -70,7 +70,7 @@ const updatePlayers = function() {
 
 const updateGameName = function() {
   let cookies = keyValParse(document.cookie);
-  getElement('#gameName').innerText = cookies.gameName;
+  getElement('#gameName').innerText = decodeURIComponent(cookies.gameName);
 };
 
 const getStatus = function() {
