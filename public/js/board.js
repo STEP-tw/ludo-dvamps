@@ -119,20 +119,33 @@ const isSamePlayer = function(currentPlayer){
   return keyValParse(cookiePlayer).playerName == currentPlayer;
 };
 
+const animateDice = function(event) {
+  let faces = [1,2,3,4,5,6];
+  let randomIndex = Math.floor(Math.random()*6);
+  let randomFace = faces[randomIndex];
+  showDice(event,randomFace);
+};
+
 const showMove = function(response,event) {
   let moveStatus = JSON.parse(response);
   if (!moveStatus.move) {
     return;
   }
-  showDice(event,+moveStatus.move);
-  if(moveStatus.coins && isSamePlayer(moveStatus.currentPlayer)){
-    showMovableCoins(moveStatus.coins);
-    addListenerTOCoin(moveStatus.coins);
-  }
+  let animator = setInterval(function(){
+    animateDice(event);
+  },100);
+  setTimeout(function(){
+    clearInterval(animator);
+    // showDice(event,+moveStatus.move);
+    if(moveStatus.coins && isSamePlayer(moveStatus.currentPlayer)){
+      showMovableCoins(moveStatus.coins);
+      addListenerTOCoin(moveStatus.coins);
+    }
+    showDice(event,+moveStatus.move);
+  },2000);
 };
 
 let requestRollDice = function(event) {
-
   sendAjaxRequest('GET', "/game/rollDice", function(){
     let response = this.responseText;
     showMove(response,event);
