@@ -186,7 +186,6 @@ const getGameStatus = function() {
     allColors.forEach((color)=>{
       setTimeout(()=>coverDice(color),2000);
     });
-    updateCoinPosition(gameStatus.players);
     if(gameStatus.won){
       let playerName = gameStatus.currentPlayerName;
       getElement('.message').innerText = `${playerName} has won`;
