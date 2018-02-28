@@ -32,6 +32,9 @@ let moveCoin = function(event) {
   let coinToMove = event.target.id.split('-')[1];
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);
+    if (status.won) {
+      endGame();
+    }
     updateCoinPosition(status.players);
     status.players.forEach((player)=>{
       hideMovableCoins(player.coins);
@@ -97,16 +100,6 @@ const showMovableCoins = function(coins) {
     let coinInBoard = document.querySelector(`#${coin.color}-${coin.id}`);
     coinInBoard.classList.add('focus');
   });
-};
-
-const showPopup = function(message) {
-  let popup = document.querySelector('.popup');
-  popup.style.display = 'block';
-  let messageHolder = document.querySelector('.popup-content p');
-  messageHolder.innerText = message;
-  setTimeout(() => {
-    popup.style.display = 'none';
-  }, 1000);
 };
 
 const showDice = function(event,move) {
@@ -190,15 +183,15 @@ const getGameStatus = function() {
     }else{
       let allColors = ["red","yellow","green","blue"];
       allColors.forEach((color)=>{
-        setTimeout(()=>coverDice(color),1000);
+        setTimeout(()=>coverDice(color),2000);
       });
     }
-    updateCoinPosition(gameStatus.players);
     if(gameStatus.won){
       let playerName = gameStatus.currentPlayerName;
       getElement('.message').innerText = `${playerName} has won`;
       endGame();
     }
+    updateCoinPosition(gameStatus.players);
     changeDiceBg();
     changeBgColor(currentPlayerColor);
   });

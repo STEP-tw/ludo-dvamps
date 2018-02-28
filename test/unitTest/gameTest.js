@@ -232,9 +232,6 @@ describe('#Game', () => {
       game.rollDice();
       assert.isOk(game.moveCoin(1));
       assert.isNotOk(game.moveCoin(1));
-      // let currPlayer = game.getCurrentPlayer();
-      // assert.equal(currPlayer.getCoin(1).position, 0);
-      // assert.equal(game.getCurrentPlayer().name, 'salman');
     });
     it('should get one more chance to roll the dice if coin moves to destination ', () => {
       let dice = {

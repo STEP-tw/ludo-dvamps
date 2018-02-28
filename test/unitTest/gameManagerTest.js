@@ -67,7 +67,6 @@ describe('GameManager', () => {
   });
   describe('#finishGame', () => {
     it('should finish game and should delete game in 10 seconds', done => {
-      // console.log(gameManager);
       let timeToDelete = 1;
       gameManager.addPlayerTo('newGame', 'john');
       gameManager.addPlayerTo('newGame', 'sandy');
