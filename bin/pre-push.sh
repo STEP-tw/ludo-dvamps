@@ -1,1 +1,1 @@
-nyc check-coverage --functions 100 --branches 100
+nyc check-coverage --functions 95 --branches 95

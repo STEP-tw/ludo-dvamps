@@ -85,10 +85,11 @@ class Turn {
     return this.currentPlayer;
   }
 
-  next(){
-    if(!this.playerChances){
-      return this.updateTurn();
-    }
+  endGame(){
+    this.markAsNotMovedCoin();
+    this.playerChances = 0;
+    this.presentPlayer = 'end Game';
+    this.players = [];
   }
 }
 

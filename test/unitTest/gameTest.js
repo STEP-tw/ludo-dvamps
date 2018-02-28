@@ -22,6 +22,11 @@ describe('#Game', () => {
   beforeEach(() => {
     game = new Game('newGame', ColorDistributer, fourPointDice);
   });
+  describe('#getname', () => {
+    it('should return name of game', () => {
+      assert.equal(game.getName(),'newGame');
+    });
+  });
   describe('#getStatus()', () => {
     it('should return game status', () => {
       let status = game.getStatus();
@@ -282,6 +287,18 @@ describe('#Game', () => {
       game.moveCoin(5)
       assert.equal(game.players[0].coins[0].getPosition(),-1);
       assert.equal(game.getCurrentPlayer().getName(),'lala');
+    });
+  });
+  describe('#finish', () => {
+    it('should finish game with no current player and no chances to play', () => {
+      let biasDice = {moves:[6,1,6],roll:()=>biasDice.moves.shift()}
+      game = initGame(['salman','lala','lali','lalu'],biasDice);
+      game.finish();
+      assert.equal(game.turn.currentPlayer,'end Game');
+      assert.equal(game.turn.currentPlayerChances,0);
+      assert.deepEqual(game.turn.players,[]);
+      assert.isNotOk(game.turn.hasMovedCoin());
+      console.log(game.rollDice());
     });
   });
 });

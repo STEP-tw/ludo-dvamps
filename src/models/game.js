@@ -39,6 +39,9 @@ class Game {
       return coin;
     });
   }
+  getName(){
+    return this.name;
+  }
   getCurrentPlayer(){
     let turn = this.turn;
     return this.players.find((player)=>{
@@ -144,8 +147,8 @@ class Game {
   }
   getLogs(){
     return this.activityLog.getLogs();
-
-  } isMovableCoin(coinId){
+  }
+  isMovableCoin(coinId){
     let move = this.turn.lastMove;
     let currentPlayer = this.getCurrentPlayer();
     let movablecoins = currentPlayer.getMovableCoins(move);
@@ -183,6 +186,9 @@ class Game {
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();
     return currentPlayer.getNoOfCoinsInDest()==4;
+  }
+  finish(){
+    this.turn.endGame();
   }
 }
 

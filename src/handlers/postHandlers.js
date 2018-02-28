@@ -50,6 +50,10 @@ const moveCoin = function(req,res){
   let coinToMove = req.body.coinId;
   req.game.moveCoin(coinToMove);
   let status = req.game.getStatus();
+  if (status.hasWon) {
+    let finishedGameName = req.game.getName();
+    req.app.gamesManager.finishGame(finishedGameName,10);
+  }
   status.status = true;
   res.json(status);
 };

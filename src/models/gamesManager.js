@@ -28,6 +28,11 @@ class GamesManager {
   removeGame(gameName) {
     delete this.allRunningGames[gameName];
   }
+  finishGame(gameName,timeToDelete){
+    let game = this.getGame(gameName);
+    game.finish();
+    setTimeout(()=>this.removeGame(gameName),timeToDelete*1000);
+  }
 }
 
 module.exports = GamesManager;
