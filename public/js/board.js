@@ -136,13 +136,12 @@ const showMove = function(response,event) {
   },100);
   setTimeout(function(){
     clearInterval(animator);
-    // showDice(event,+moveStatus.move);
+    showDice(event,+moveStatus.move);
     if(moveStatus.coins && isSamePlayer(moveStatus.currentPlayer)){
       showMovableCoins(moveStatus.coins);
       addListenerTOCoin(moveStatus.coins);
     }
-    showDice(event,+moveStatus.move);
-  },2000);
+  },1000);
 };
 
 let requestRollDice = function(event) {
