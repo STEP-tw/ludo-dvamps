@@ -16,6 +16,7 @@ const generateCoins = function(eventEmitter) {
   return coins;
 };
 
+
 class Game {
   constructor(name, ColorDistributor, dice, eventEmitter) {
     this.name = name;
@@ -105,25 +106,33 @@ class Game {
   setStatus() {
     this.status.players = this.players.map(player => player.getStatus());
   }
+
+  decidePlayerPer(move) {
+    let currentPlayer = this.getCurrentPlayer();
+    this.activityLog.registerMove(currentPlayer.name,currentPlayer.color,move);
+    if (this.turn.shouldChange(currentPlayer.hasMovableCoins(move))){
+      currentPlayer = this.getCurrentPlayer();
+      this.activityLog.registerTurn(currentPlayer.name,currentPlayer.color);
+    }
+    return currentPlayer;
+  }
+  getInfoPer(move){
+    let currentPlayer = this.decidePlayerPer(move);
+    return {
+      move:move,
+      coins:this.getMovableCoinsOf(move),
+      currentPlayer:currentPlayer.getName()
+    };
+  }
   rollDice(){
     let turn = this.turn;
     if(!turn.hasMovedCoin()) {
       return {message:"first move your coin"};
     }
     let move = turn.rollDice(this.dice);
-    let currentPlayer = this.getCurrentPlayer();
-    this.activityLog.registerMove(currentPlayer.name,currentPlayer.color,move);
-    if (turn.decideTurnAsPerMove(currentPlayer.hasMovableCoins(move))){
-      let changedPlayer = this.getCurrentPlayer();
-      this.activityLog.registerTurn(changedPlayer.name,changedPlayer.color);
-      return {move:move,currentPlayer:this.getCurrentPlayer().name};
-    }
-    return {
-      move:move,
-      coins:this.getMovableCoinsOf(move),
-      currentPlayer:this.getCurrentPlayer().name
-    };
+    return this.getInfoPer(move);
   }
+
   arrangePlayers(){
     return this.players.reduce((sequence,player)=>{
       let colorSequence = {red:0,green:1,yellow:2,blue:3};

@@ -65,7 +65,7 @@ class Turn {
     return this.movedCoin;
   }
 
-  decideTurnAsPerMove(haveMovablecoins){
+  shouldChange(haveMovablecoins){
     if (this.lastMove == 6) {
       this.increamentChances();
     }
