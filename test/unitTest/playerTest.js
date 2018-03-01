@@ -3,7 +3,7 @@ const _path = require('path');
 const Path = require(_path.resolve('src/models/path.js'));
 const Player = require(_path.resolve('src/models/player.js'));
 const Coin = require(_path.resolve('src/models/coin.js'));
-const SafeCell = require(_path.resolve('src/models/safeCell.js'));
+const Cell = require(_path.resolve('src/models/cell.js'));
 const UnsafeCell = require(_path.resolve('src/models/unsafeCell.js'));
 const DestinationCell = require(_path.resolve('src/models/destinationCell.js'));
 const dice = {
@@ -96,8 +96,8 @@ describe('#Player', () => {
   });
   describe('#hasMovableCoins', () => {
     beforeEach(()=>{
-      player.path.addCell(new SafeCell(-2));
-      player.path.addCell(new SafeCell(-3));
+      player.path.addCell(new Cell(-2));
+      player.path.addCell(new Cell(-3));
       player.path.addCell(new UnsafeCell(1));
       player.path.addCell(new UnsafeCell(2));
       player.path.addCell(new UnsafeCell(3));

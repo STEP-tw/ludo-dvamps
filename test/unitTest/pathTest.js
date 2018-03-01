@@ -3,7 +3,7 @@ const path = require('path');
 const Path= require(path.resolve('src/models/path.js'));
 const Coin= require(path.resolve('src/models/coin.js'));
 const UnsafeCell= require(path.resolve('src/models/unsafeCell.js'));
-const SafeCell= require(path.resolve('src/models/safeCell.js'));
+const Cell= require(path.resolve('src/models/cell.js'));
 const DestinationCell= require(path.resolve('src/models/destinationCell.js'));
 
 describe('Path', () => {
@@ -49,12 +49,12 @@ describe('Path', () => {
     })
     it('should return next position of the coin if the coin is movable', () => {
       coin = new Coin(1,5);
-      let initCell = new SafeCell(5);
-      let finalCell = new SafeCell(8);
+      let initCell = new Cell(5);
+      let finalCell = new Cell(8);
       initCell.addCoin(coin);
       redPath.addCell(initCell);
-      redPath.addCell(new SafeCell(6));
-      redPath.addCell(new SafeCell(7));
+      redPath.addCell(new Cell(6));
+      redPath.addCell(new Cell(7));
       redPath.addCell(finalCell);
       assert.deepEqual(redPath.getNextMove(coin,3),finalCell);
     });
@@ -67,7 +67,7 @@ describe('Path', () => {
       assert.deepEqual(redPath.getNextMove(coin,5),{position:5});
     });
     it('should return same position of coin if Coin is in home and move is less than 6', () => {
-      let home =new SafeCell(-1);
+      let home =new Cell(-1);
       home.addCoin(coin)
       redPath.addCell(home);
       redPath.addCell(new UnsafeCell(1));

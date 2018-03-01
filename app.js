@@ -21,7 +21,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(lib.trimRequestBody);
+app.post(lib.verifyReqBody,lib.trimRequestBody);
 app.use(lib.checkGame);
 app.use(lib.logger);
 app.use(lib.restrictValidPlayer);
@@ -33,5 +33,5 @@ app.post('/createGame',lib.verifyReqBody,lib.verifyCreateGameReq,
   lib.checkCharacterLimit,lib.blockIfUserHasGame,
   postHandlers.createNewGame);
 app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
-app.delete('/player', deleteHandler.removePlayer);
+app.delete('/player',lib.checkCookie, deleteHandler.removePlayer);
 module.exports = app;

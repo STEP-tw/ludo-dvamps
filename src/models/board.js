@@ -1,5 +1,5 @@
 const path = require('path');
-const SafeCell = require(path.resolve('src/models/safeCell.js'));
+const Cell = require(path.resolve('src/models/cell.js'));
 const UnsafeCell = require(path.resolve('src/models/unsafeCell.js'));
 const DestinationCell = require(path.resolve('src/models/destinationCell.js'));
 
@@ -14,7 +14,7 @@ class Board {
     let numOfCells = this.numOfPlayers * this.cellsPerPlayer;
     return Array(numOfCells).fill(0).map((cell, index) => {
       if (index % this.cellsPerPlayer == 0 || index%this.cellsPerPlayer == 8) {
-        return new SafeCell(index);
+        return new Cell(index);
       }
       return new UnsafeCell(index);
     });
@@ -22,16 +22,15 @@ class Board {
   generateHomeCells() {
     let numOfHomeCells = this.numOfPlayers * this.homesCellsPerPlayer;
     return Array(numOfHomeCells).fill(0).map((cell, index) => {
-      return new SafeCell((index + 1) * (-1));
+      return new Cell((index + 1) * (-1));
     });
   }
-
   generateFinalPaths() {
     return Array(this.numOfPlayers).fill(0).reduce((allPaths,ele,playerNum) =>{
       let playerSquenceLoc = (playerNum + 1) % this.numOfPlayers;
       allPaths[playerSquenceLoc] = Array(5).fill(0).map((ele,cellNum) =>{
         let pos = (playerNum*this.cellsPerPlayer) +this.finalPathStart+cellNum;
-        return new SafeCell(pos);
+        return new Cell(pos);
       });
       return allPaths;
     }, {});
@@ -52,7 +51,6 @@ class Board {
     this.finalPaths = this.generateFinalPaths();
     this.destinations = this.generateDestinations();
   }
-
   getCommonPathFor(playerPos) {
     let commonPath = [];
     let numOfCells = this.numOfPlayers * this.cellsPerPlayer - 1;
@@ -63,7 +61,6 @@ class Board {
     }
     return commonPath;
   }
-
   getPathFor(player) {
     let path = [];
     let homeCells = this.homeCells.slice(player*4, (player*4) + 4);

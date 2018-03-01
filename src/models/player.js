@@ -31,15 +31,13 @@ class Player {
   getPath(){
     return this.path;
   }
-  hasMovableCoins(move){
-    return this.coins.some(coin=>{
-      return this.path.isMovePossible(coin,move);
-    });
-  }
   getMovableCoins(move){
     return this.coins.filter(coin=>{
       return this.path.isMovePossible(coin,move);
     });
+  }
+  hasMovableCoins(move){
+    return this.getMovableCoins(move).length > 0;
   }
   assignPath(path){
     this.path.add(path);
@@ -53,7 +51,7 @@ class Player {
     let coin = this.coins.find((coin)=>coin.id == coinDetail.id);
     this.path.putAtHome(coin);
   }
-  
+
   getNoOfCoinsInDest(){
     let path = this.getPath();
     return path.getCoinsInDest();

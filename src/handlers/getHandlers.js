@@ -18,14 +18,12 @@ const getGameStatus = function(req,res){
 const getLogs = function(req,res){
   let game = req.game;
   res.json(game.getLogs());
-  res.end();
 };
 
 const rollDice = function(req, res) {
   let game = req.game;
   let diceRollStatus = game.rollDice();
   res.json(diceRollStatus);
-  res.end();
 };
 
 module.exports = {

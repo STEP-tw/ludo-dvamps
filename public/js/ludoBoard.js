@@ -39,7 +39,7 @@ let moveCoin = function(event) {
     }
     updateCoinPosition(status.players);
     status.players.forEach((player)=>{
-      hideMovableCoins(player.coins);
+      actionOnMovableCoins(player.coins,"remove");
     });
   }, `coinId=${coinToMove}`);
 };
@@ -50,10 +50,10 @@ const addListenerTOCoin = function(coins) {
   });
 };
 
-const hideMovableCoins = function(coins) {
+const actionOnMovableCoins = function(coins,action) {
   coins.forEach((coin) => {
     let coinInBoard = document.querySelector(`#${coin.color}-${coin.id}`);
-    coinInBoard.classList.remove('focus');
+    coinInBoard.classList[action]('focus');
   });
 };
 
@@ -97,13 +97,6 @@ const arrOverlappingCoins = function(){
   }
 };
 
-const showMovableCoins = function(coins) {
-  coins.forEach((coin) => {
-    let coinInBoard = document.querySelector(`#${coin.color}-${coin.id}`);
-    coinInBoard.classList.add('focus');
-  });
-};
-
 const showDice = function(event,move) {
   let margin = (move - 1) * -50;
   getElement(`#${event.target.id}`).style.marginTop = `${margin}px`;
@@ -133,7 +126,7 @@ const showMove = function(response,event) {
     clearInterval(animator);
     showDice(event,+moveStatus.move);
     if(moveStatus.coins && isSamePlayer(moveStatus.currentPlayer)){
-      showMovableCoins(moveStatus.coins);
+      actionOnMovableCoins(moveStatus.coins,"add");
       addListenerTOCoin(moveStatus.coins);
     }
   },1000);

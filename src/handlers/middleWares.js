@@ -1,16 +1,18 @@
 const checkCookie = function(req,res,next) {
   let gameName = req.cookies.gameName;
   let playerName = req.cookies.playerName;
-  if(!gameName || !playerName){
-    res.redirect('/index.html');
+  if(gameName && playerName){
+    next();
     return;
   }
-  next();
+  res.redirect('/index.html');
+  return;
 };
 
 const isEmptyString = function(string) {
   return string.trim()=='';
 };
+
 const verifyReqBody = function(req,res,next) {
   let bodyFieldValues = Object.values(req.body);
   if(bodyFieldValues.some(isEmptyString)){

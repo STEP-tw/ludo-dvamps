@@ -11,8 +11,11 @@ const fourPointDice = {
 const sixPointDice ={
   roll:()=> 6
 };
-const initGame = function(players,dice) {
-  let game = new Game('ludo',ColorDistributer,dice);
+
+let players = ['lala','kaka','lali','lalu'];
+
+const initGame = function(players,dice,gameName) {
+  let game = new Game(gameName||'ludo',ColorDistributer,dice);
   players.forEach((player)=> game.addPlayer(player));
   if(players.length == 4) game.start();
   return game;
@@ -43,6 +46,11 @@ describe('#Game', () => {
       game.addPlayer('manish');
       assert.isNotOk(game.addPlayer('manish'));
     });
+    it('should initiate turn if four players are added ', () => {
+      let game = initGame(players,fourPointDice);
+      assert.property(game, 'turn');
+      assert.instanceOf(game.turn, Turn);
+    });
   });
   describe('#getPlayer', () => {
     it('should give the player with given player name', () => {
@@ -67,10 +75,7 @@ describe('#Game', () => {
       assert.isNotOk(game.hasEnoughPlayers());
     });
     it(`should give true when game has enough players`, () => {
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.addPlayer('kaka');
-      game.addPlayer('lala');
+      let game = initGame(players,fourPointDice,'newGame');
       assert.isOk(game.hasEnoughPlayers());
     });
   });
@@ -78,10 +83,7 @@ describe('#Game', () => {
     it(`should give number of needed players to start the game`, () => {
       game.addPlayer('ram');
       assert.equal(game.neededPlayers(), 3);
-
-      game.addPlayer('lala');
-      game.addPlayer('shyam');
-      game.addPlayer('kaka');
+      ['lala','shyam','kaka'].forEach((name)=>game.addPlayer(name));
       assert.equal(game.neededPlayers(), 0);
     });
   });
@@ -169,49 +171,32 @@ describe('#Game', () => {
   });
   describe('#start', () => {
     it('should arrangePlayers in order and initiat turn object ', () => {
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.start();
+      let game = initGame(players,fourPointDice);
       assert.property(game, 'turn');
       assert.propertyVal(game.getCurrentPlayer(), 'name', 'lala');
     });
   });
   describe('#getGameStatus', () => {
     it('should give game status', () => {
-      game.addPlayer('lala');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      game.addPlayer('shyam');
-      game.start();
+      let game = initGame(players,fourPointDice,'newGame');
       let gameStatus = game.getGameStatus();
       assert.equal(gameStatus.currentPlayerName, 'lala');
       assert.lengthOf(gameStatus.players, 4);
     });
   });
   describe('#moveCoin', () => {
-    it('should move coin of specific id if coin is valid of current player  with specific moves, update game status, return true and should not change turn', () => {
-        let dice = {
-          roll: function() {
-            return 6;
-          }
-        };
-        game = new Game('newGame', ColorDistributer, dice);
-        game.addPlayer('salman');
-        game.addPlayer('lala');
-        game.addPlayer('lali');
-        game.addPlayer('lalu');
-        game.start();
+    it('should move coin of specific id if coin is valid of current player ' +
+      ' with specific moves, update game status, return true and should not change turn', () => {
+        let game = initGame(players,sixPointDice);
         game.rollDice();
         let currPlayer = game.getCurrentPlayer();
         assert.isOk(game.moveCoin(1));
         assert.equal(currPlayer.getCoin(1).position, 0);
-        assert.equal(game.getCurrentPlayer().name, 'salman');
+        assert.equal(game.getCurrentPlayer().name, 'lala');
         game.rollDice();
         assert.isOk(game.moveCoin(1));
         assert.equal(currPlayer.getCoin(1).position, 6);
-        assert.equal(game.getCurrentPlayer().name, 'salman');
+        assert.equal(game.getCurrentPlayer().name, 'lala');
       });
     it('should not move coin more than once for a single dice roll', () => {
       let dice = {
@@ -219,12 +204,7 @@ describe('#Game', () => {
           return 6;
         }
       };
-      game = new Game('newGame', ColorDistributer, dice );
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
-      game.start();
+      let game = initGame(players,sixPointDice);
       game.rollDice();
       assert.isOk(game.moveCoin(1));
       assert.isNotOk(game.moveCoin(1));
@@ -235,12 +215,7 @@ describe('#Game', () => {
           return 4;
         }
       };
-      game = new Game('newGame', ColorDistributer, dice);
-      game.addPlayer('salman');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
-      game.start();
+      let game = initGame(players,fourPointDice);
       let currPlayer = game.getCurrentPlayer();
       let coin = currPlayer.getCoin(1);
       coin.setPosition(151);
@@ -252,11 +227,7 @@ describe('#Game', () => {
   });
   describe('#hasWon', () => {
     it('should return true if player has 4 coins in destination cell', () => {
-      game.addPlayer('kaka');
-      game.addPlayer('lala');
-      game.addPlayer('lali');
-      game.addPlayer('lalu');
-      game.start();
+      let game = initGame(players,fourPointDice);
       let currentPlayer = game.getCurrentPlayer();
       let path = currentPlayer.getPath();
       let destination = path.getDestination();
