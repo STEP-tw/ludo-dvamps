@@ -11,6 +11,7 @@ const checkCookie = function(req,res,next) {
 const isEmptyString = function(string) {
   return string.trim()=='';
 };
+
 const verifyReqBody = function(req,res,next) {
   let bodyFieldValues = Object.values(req.body);
   if(bodyFieldValues.some(isEmptyString)){

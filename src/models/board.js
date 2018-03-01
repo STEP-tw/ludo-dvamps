@@ -25,7 +25,6 @@ class Board {
       return new SafeCell((index + 1) * (-1));
     });
   }
-
   generateFinalPaths() {
     return Array(this.numOfPlayers).fill(0).reduce((allPaths,ele,playerNum) =>{
       let playerSquenceLoc = (playerNum + 1) % this.numOfPlayers;
@@ -52,7 +51,6 @@ class Board {
     this.finalPaths = this.generateFinalPaths();
     this.destinations = this.generateDestinations();
   }
-
   getCommonPathFor(playerPos) {
     let commonPath = [];
     let numOfCells = this.numOfPlayers * this.cellsPerPlayer - 1;
@@ -63,7 +61,6 @@ class Board {
     }
     return commonPath;
   }
-
   getPathFor(player) {
     let path = [];
     let homeCells = this.homeCells.slice(player*4, (player*4) + 4);

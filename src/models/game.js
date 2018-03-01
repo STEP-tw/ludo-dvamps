@@ -163,6 +163,7 @@ class Game {
     let movablecoins = currentPlayer.getMovableCoins(move);
     return movablecoins.some((coin=>coin.id==coinId));
   }
+
   moveCoin(coinId){//have to refactor this code.
     let currentPlayer = this.getCurrentPlayer();
     let move = this.turn.lastMove;
@@ -192,6 +193,7 @@ class Game {
     }
     return false;
   }
+
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();
     return currentPlayer.getNoOfCoinsInDest()==4;
