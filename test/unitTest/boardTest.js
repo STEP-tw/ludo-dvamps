@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const path = require('path');
 let Board = require(path.resolve('src/models/board.js'));
-let SafeCell = require(path.resolve('src/models/safeCell.js'));
+let Cell = require(path.resolve('src/models/cell.js'));
 let UnsafeCell = require(path.resolve('src/models/unsafeCell.js'));
 let DestinationCell = require(path.resolve('src/models/destinationCell.js'));
 
@@ -14,11 +14,11 @@ describe('Board', () => {
         let expectedSafeCells = [0, 8, 13, 21, 26, 34, 39, 47];
         assert.lengthOf(commonRoute, 52);
         expectedSafeCells.forEach(ele => {
-          assert.instanceOf(commonRoute[ele], SafeCell);
+          assert.instanceOf(commonRoute[ele], Cell);
         });
         assert.instanceOf(commonRoute[1], UnsafeCell);
         assert.instanceOf(commonRoute[51], UnsafeCell);
-        assert.notInstanceOf(commonRoute[1], SafeCell);
+        assert.instanceOf(commonRoute[1], Cell);
       });
   });
   describe('#generateHomeCells', () => {
@@ -27,7 +27,7 @@ describe('Board', () => {
       let homeCells = board.generateHomeCells();
       assert.lengthOf(homeCells, 16);
       homeCells.forEach((cell, index) => {
-        assert.instanceOf(cell, SafeCell);
+        assert.instanceOf(cell, Cell);
         assert.equal(cell.position, (index + 1) * -1);
       });
     });
@@ -39,7 +39,7 @@ describe('Board', () => {
       assert.lengthOf(Object.keys(finalPaths), 4);
       Object.values(finalPaths).forEach((path) => {
         path.forEach(cell => {
-          assert.instanceOf(cell, SafeCell)
+          assert.instanceOf(cell, Cell)
           assert.isAbove(cell.position, 110);
           assert.isBelow(cell.position, 155);
         });
