@@ -8,6 +8,11 @@ const checkCookie = function(req,res,next) {
   next();
 };
 
+const isPartOfGame = function(req){
+  let game = req.app.gamesManager.getGame(req.cookies.gameName);
+  return game && game.doesPlayerExist(req.cookies.playerName);
+};
+
 const isEmptyString = function(string) {
   return string.trim()=='';
 };
@@ -22,14 +27,9 @@ const verifyReqBody = function(req,res,next) {
   next();
 };
 
-const isPlayerValid = function(req){
-  let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  return game && game.doesPlayerExist(req.cookies.playerName);
-};
-
 const restrictValidPlayer = function(req,res,next){
   let restrictedUrls = ['/','/index.html','/joining.html'];
-  if (isPlayerValid(req) && restrictedUrls.includes(req.url)){
+  if (isPartOfGame(req) && restrictedUrls.includes(req.url)){
     res.redirect('/waiting.html');
     return;
   }
@@ -58,13 +58,18 @@ const checkGame = function(req,res,next) {
   next();
 };
 
+const resWithBadReq = function(res,message) {
+  res.statusCode = 400;
+  res.json({status:false,message:message});
+  res.end();
+  return;
+};
+
 const verifyPlayer =function(req,res,next) {
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
   let playerName = req.cookies.playerName;
   if(!game.doesPlayerExist(playerName)){
-    res.statusCode = 400;
-    res.json({status:false,message:'invalid cookie'});
-    res.end();
+    resWithBadReq(res,'invalid cookie');
     return;
   }
   next();
@@ -74,9 +79,7 @@ const checkCharacterLimit = function(req,res,next) {
   let gameName = req.body.gameName;
   let playerName = req.body.playerName;
   if(gameName.length>15 || playerName.length>8){
-    res.statusCode = 400 ;
-    res.json({status:false,message:'bad request'});
-    res.end();
+    resWithBadReq(res,'bad request');
     return;
   }
   next();
@@ -114,23 +117,16 @@ const isValidReqBodyFormat = function(paramsKeys,req) {
   });
 };
 
-const verifyCreateGameReq = function(req,res,next) {//should be rename
+const verifyCreateGameReq = function(req,res,next) {
   if(!isValidReqBodyFormat(['gameName','playerName'],req)){
-    res.statusCode = 400 ;
-    res.json({status:false,message:'bad request'});
-    res.end();
+    resWithBadReq(res,'bad request');
     return;
   }
   next();
 };
 
-const hasCreatedGame = function(req){
-  let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  return game && game.doesPlayerExist(req.cookies.playerName);
-};
-
 const blockIfUserHasGame = function(req,res,next){
-  if(hasCreatedGame(req)) {
+  if(isPartOfGame(req)) {
     res.json({status:true});
     res.end();
     return;
