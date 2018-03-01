@@ -73,15 +73,12 @@ class Game {
     return new Player(playerName,playerColor,coins,new Path(coins.length));
   }
   addPlayer(playerName) {
-    if (!this.doesPlayerExist(playerName) && !this.hasEnoughPlayers()) {
-      this.players.push(this.createPlayer(playerName));
-      this.setStatus();
-      if (this.hasEnoughPlayers()) {
-        this.start();
-      }
-      return true;
+    if (this.doesPlayerExist(playerName) || this.hasEnoughPlayers()) {
+      return false;
     }
-    return false;
+    this.players.push(this.createPlayer(playerName));
+    this.setStatus();
+    return true;
   }
   getPlayer(playerName) {
     return this.players.find(player => player.name == playerName);

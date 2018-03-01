@@ -1,6 +1,3 @@
-const delPlayerFromGame = require('./deleteHandler.js').delPlayerFromGame;
-const clearCookies = require('./deleteHandler.js').clearCookies;
-
 const serveAvailableGames = function(req, res) {
   let availableGames = req.app.gamesManager.getAvailableGames();
   res.send(availableGames);

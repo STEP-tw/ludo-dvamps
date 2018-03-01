@@ -14,6 +14,7 @@ const sixPointDice ={
 const initGame = function(players,dice) {
   let game = new Game('ludo',ColorDistributer,dice);
   players.forEach((player)=> game.addPlayer(player));
+  if(players.length == 4) game.start();
   return game;
 }
 
@@ -41,14 +42,6 @@ describe('#Game', () => {
     it('should not addPlayer to game if player is in the game', () => {
       game.addPlayer('manish');
       assert.isNotOk(game.addPlayer('manish'));
-    });
-    it('should initiate turn if four players are added ', () => {
-      game.addPlayer('lala');
-      game.addPlayer('manish');
-      game.addPlayer('kaka');
-      game.addPlayer('ram');
-      assert.property(game, 'turn');
-      assert.instanceOf(game.turn, Turn);
     });
   });
   describe('#getPlayer', () => {
@@ -180,6 +173,7 @@ describe('#Game', () => {
       game.addPlayer('kaka');
       game.addPlayer('ram');
       game.addPlayer('shyam');
+      game.start();
       assert.property(game, 'turn');
       assert.propertyVal(game.getCurrentPlayer(), 'name', 'lala');
     });
@@ -190,14 +184,14 @@ describe('#Game', () => {
       game.addPlayer('kaka');
       game.addPlayer('ram');
       game.addPlayer('shyam');
+      game.start();
       let gameStatus = game.getGameStatus();
       assert.equal(gameStatus.currentPlayerName, 'lala');
       assert.lengthOf(gameStatus.players, 4);
     });
   });
   describe('#moveCoin', () => {
-    it('should move coin of specific id if coin is valid of current player ' +
-      ' with specific moves, update game status, return true and should not change turn', () => {
+    it('should move coin of specific id if coin is valid of current player  with specific moves, update game status, return true and should not change turn', () => {
         let dice = {
           roll: function() {
             return 6;
@@ -208,6 +202,7 @@ describe('#Game', () => {
         game.addPlayer('lala');
         game.addPlayer('lali');
         game.addPlayer('lalu');
+        game.start();
         game.rollDice();
         let currPlayer = game.getCurrentPlayer();
         assert.isOk(game.moveCoin(1));
@@ -229,6 +224,7 @@ describe('#Game', () => {
       game.addPlayer('lala');
       game.addPlayer('lali');
       game.addPlayer('lalu');
+      game.start();
       game.rollDice();
       assert.isOk(game.moveCoin(1));
       assert.isNotOk(game.moveCoin(1));
@@ -244,6 +240,7 @@ describe('#Game', () => {
       game.addPlayer('lala');
       game.addPlayer('lali');
       game.addPlayer('lalu');
+      game.start();
       let currPlayer = game.getCurrentPlayer();
       let coin = currPlayer.getCoin(1);
       coin.setPosition(151);
@@ -259,6 +256,7 @@ describe('#Game', () => {
       game.addPlayer('lala');
       game.addPlayer('lali');
       game.addPlayer('lalu');
+      game.start();
       let currentPlayer = game.getCurrentPlayer();
       let path = currentPlayer.getPath();
       let destination = path.getDestination();
@@ -294,7 +292,6 @@ describe('#Game', () => {
       assert.equal(game.turn.currentPlayerChances,0);
       assert.deepEqual(game.turn.players,[]);
       assert.isNotOk(game.turn.hasMovedCoin());
-      console.log(game.rollDice());
     });
   });
 });

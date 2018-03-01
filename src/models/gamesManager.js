@@ -20,7 +20,12 @@ class GamesManager {
     return this.allRunningGames[gameName];
   }
   addPlayerTo(gameName, player) {
-    return this.allRunningGames[gameName].addPlayer(player);
+    let game = this.allRunningGames[gameName];
+    let isAdded = game.addPlayer(player);
+    if(game.hasEnoughPlayers()){
+      game.start();
+    }
+    return isAdded ;
   }
   doesGameExists(gameName) {
     return gameName in this.allRunningGames;
