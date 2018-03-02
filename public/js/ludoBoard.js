@@ -102,7 +102,7 @@ const showDice = function(event,move) {
   getElement(`#${event.target.id}`).style.marginTop = `${margin}px`;
 };
 
-const isSamePlayer = function(currentPlayer){
+const isCurrentPlayer = function(currentPlayer){
   let cookiePlayer = decodeURIComponent(document.cookie);
   return keyValParse(cookiePlayer).playerName == currentPlayer;
 };
@@ -125,7 +125,7 @@ const showMove = function(response,event) {
   setTimeout(function(){
     clearInterval(animator);
     showDice(event,+moveStatus.move);
-    if(moveStatus.coins && isSamePlayer(moveStatus.currentPlayer)){
+    if(moveStatus.coins && isCurrentPlayer(moveStatus.currentPlayer)){
       actionOnMovableCoins(moveStatus.coins,"add");
       addListenerTOCoin(moveStatus.coins);
     }
@@ -176,13 +176,17 @@ const getGameStatus = function() {
     }
     let currentPlayerName = gameStatus.currentPlayerName;
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
-    if (isSamePlayer(currentPlayerName)){
-      uncoverDice(currentPlayerColor);
-    }
+
     let allColors = ["red","yellow","green","blue"];
     allColors.splice(allColors.indexOf(currentPlayerColor),1);
     allColors.forEach((color)=>{
-      setTimeout(()=>coverDice(color),2000);
+      setTimeout(()=>{
+        if (isCurrentPlayer(currentPlayerName)){
+          uncoverDice(currentPlayerColor);
+          return;
+        }
+        coverDice(color);
+      },1500);
     });
     if(gameStatus.won){
       let playerName = gameStatus.currentPlayerName;
