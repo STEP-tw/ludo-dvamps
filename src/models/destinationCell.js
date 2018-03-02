@@ -6,6 +6,7 @@ class DestinationCell extends Cell {
   }
   addCoin(coin){
     super.addCoin(coin);
+    coin.setPosition(this.position);
     return {reachedDestination:true};
   }
   getNumberOfCoins(){

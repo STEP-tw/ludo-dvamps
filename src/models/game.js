@@ -168,6 +168,7 @@ class Game {
       this.activityLog.registerCoinMoved(currentPlayer.getName(),
         currentPlayer.getColor());
       if(status.killedOppCoin){
+        currentPlayer.setKilledOpponent();
         this.turn.increamentChances();
         let oppPlayer = this.players.find((player) =>
           player.getColor()==status.diedCoin.color);
@@ -178,7 +179,6 @@ class Game {
       if(status.reachedDestination){
         this.turn.increamentChances();
       }
-
       this.setStatus();
       this.turn.decideTurnOnChance();
       currentPlayer = this.getCurrentPlayer();

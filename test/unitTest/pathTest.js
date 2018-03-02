@@ -56,7 +56,7 @@ describe('Path', () => {
       redPath.addCell(new Cell(6));
       redPath.addCell(new Cell(7));
       redPath.addCell(finalCell);
-      assert.deepEqual(redPath.getNextMove(coin,3),finalCell);
+      assert.deepEqual(redPath.getNextMove(coin,3,true),finalCell);
     });
     it('should return same position of the coin if the coin is not movable', () => {
       coin = new Coin(1,5);
@@ -98,6 +98,21 @@ describe('Path', () => {
       // redPath.addCell(finalCell);
       assert.deepEqual(redPath.getNextMove(firstCoin,2),initCell);
     });
+    it('should return same position if player has not killed opp', ()=>{
+      [1,2,3,4].forEach((cellPos)=>redPath.addCell(new Cell(cellPos)));
+      coin = new Coin(1,3);
+      let thirdCell = redPath.getCell(3);
+      thirdCell.addCoin(coin);
+      assert.deepEqual(redPath.getNextMove(coin,1,false),thirdCell);
+    });
+    it('should return destination position if player has not killed opp', ()=>{
+      [1,2,3,4].forEach((cellPos)=>redPath.addCell(new Cell(cellPos)));
+      coin = new Coin(1,3);
+      let thirdCell = redPath.getCell(3);
+      let destination = redPath.getCell(4);
+      thirdCell.addCoin(coin);
+      assert.deepEqual(redPath.getNextMove(coin,1,true),destination);
+    });
   });
   describe('#isMovePossible', () => {
     let coin;
@@ -110,7 +125,7 @@ describe('Path', () => {
       redPath.addCell(new UnsafeCell(6));
       redPath.addCell(new UnsafeCell(7));
       redPath.addCell(new UnsafeCell(11));
-      assert.isOk(redPath.isMovePossible(coin,3));
+      assert.isOk(redPath.isMovePossible(coin,3,true));
     });
     it('should return false if move is not possible', () => {
       redPath.addCell(new UnsafeCell(5));
