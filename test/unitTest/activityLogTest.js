@@ -1,11 +1,11 @@
 const assert = require('chai').assert;
 const path = require('path');
 const ActivityLog = require(path.resolve('src/models/activityLog.js'));
-
+const timeStamp = ()=> 1234;
 describe('ActivityLog', () => {
   let activityLog;
   beforeEach(()=>{
-    activityLog = new ActivityLog();
+    activityLog = new ActivityLog(timeStamp);
   })
   describe('#registerTurn', () => {
     it('should register player turn', () => {

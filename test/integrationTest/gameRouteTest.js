@@ -4,6 +4,7 @@ const path = require('path');
 const Coin = require(path.resolve('src/models/coin.js'));
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
+const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
 let doesNotHaveCookies = (res) => {
   const keys = Object.keys(res.headers);
   let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
@@ -17,31 +18,17 @@ const dice = {
     return 4;
   }
 };
-
-const ColorDistributer = function() {
-  this.colors = ['red', 'green', 'blue', 'yellow'];
-}
-ColorDistributer.prototype = {
-  getColor: function() {
-    return this.colors.shift();
-  },
-  addColor:function(color){
-    if(this.colors.includes(color)){
-      return;
-    }
-    this.colors.push(color);
-  }
-}
+const timeStamp = () => 1234;
 
 describe('GameRoute', () => {
   beforeEach(function(done) {
-    gamesManager = new GamesManager(ColorDistributer,dice);
+    gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);;
     app.initialize(gamesManager);
     done();
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
-      let gamesManager = new GamesManager(ColorDistributer,dice);
+      let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);;
       let game = gamesManager.addGame('ludo');
       gamesManager.addPlayerTo('ludo','ashish');
       gamesManager.addPlayerTo('ludo','arvind');
@@ -171,7 +158,7 @@ describe('GameRoute', () => {
       let dice = {
         roll:()=>6
       }
-      gamesManager = new GamesManager(ColorDistributer,dice)
+      gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
       let game = gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');
@@ -208,7 +195,7 @@ describe('GameRoute', () => {
           return moves.shift();
         }
       }
-      gamesManager = new GamesManager(ColorDistributer,dice)
+      gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
       let game = gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');

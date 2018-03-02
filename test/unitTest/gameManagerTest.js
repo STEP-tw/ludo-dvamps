@@ -8,16 +8,18 @@ const dice = function(){
   return 4;
 }
 
+const timeStamp = () => 1234;
+
 describe('GameManager', () => {
   let gameManager;
   let game;
   beforeEach(() => {
-    gameManager = new GameManager(ColorDistributor,dice);
+    gameManager = new GameManager(ColorDistributer,dice,timeStamp);;
     game = gameManager.addGame('newGame');
   });
   describe('#addGame', () => {
     it('should create a new game with given name and store it', () => {
-      let expected = new Game('newGame',ColorDistributor,dice);
+      let expected = new Game('newGame',ColorDistributor,dice,timeStamp);
       assert.deepEqual(game,expected );
       assert.instanceOf(game,Game);
     });
@@ -25,7 +27,7 @@ describe('GameManager', () => {
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
-      let expectedGame = new Game('newGame',ColorDistributor,dice);
+      let expectedGame = new Game('newGame',ColorDistributor,dice,timeStamp);
       expectedGame.addPlayer('john');
       assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
     });
@@ -60,7 +62,7 @@ describe('GameManager', () => {
   });
   describe('#getGame()', () => {
     it('should return Game', () => {
-      let expected = new Game('newGame', ColorDistributor, dice);
+      let expected = new Game('newGame', ColorDistributor, dice,timeStamp);
       assert.deepEqual(gameManager.getGame('newGame'),expected);
       assert.isUndefined(gameManager.getGame('badGame'));
     });

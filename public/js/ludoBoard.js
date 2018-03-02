@@ -207,12 +207,19 @@ const getPlayer = function(color){
   return color && `<span class="fa ${color}">&#xf2be;</span>` || '';
 };
 
+const toLocalTime = function(time) {
+  let timeZone = moment.tz.guess();
+  let tm = moment(time);
+  return tm.tz(timeZone).format('hh:mm:ss a');
+};
+
 const getLogStatements =function(logs) {
   let logStatements = logs.map((log) => {
+    let convTime = toLocalTime(log.time);
     let playerColor = getPlayer(log.pColor);
     let move = log.move && `<label class ="redDice">${log.move}</label>` || '';
     let coinColor = getCoin(log.color);
-    let time = `<label class="time">${log.time}</label>`;
+    let time = `<label class="time">${convTime}</label>`;
     let statement = `<span class="log">${log.statement}</span>`;
     return `<p class="logItems">${time}${playerColor}
     ${statement}${move}${coinColor} </p>`;

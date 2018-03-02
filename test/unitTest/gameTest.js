@@ -5,6 +5,7 @@ const Game = require(path.resolve('src/models/game.js'));
 const Turn = require(path.resolve('src/models/turn.js'));
 const Coin = require(path.resolve('src/models/coin.js'));
 const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
+const timeStamp = () => 1234;
 const fourPointDice = {
   roll:()=> 4
 };
@@ -15,7 +16,7 @@ const sixPointDice ={
 let players = ['lala','kaka','lali','lalu'];
 
 const initGame = function(players,dice,gameName) {
-  let game = new Game(gameName||'ludo',ColorDistributer,dice);
+  let game = new Game(gameName||'ludo',ColorDistributer,dice,timeStamp);
   players.forEach((player)=> game.addPlayer(player));
   if(players.length == 4) game.start();
   return game;
@@ -24,7 +25,7 @@ const initGame = function(players,dice,gameName) {
 describe('#Game', () => {
   let game;
   beforeEach(() => {
-    game = new Game('newGame', ColorDistributer, fourPointDice);
+    game = new Game('newGame', ColorDistributer, fourPointDice,timeStamp);
   });
   describe('#getname', () => {
     it('should return name of game', () => {
