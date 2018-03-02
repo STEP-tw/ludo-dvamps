@@ -21,7 +21,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cookieParser());
-app.post(lib.verifyReqBody,lib.trimRequestBody);
+app.use(lib.trimRequestBody);
 app.use(lib.checkGame);
 app.use(lib.logger);
 app.use(lib.restrictValidPlayer);

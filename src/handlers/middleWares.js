@@ -16,7 +16,7 @@ const isEmptyString = function(string) {
 const verifyReqBody = function(req,res,next) {
   let bodyFieldValues = Object.values(req.body);
   if(bodyFieldValues.some(isEmptyString)){
-    res.statusCode = 400;
+    res.status(400);
     res.json({status:false,message:'empty field'});
     return;
   }
