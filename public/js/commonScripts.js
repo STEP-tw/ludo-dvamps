@@ -71,3 +71,8 @@ const updateUserName = function() {
   let cookies = keyValParse(decodeURIComponent(document.cookie));
   getElement('#userName').innerText = cookies.playerName;
 };
+
+const setGameNameOnBoard = function() {
+  let cookies = keyValParse(decodeURIComponent(document.cookie));
+  getElement('#nameOfGame').innerText = cookies.gameName;
+};

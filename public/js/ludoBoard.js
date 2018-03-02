@@ -151,18 +151,28 @@ const getCurrPlayerColor = function(gameStatus) {
 };
 
 const coverDice = function(color) {
-  let dice = getElement(`.${color}Sec .dice`);
+  let dice = getElement(`.${color}Sec .dice .diceHolder`);
   dice.classList.replace('show','hide');
 };
 
 const uncoverDice = function(color) {
-  let dice = getElement(`.${color}Sec .dice`);
+  let dice = getElement(`.${color}Sec .dice .diceHolder`);
   dice.onclick = requestRollDice;
   dice.classList.replace('hide','show');
 };
 
-const changeDiceBg = function(color){
-  let dice = getElement(`.${color}Sec .dice`);
+const changeCurrPlayerDice = function(player,color) {
+  let allColors = ["red","yellow","green","blue"];
+  allColors.splice(allColors.indexOf(color),1);
+  allColors.forEach((pcolor)=>{
+    setTimeout(()=>{
+      if (isCurrentPlayer(player)){
+        uncoverDice(color);
+        return;
+      }
+      coverDice(pcolor);
+    },1500);
+  });
 };
 
 const getGameStatus = function() {
@@ -176,31 +186,20 @@ const getGameStatus = function() {
     }
     let currentPlayerName = gameStatus.currentPlayerName;
     let currentPlayerColor = getCurrPlayerColor(gameStatus);
-
-    let allColors = ["red","yellow","green","blue"];
-    allColors.splice(allColors.indexOf(currentPlayerColor),1);
-    allColors.forEach((color)=>{
-      setTimeout(()=>{
-        if (isCurrentPlayer(currentPlayerName)){
-          uncoverDice(currentPlayerColor);
-          return;
-        }
-        coverDice(color);
-      },1500);
-    });
+    changeCurrPlayerDice(currentPlayerName,currentPlayerColor);
     if(gameStatus.won){
       let playerName = gameStatus.currentPlayerName;
       getElement('.message').innerText = `${playerName} has won`;
       endGame();
     }
     updateCoinPosition(gameStatus.players);
-    changeDiceBg();
     changeBgColor(currentPlayerColor);
   });
 };
 
-const getCoin = function(color){
-  return color &&`<span class="${color} coin">&#x25C9;</span>` || '';
+const getCoin = function(color,unicode){
+  let coin = color &&`<span class="${color} coin">${unicode}</span>`|| '';
+  return coin.replace(/\'/g,'');
 };
 
 const getPlayer = function(color){
@@ -218,11 +217,12 @@ const getLogStatements =function(logs) {
     let convTime = toLocalTime(log.time);
     let playerColor = getPlayer(log.pColor);
     let move = log.move && `<label class ="redDice">${log.move}</label>` || '';
-    let coinColor = getCoin(log.color);
     let time = `<label class="time">${convTime}</label>`;
+    let coinColor = getCoin(log.color,'&#x25C9;');
+    let killedCoin = getCoin(log.killedCoinColor,'&#x2639;');
     let statement = `<span class="log">${log.statement}</span>`;
     return `<p class="logItems">${time}${playerColor}
-    ${statement}${move}${coinColor} </p>`;
+    ${statement}${move}${coinColor}${killedCoin}</p>`;
   }).reverse().join('');
   return logStatements;
 };
@@ -250,6 +250,7 @@ let logStatusReqInterval;
 const load = function() {
   showPlayers();
   updateUserName();
+  setGameNameOnBoard();
   sendAjaxRequest('GET', '/images/board.svg', function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;

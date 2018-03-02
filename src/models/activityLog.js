@@ -11,12 +11,13 @@ class ActivityLog {
       pColor:playerColor
     });
   }
-  setLog(statement,playerColor,killedCoinColor){
+  setLog(statement,playerColor,coinColor,killedCoinColor){
     this.logs.push({
       time:this.timeStamp(),
       statement:statement,
-      color:killedCoinColor || playerColor,
-      pColor:playerColor
+      color:coinColor,
+      pColor:playerColor,
+      killedCoinColor:killedCoinColor
     });
   }
   registerMove(playerName,playerColor,move){
@@ -30,10 +31,10 @@ class ActivityLog {
     });
   }
   registerCoinMoved(playerName,coinColor){
-    this.setLog(`${playerName} moved`,coinColor);
+    this.setLog(`${playerName} moved`,coinColor,coinColor);
   }
   registerKilledCoin(playerName,playerColor,killedCoinColor){
-    this.setLog(`${playerName} killed`,playerColor,killedCoinColor);
+    this.setLog(`${playerName} killed`,playerColor,undefined,killedCoinColor);
   }
   getLogs(){
     return this.logs;
