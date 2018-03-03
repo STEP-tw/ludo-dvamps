@@ -13,7 +13,7 @@ class GamesManager {
     return availableGames.map(game => game.getDetails());
   }
   addGame(gameName) {
-    let game = new Game(gameName, this.ColorDistributor, 
+    let game = new Game(gameName, this.ColorDistributor,
       this.dice,this.timeStamp);
     this.allRunningGames[gameName] = game;
     return game;
