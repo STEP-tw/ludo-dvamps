@@ -167,7 +167,7 @@ const showMove = function(response,event) {
   },1000);
 };
 
-let requestRollDice = function(event) {
+const requestRollDice = function(event) {
   sendAjaxRequest('GET', "/game/rollDice", function(){
     let response = this.responseText;
     showMove(response,event);
@@ -179,9 +179,7 @@ const changeBgColor = function(color) {
   player.focus();
 };
 
-const getCurrPlayerColor = function(gameStatus) {
-  let currentPlayer = gameStatus.currentPlayerName;
-  let players = gameStatus.players;
+const getCurrPlayerColor = function(players,currentPlayer) {
   return players.find(player => player.name == currentPlayer).color;
 };
 
@@ -210,25 +208,27 @@ const changeCurrPlayerDice = function(player,color) {
   });
 };
 
+const setWinningMsg = function(player){
+  getElement('.message').innerText = `${player} has won`;
+  endGame();
+};
+
+const setCurrPlayer = function(players,currentPlayer){
+  let currentPlayerColor = getCurrPlayerColor(players,currentPlayer);
+  changeCurrPlayerDice(currentPlayer,currentPlayerColor);
+  updateCoinPosition(players);
+  changeBgColor(currentPlayerColor);
+};
+
 const getGameStatus = function() {
   sendAjaxRequest('GET', '/game/gameStatus', function() {
-    if(!this.responseText) {
-      return;
-    }
     let gameStatus = JSON.parse(this.responseText);
-    if (gameStatus.won) {
-      endGame();
+    let players = gameStatus.players;
+    let currentPlayer = gameStatus.currentPlayerName;
+    if(gameStatus.won) {
+      setWinningMsg(currentPlayer);
     }
-    let currentPlayerName = gameStatus.currentPlayerName;
-    let currentPlayerColor = getCurrPlayerColor(gameStatus);
-    changeCurrPlayerDice(currentPlayerName,currentPlayerColor);
-    if(gameStatus.won){
-      let playerName = gameStatus.currentPlayerName;
-      getElement('.message').innerText = `${playerName} has won`;
-      endGame();
-    }
-    updateCoinPosition(gameStatus.players);
-    changeBgColor(currentPlayerColor);
+    setCurrPlayer(players,currentPlayer);
   });
 };
 
