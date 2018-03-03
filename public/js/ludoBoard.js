@@ -249,8 +249,7 @@ let gameStatusReqInterval;
 let logStatusReqInterval;
 const load = function() {
   showPlayers();
-  updateUserName();
-  setGameNameOnBoard();
+  setGameAndUser('#userName','#nameOfGame');
   sendAjaxRequest('GET', '/images/board.svg', function() {
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
