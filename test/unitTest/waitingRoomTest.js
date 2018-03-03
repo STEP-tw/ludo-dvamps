@@ -36,4 +36,16 @@ describe('WaitingRoom', () => {
       assert.isOk(room.isGuest('badMan'));
     });
   });
+  describe('#isFull', () => {
+    it('should give false number of guest in is not equal to its capacity', () => {
+      room.addGuest('guest');
+      assert.isNotOk(room.isFull());
+    });
+    it('should give true number of guest in is equal to its capacity', () => {
+      ['guest1','guest2','guest3','guest4'].forEach(function(guest){
+        room.addGuest(guest);
+      });
+      assert.isOk(room.isFull());
+    });
+  });
 });

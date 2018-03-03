@@ -20,9 +20,17 @@ const dice = {
 };
 const timeStamp = () => 1234;
 
+const initGameManager = function(players,dice,gameName) {
+  let gameManager = new GamesManager(ColorDistributer,dice,timeStamp);
+  gameManager.createRoom(gameName,4);
+  players.forEach((player)=>gameManager.joinRoom(gameName,player));
+  return gameManager;
+}
+
 describe('GameRoute', () => {
+  let gamesManager;
   beforeEach(function(done) {
-    gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);;
+    gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
     app.initialize(gamesManager);
     done();
   });
@@ -213,6 +221,33 @@ describe('GameRoute', () => {
         .expect(/"status":false/)
         .expect(/"message":"Coin/)
         .end(done)
+    });
+  });
+});
+
+describe.skip('Legends', () => {
+  describe('post /game/moveCoin',function(){
+    this.slow(11000);
+    let players = ['john','johnny','roy','albert'];
+    let moves = [6,56,6,56,6,56,6,56,6];
+    let winningDice = {roll:()=>moves.shift()};
+    it('should delete game when someone won game', (done) => {
+      let gameManager = initGameManager(players,winningDice,'ludo');
+      let game = gameManager.getGame('ludo');
+
+      // game.getCurrentPlayer().setKilledOpponent();
+      // [1,1,2,2,3,3,4].forEach(function(coinId){
+      //   game.rollDice();
+      //   game.moveCoin(coinId);
+      // });
+      // game.rollDice();
+      // app.initialize(gameManager);
+      // request(app)
+      //   .post('/game/moveCoin')
+      //   .set('Cookie',['gameName=johnny','playerName=john'])
+      //   .send('coinId=4')
+      //   .expect(200)
+      //   .end(done)
     });
   });
 });
