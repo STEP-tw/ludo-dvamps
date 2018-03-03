@@ -18,17 +18,21 @@ class Path {
   isPositionHome(pos){
     return pos < 0;
   }
+  isDestinationCell(cell){
+    let lastCell = this.cells[this.cells.length-1];
+    return lastCell.getPosition() == cell.getPosition();
+  }
   isAbleToStart(coin,move){
     return this.isPositionHome(coin.getPosition()) && move==6;
   }
   isNotMovable(coin,move,nextMovableCell){
-    let notMovableFromHome = this.isPositionHome(coin.getPosition())&&move < 6;
+    let notMovableFromHome = this.isPositionHome(coin.getPosition())&&move != 6;
     let canMove = nextMovableCell && nextMovableCell.canPlace(coin);
     return notMovableFromHome || !canMove;
   }
-  getNextMove(coin,move){
-    let currentCell = coin.getPosition();
-    let currentPos = this.cells.findIndex(cell=>cell.position == currentCell);
+  getNextMove(coin,move,hasKilledOpp){
+    let currCoinPos = coin.getPosition();
+    let currentPos = this.cells.findIndex(cell=>cell.position == currCoinPos);
     let nextMovableCell = this.cells[currentPos+move];
     if(this.isAbleToStart(coin,move)){
       return this.cells[this.numberOfHomes];
@@ -36,15 +40,20 @@ class Path {
     if (this.isNotMovable(coin,move,nextMovableCell)) {
       return this.cells[currentPos];
     }
+    if(this.isDestinationCell(nextMovableCell)&&!hasKilledOpp) {
+      return this.cells[currentPos];
+    }
     return nextMovableCell;
   }
-  isMovePossible(coin,move) {
+  isMovePossible(coin,move,hasKilledOpp) {
     let cellHoldingCoin = this.getCell(coin.getPosition());
-    return cellHoldingCoin.position!=this.getNextMove(coin,move).getPosition();
+    let currentPos = cellHoldingCoin.getPosition();
+    let nextPos = this.getNextMove(coin,move,hasKilledOpp).getPosition();
+    return currentPos!=nextPos;
   }
-  moveCoin(coin,move){
+  moveCoin(coin,move,hasKilledOpp){
     let currentCell = this.getCell(coin.position);
-    let nextCell = this.getNextMove(coin,move);
+    let nextCell = this.getNextMove(coin,move,hasKilledOpp);
     currentCell.removeCoin(coin);
     let status = nextCell.addCoin(coin);
     return status;

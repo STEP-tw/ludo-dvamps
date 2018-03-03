@@ -35,7 +35,7 @@ const removeIntervals = function() {
 
 const displayPlayerNames = function(players) {
   players.forEach((player, index) => {
-    if (getElement(`#player${index+2}`) != undefined) {
+    if (getElement(`#player${index+2}`)) {
       getElement(`#player${index+2}`).value = "";
     }
     getElement(`#player${index+1}`).value = player.name;
@@ -55,7 +55,7 @@ const updatePlayers = function() {
     return;
   }
   let players = JSON.parse(this.responseText).players;
-  if (players == undefined) {
+  if (!players) {
     return;
   }
   displayPlayerNames(players);
@@ -78,8 +78,7 @@ const getStatus = function() {
 };
 
 const begin = function() {
-  updateGameName();
-  updateUserName();
+  setGameAndUser('#userName','#gameName');
   getStatus();
   intervalID = setInterval(getStatus, 1000);
   blinkID = setInterval(blinkText, 500);

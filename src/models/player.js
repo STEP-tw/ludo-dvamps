@@ -7,6 +7,7 @@ class Player {
     this.color = color;
     this.coins = coins;
     this.path = path;
+    this.hasKilledOpp = false;
   }
   getName() {
     return this.name;
@@ -32,8 +33,9 @@ class Player {
     return this.path;
   }
   getMovableCoins(move){
+    let hasKilledOpp = this.hasKilledOpp;
     return this.coins.filter(coin=>{
-      return this.path.isMovePossible(coin,move);
+      return this.path.isMovePossible(coin,move,hasKilledOpp);
     });
   }
   hasMovableCoins(move){
@@ -44,17 +46,19 @@ class Player {
   }
   moveCoin(coinId,move){
     let coin = this.coins.find(coin=>coin.id==coinId);
-    let status = this.path.moveCoin(coin,move);
+    let status = this.path.moveCoin(coin,move,this.hasKilledOpp);
     return status;
   }
   moveCoinToHome(coinDetail){
     let coin = this.coins.find((coin)=>coin.id == coinDetail.id);
     this.path.putAtHome(coin);
   }
-
   getNoOfCoinsInDest(){
     let path = this.getPath();
     return path.getCoinsInDest();
+  }
+  setKilledOpponent(){
+    this.hasKilledOpp=true;
   }
 }
 module.exports = Player;

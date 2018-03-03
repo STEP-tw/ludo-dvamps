@@ -5,6 +5,7 @@ const Game = require(path.resolve('src/models/game.js'));
 const Turn = require(path.resolve('src/models/turn.js'));
 const Coin = require(path.resolve('src/models/coin.js'));
 const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
+const timeStamp = () => 1234;
 const fourPointDice = {
   roll:()=> 4
 };
@@ -15,7 +16,7 @@ const sixPointDice ={
 let players = ['lala','kaka','lali','lalu'];
 
 const initGame = function(players,dice,gameName) {
-  let game = new Game(gameName||'ludo',ColorDistributer,dice);
+  let game = new Game(gameName||'ludo',ColorDistributer,dice,timeStamp);
   players.forEach((player)=> game.addPlayer(player));
   if(players.length == 4) game.start();
   return game;
@@ -24,7 +25,7 @@ const initGame = function(players,dice,gameName) {
 describe('#Game', () => {
   let game;
   beforeEach(() => {
-    game = new Game('newGame', ColorDistributer, fourPointDice);
+    game = new Game('newGame', ColorDistributer, fourPointDice,timeStamp);
   });
   describe('#getname', () => {
     it('should return name of game', () => {
@@ -199,30 +200,34 @@ describe('#Game', () => {
         assert.equal(game.getCurrentPlayer().name, 'lala');
       });
     it('should not move coin more than once for a single dice roll', () => {
-      let dice = {
-        roll: function() {
-          return 6;
-        }
-      };
       let game = initGame(players,sixPointDice);
       game.rollDice();
       assert.isOk(game.moveCoin(1));
       assert.isNotOk(game.moveCoin(1));
     });
     it('should get one more chance to roll the dice if coin moves to destination ', () => {
-      let dice = {
-        roll:function(){
-          return 4;
-        }
-      };
-      let game = initGame(players,fourPointDice);
+      let moves = [6,56,1];
+      let baiseDice = {roll:()=>moves.shift()};
+      let game = initGame(players,baiseDice);
       let currPlayer = game.getCurrentPlayer();
-      let coin = currPlayer.getCoin(1);
-      coin.setPosition(151);
-      let playerChance = game.turn.currentPlayerChances;
+      assert.equal(currPlayer.getCoin(1).getPosition(),-1);
       game.rollDice();
       game.moveCoin(1);
-      assert.equal(game.turn.currentPlayerChances,playerChance);
+      assert.equal(currPlayer.getCoin(1).getPosition(),0);
+      currPlayer.setKilledOpponent();
+      game.rollDice();
+      game.moveCoin(1);
+      assert.deepEqual(currPlayer,game.getCurrentPlayer());
+    });
+    it('should not allow to go to destination if player has not killed coin ', () => {
+      let moves = [6,56,1];
+      let baiseDice = {roll:()=>moves.shift()};
+      let game = initGame(players,baiseDice);
+      let currPlayer = game.getCurrentPlayer();
+      game.rollDice();
+      game.moveCoin(1);
+      game.rollDice();
+      assert.notDeepEqual(currPlayer,game.getCurrentPlayer());
     });
   });
   describe('#hasWon', () => {

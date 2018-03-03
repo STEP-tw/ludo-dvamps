@@ -6,11 +6,6 @@ const Coin = require(_path.resolve('src/models/coin.js'));
 const Cell = require(_path.resolve('src/models/cell.js'));
 const UnsafeCell = require(_path.resolve('src/models/unsafeCell.js'));
 const DestinationCell = require(_path.resolve('src/models/destinationCell.js'));
-const dice = {
-  roll : function(){
-    return 4;
-  }
-};
 
 const generateSafeCells = function(from,to) {
   let cells = [];
@@ -88,22 +83,26 @@ describe('#Player', () => {
     });
     it('should return coins list if there are movable coins', () => {
       [-2,-3,1,2,3,4,5,6].forEach(function(cellPos){
-        player.path.addCell(cellPos);
+        player.path.addCell(new UnsafeCell(cellPos));
       })
       let expected = [new Coin(1,-2),new Coin(2,-3)]
       assert.deepEqual(player.getMovableCoins(6),expected);
+    });
+    it('should not allow coin to reach Destination if players has not killed opp. coin',()=>{
+      player.path.getCell(3).addCoin(secondCoin);
+      assert.deepEqual(player.getMovableCoins(1),[]);
+    });
+    it('should allow coin to reach Destination if players has killed opp. coin',()=>{
+      player.setKilledOpponent()
+      player.path.getCell(3).addCoin(secondCoin);
+      assert.deepEqual(player.getMovableCoins(1),[secondCoin]);
     });
   });
   describe('#hasMovableCoins', () => {
     beforeEach(()=>{
       player.path.addCell(new Cell(-2));
       player.path.addCell(new Cell(-3));
-      player.path.addCell(new UnsafeCell(1));
-      player.path.addCell(new UnsafeCell(2));
-      player.path.addCell(new UnsafeCell(3));
-      player.path.addCell(new UnsafeCell(4));
-      player.path.addCell(new UnsafeCell(5));
-      player.path.addCell(new UnsafeCell(6));
+      [1,2,3,4,5,6].forEach((num)=>player.path.addCell(new UnsafeCell(num)));
     })
     it('should return true if there are movable coins', () => {
       assert.isOk(player.hasMovableCoins(6));

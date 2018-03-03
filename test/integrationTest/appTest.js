@@ -3,6 +3,7 @@ const request = require('supertest');
 const path = require('path');
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
+const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
 let doesNotHaveCookies = (res) => {
   const keys = Object.keys(res.headers);
   let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
@@ -16,26 +17,12 @@ const dice = {
     return 4;
   }
 };
-
-const ColorDistributer = function() {
-  this.colors = ['red', 'green', 'blue', 'yellow'];
-}
-ColorDistributer.prototype = {
-  getColor: function() {
-    return this.colors.shift();
-  },
-  addColor:function(color){
-    if(this.colors.includes(color)){
-      return;
-    }
-    this.colors.push(color);
-  }
-}
+const timeStamp = () => 1234;
 
 describe('#App', () => {
   let gamesManager = {};
   beforeEach(function(done) {
-    gamesManager = new GamesManager(ColorDistributer,dice);
+    gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
     app.initialize(gamesManager);
     done();
   });
@@ -184,7 +171,7 @@ describe('#App', () => {
         .end(done);
     });
     it('should redirect to waiting if user has already a game', function(done) {
-      let gamesManager = new GamesManager(ColorDistributer,dice);
+      let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
       gamesManager.addGame('newGame');
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
@@ -275,7 +262,7 @@ describe('#App', () => {
   });
   describe('GET /getAvailableGames', () => {
     it('should give all available games', done => {
-      gamesManager = new GamesManager(ColorDistributer,dice)
+      gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
       app.initialize(gamesManager);
       request(app)
         .get('/getAvailableGames')
