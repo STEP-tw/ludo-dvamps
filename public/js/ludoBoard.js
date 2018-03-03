@@ -14,18 +14,53 @@ const showPlayers = function() {
     });
   });
 };
+
+const showCoin = function(coin){
+  let ele = getElement(`#${coin.color}-${coin.id}`);
+  ele.classList.replace('hide','show');
+};
+
+const hideCoin = function(coin){
+  let ele = getElement(`#${coin.color}-${coin.id}`);
+  ele.classList.contains('show')?
+    ele.classList.replace('show','hide')
+    : ele.classList.add('hide');
+};
+
+const placeCoin = (coin)=>{
+  if (+coin.position < 0) {
+    coin.position = `home${coin.position}`;
+    changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,31.5,31.5);
+    return;
+  }
+  changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,20,20);
+  return;
+};
+
+const decideCoinsToShow = (playerCoinsToShow,coin)=>{
+  if (playerCoinsToShow.some(co=>co.position==coin.position)) {
+    hideCoin(coin);
+    return playerCoinsToShow;
+  }
+  coin.position >= 0 && playerCoinsToShow.push(coin);
+  showCoin(coin);
+  placeCoin(coin);
+  return playerCoinsToShow;
+};
+
 const updateCoinPosition = function(players){
+  let overlappedCoins = [];
   players.forEach((player)=>{
-    player.coins.forEach((coin)=>{
-      if (+coin.position < 0) {
-        coin.position = `home${coin.position}`;
-        changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,31.5);
-        return;
-      }
-      changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,17.35);
-    });
+    let playerCoinsToShow = player.coins.reduce(decideCoinsToShow,[]);
+    overlappedCoins = overlappedCoins.concat(playerCoinsToShow);
   });
-  arrOverlappingCoins();
+  let sortedCoins = overlappedCoins.reduce((sortedCoins,coin)=>{
+    sortedCoins[coin.position] ?
+      sortedCoins[coin.position].push(`${coin.color}-${coin.id}`)
+      : sortedCoins[coin.position] = [`${coin.color}-${coin.id}`];
+    return sortedCoins;
+  },{});
+  arrOverlappingCoins(sortedCoins);
 };
 
 let moveCoin = function(event) {
@@ -82,19 +117,19 @@ const isOverlapped = function(currCoin,nextCoin) {
   return hasSameCoords(currCoin,nextCoin)&&hasDiffColor(currCoin,nextCoin);
 };
 
-const arrOverlappingCoins = function(){
-  for(let count=0;count<coinsId.length-1;count++){
-    let currentCoin = document.getElementById(coinsId[count]);
-    for(let index=count+1;index<coinsId.length;index++){
-      let nextCoin = document.getElementById(coinsId[index]);
-      if(isOverlapped(currentCoin,nextCoin)){
-        currentCoin.setAttribute('cx',currentCoin.cx.animVal.value-6);//14
-        currentCoin.setAttribute('cy',currentCoin.cy.animVal.value-6);//8
-        nextCoin.setAttribute('cx',nextCoin.cx.animVal.value+12);//8
-        nextCoin.setAttribute('cy',nextCoin.cy.animVal.value+12);//4
-      }
-    }
-  }
+const arrOverlappingCoins = function(sortedCoins){
+  // console.log(sortedCoins);
+  Object.keys(sortedCoins).forEach((cellPos)=>{
+    let marginsFor = {1:[20,20],2:[11,11,28,28],
+      3:[11,11,20,28,28,11],4:[11,11,11,28,28,11,28,28]};
+    let coins = sortedCoins[cellPos];
+    let marginForCoin = marginsFor[coins.length];
+    coins.forEach((coin,index)=>{
+      // let coinId = `${coin.color}-${coin.id}`;
+      margins = marginForCoin.slice(index*2,index*2+2);
+      changeCoinPosition(coin,cellPos,margins[0],margins[1]);
+    });
+  });
 };
 
 const showDice = function(event,move) {
@@ -258,11 +293,12 @@ const endGame = function() {
   // sendAjaxRequest('DELETE', '/player');
 };
 
-const changeCoinPosition = (coinId,cellId,margin) => {
+const changeCoinPosition = (coinId,cellId,marginForX,marginForY) => {
+  // console.log(coinId);
   let coin = document.getElementById(coinId);
   let cell = document.getElementById(cellId);
-  coin.setAttribute('cx',cell.x.animVal.value + margin);
-  coin.setAttribute('cy',cell.y.animVal.value + margin);
+  coin.setAttribute('cx',cell.x.animVal.value + marginForX);
+  coin.setAttribute('cy',cell.y.animVal.value + marginForY);
 };
 
 window.onload = load;
