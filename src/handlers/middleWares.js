@@ -120,6 +120,14 @@ const isValidReqBodyFormat = function(paramsKeys,req) {
 };
 
 const verifyCreateGameReq = function(req,res,next) {//should be rename
+  if(!isValidReqBodyFormat(['gameName','playerName','noOfPlayers'],req)){
+    resForBadRequest(res,"bad request");
+    return;
+  }
+  next();
+};
+
+const verifyJoinGameReq = function(req,res,next) {//should be rename
   if(!isValidReqBodyFormat(['gameName','playerName'],req)){
     resForBadRequest(res,"bad request");
     return;
@@ -144,11 +152,26 @@ const trimRequestBody = function(req,res,next) {
   next();
 };
 
-const doesGameExists = function(req,res,next){
-  let game = req.app.gamesManager.getGame(req.body.gameName);
-  if(!game){
+const checkRoomExists = function(req,res,next) {
+  let gamesManager = req.app.gamesManager;
+  let gameName = req.body.gameName;
+  if(!gamesManager.doesRoomExists(gameName)) {
     res.statusCode = 400;
     res.json({status:false,message:"game dosen\'t exist"});
+    return;
+  }
+  next();
+};
+
+
+const verifyIsGuest = function(req,res,next) {
+  let game = req.cookies.gameName;
+  let player = req.cookies.playerName;
+  let gamesManager = req.app.gamesManager;
+  let room = gamesManager.getRoom(game);
+  if(!room || !room.isGuest(player)){
+    res.statusCode = 400;
+    res.json({status:false,message:"bad request "});
     return;
   }
   next();
@@ -168,5 +191,7 @@ module.exports = {
   verifyCreateGameReq,
   blockIfUserHasGame,
   trimRequestBody,
-  doesGameExists,
+  verifyJoinGameReq,
+  checkRoomExists,
+  verifyIsGuest
 };

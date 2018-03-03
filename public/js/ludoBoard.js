@@ -159,6 +159,7 @@ const arrOverlappingCoins = function(sortedCoins) {
     });
   });
 };
+
 const showDice = function(event,move) {
   let margin = (move - 1) * -50;
   getElement(`#${event.target.id}`).style.marginTop = `${margin}px`;

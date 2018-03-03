@@ -23,6 +23,9 @@ class WaitingRoom {
   isFull(){
     return this.guests.length == this.capacity;
   }
+  isEmpty(){
+    return !this.guests.length;
+  }
 }
 
 module.exports = WaitingRoom;

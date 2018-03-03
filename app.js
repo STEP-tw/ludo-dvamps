@@ -15,7 +15,7 @@ app.initialize = function(gamesManager,fs) {
   app.gamesManager = gamesManager;
   app.fs = fs;
 };
-
+/*eslint-disable*/
 app.use(express.urlencoded({
   extended: false
 }));
@@ -33,5 +33,5 @@ app.post('/createGame',lib.verifyReqBody,lib.verifyCreateGameReq,
   lib.checkCharacterLimit,lib.blockIfUserHasGame,
   postHandlers.createNewGame);
 app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
-app.delete('/player',lib.checkCookie, deleteHandler.removePlayer);
+app.delete('/player',lib.checkCookie,lib.verifyIsGuest,deleteHandler.removePlayer);
 module.exports = app;

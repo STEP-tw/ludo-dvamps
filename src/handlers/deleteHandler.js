@@ -1,18 +1,14 @@
 const removePlayer=(req,res)=>{
-  delPlayerFromGame(req,res);
+  delPlayerFromRoom(req,res);
   clearCookies(res);
   res.end();
 };
 
-const delPlayerFromGame = function(req,res){
+const delPlayerFromRoom = function(req,res){
+  let gamesManager = req.app.gamesManager;
   let gameName=req.cookies.gameName;
-  let player= req.cookies.playerName;
-  let game = req.app.gamesManager.getGame(gameName);
-  game.removePlayer(player);
-  let totalPlayers=game.getNoOfPlayers();
-  if(!totalPlayers){
-    req.app.gamesManager.removeGame(gameName);
-  }
+  let playerName= req.cookies.playerName;
+  gamesManager.leaveRoom(gameName,playerName);
 };
 
 const clearCookies = function(res) {
@@ -24,6 +20,6 @@ const clearCookies = function(res) {
 // have to move these function from here to some suitable file.
 module.exports={
   removePlayer,
-  delPlayerFromGame,
+  delPlayerFromRoom,
   clearCookies
 };

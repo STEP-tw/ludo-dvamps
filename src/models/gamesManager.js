@@ -40,13 +40,25 @@ class GamesManager {
       delete this.rooms[roomName];
     }
   }
-
+  getRoom(roomName) {
+    return this.rooms[roomName];
+  }
   doesRoomExists(roomName) {
     return roomName in this.rooms;
   }
-
+  leaveRoom(roomName,playerName) {
+    let room = this.getRoom(roomName);
+    room.removeGuest(playerName);
+    if(room.isEmpty()){
+      delete this.rooms[roomName];
+    }
+  }
   canCreateGame(gameName) {
     return !this.doesGameExists(gameName) && !this.doesRoomExists(gameName);
+  }
+  canJoinRoom(gameName,playerName) {
+    let room = this.getRoom(gameName);
+    return !room.isGuest(playerName);
   }
   //room concept
   getGame(gameName) {

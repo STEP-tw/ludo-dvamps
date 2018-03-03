@@ -113,6 +113,8 @@ describe('#Legends', () => {
         gameManager.joinRoom('ludo',player);
       });
       assert.isDefined(gameManager.getGame('ludo'));
+      assert.instanceOf(gameManager.getGame('ludo'),Game);
+      assert.isNotOk(gameManager.doesRoomExists('ludo'));
     });
   });
 });

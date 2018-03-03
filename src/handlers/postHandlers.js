@@ -16,25 +16,25 @@ const createNewGame = function(req,res) {
   let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;
   let playerName = req.body.playerName;
-  if(gamesManager.doesGameExists(gameName)){
+  let roomCapacity = req.body.noOfPlayers;
+  if(!gamesManager.canCreateGame(gameName)){
     return resGameAlreadyExists(res);
   }
-  let game = gamesManager.addGame(gameName);
-  game.addPlayer(playerName);
+  let room = gamesManager.createRoom(gameName,roomCapacity);
+  room.addGuest(playerName);
   resWithGameJoined(res,gameName,playerName);
 };
 
 const joinPlayerToGame = function(req,res){
   let gamesManager = req.app.gamesManager;
-  let gameName = req.body.gameName.trim();
-  let playerName = req.body.playerName.trim();
-  let joiningStatus = gamesManager.addPlayerTo(gameName,playerName);
-  if (joiningStatus) {
-    resWithGameJoined(res,gameName,playerName);
+  let gameName = req.body.gameName;
+  let playerName = req.body.playerName;
+  if(!gamesManager.canJoinRoom(gameName,playerName)){
+    res.json({status:false});
     return;
   }
-  res.json({status:joiningStatus});
-  res.end();
+  gamesManager.joinRoom(gameName,playerName);
+  res.json({status:true});
 };
 
 const checkCanMoveCoin = function(req,res,next) {
@@ -60,10 +60,10 @@ const moveCoin = function(req,res){
 };
 
 let joinGameRoute = [
-  lib.verifyCreateGameReq,
+  lib.verifyJoinGameReq,
   lib.verifyReqBody,
   lib.checkCharacterLimit,
-  lib.doesGameExists,
+  lib.checkRoomExists,
   joinPlayerToGame,
 ];
 module.exports = {
