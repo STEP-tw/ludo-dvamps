@@ -26,10 +26,17 @@ const rollDice = function(req, res) {
   res.json(diceRollStatus);
 };
 
+const getNextPos = function(req,res){
+  let coinID = req.body.coinID;
+  let game = req.game;
+  res.json(game.getNextPos(coinID));
+};
+
 module.exports = {
   serveAvailableGames,
   serveWaitingStatus,
   getGameStatus,
   rollDice,
-  getLogs
+  getLogs,
+  getNextPos
 };

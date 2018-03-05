@@ -228,6 +228,23 @@ describe('#Game', () => {
       assert.notDeepEqual(currPlayer,game.getCurrentPlayer());
     });
   });
+  describe('#nextPos', () => {
+    it('should return the next postion of a given coinID', () => {
+      game = initGame(['salman','lala','lali','lalu'],sixPointDice);
+      game.start();
+      game.rollDice();
+      assert.equal(game.getNextPos('1'),0);
+      assert.equal(game.getNextPos('2'),0);
+      assert.equal(game.getNextPos('3'),0);
+      assert.equal(game.getNextPos('4'),0);
+      game.moveCoin(3);
+      game.rollDice();
+      assert.equal(game.getNextPos('1'),0);
+      assert.equal(game.getNextPos('2'),0);
+      assert.equal(game.getNextPos('3'),6);
+      assert.equal(game.getNextPos('4'),0);
+    });
+  });
   describe('#hasWon', () => {
     it('should return true if player has 4 coins in destination cell', () => {
       let game = initGame(players,fourPointDice);

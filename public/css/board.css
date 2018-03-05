@@ -258,6 +258,10 @@ li span{
   font-size: 30px;
 }
 
+.highlight{
+  fill: #b5aaaa;
+}
+
 .red{
   color: red;
 }

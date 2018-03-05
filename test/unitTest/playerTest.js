@@ -151,4 +151,15 @@ describe('#Player', () => {
       assert.equal(player.getNoOfCoinsInDest(),4);
     });
   });
+  describe('#getNextPos', () => {
+    beforeEach(()=>{
+      player.path.addCell(new UnsafeCell(0));
+      player.path.addCell(new UnsafeCell(1));
+      player.path.addCell(new UnsafeCell(2));
+      player.path.addCell(new UnsafeCell(3));
+    })
+    it('should return next postion of given coinId ', () => {
+      assert.equal(player.getNextPos(1,6),0);
+    });
+  });
 });

@@ -203,7 +203,10 @@ class Game {
     this.actAfterMoveCoin(currentPlayer,status);
     return true;
   }
-
+  getNextPos(coinId){
+    let move = this.turn.lastMove;
+    return this.getCurrentPlayer().getNextPos(coinId,move);
+  }
   hasWon() {
     let currentPlayer = this.getCurrentPlayer();
     return currentPlayer.getNoOfCoinsInDest()==4;

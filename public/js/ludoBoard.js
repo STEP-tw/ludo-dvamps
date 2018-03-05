@@ -25,6 +25,20 @@ const showCoin = function(coin){
   ele.classList.replace('hide','show');
 };
 
+const highlightCell = function(cellID){
+  let ele = document.getElementById(cellID);
+  ele.classList.add('highlight');
+};
+
+const dehighlightCell = function(cellID){
+  let ele = document.getElementById(cellID);
+  ele.classList.remove('highlight');
+};
+
+const isHighlighted = function(cellID){
+  return document.getElementById(cellID).classList.contains('highlight');
+};
+
 const hideCoin = function(coin){
   let ele = getElement(`#${coin.color}-${coin.id}`);
   ele.classList.contains('show')?
@@ -84,9 +98,25 @@ let moveCoin = function(event) {
   }, `coinId=${coinToMove}`);
 };
 
+const getNextPos = function(event){
+  let coinToMove = event.target.id.split('-')[1];
+  sendAjaxRequest('POST','/game/nextPos',function(){
+    if(!this.responseText){
+      return;
+    }
+    let nextPos = +this.responseText;
+    if(isHighlighted(nextPos)){
+      dehighlightCell(nextPos);
+      moveCoin(event);
+      return;
+    }
+    highlightCell(nextPos);
+  },`coinID=${coinToMove}`);
+};
+
 const addListenerTOCoin = function(coins) {
   coins.forEach((coin) => {
-    setClickListener(`#${coin.color}-${coin.id}`, moveCoin);
+    setClickListener(`#${coin.color}-${coin.id}`, getNextPos);
   });
 };
 

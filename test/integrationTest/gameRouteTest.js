@@ -223,6 +223,29 @@ describe('GameRoute', () => {
         .end(done)
     });
   });
+  describe('#POST /game/nextPos', () => {
+    beforeEach(()=>{
+      let dice = {
+        roll:()=>6
+      }
+      gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
+      let game = gamesManager.addGame('newGame');
+      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager.addPlayerTo('newGame','kaka');
+      gamesManager.addPlayerTo('newGame','ram');
+      gamesManager.addPlayerTo('newGame','shyam');
+      game.rollDice();
+      app.initialize(gamesManager);
+    })
+    it('should return the next postion of a coin', (done) => {
+      request(app)
+        .post('/game/nextPos')
+        .set('Cookie',['gameName=newGame','playerName=lala'])
+        .send('coinID=1')
+        .expect(/0/)
+        .end(done);
+    });
+  });
 });
 
 describe.skip('Legends', () => {

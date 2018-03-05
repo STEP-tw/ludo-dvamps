@@ -5,9 +5,6 @@ class ColorDistributer {
   getColor() {
     let colorIndex = Math.floor(Math.random() * this.colors.length);
     let color = this.colors.splice(colorIndex,1);
-    if(color.length == 0){
-      this.colors = ['red','green','blue','yellow'];
-    }
     return color.pop();
   }
   addColor(color){

@@ -17,6 +17,7 @@ ludo.use(express.static('templates'));
 ludo.get('/gameStatus',getHandlers.getGameStatus);
 ludo.get('/logs',getHandlers.getLogs);
 ludo.get('/rollDice',lib.checkCurrentPlayer,getHandlers.rollDice);
+ludo.post('/nextPos',lib.checkCurrentPlayer,getHandlers.getNextPos);
 ludo.post('/moveCoin',lib.checkCurrentPlayer,postHandlers.moveCoin);
 
 module.exports = ludo;

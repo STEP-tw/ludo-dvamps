@@ -60,5 +60,10 @@ class Player {
   setKilledOpponent(){
     this.hasKilledOpp=true;
   }
+  getNextPos(coinId,move){
+    let coin = this.coins.find(coin=>coin.id==coinId);
+    let status = this.path.getNextMove(coin,move,this.hasKilledOpp);
+    return status.position;
+  }
 }
 module.exports = Player;
