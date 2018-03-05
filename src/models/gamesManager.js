@@ -1,9 +1,12 @@
-const Game = require('./game.js');
+const path = require('path');
+const WaitingRoom = require(path.resolve('src/models/waitingRoom.js'));
+const Game = require(path.resolve('src/models/game.js'));
 
 class GamesManager {
   constructor(ColorDistributor,dice,timeStamp) {
     this.ColorDistributor = ColorDistributor;
     this.allRunningGames = {};
+    this.rooms = {};
     this.dice = dice;
     this.timeStamp = timeStamp;
   }
@@ -13,11 +16,39 @@ class GamesManager {
     return availableGames.map(game => game.getDetails());
   }
   addGame(gameName) {
-    let game = new Game(gameName, this.ColorDistributor, 
+    let game = new Game(gameName, this.ColorDistributor,
       this.dice,this.timeStamp);
     this.allRunningGames[gameName] = game;
     return game;
   }
+  //room concept
+  createRoom(roomName,capacity) {
+    let room = new WaitingRoom(roomName,capacity);
+    this.rooms[roomName] = room;
+    return room;
+  }
+
+  joinRoom(roomName,guestName) {
+    let room = this.rooms[roomName];
+    room.addGuest(guestName);
+    if(room.isFull()){
+      let game = this.addGame(roomName);
+      let players = room.getGuests();
+      players.forEach((playerName)=>game.addPlayer(playerName));
+      game.start();
+      this.allRunningGames[roomName]=game;
+      delete this.rooms[roomName];
+    }
+  }
+
+  doesRoomExists(roomName) {
+    return roomName in this.rooms;
+  }
+
+  canCreateGame(gameName) {
+    return !this.doesGameExists(gameName) && !this.doesRoomExists(gameName);
+  }
+  //room concept
   getGame(gameName) {
     return this.allRunningGames[gameName];
   }

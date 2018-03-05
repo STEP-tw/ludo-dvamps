@@ -15,6 +15,11 @@ const showPlayers = function() {
   });
 };
 
+const showMovableCoins = function(coins){
+  actionOnMovableCoins(coins,"add");
+  addListenerTOCoin(coins);
+};
+
 const showCoin = function(coin){
   let ele = getElement(`#${coin.color}-${coin.id}`);
   ele.classList.replace('hide','show');
@@ -99,33 +104,13 @@ const coinsId = [
   'blue-13','blue-14','blue-15','blue-16'
 ];
 
-const hasSameCoords = function(coin1,coin2){
-  let coin1XCoord = coin1.cx.animVal.value;
-  let coin1YCoord = coin1.cy.animVal.value;
-  let coin2XCoord = coin2.cx.animVal.value;
-  let coin2YCoord = coin2.cy.animVal.value;
-  return coin1XCoord==coin2XCoord&&coin1YCoord==coin2YCoord;
-};
-
-const hasDiffColor = function(currentCoin,nextCoin){
-  let currentCoinColor = currentCoin.id.split('-')[0];
-  let nextCoinColor = nextCoin.id.split('-')[0];
-  return currentCoinColor != nextCoinColor;
-};
-
-const isOverlapped = function(currCoin,nextCoin) {
-  return hasSameCoords(currCoin,nextCoin)&&hasDiffColor(currCoin,nextCoin);
-};
-
 const arrOverlappingCoins = function(sortedCoins){
-  // console.log(sortedCoins);
   Object.keys(sortedCoins).forEach((cellPos)=>{
     let marginsFor = {1:[20,20],2:[11,11,28,28],
       3:[11,11,20,28,28,11],4:[11,11,11,28,28,11,28,28]};
     let coins = sortedCoins[cellPos];
     let marginForCoin = marginsFor[coins.length];
     coins.forEach((coin,index)=>{
-      // let coinId = `${coin.color}-${coin.id}`;
       margins = marginForCoin.slice(index*2,index*2+2);
       changeCoinPosition(coin,cellPos,margins[0],margins[1]);
     });
@@ -160,10 +145,6 @@ const showMove = function(response,event) {
   setTimeout(function(){
     clearInterval(animator);
     showDice(event,+moveStatus.move);
-    if(moveStatus.coins && isCurrentPlayer(moveStatus.currentPlayer)){
-      actionOnMovableCoins(moveStatus.coins,"add");
-      addListenerTOCoin(moveStatus.coins);
-    }
   },1000);
 };
 
@@ -222,11 +203,14 @@ const setCurrPlayer = function(players,currentPlayer){
 
 const getGameStatus = function() {
   sendAjaxRequest('GET', '/game/gameStatus', function() {
-    let gameStatus = JSON.parse(this.responseText);
-    let players = gameStatus.players;
-    let currentPlayer = gameStatus.currentPlayerName;
-    if(gameStatus.won) {
+    let gameStat = JSON.parse(this.responseText);
+    let players = gameStat.players;
+    let currentPlayer = gameStat.currentPlayerName;
+    if(gameStat.won) {
       setWinningMsg(currentPlayer);
+    }
+    if(gameStat.movableCoins && isCurrentPlayer(gameStat.currentPlayerName)){
+      showMovableCoins(gameStat.movableCoins);
     }
     setCurrPlayer(players,currentPlayer);
   });
@@ -297,11 +281,9 @@ const endGame = function() {
   clearInterval(logStatusReqInterval);
   moveCoin=null;
   requestRollDice = null;
-  // sendAjaxRequest('DELETE', '/player');
 };
 
 const changeCoinPosition = (coinId,cellId,marginForX,marginForY) => {
-  // console.log(coinId);
   let coin = document.getElementById(coinId);
   let cell = document.getElementById(cellId);
   coin.setAttribute('cx',cell.x.animVal.value + marginForX);

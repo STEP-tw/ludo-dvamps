@@ -120,19 +120,10 @@ describe('#Game', () => {
       game = initGame(['salman','lala','lali','lalu'],fourPointDice);
       game.start();
     });
-    it('should return a dice roll status with no movable coins and change turn ', () => {
+    it('should return a dice roll status with change turn ', () => {
       let rollStatus = game.rollDice();
       assert.equal(rollStatus.move, 4);
-      assert.notPropertyVal(rollStatus, 'coins');
       assert.equal(game.getCurrentPlayer().getName(), 'lala');
-    });
-    it(`should return a dice roll status with movable coins and don't change turn`, () => {
-      game.dice = sixPointDice;
-      let rollStatus = game.rollDice();
-      assert.equal(rollStatus.move, 6);
-      assert.property(rollStatus, 'coins');
-      assert.lengthOf(rollStatus.coins, 4);
-      assert.equal(game.getCurrentPlayer().getName(), 'salman')
     });
     it('should return dice status with move undefined if there are no player chances ', () => {
       game.turn.playerChances = 0;
@@ -183,6 +174,13 @@ describe('#Game', () => {
       let gameStatus = game.getGameStatus();
       assert.equal(gameStatus.currentPlayerName, 'lala');
       assert.lengthOf(gameStatus.players, 4);
+    });
+    it(`should return movable coins`, () => {
+      let game = initGame(players,sixPointDice,'newGame');
+      game.rollDice();
+      let status = game.getGameStatus();
+      assert.property(status, 'movableCoins');
+      assert.lengthOf(status.movableCoins, 4);
     });
   });
   describe('#moveCoin', () => {
