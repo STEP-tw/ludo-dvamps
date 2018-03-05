@@ -16,7 +16,7 @@ const sixPointDice ={
 let players = ['lala','kaka','lali','lalu'];
 
 const initGame = function(players,dice,gameName) {
-  let game = new Game(gameName||'ludo',ColorDistributer,dice,timeStamp);
+  let game = new Game(gameName||'ludo',ColorDistributer,dice,timeStamp,4);
   players.forEach((player)=> game.addPlayer(player));
   if(players.length == 4) game.start();
   return game;
@@ -25,7 +25,7 @@ const initGame = function(players,dice,gameName) {
 describe('#Game', () => {
   let game;
   beforeEach(() => {
-    game = new Game('newGame', ColorDistributer, fourPointDice,timeStamp);
+    game = new Game('newGame', ColorDistributer, fourPointDice,timeStamp,4);
   });
   describe('#getname', () => {
     it('should return name of game', () => {
@@ -157,7 +157,7 @@ describe('#Game', () => {
   describe('#arrangePlayers', () => {
     it('should arrange Players in required sequence', () => {
       game = initGame(['lala','kaka','ram','shyam'],fourPointDice);
-      let expection = ['lala', 'kaka', 'shyam', 'ram'];
+      let expection = ['lala', 'kaka', 'ram', 'shyam'];
       assert.deepEqual(expection, game.arrangePlayers());
     });
   });

@@ -1,11 +1,9 @@
 class ColorDistributer {
   constructor() {
-    this.colors = ['red','blue','green','yellow'];
+    this.colors = ['red','green','yellow','blue'];
   }
   getColor() {
-    let colorIndex = Math.floor(Math.random() * this.colors.length);
-    let color = this.colors.splice(colorIndex,1);
-    return color.pop();
+    return this.colors.shift();
   }
   addColor(color){
     if(this.colors.includes(color)){

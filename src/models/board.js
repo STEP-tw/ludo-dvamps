@@ -4,8 +4,8 @@ const UnsafeCell = require(path.resolve('src/models/unsafeCell.js'));
 const DestinationCell = require(path.resolve('src/models/destinationCell.js'));
 
 class Board {
-  constructor(numOfPlayers) {
-    this.numOfPlayers = numOfPlayers;
+  constructor() {
+    this.numOfPlayers = 4;
     this.homesCellsPerPlayer = 4;
     this.cellsPerPlayer = 13;
     this.finalPathStart = 111;

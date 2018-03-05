@@ -36,7 +36,7 @@ describe('#App', () => {
       .end(done);
     });
     it('should redirect to waiting page if valid cookies are present', done => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
@@ -47,7 +47,7 @@ describe('#App', () => {
         .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
@@ -59,7 +59,7 @@ describe('#App', () => {
   });
   describe('GET /index.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
@@ -70,7 +70,7 @@ describe('#App', () => {
       .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
@@ -91,7 +91,7 @@ describe('#App', () => {
   });
   describe('GET /joining.html', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
@@ -102,7 +102,7 @@ describe('#App', () => {
       .end(done);
     });
     it('should serve joining page if invalid cookies are present', done => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
@@ -125,7 +125,7 @@ describe('#App', () => {
         .end(done);
     });
     it('should not create game if game name already exist', (done) => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       app.initialize(gamesManager);
       request(app)
         .post('/createGame')
@@ -172,7 +172,7 @@ describe('#App', () => {
     });
     it('should redirect to waiting if user has already a game', function(done) {
       let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
@@ -315,26 +315,36 @@ describe('#App', () => {
     });
   });
   describe('get /waitingStatus', () => {
-    it('should send gameStatus', (done) => {
-      gamesManager.addGame('ludo')
-      gamesManager.addPlayerTo('ludo','salman');
-      gamesManager.addPlayerTo('ludo','lala');
-      gamesManager.addPlayerTo('ludo','lali');
-      gamesManager.addPlayerTo('ludo','lalu');
+    it('should serve roomStatus', (done) => {
+      let room = gamesManager.createRoom('ludo')
+      room.addGuest('batman');
       app.initialize(gamesManager);
       request(app)
         .get('/waitingStatus')
         .set('Cookie', 'gameName=ludo')
         .expect(200)
+        .expect(/batman/)
         .end(done);
     });
     it('should send empty response', (done) => {
-      gamesManager.addGame('ludo');
+      gamesManager.addGame('ludo',4);
       app.initialize(gamesManager);
       request(app)
         .get('/waitingStatus')
         .expect("")
         .expect(400)
+        .end(done);
+    });
+    it('should give status with player color and gameStarted as true', (done) => {
+      gamesManager.createRoom('ludo',2);
+      ['player1','player2'].forEach((player)=>gamesManager.joinRoom('ludo',player));
+      app.initialize(gamesManager);
+      request(app)
+        .get('/waitingStatus')
+        .set('Cookie',['gameName=ludo','playerName=player1'])
+        .expect(/true/)
+        .expect(/yourColor/)
+        .expect(200)
         .end(done);
     });
   });

@@ -7,7 +7,7 @@ const showPlayers = function() {
     }
     let colors = ['red', 'green', 'yellow', 'blue'];
     let status = JSON.parse(this.responseText);
-    alert(this.responseText);
+    colors = colors.slice(0,status.players.length);
     colors.forEach((color) => {
       let player = status.players.find((player) => {
         return player.color == color;
@@ -192,7 +192,7 @@ const showMove = function(response,event) {
   },1000);
 };
 
-const requestRollDice = function(event) {
+let requestRollDice = function(event) { //don't change this function to const
   sendAjaxRequest('GET', "/game/rollDice", function(){
     let response = this.responseText;
     showMove(response,event);

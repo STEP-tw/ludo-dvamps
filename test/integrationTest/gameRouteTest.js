@@ -37,7 +37,7 @@ describe('GameRoute', () => {
   describe('GET /game/board.html', () => {
     beforeEach(function(){
       let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);;
-      let game = gamesManager.addGame('ludo');
+      let game = gamesManager.addGame('ludo',4);
       gamesManager.addPlayerTo('ludo','ashish');
       gamesManager.addPlayerTo('ludo','arvind');
       gamesManager.addPlayerTo('ludo','debu');
@@ -62,7 +62,7 @@ describe('GameRoute', () => {
   });
   describe('#GET /game/rollDice', () => {
     it('should roll the dice for currentPlayer', (done) => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');
       gamesManager.addPlayerTo('newGame','ram');
@@ -77,7 +77,7 @@ describe('GameRoute', () => {
         .end(done);
     });
     it('should response with bad request if player is not there', (done) => {
-      gamesManager.addGame('newGame');
+      gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');
       gamesManager.addPlayerTo('newGame','ram');
@@ -93,7 +93,7 @@ describe('GameRoute', () => {
   });
   describe('get /game/gameStatus', () => {
     beforeEach(function() {
-      let game = gamesManager.addGame('newGame');
+      let game = gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame','ashish');
       gamesManager.addPlayerTo('newGame','joy');
       gamesManager.addPlayerTo('newGame','pallabi');
@@ -144,7 +144,7 @@ describe('GameRoute', () => {
   });
   describe('#GET /game/logs', () => {
     it('should give game activity log', (done) => {
-      let game = gamesManager.addGame('newGame');
+      let game = gamesManager.addGame('newGame',4);
       game.addPlayer('lala');
       game.addPlayer('kaka');
       game.addPlayer('ram');
@@ -167,7 +167,7 @@ describe('GameRoute', () => {
         roll:()=>6
       }
       gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      let game = gamesManager.addGame('newGame');
+      let game = gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');
       gamesManager.addPlayerTo('newGame','ram');
@@ -204,7 +204,7 @@ describe('GameRoute', () => {
         }
       }
       gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      let game = gamesManager.addGame('newGame');
+      let game = gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');
       gamesManager.addPlayerTo('newGame','ram');
@@ -229,7 +229,7 @@ describe('GameRoute', () => {
         roll:()=>6
       }
       gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      let game = gamesManager.addGame('newGame');
+      let game = gamesManager.addGame('newGame',4);
       gamesManager.addPlayerTo('newGame','lala');
       gamesManager.addPlayerTo('newGame','kaka');
       gamesManager.addPlayerTo('newGame','ram');
@@ -246,10 +246,7 @@ describe('GameRoute', () => {
         .end(done);
     });
   });
-});
-
-describe('Legends', () => {
-  describe('post /game/moveCoin',() => {
+  describe('#POST /game/moveCoin',() => {
     let players = ['john','johnny','roy','albert'];
     let moves = [6,56,6,56,6,56,6,56,6];
     let winningDice = {roll:()=>moves.shift()};
@@ -264,16 +261,30 @@ describe('Legends', () => {
       game.rollDice();
       app.initialize(gameManager);
       request(app)
-        .post('/game/moveCoin')
+      .post('/game/moveCoin')
+      .set('Cookie',['gameName=ludo','playerName=john'])
+      .send('coinId=4')
+      .expect(200)
+      .end(()=>{
+        // setTimeout(()=>{
+        //   assert.isUndefined(gameManager.getGame('ludo'));
+          done();
+        // },10500);
+      });
+    });
+  });
+  describe('GET /game/playerDetails',function(done){
+    it('should give players colors details',function(){
+      let players = ['john','johnny','roy','albert'];
+      let gameManager = initGameManager(players,dice,'ludo');
+      app.initialize(gameManager);
+      request(app)
+        .get('/game/playerDetails')
         .set('Cookie',['gameName=ludo','playerName=john'])
-        .send('coinId=4')
         .expect(200)
-        .end(()=>{
-          setTimeout(()=>{
-            assert.isUndefined(gameManager.getGame('ludo'));
-            done();
-          },10010);
-        });
-    }).timeout(10100);
+        .expect(/john/)
+        .expect(/red/)
+        .end(done);
+    });
   });
 });

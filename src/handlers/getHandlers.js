@@ -43,6 +43,6 @@ module.exports = {
   getGameStatus,
   rollDice,
   getLogs,
-  getNextPos
+  getNextPos,
   getPlayerDetails
 };

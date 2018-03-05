@@ -12,44 +12,53 @@ const timeStamp = () => 1234;
 
 describe('GameManager', () => {
   let gameManager;
+  let room;
   let game;
   beforeEach(() => {
-    gameManager = new GameManager(ColorDistributer,dice,timeStamp);;
-    game = gameManager.addGame('newGame');
+    gameManager = new GameManager(ColorDistributer,dice,timeStamp);
+    room = gameManager.createRoom('ludo',3);
+    game = gameManager.addGame('newGame',4);
+  });
+  describe('#canJoinRoom', () => {
+    it('should return true if there are no player with same name', () => {
+      assert.isOk(gameManager.canJoinRoom('ludo','tony'));
+    });
+    it('should return false if there is already a player with same name', () => {
+      room.addGuest('thor');
+      assert.isNotOk(gameManager.canJoinRoom('ludo','thor'));
+    });
+  });
+  describe('#getAvailableRooms', () => {
+    it(`should give empty list if all Rooms have maximum players`, () => {
+      gameManager.joinRoom('ludo', 'john');
+      gameManager.joinRoom('ludo', 'sandy');
+      gameManager.joinRoom('ludo', 'alex');
+      assert.deepEqual(gameManager.getAvailableRooms(), []);
+    });
+    it(`should give all games which don't have maximum players`, () => {
+      gameManager.joinRoom('ludo', 'john');
+      gameManager.joinRoom('ludo', 'sandy');
+      let expectation = [{
+        name:'ludo',
+        remain:1,
+        createdBy: 'john'
+      }];
+      assert.deepEqual(gameManager.getAvailableRooms(), expectation);
+    });
   });
   describe('#addGame', () => {
     it('should create a new game with given name and store it', () => {
-      let expected = new Game('newGame',ColorDistributor,dice,timeStamp);
-      assert.deepEqual(game,expected );
+      let expected = new Game('newGame',ColorDistributor,dice,timeStamp,4);
+      assert.deepEqual(game,expected);
       assert.instanceOf(game,Game);
     });
   });
   describe('#addPlayerTo', () => {
     it('should add player to given specific game', () => {
       gameManager.addPlayerTo('newGame', 'john');
-      let expectedGame = new Game('newGame',ColorDistributor,dice,timeStamp);
+      let expectedGame = new Game('newGame',ColorDistributor,dice,timeStamp,4);
       expectedGame.addPlayer('john');
       assert.deepEqual(gameManager.getGame('newGame'),expectedGame);
-    });
-  });
-  describe('#getAvailableGames', () => {
-    it(`should give empty list if all games have 4 players`, () => {
-      gameManager.addPlayerTo('newGame', 'john');
-      gameManager.addPlayerTo('newGame', 'sandy');
-      gameManager.addPlayerTo('newGame', 'mandy');
-      gameManager.addPlayerTo('newGame', 'alex');
-      assert.deepEqual(gameManager.getAvailableGames(), []);
-    });
-    it(`should give all games which don't have 4 players`, () => {
-      gameManager.addPlayerTo('newGame', 'john');
-      gameManager.addPlayerTo('newGame', 'sandy');
-      gameManager.addPlayerTo('newGame', 'mandy');
-      let expectation = [{
-        name:'newGame',
-        remain:1,
-        createdBy: 'john'
-      }];
-      assert.deepEqual(gameManager.getAvailableGames(), expectation);
     });
   });
   describe('#doesGameExists', () => {
@@ -60,9 +69,9 @@ describe('GameManager', () => {
       assert.isNotOk(gameManager.doesGameExists('badGame'));
     });
   });
-  describe('#getGame()', () => {
+  describe('#getGame', () => {
     it('should return Game', () => {
-      let expected = new Game('newGame', ColorDistributor, dice,timeStamp);
+      let expected = new Game('newGame', ColorDistributor, dice,timeStamp,4);
       assert.deepEqual(gameManager.getGame('newGame'),expected);
       assert.isUndefined(gameManager.getGame('badGame'));
     });
@@ -86,7 +95,7 @@ describe('GameManager', () => {
 describe('#Legends', () => {
   let gameManager,room;
   beforeEach(() => {
-    gameManager = new GameManager(ColorDistributer,dice,timeStamp);
+    gameManager = new GameManager(ColorDistributer,dice,timeStamp,4);
     room = gameManager.createRoom('ludo',4);
   });
   describe('#createRoom', () => {

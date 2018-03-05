@@ -2,6 +2,16 @@ const path = require('path');
 const WaitingRoom = require(path.resolve('src/models/waitingRoom.js'));
 const Game = require(path.resolve('src/models/game.js'));
 
+const shufflePlayers = function(allPlayers) {
+  let shuffledPlayers = [];
+  while(allPlayers.length!=0){
+    let playerIndex = Math.floor(Math.random()*allPlayers.length);
+    shuffledPlayers.push(allPlayers[playerIndex]);
+    allPlayers.splice(playerIndex,1);
+  }
+  return shuffledPlayers;
+};
+
 class GamesManager {
   constructor(ColorDistributor,dice,timeStamp) {
     this.ColorDistributor = ColorDistributor;
@@ -10,29 +20,25 @@ class GamesManager {
     this.dice = dice;
     this.timeStamp = timeStamp;
   }
+  canJoinRoom(gameName,playerName) {
+    let room = this.getRoom(gameName);
+    return !room.isGuest(playerName);
+  }
   getAvailableRooms() {
     let allRooms = Object.values(this.rooms);
     return allRooms.map(room => room.getDetails());
   }
-  addGame(gameName) {
-    let game = new Game(gameName, this.ColorDistributor,
-      this.dice,this.timeStamp);
-    this.allRunningGames[gameName] = game;
-    return game;
-  }
-  //room concept
   createRoom(roomName,capacity) {
     let room = new WaitingRoom(roomName,capacity);
     this.rooms[roomName] = room;
     return room;
   }
-
   joinRoom(roomName,guestName) {
     let room = this.rooms[roomName];
     room.addGuest(guestName);
     if(room.isFull()){
-      let game = this.addGame(roomName);
-      let players = room.getGuests();
+      let game = this.addGame(roomName,room.getCapacity());
+      let players = shufflePlayers(room.getGuests());
       players.forEach((playerName)=>game.addPlayer(playerName));
       game.start();
       this.allRunningGames[roomName]=game;
@@ -52,14 +58,15 @@ class GamesManager {
       delete this.rooms[roomName];
     }
   }
+  addGame(gameName,capacity) {
+    let game = new Game(gameName, this.ColorDistributor,
+      this.dice,this.timeStamp,capacity);
+    this.allRunningGames[gameName] = game;
+    return game;
+  }
   canCreateGame(gameName) {
     return !this.doesGameExists(gameName) && !this.doesRoomExists(gameName);
   }
-  canJoinRoom(gameName,playerName) {
-    let room = this.getRoom(gameName);
-    return !room.isGuest(playerName);
-  }
-  //room concept
   getGame(gameName) {
     return this.allRunningGames[gameName];
   }

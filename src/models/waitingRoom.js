@@ -4,6 +4,9 @@ class WaitingRoom {
     this.capacity = capacity;
     this.guests = [];
   }
+  getCapacity(){
+    return this.capacity;
+  }
   getName(){
     return this.name;
   }
