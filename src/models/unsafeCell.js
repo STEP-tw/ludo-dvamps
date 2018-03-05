@@ -22,6 +22,7 @@ class UnsafeCell extends Cell {
       status.diedCoin = oldCoin.getStatus();
     }
     this.coins.push(coin);
+    status[coin.getColor()]=this.coins.length;
     return status;
   }
 

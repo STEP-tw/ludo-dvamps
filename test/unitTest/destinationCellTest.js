@@ -6,7 +6,10 @@ describe('DestinationCell', () => {
   describe('#getNumberOfCoins', () => {
     it('should return number of coins in that cell', () => {
       let destinationCell = new DestinationCell(1);
-      let coin = {id:1,setPosition:(pos)=>this.position=pos};
+      let coin = {id:1,
+        setPosition:(pos)=>this.position=pos,
+        getColor: () =>'red'
+      };
       destinationCell.addCoin(coin);
       assert.equal(destinationCell.getNumberOfCoins(),1);
       destinationCell.addCoin(coin);

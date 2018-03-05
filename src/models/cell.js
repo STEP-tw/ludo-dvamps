@@ -3,10 +3,20 @@ class Cell {
     this.position = position;
     this.coins = [];
   }
+
+  getNumberOfCoinsOf(color) {
+    return this.coins.filter(coin=>coin.getColor()==color).length;
+  }
+
   addCoin(coin){
+    let status={killedOppCoin:false};
     coin.setPosition(this.position);
     this.coins.push(coin);
-    return {killedOppCoin:false};
+    this.coins.forEach(coin=>{
+      let color = coin.getColor();
+      status[color]=this.getNumberOfCoinsOf(color);
+    });
+    return status;
   }
 
   removeCoin(coinId){
