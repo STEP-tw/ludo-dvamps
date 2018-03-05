@@ -1,3 +1,5 @@
+let highlightedCell = "";
+
 const showPlayers = function() {
   sendAjaxRequest('GET', '/waitingStatus', function() {
     if (!this.responseText) {
@@ -36,6 +38,9 @@ const dehighlightCell = function(cellID){
 };
 
 const isHighlighted = function(cellID){
+  if(!document.getElementById(cellID)){
+    return;
+  }
   return document.getElementById(cellID).classList.contains('highlight');
 };
 
@@ -110,7 +115,11 @@ const getNextPos = function(event){
       moveCoin(event);
       return;
     }
+    if(isHighlighted(highlightedCell)){
+      dehighlightCell(+highlightedCell);
+    }
     highlightCell(nextPos);
+    highlightedCell = nextPos;
   },`coinID=${coinToMove}`);
 };
 
