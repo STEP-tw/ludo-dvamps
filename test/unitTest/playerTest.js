@@ -38,6 +38,7 @@ describe('#Player', () => {
       assert.equal(player.getColor(),'red');
     })
   });
+
   describe('#getStatus', () => {
     it('should return playerStatus', () => {
       let firstCoin = new Coin(1,-2);
@@ -50,7 +51,8 @@ describe('#Player', () => {
         name:'john',
         color:'red',
         coins:[{id:1,color:'red',position:-2},
-          {id:2,color:'red',position:-3}]
+          {id:2,color:'red',position:-3}],
+        pairedCellPos:[]
       };
       assert.deepEqual(player.getStatus(),expectedStatus);
     });
@@ -98,6 +100,18 @@ describe('#Player', () => {
       assert.deepEqual(player.getMovableCoins(1),[secondCoin]);
     });
   });
+  describe('#getPairedCellPos', () => {
+    it('should return paired cell pos if paring of coins happend', () => {
+      let firstCoin = new Coin(1,2);
+      let secondCoin = new Coin(2,2);
+      let positions = [2,2];
+      firstCoin.color = 'red';
+      secondCoin.color = 'red';
+      let coins = [firstCoin,secondCoin];
+      let player = new Player('john','red',coins);
+      assert.deepEqual(player.getPairedCellPos(positions),[2]);
+    });
+  });
   describe('#hasMovableCoins', () => {
     beforeEach(()=>{
       player.path.addCell(new Cell(-2));
@@ -115,6 +129,7 @@ describe('#Player', () => {
     let oppCoin = new Coin(1,1);
     oppCoin.setColor('blue');
     beforeEach(()=>{
+      firstCoin.setColor('red');
       [1,2,3,4,5,6].forEach(function(numb){
         player.path.addCell(new UnsafeCell(numb));
       })

@@ -39,15 +39,6 @@ describe('UnsafeCell', () => {
       assert.isOk(status.killedOppCoin);
       assert.deepEqual(status.diedCoin,coin.getStatus());
     });
-    it('should give status of how many coins with their color', () => {
-      let status = unsafeCell.addCoin(coin);
-      assert.isNotOk(status.killedOppCoin);
-      let coin2 = new Coin(2);
-      coin2.setColor('red');
-      status = unsafeCell.addCoin(coin2);
-      assert.isNotOk(status.killedOppCoin);
-      assert.equal(status.red,2);
-    });
   });
 
   describe('#hasCoinOfSameColor', () => {

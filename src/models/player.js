@@ -2,7 +2,7 @@ const Coin = require('./coin.js');
 const Path = require('./path.js');
 
 class Player {
-  constructor(name,color,coins,path) {
+  constructor(name, color, coins, path) {
     this.name = name;
     this.color = color;
     this.coins = coins;
@@ -12,53 +12,65 @@ class Player {
   getName() {
     return this.name;
   }
-  getCoin(id){
-    return this.coins.find(coin=>coin.id==id);
+  getCoin(id) {
+    return this.coins.find(coin => coin.id == id);
   }
   getColor() {
     return this.color;
   }
-  getCoins(){
+  getCoins() {
     return this.coins;
   }
-  getStatus(){
+  getPairedCellPos(positions) {
+    let pairedPositions=[];
+    for (let first = 0; first < positions.length; first++) {
+      for (let second = first+1; second < positions.length; second++) {
+        if(positions[first]==positions[second]) {
+          pairedPositions.push(positions[first]);
+        }
+      }
+    }
+    return pairedPositions;
+  }
+  getStatus() {
     let coinsPositions = this.coins.map(coin => coin.getStatus());
     return {
-      name:this.name,
-      color:this.color,
-      coins: coinsPositions
+      name: this.name,
+      color: this.color,
+      coins: coinsPositions,
+      pairedCellPos: this.getPairedCellPos(coinsPositions)
     };
   }
-  getPath(){
+  getPath() {
     return this.path;
   }
-  getMovableCoins(move){
+  getMovableCoins(move) {
     let hasKilledOpp = this.hasKilledOpp;
-    return this.coins.filter(coin=>{
-      return this.path.isMovePossible(coin,move,hasKilledOpp);
+    return this.coins.filter(coin => {
+      return this.path.isMovePossible(coin, move, hasKilledOpp);
     });
   }
-  hasMovableCoins(move){
+  hasMovableCoins(move) {
     return this.getMovableCoins(move).length > 0;
   }
-  assignPath(path){
+  assignPath(path) {
     this.path.add(path);
   }
-  moveCoin(coinId,move){
-    let coin = this.coins.find(coin=>coin.id==coinId);
-    let status = this.path.moveCoin(coin,move,this.hasKilledOpp);
+  moveCoin(coinId, move) {
+    let coin = this.coins.find(coin => coin.id == coinId);
+    let status = this.path.moveCoin(coin, move, this.hasKilledOpp);
     return status;
   }
-  moveCoinToHome(coinDetail){
-    let coin = this.coins.find((coin)=>coin.id == coinDetail.id);
+  moveCoinToHome(coinDetail) {
+    let coin = this.coins.find((coin) => coin.id == coinDetail.id);
     this.path.putAtHome(coin);
   }
-  getNoOfCoinsInDest(){
+  getNoOfCoinsInDest() {
     let path = this.getPath();
     return path.getCoinsInDest();
   }
-  setKilledOpponent(){
-    this.hasKilledOpp=true;
+  setKilledOpponent() {
+    this.hasKilledOpp = true;
   }
   getNextPos(coinId,move){
     let coin = this.coins.find(coin=>coin.id==coinId);

@@ -143,19 +143,22 @@ const coinsId = [
   'blue-13','blue-14','blue-15','blue-16'
 ];
 
-const arrOverlappingCoins = function(sortedCoins){
-  Object.keys(sortedCoins).forEach((cellPos)=>{
-    let marginsFor = {1:[20,20],2:[11,11,28,28],
-      3:[11,11,20,28,28,11],4:[11,11,11,28,28,11,28,28]};
+const arrOverlappingCoins = function(sortedCoins) {
+  Object.keys(sortedCoins).forEach((cellPos) => {
+    let marginsFor = {
+      1: [20, 20],
+      2: [11, 11, 28, 28],
+      3: [11, 11, 20, 28, 28, 11],
+      4: [11, 11, 11, 28, 28, 11, 28, 28]
+    };
     let coins = sortedCoins[cellPos];
     let marginForCoin = marginsFor[coins.length];
-    coins.forEach((coin,index)=>{
-      margins = marginForCoin.slice(index*2,index*2+2);
-      changeCoinPosition(coin,cellPos,margins[0],margins[1]);
+    coins.forEach((coin, index) => {
+      margins = marginForCoin.slice(index * 2, index * 2 + 2);
+      changeCoinPosition(coin, cellPos, margins[0], margins[1]);
     });
   });
 };
-
 const showDice = function(event,move) {
   let margin = (move - 1) * -50;
   getElement(`#${event.target.id}`).style.marginTop = `${margin}px`;
