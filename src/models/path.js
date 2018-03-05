@@ -32,16 +32,16 @@ class Path {
   }
   getNextMove(coin,move,hasKilledOpp){
     let currCoinPos = coin.getPosition();
-    let currentPos = this.cells.findIndex(cell=>cell.position == currCoinPos);
-    let nextMovableCell = this.cells[currentPos+move];
+    let currentCellPos = this.cells.findIndex(cell=>cell.position==currCoinPos);
+    let nextMovableCell = this.cells[currentCellPos+move];
     if(this.isAbleToStart(coin,move)){
       return this.cells[this.numberOfHomes];
     }
     if (this.isNotMovable(coin,move,nextMovableCell)) {
-      return this.cells[currentPos];
+      return this.cells[currentCellPos];
     }
     if(this.isDestinationCell(nextMovableCell)&&!hasKilledOpp) {
-      return this.cells[currentPos];
+      return this.cells[currentCellPos];
     }
     return nextMovableCell;
   }
