@@ -15,13 +15,16 @@ const handleServerResponse = function(serverResponse) {
 const createGame = function() {
   let gameName = getFormInput('input[name="gameName"]');
   let playerName = getFormInput('input[name="playerName"]');
+  let noOfPlayers = getFormInput('select');
   if(anyEmptyField([gameName,playerName])){
     setInnerText('.message','* Fields should not be empty');
     return;
   }
   gameName = encodeURIComponent(gameName);
   playerName = encodeURIComponent(playerName);
-  let requestBody = `gameName=${gameName}&playerName=${playerName}`;
+  /*eslint-disable*/
+  let requestBody = `gameName=${gameName}&playerName=${playerName}&noOfPlayers=${noOfPlayers}`;
+  /*eslint-enable*/
   return sendAjaxRequest('POST','/createGame',function(){
     handleServerResponse(JSON.parse(this.responseText));
   },requestBody);

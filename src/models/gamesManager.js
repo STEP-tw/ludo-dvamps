@@ -10,10 +10,9 @@ class GamesManager {
     this.dice = dice;
     this.timeStamp = timeStamp;
   }
-  getAvailableGames() {
-    let allGames = Object.values(this.allRunningGames);
-    let availableGames = allGames.filter(game => !game.hasEnoughPlayers());
-    return availableGames.map(game => game.getDetails());
+  getAvailableRooms() {
+    let allRooms = Object.values(this.rooms);
+    return allRooms.map(room => room.getDetails());
   }
   addGame(gameName) {
     let game = new Game(gameName, this.ColorDistributor,

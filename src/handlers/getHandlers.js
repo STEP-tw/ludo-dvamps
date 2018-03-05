@@ -1,12 +1,12 @@
 const serveAvailableGames = function(req, res) {
-  let availableGames = req.app.gamesManager.getAvailableGames();
+  let availableGames = req.app.gamesManager.getAvailableRooms();
   res.send(availableGames);
 };
 
 const serveWaitingStatus = (req, res) => {
-  let gameName = req.cookies.gameName;
-  let game = req.app.gamesManager.getGame(gameName);
-  res.json(game.getStatus());
+  let roomName = req.cookies.gameName;
+  let room = req.app.gamesManager.getRoom(roomName);
+  res.json(room.getStatus());
 };
 
 const getGameStatus = function(req,res){
@@ -32,6 +32,11 @@ const getNextPos = function(req,res){
   res.json(game.getNextPos(coinID));
 };
 
+const getPlayerDetails = function(req,res) {
+  let game = req.game;
+  res.json(game.getStatus());
+};
+
 module.exports = {
   serveAvailableGames,
   serveWaitingStatus,
@@ -39,4 +44,5 @@ module.exports = {
   rollDice,
   getLogs,
   getNextPos
+  getPlayerDetails
 };

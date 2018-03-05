@@ -144,6 +144,17 @@ class Game {
       return sequence;
     },[]);
   }
+  // arrangePlayers() {
+  //   let players = this.players;
+  //   let sequence=['red','green','yellow','blue'].reduce(function(seq,color){
+  //     let playerWithColor = players.find((player)=>player.getColor==color);
+  //     if(playerWithColor){
+  //       seq.push(playerWithColor);
+  //     }
+  //     return seq;
+  //   },[]);
+  //   return sequence;
+  // }
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);

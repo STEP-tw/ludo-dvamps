@@ -24,7 +24,20 @@ class WaitingRoom {
     return this.guests.length == this.capacity;
   }
   isEmpty(){
-    return !this.guests.length;
+    return this.guests.length==0;
+  }
+  availableSpace(){
+    return this.capacity - this.guests.length;
+  }
+  getDetails(){
+    return {
+      name: this.name,
+      remain: this.availableSpace(),
+      createdBy: this.guests[0]
+    };
+  }
+  getStatus(){
+    return this;
   }
 }
 

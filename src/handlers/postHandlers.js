@@ -34,7 +34,7 @@ const joinPlayerToGame = function(req,res){
     return;
   }
   gamesManager.joinRoom(gameName,playerName);
-  res.json({status:true});
+  resWithGameJoined(res,gameName,playerName);
 };
 
 const checkCanMoveCoin = function(req,res,next) {

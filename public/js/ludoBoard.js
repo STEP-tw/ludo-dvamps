@@ -1,12 +1,13 @@
 let highlightedCell = "";
 
 const showPlayers = function() {
-  sendAjaxRequest('GET', '/waitingStatus', function() {
+  sendAjaxRequest('GET', '/game/playerDetails', function() {
     if (!this.responseText) {
       return;
     }
     let colors = ['red', 'green', 'yellow', 'blue'];
     let status = JSON.parse(this.responseText);
+    alert(this.responseText);
     colors.forEach((color) => {
       let player = status.players.find((player) => {
         return player.color == color;

@@ -10,6 +10,7 @@ const clearBlink = function() {
 const blinkText = function() {
   getElement('#message').classList.add("blink");
 };
+
 const updateSeconds = function() {
   let secondBlock = getElement('#sec');
   let seconds = +(secondBlock.innerText);
@@ -17,14 +18,14 @@ const updateSeconds = function() {
   secondBlock.innerHTML = seconds;
 };
 
-const showColor = function(players) {
+const showColor = function(color) {
   let overlay = getElement(".overlay");
   let colorHolder = getElement('#color');
-  let playerName = getElement('#userName').innerText;
-  let player = players.find((player) => player.name == playerName);
-  colorHolder.style.backgroundColor = player.color;
-  overlay.classList.remove('hide');
-  overlay.classList.add('show');
+  // let playerName = getElement('#userName').innerText;
+  // let player = players.find((player) => player.name == playerName);
+  colorHolder.style.backgroundColor = color;
+  overlay.classList.replace('hide','show');
+  // overlay.classList.add('show');
 };
 
 const removeIntervals = function() {
@@ -38,7 +39,7 @@ const displayPlayerNames = function(players) {
     if (getElement(`#player${index+2}`)) {
       getElement(`#player${index+2}`).value = "";
     }
-    getElement(`#player${index+1}`).value = player.name;
+    getElement(`#player${index+1}`).value = player;
   });
 };
 
@@ -49,23 +50,31 @@ const startTimer = function() {
   setTimeout(goToBoard, 3000);
 };
 
+const getGameDetails = function(color){
+  removeIntervals();
+  getElement('#message').style.visibility = 'hidden';
+  showColor(color);
+  startTimer();
+};
+
 const updatePlayers = function() {
   if (this.responseText == "") {
     goToHome();
     return;
   }
-  let players = JSON.parse(this.responseText).players;
+  let roomDetails = JSON.parse(this.responseText);
+  if(roomDetails.gameStarted){
+    getGameDetails(roomDetails.yourColor);
+    return;
+  }
+  let players = roomDetails.guests;
   if (!players) {
     return;
   }
   displayPlayerNames(players);
-  if (players.length < 4) {
+  if (players.length < roomDetails.capacity) {
     return;
   }
-  getElement('#message').style.visibility = 'hidden';
-  showColor(players);
-  startTimer();
-  removeIntervals();
 };
 
 const updateGameName = function() {

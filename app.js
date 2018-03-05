@@ -28,7 +28,7 @@ app.use(lib.restrictValidPlayer);
 app.use(express.static('public'));
 app.use('/game',GameRoute);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
-app.get('/waitingStatus',lib.checkIsGamePresent,getHandlers.serveWaitingStatus);
+app.get('/waitingStatus',lib.checkGameStarted,lib.checkIsRoomPresent,getHandlers.serveWaitingStatus);
 app.post('/createGame',lib.verifyReqBody,lib.verifyCreateGameReq,
   lib.checkCharacterLimit,lib.blockIfUserHasGame,
   postHandlers.createNewGame);

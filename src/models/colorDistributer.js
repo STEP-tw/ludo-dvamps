@@ -1,6 +1,6 @@
 class ColorDistributer {
   constructor() {
-    this.colors = ['red','green','blue','yellow'];
+    this.colors = ['red','blue','green','yellow'];
   }
   getColor() {
     let colorIndex = Math.floor(Math.random() * this.colors.length);

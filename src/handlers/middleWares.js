@@ -97,9 +97,9 @@ const checkCurrentPlayer= function(req,res,next){
   next();
 };
 
-const checkIsGamePresent = function(req,res,next){
-  let gameName = req.cookies.gameName;
-  if (!req.app.gamesManager.doesGameExists(gameName)) {
+const checkIsRoomPresent = function(req,res,next){
+  let roomName = req.cookies.gameName;
+  if (!req.app.gamesManager.doesRoomExists(roomName)) {
     res.statusCode = 400;
     res.send('');
     return;
@@ -177,6 +177,18 @@ const verifyIsGuest = function(req,res,next) {
   next();
 };
 
+const checkGameStarted = function(req,res,next) {
+  let gameName = req.cookies.gameName;
+  let playerName = req.cookies.playerName;
+  let game = req.app.gamesManager.getGame(gameName);
+  if(game && game.getPlayer(playerName)) {
+    let color = game.getPlayer(playerName).getColor();
+    res.json({gameStarted:true,yourColor:color});
+    return;
+  }
+  next();
+};
+
 module.exports = {
   checkCookie,
   loadGame,
@@ -185,7 +197,7 @@ module.exports = {
   verifyReqBody,
   checkCharacterLimit,
   checkCurrentPlayer,
-  checkIsGamePresent,
+  checkIsRoomPresent,
   checkGame,
   logger,
   verifyCreateGameReq,
@@ -193,5 +205,6 @@ module.exports = {
   trimRequestBody,
   verifyJoinGameReq,
   checkRoomExists,
-  verifyIsGuest
+  verifyIsGuest,
+  checkGameStarted
 };
