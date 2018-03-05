@@ -73,7 +73,7 @@ describe('GameRoute', () => {
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
         .expect(200)
-        .expect('{"move":4,"coins":[],"currentPlayer":"kaka"}')
+        .expect('{"move":4,"currentPlayer":"kaka"}')
         .end(done);
     });
     it('should response with bad request if player is not there', (done) => {

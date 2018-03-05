@@ -93,6 +93,11 @@ class Game {
   getGameStatus(){
     let gameStatus = this.getStatus();
     gameStatus.currentPlayerName = this.turn.currentPlayer;
+    if(this.turn.lastMove && !(this.turn.hasMovedCoin())){
+      gameStatus.movableCoins = this.getMovableCoinsOf(this.turn.lastMove);
+    }else{
+      gameStatus.movableCoins = undefined;
+    }
     gameStatus.won = this.hasWon();
     return gameStatus;
   }
@@ -121,7 +126,6 @@ class Game {
     let currentPlayer = this.decidePlayerPer(move);
     return {
       move:move,
-      coins:this.getMovableCoinsOf(move),
       currentPlayer:currentPlayer.getName()
     };
   }
