@@ -51,10 +51,10 @@ const highlightDestinationCells = function(cellId){
 };
 
 const dehighlightDestinationCells = function(cellId){
-  let highlightedCells = document.getElementsByClassName(`${cellId}`);
-  for (let i = 0; i < highlightedCells.length; i++) {
-    highlightedCells[i].classList.remove('highlight');
-  }
+  let highlightedCells = document.querySelectorAll(`[id="${cellId}"]`);
+  highlightedCells.forEach((cell)=>{
+    cell.classList.remove('highlight');
+  })
 };
 
 const isHighlighted = function(cellID){
@@ -137,7 +137,7 @@ const highlightNextPosition = function(responseText,coinToMove){
     removeClickListeners('.focus');
     return;
   }
-  if(highlightedCell){
+  if(highlightedCell || highlightedCell == '0'){
     dehighlightCells(highlightedCell);
   }
   highlightCells(nextPos);
