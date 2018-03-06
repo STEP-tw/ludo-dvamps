@@ -1,3 +1,4 @@
+/*eslint-disable*/
 let highlightedCell = "";
 
 const showPlayers = function() {
@@ -28,14 +29,32 @@ const showCoin = function(coin){
   ele.classList.replace('hide','show');
 };
 
-const highlightCell = function(cellID){
+const isDestinationCell = function(cellID){
+  return [116,155,129,142].includes(+cellID);
+};
+
+const highlightSingleCell = function(cellID){
   let ele = document.getElementById(cellID);
   ele.classList.add('highlight');
 };
 
-const dehighlightCell = function(cellID){
-  let ele = document.getElementById(cellID);
+const dehighlightSingleCell = function(cellID){
+  let ele = document.getElementById(`${cellID}`);
   ele.classList.remove('highlight');
+};
+
+const highlightDestinationCells = function(cellId){
+  let highlightedCells = document.getElementsByClassName(`${cellId}`);
+  for (let i = 0; i < highlightedCells.length; i++) {
+    highlightedCells[i].classList.add('highlight');
+  }
+};
+
+const dehighlightDestinationCells = function(cellId){
+  let highlightedCells = document.getElementsByClassName(`${cellId}`);
+  for (let i = 0; i < highlightedCells.length; i++) {
+    highlightedCells[i].classList.remove('highlight');
+  }
 };
 
 const isHighlighted = function(cellID){
@@ -104,24 +123,30 @@ let moveCoin = function(event) {
   }, `coinId=${coinToMove}`);
 };
 
+const highlightNextPosition = function(){
+  if(!this.responseText){
+    return;
+  }
+  let highlightCells = highlightSingleCell;
+  let dehighlightCells = dehighlightSingleCell;
+  let nextPos = +this.responseText;
+  isDestinationCell(nextPos) && (highlightCells = highlightDestinationCells);
+  isDestinationCell(highlightedCell) && (dehighlightCells = dehighlightDestinationCells);
+  if(isHighlighted(nextPos)){
+    dehighlightCells(nextPos);
+    moveCoin(event);
+    return;
+  }
+  if(highlightedCell){
+    dehighlightCells(highlightedCell);
+  }
+  highlightCells(nextPos);
+  highlightedCell = nextPos;
+}
+
 const getNextPos = function(event){
   let coinToMove = event.target.id.split('-')[1];
-  sendAjaxRequest('POST','/game/nextPos',function(){
-    if(!this.responseText){
-      return;
-    }
-    let nextPos = +this.responseText;
-    if(isHighlighted(nextPos)){
-      dehighlightCell(nextPos);
-      moveCoin(event);
-      return;
-    }
-    if(isHighlighted(highlightedCell)){
-      dehighlightCell(+highlightedCell);
-    }
-    highlightCell(nextPos);
-    highlightedCell = nextPos;
-  },`coinID=${coinToMove}`);
+  sendAjaxRequest('POST','/game/nextPos',highlightNextPosition,`coinID=${coinToMove}`);
 };
 
 const addListenerTOCoin = function(coins) {
@@ -247,6 +272,9 @@ const setCurrPlayer = function(players,currentPlayer){
 
 const getGameStatus = function() {
   sendAjaxRequest('GET', '/game/gameStatus', function() {
+    if(!this.responseText){
+      return;
+    }
     let gameStat = JSON.parse(this.responseText);
     let players = gameStat.players;
     let currentPlayer = gameStat.currentPlayerName;
@@ -307,13 +335,15 @@ const getLogs = function() {
   }, null);
 };
 
-/*eslint-disable*/
 let gameStatusReqInterval;
 let logStatusReqInterval;
 const load = function() {
   showPlayers();
   setGameAndUser('#userName','#nameOfGame');
   sendAjaxRequest('GET', '/images/board.svg', function() {
+    if(!this.responseText){
+      return;
+    }
     let main = document.querySelector('.board');
     main.innerHTML = this.responseText;
   });
@@ -335,3 +365,4 @@ const changeCoinPosition = (coinId,cellId,marginForX,marginForY) => {
 };
 
 window.onload = load;
+/*eslint-enable*/
