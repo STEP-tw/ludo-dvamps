@@ -30,9 +30,18 @@ const verifyReqBody = function(req,res,next) {
   next();
 };
 
-const isPlayerValid = function(req){
+const isPlayerInRoom = function(req){
+  let room = req.app.gamesManager.getRoom(req.cookies.gameName);
+  return room && room.isGuest(req.cookies.playerName);
+};
+
+const isPlayerInGame = function(req){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
   return game && game.doesPlayerExist(req.cookies.playerName);
+};
+
+const isPlayerValid = function(req){
+  return isPlayerInRoom(req) || isPlayerInGame(req);
 };
 
 const restrictValidPlayer = function(req,res,next){
