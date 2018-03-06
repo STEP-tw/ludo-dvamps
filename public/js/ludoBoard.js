@@ -107,8 +107,7 @@ const updateCoinPosition = function(players){
   arrOverlappingCoins(sortedCoins);
 };
 
-let moveCoin = function(event) {
-  let coinToMove = event.target.id.split('-')[1];
+const moveCoin = function(coinToMove) {
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);
     if (status.won) {
@@ -123,18 +122,18 @@ let moveCoin = function(event) {
   }, `coinId=${coinToMove}`);
 };
 
-const highlightNextPosition = function(){
-  if(!this.responseText){
+const highlightNextPosition = function(responseText,coinToMove){
+  if(!responseText){
     return;
   }
   let highlightCells = highlightSingleCell;
   let dehighlightCells = dehighlightSingleCell;
-  let nextPos = +this.responseText;
+  let nextPos = +responseText;
   isDestinationCell(nextPos) && (highlightCells = highlightDestinationCells);
   isDestinationCell(highlightedCell) && (dehighlightCells = dehighlightDestinationCells);
   if(isHighlighted(nextPos)){
     dehighlightCells(nextPos);
-    moveCoin(event);
+    moveCoin(coinToMove);
     return;
   }
   if(highlightedCell){
@@ -146,7 +145,9 @@ const highlightNextPosition = function(){
 
 const getNextPos = function(event){
   let coinToMove = event.target.id.split('-')[1];
-  sendAjaxRequest('POST','/game/nextPos',highlightNextPosition,`coinID=${coinToMove}`);
+  sendAjaxRequest('POST','/game/nextPos',function(){
+    highlightNextPosition(this.responseText,coinToMove);
+  },`coinID=${coinToMove}`);
 };
 
 const addListenerTOCoin = function(coins) {
