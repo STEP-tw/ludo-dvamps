@@ -197,7 +197,10 @@ const checkGameStarted = function(req,res,next) {
   let game = req.app.gamesManager.getGame(gameName);
   if(game && game.getPlayer(playerName)) {
     let color = game.getPlayer(playerName).getColor();
-    res.json({gameStarted:true,yourColor:color});
+    let playersName = game.getStatus().players.map((player)=> {
+      return player.name;
+    });
+    res.json({gameStarted:true,yourColor:color,players:playersName});
     return;
   }
   next();

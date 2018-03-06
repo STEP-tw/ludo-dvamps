@@ -50,7 +50,8 @@ const startTimer = function() {
   setTimeout(goToBoard, 3000);
 };
 
-const getGameDetails = function(color){
+const getGameDetails = function(color,players){
+  displayPlayerNames(players);
   removeIntervals();
   getElement('#message').style.visibility = 'hidden';
   showColor(color);
@@ -64,7 +65,7 @@ const updatePlayers = function() {
   }
   let roomDetails = JSON.parse(this.responseText);
   if(roomDetails.gameStarted){
-    getGameDetails(roomDetails.yourColor);
+    getGameDetails(roomDetails.yourColor,roomDetails.players);
     return;
   }
   let players = roomDetails.guests;
