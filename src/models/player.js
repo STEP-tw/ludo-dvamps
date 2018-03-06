@@ -32,6 +32,7 @@ class Player {
     }
     return pairedPositions;
   }
+
   getStatus() {
     let coinsPositions = this.coins.map(coin => coin.getStatus());
     return {
