@@ -1,6 +1,6 @@
 class ColorDistributer {
   constructor() {
-    this.colors = ['red','green','yellow','blue'];
+    this.colors = ['red','yellow','green','blue'];
   }
   getColor() {
     return this.colors.shift();

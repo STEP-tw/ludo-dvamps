@@ -6,10 +6,10 @@ const Path = require('./path.js');
 const ActivityLog = require('./activityLog.js');
 const Board = require('./board.js');
 
-const generateCoins = function(numberOfPlayers) {
+const generateCoins = function() {
   let homeId = -1;
   let coins = [];
-  for(let count=0;count<numberOfPlayers*4;count++,homeId--){
+  for(let count=0;count<16;count++,homeId--){
     let coinId = count+1;
     coins.push(new Coin(coinId,homeId));
   }
@@ -138,29 +138,15 @@ class Game {
     return this.getInfoPer(move);
   }
   arrangePlayers(){
-    // return this.players.reduce((sequence,player)=>{
-    //   let colorSequence = {red:0,green:1,yellow:2,blue:3};
-    //   sequence[colorSequence[player.color]] = player.name;
-    //   return sequence;
-    // },[]);
     return this.players.map((player)=>player.getName());
   }
-  // arrangePlayers() {
-  //   let players = this.players;
-  //   let sequence=['red','green','yellow','blue'].reduce(function(seq,color){
-  //     let playerWithColor = players.find((player)=>player.getColor==color);
-  //     if(playerWithColor){
-  //       seq.push(playerWithColor);
-  //     }
-  //     return seq;
-  //   },[]);
-  //   return sequence;
-  // }
   start(){
     let players = this.arrangePlayers();
     this.turn =new Turn(players);
-    players.forEach((playerName,index)=>{
+    let color = ['red','green','yellow','blue'];
+    players.forEach((playerName)=>{
       let player = this.getPlayer(playerName);
+      let index = color.indexOf(player.getColor());
       let path = this.board.getPathFor(index);
       player.assignPath(path);
     });
