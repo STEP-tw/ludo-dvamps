@@ -6,7 +6,7 @@ const showPlayers = function() {
     if (!this.responseText) {
       return;
     }
-    let colors = ['red', 'green', 'yellow', 'blue'];
+    let colors = ['red', 'yellow', 'green', 'blue'];
     let status = JSON.parse(this.responseText);
     colors = colors.slice(0,status.players.length);
     colors.forEach((color) => {
