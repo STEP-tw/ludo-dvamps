@@ -58,8 +58,13 @@ const loadGame = function(req,res,next) {
   next();
 };
 
+const isOneOf = function(currUrl){
+  let urllist = ['/board.html','/game/index.html'];
+  return urllist.find((url)=>url==currUrl);
+};
+
 const checkGame = function(req,res,next) {
-  if((req.url=='/board.html') && !(req.game)) {
+  if(isOneOf(req.url) && !(req.game)) {
     redirectToHome(res);
     return;
   }
