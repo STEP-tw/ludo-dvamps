@@ -134,6 +134,7 @@ const highlightNextPosition = function(responseText,coinToMove){
   if(isHighlighted(nextPos)){
     dehighlightCells(nextPos);
     moveCoin(coinToMove);
+    removeClickListeners('.focus');
     return;
   }
   if(highlightedCell){

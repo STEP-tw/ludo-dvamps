@@ -13,6 +13,16 @@ const setClickListener = function(selector,listener) {
   }
 };
 
+const removeClickListeners = function(selector){
+  let elements = getAllElements(selector);
+  if(!elements) {
+    return;
+  }
+  elements.forEach((element)=>{
+    element.onclick = "";
+  });
+};
+
 const sendAjaxRequest = function(method,url,callBack,reqBody){
   let ajax = new XMLHttpRequest();
   ajax.onload=callBack;
