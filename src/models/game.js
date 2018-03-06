@@ -51,19 +51,6 @@ class Game {
   getStatus() {
     return this.status;
   }
-  hasEnoughPlayers() {
-    return this.numberOfPlayers <= this.players.length;
-  }
-  neededPlayers() {
-    return this.numberOfPlayers - this.players.length;
-  }
-  getDetails() {
-    return {
-      name: this.name,
-      remain: this.neededPlayers(),
-      createdBy: this.players[0].name,
-    };
-  }
   doesPlayerExist(playerName) {
     return this.players.some((player) => player.name == playerName);
   }
@@ -73,22 +60,12 @@ class Game {
     return new Player(playerName,playerColor,coins,new Path(coins.length));
   }
   addPlayer(playerName) {
-    if (this.doesPlayerExist(playerName) || this.hasEnoughPlayers()) {
-      return false;
-    }
     this.players.push(this.createPlayer(playerName));
     this.setStatus();
     return true;
   }
   getPlayer(playerName) {
     return this.players.find(player => player.name == playerName);
-  }
-  removePlayer(playerName) {
-    let player = this.players.find(player => player.name == playerName);
-    let playerIndex = this.players.indexOf(player);
-    this.colorDistributor.addColor(player.getColor());
-    this.players.splice(playerIndex, 1);
-    this.setStatus();
   }
   getGameStatus(){
     let gameStatus = this.getStatus();
@@ -100,9 +77,6 @@ class Game {
     }
     gameStatus.won = this.hasWon();
     return gameStatus;
-  }
-  getNoOfPlayers() {
-    return this.players.length;
   }
   setStatus() {
     this.status.players = this.players.map(player => player.getStatus());

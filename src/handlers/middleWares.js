@@ -141,7 +141,7 @@ const verifyCreateGameReq = function(req,res,next) {//should be rename
   next();
 };
 
-const verifyJoinGameReq = function(req,res,next) {//should be rename
+const verifyJoinGameReq = function(req,res,next) {
   if(!isValidReqBodyFormat(['gameName','playerName'],req)){
     resForBadRequest(res,"bad request");
     return;

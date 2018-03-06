@@ -19,29 +19,26 @@ const dice = {
   }
 };
 const timeStamp = () => 1234;
-
+const dummyShuffler = (array) => {return array};
 const initGameManager = function(players,dice,gameName) {
-  let gameManager = new GamesManager(ColorDistributer,dice,timeStamp);
+  let gameManager = new GamesManager(ColorDistributer,dice,timeStamp,
+    dummyShuffler);
   gameManager.createRoom(gameName,4);
   players.forEach((player)=>gameManager.joinRoom(gameName,player));
   return gameManager;
 }
-
+const sixPointDice = {roll:()=>6};
+let players = ['lala','kaka','ram','shyam'];
 describe('GameRoute', () => {
   let gamesManager;
   beforeEach(function(done) {
-    gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
+    gamesManager = new GamesManager(ColorDistributer,dice,timeStamp,dummyShuffler);
     app.initialize(gamesManager);
     done();
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
-      let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);;
-      let game = gamesManager.addGame('ludo',4);
-      gamesManager.addPlayerTo('ludo','ashish');
-      gamesManager.addPlayerTo('ludo','arvind');
-      gamesManager.addPlayerTo('ludo','debu');
-      gamesManager.addPlayerTo('ludo','lala');
+      let gamesManager = initGameManager(players,dice,'ludo');
       app.initialize(gamesManager);
     })
     it('should response with bad request if game does not exists', (done) => {
@@ -61,14 +58,11 @@ describe('GameRoute', () => {
     });
   });
   describe('#GET /game/rollDice', () => {
-    it('should roll the dice for currentPlayer', (done) => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      // gamesManager.getGame('newGame').start();
+    beforeEach(function(){
+      let gamesManager = initGameManager(players,dice,'newGame');
       app.initialize(gamesManager);
+    });
+    it('should roll the dice for currentPlayer', (done) => {
       request(app)
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
@@ -77,13 +71,6 @@ describe('GameRoute', () => {
         .end(done);
     });
     it('should response with bad request if player is not there', (done) => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      // gamesManager.getGame('newGame').start();
-      app.initialize(gamesManager);
       request(app)
         .get('/game/rollDice')
         .set('Cookie', ['gameName=newGame', 'playerName=kaka'])
@@ -93,19 +80,15 @@ describe('GameRoute', () => {
   });
   describe('get /game/gameStatus', () => {
     beforeEach(function() {
-      let game = gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame','ashish');
-      gamesManager.addPlayerTo('newGame','joy');
-      gamesManager.addPlayerTo('newGame','pallabi');
-      gamesManager.addPlayerTo('newGame','lala');
+      gamesManager = initGameManager(players,dice,'newGame');
       app.initialize(gamesManager);
     });
     it('should give game status', (done) => {
       request(app)
         .get('/game/gameStatus')
-        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .set('Cookie',['gameName=newGame','playerName=lala'])
         .expect(200)
-        .expect(/ashish/)
+        .expect(/lala/)
         .expect(/red/)
         .end(done);
     });
@@ -120,9 +103,9 @@ describe('GameRoute', () => {
       destination.addCoin(new Coin(4));
       request(app)
         .get('/game/gameStatus')
-        .set('Cookie',['gameName=newGame','playerName=ashish'])
+        .set('Cookie',['gameName=newGame','playerName=lala'])
         .expect(200)
-        .expect(/ashish/)
+        .expect(/lala/)
         .expect(/red/)
         .expect(/"won":true/)
         .end(done);
@@ -162,20 +145,18 @@ describe('GameRoute', () => {
     });
   });
   describe('#POST /game/moveCoin', () => {
+    let game;
+    let gamesManager;
     beforeEach(()=>{
       let dice = {
         roll:()=>6
       }
-      gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      let game = gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      game.rollDice();
+      gamesManager = initGameManager(players,dice,'newGame');
+      game = gamesManager.getGame('newGame');
       app.initialize(gamesManager);
     })
     it('should return move coin status if valid player gives valid coin Id', done => {
+      game.rollDice();
       request(app)
         .post('/game/moveCoin')
         .set('Cookie',['gameName=newGame','playerName=lala'])
@@ -187,6 +168,7 @@ describe('GameRoute', () => {
     });
     it('should return status false and message as not your turn if invalid '+
     ' player gives invalid coin Id', done => {
+      game.rollDice();
       request(app)
       .post('/game/moveCoin')
       .set('Cookie',['gameName=newGame','playerName=kaka'])
@@ -198,17 +180,12 @@ describe('GameRoute', () => {
     });
     it('should return move coin status as false if valid player gives invalid coin Id', done => {
       let moves = [6,4];
-      let dice = {
+      let newDice = {
         roll:()=>{
           return moves.shift();
         }
       }
-      gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      let game = gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
+      game.dice = newDice;
       game.rollDice();
       game.moveCoin(1);
       game.rollDice();
@@ -224,20 +201,10 @@ describe('GameRoute', () => {
     });
   });
   describe('#POST /game/nextPos', () => {
-    beforeEach(()=>{
-      let dice = {
-        roll:()=>6
-      }
-      gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      let game = gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame','lala');
-      gamesManager.addPlayerTo('newGame','kaka');
-      gamesManager.addPlayerTo('newGame','ram');
-      gamesManager.addPlayerTo('newGame','shyam');
-      game.rollDice();
-      app.initialize(gamesManager);
-    })
     it('should return the next postion of a coin', (done) => {
+      let gamesManager = initGameManager(players,sixPointDice,'newGame');
+      gamesManager.getGame('newGame').rollDice();
+      app.initialize(gamesManager);
       request(app)
         .post('/game/nextPos')
         .set('Cookie',['gameName=newGame','playerName=lala'])

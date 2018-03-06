@@ -95,7 +95,6 @@ describe('Path', () => {
 
       redPath.addCell(initCell);
       redPath.addCell(new UnsafeCell(2));
-      // redPath.addCell(finalCell);
       assert.deepEqual(redPath.getNextMove(firstCoin,2),initCell);
     });
     it('should return same position if player has not killed opp', ()=>{

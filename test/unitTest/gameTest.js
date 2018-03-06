@@ -39,13 +39,9 @@ describe('#Game', () => {
     });
   });
   describe('#addPlayer()', () => {
-    it('should addPlayer to game if player is not there', () => {
+    it('should addPlayer to game', () => {
       assert.isOk(game.addPlayer('manish'));
       assert.isOk(game.doesPlayerExist('manish'));
-    });
-    it('should not addPlayer to game if player is in the game', () => {
-      game.addPlayer('manish');
-      assert.isNotOk(game.addPlayer('manish'));
     });
     it('should initiate turn if four players are added ', () => {
       let game = initGame(players,fourPointDice);
@@ -62,43 +58,6 @@ describe('#Game', () => {
       assert.property(player, 'coins');
     });
   });
-  describe('#removePlayer()', () => {
-    it('should removePlayer from game', () => {
-      game.addPlayer('manish');
-      assert.isOk(game.doesPlayerExist('manish'));
-      game.removePlayer('manish');
-      assert.isNotOk(game.doesPlayerExist('manish'));
-    });
-  });
-  describe('#hasEnoughPlayers()', () => {
-    it(`should give false when game don't have enough players`, () => {
-      game.addPlayer('ram');
-      assert.isNotOk(game.hasEnoughPlayers());
-    });
-    it(`should give true when game has enough players`, () => {
-      let game = initGame(players,fourPointDice,'newGame');
-      assert.isOk(game.hasEnoughPlayers());
-    });
-  });
-  describe('#neededPlayers()', () => {
-    it(`should give number of needed players to start the game`, () => {
-      game.addPlayer('ram');
-      assert.equal(game.neededPlayers(), 3);
-      ['lala','shyam','kaka'].forEach((name)=>game.addPlayer(name));
-      assert.equal(game.neededPlayers(), 0);
-    });
-  });
-  describe('#getDetails', () => {
-    it(`should give name, creator and player's needed for game`, () => {
-      game.addPlayer('ram');
-      let expected = {
-        name: 'newGame',
-        createdBy: 'ram',
-        remain: 3,
-      };
-      assert.deepEqual(expected, game.getDetails());
-    });
-  });
   describe('#doesPlayerExist', () => {
     it('should return true if player name is in the game', () => {
       game.addPlayer('kaka');
@@ -107,13 +66,6 @@ describe('#Game', () => {
     it('should return false if player name is not in the game', () => {
       assert.isNotOk(game.doesPlayerExist('kaka'));
     });
-  });
-  describe('#getNoOfPlayers', () => {
-    it('should give total number of players in game', () => {
-      game.addPlayer('ashish');
-      game.addPlayer('joy');
-      assert.equal(game.getNoOfPlayers(), 2);
-    })
   });
   describe('#rollDice', () => {
     beforeEach(function() {

@@ -27,6 +27,11 @@ describe('#App', () => {
     done();
   });
   describe('GET /', () => {
+    beforeEach(function(){
+      gamesManager.createRoom('newGame',4);
+      gamesManager.joinRoom('newGame', 'lala');
+      app.initialize(gamesManager);
+    });
     it('should serve index page', done => {
       request(app)
       .get('/')
@@ -36,9 +41,6 @@ describe('#App', () => {
       .end(done);
     });
     it('should redirect to waiting page if valid cookies are present', done => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame', 'lala');
-      app.initialize(gamesManager);
       request(app)
         .get('/')
         .set('Cookie', ['gameName=newGame', 'playerName=lala'])
@@ -47,9 +49,6 @@ describe('#App', () => {
         .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame', 'lala');
-      app.initialize(gamesManager);
       request(app)
         .get('/')
         .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
@@ -58,10 +57,12 @@ describe('#App', () => {
     });
   });
   describe('GET /index.html', () => {
-    it('should redirect to waiting page if valid cookies are present', done => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame', 'lala');
+    beforeEach(function(){
+      gamesManager.createRoom('newGame',4);
+      gamesManager.joinRoom('newGame', 'lala');
       app.initialize(gamesManager);
+    });
+    it('should redirect to waiting page if valid cookies are present', done => {
       request(app)
       .get('/index.html')
       .set('Cookie', ['gameName=newGame', 'playerName=lala'])
@@ -70,9 +71,6 @@ describe('#App', () => {
       .end(done);
     });
     it('should serve index page if invalid cookies are present', done => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame', 'lala');
-      app.initialize(gamesManager);
       request(app)
       .get('/index.html')
       .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
@@ -90,10 +88,12 @@ describe('#App', () => {
     });
   });
   describe('GET /joining.html', () => {
-    it('should redirect to waiting page if valid cookies are present', done => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame', 'lala');
+    beforeEach(function(){
+      gamesManager.createRoom('newGame',4);
+      gamesManager.joinRoom('newGame', 'lala');
       app.initialize(gamesManager);
+    });
+    it('should redirect to waiting page if valid cookies are present', done => {
       request(app)
       .get('/joining.html')
       .set('Cookie', ['gameName=newGame', 'playerName=lala'])
@@ -102,9 +102,6 @@ describe('#App', () => {
       .end(done);
     });
     it('should serve joining page if invalid cookies are present', done => {
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame', 'lala');
-      app.initialize(gamesManager);
       request(app)
       .get('/joining.html')
       .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
@@ -172,8 +169,8 @@ describe('#App', () => {
     });
     it('should redirect to waiting if user has already a game', function(done) {
       let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      gamesManager.addGame('newGame',4);
-      gamesManager.addPlayerTo('newGame', 'lala');
+      gamesManager.createRoom('newGame',4);
+      gamesManager.joinRoom('newGame', 'lala');
       app.initialize(gamesManager);
       request(app)
         .post('/createGame')

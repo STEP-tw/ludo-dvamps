@@ -2,7 +2,7 @@ const path = require('path');
 const WaitingRoom = require(path.resolve('src/models/waitingRoom.js'));
 const Game = require(path.resolve('src/models/game.js'));
 
-const shufflePlayers = function(allPlayers) {
+const defaultShuffler = function(allPlayers) {
   let shuffledPlayers = [];
   while(allPlayers.length!=0){
     let playerIndex = Math.floor(Math.random()*allPlayers.length);
@@ -13,12 +13,13 @@ const shufflePlayers = function(allPlayers) {
 };
 
 class GamesManager {
-  constructor(ColorDistributor,dice,timeStamp) {
+  constructor(ColorDistributor,dice,timeStamp,shuffleFunc) {
     this.ColorDistributor = ColorDistributor;
     this.allRunningGames = {};
     this.rooms = {};
     this.dice = dice;
     this.timeStamp = timeStamp;
+    this.shufflePlayers = shuffleFunc||defaultShuffler;
   }
   canJoinRoom(gameName,playerName) {
     let room = this.getRoom(gameName);
@@ -38,7 +39,7 @@ class GamesManager {
     room.addGuest(guestName);
     if(room.isFull()){
       let game = this.addGame(roomName,room.getCapacity());
-      let players = shufflePlayers(room.getGuests());
+      let players = this.shufflePlayers(room.getGuests());
       players.forEach((playerName)=>game.addPlayer(playerName));
       game.start();
       this.allRunningGames[roomName]=game;
@@ -69,14 +70,6 @@ class GamesManager {
   }
   getGame(gameName) {
     return this.allRunningGames[gameName];
-  }
-  addPlayerTo(gameName, player) {
-    let game = this.allRunningGames[gameName];
-    let isAdded = game.addPlayer(player);
-    if(game.hasEnoughPlayers()){
-      game.start();
-    }
-    return isAdded ;
   }
   doesGameExists(gameName) {
     return gameName in this.allRunningGames;
