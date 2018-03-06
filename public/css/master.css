@@ -69,3 +69,16 @@ main{
   linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
   transform: translateY(-21%);
 }
+
+.red{
+  color: red;
+}
+.green{
+  color: green;
+}
+.yellow{
+  color: yellow;
+}
+.blue{
+  color: blue;
+}
