@@ -72,12 +72,13 @@ const hideCoin = function(coin){
 };
 
 const placeCoin = (coin)=>{
+  let coinId = `${coin.color}-${coin.id}`;
   if (+coin.position < 0) {
     coin.position = `home${coin.position}`;
-    changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,31.5,31.5);
+    changeCoinPosition(coinId,coin.position,31.5,31.5);
     return;
   }
-  changeCoinPosition(`${coin.color}-${coin.id}`,coin.position,20,20);
+  changeCoinPosition(coinId,coin.position,20,20);
   return;
 };
 
@@ -339,19 +340,6 @@ const getLogs = function() {
 
 let gameStatusReqInterval;
 let logStatusReqInterval;
-const load = function() {
-  showPlayers();
-  setGameAndUser('#userName','#nameOfGame');
-  sendAjaxRequest('GET', '/images/board.svg', function() {
-    if(!this.responseText){
-      return;
-    }
-    let main = document.querySelector('.board');
-    main.innerHTML = this.responseText;
-  });
-  gameStatusReqInterval=setInterval(getGameStatus, 1000);
-  logStatusReqInterval=setInterval(getLogs, 2000);
-};
 const endGame = function() {
   clearInterval(gameStatusReqInterval);
   clearInterval(logStatusReqInterval);
@@ -366,6 +354,20 @@ const changeCoinPosition = (coinId,cellId,marginForX,marginForY) => {
   coin.setAttribute('cx',cell.x.animVal.value + marginForX);
   coin.setAttribute('cy',cell.y.animVal.value + marginForY);
 };/////////did'nt get...
+
+const load = function() {
+  showPlayers();
+  setGameAndUser('#userName','#nameOfGame');
+  sendAjaxRequest('GET', '/images/board.svg', function() {
+    if(!this.responseText){
+      return;
+    }
+    let main = document.querySelector('.board');
+    main.innerHTML = this.responseText;
+  });
+  gameStatusReqInterval=setInterval(getGameStatus, 1000);
+  logStatusReqInterval=setInterval(getLogs, 2000);
+};
 
 window.onload = load;
 /*eslint-enable*/

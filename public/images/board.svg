@@ -119,21 +119,21 @@
   <polygon class="155" points="240,360 300,300 360,360" stroke="black" stroke-width="1.5" fill="#f21010"/>
   <polygon class="142" points="360,240 300,300 360,360" stroke="black" stroke-width="1.5" fill="#1436e9"/>
   <polygon class="129" points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#ffff00"/>
-  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" rx="10.5" ry="10.5" id="green-5"></ellipse>
-  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" rx="10.5" ry="10.5" id="green-6"></ellipse>
-  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" rx="10.5" ry="10.5" id="green-7"></ellipse>
-    <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" rx="10.5" ry="10.5" id="green-8"></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" rx="10.5" ry="10.5" id="yellow-9"></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" rx="10.5" ry="10.5" id="yellow-10"></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" rx="10.5" ry="10.5" id="yellow-11"></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" rx="10.5" ry="10.5" id="yellow-12"></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" rx="10.5" ry="10.5" id="blue-13"></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" rx="10.5" ry="10.5" id="blue-14"></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" rx="10.5" ry="10.5" id="blue-15"></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" rx="10.5" ry="10.5" id="blue-16"></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" rx="10.5" ry="10.5" id="red-1"></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" rx="10.5" ry="10.5" id="red-2"></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" rx="10.5" ry="10.5" id="red-3"></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" rx="10.5" ry="10.5" id="red-4"></ellipse>
+  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" rx="10.5" ry="10.5" id="green-5" class='hide'></ellipse>
+  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" rx="10.5" ry="10.5" id="green-6" class='hide'></ellipse>
+  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" rx="10.5" ry="10.5" id="green-7" class='hide'></ellipse>
+    <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" rx="10.5" ry="10.5" id="green-8" class='hide'></ellipse>
+  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" rx="10.5" ry="10.5" id="yellow-9" class='hide'></ellipse>
+  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" rx="10.5" ry="10.5" id="yellow-10" class='hide'></ellipse>
+  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" rx="10.5" ry="10.5" id="yellow-11" class='hide'></ellipse>
+  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" rx="10.5" ry="10.5" id="yellow-12" class='hide'></ellipse>
+  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" rx="10.5" ry="10.5" id="blue-13" class='hide'></ellipse>
+  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" rx="10.5" ry="10.5" id="blue-14" class='hide'></ellipse>
+  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" rx="10.5" ry="10.5" id="blue-15" class='hide'></ellipse>
+  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" rx="10.5" ry="10.5" id="blue-16" class='hide'></ellipse>
+  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" rx="10.5" ry="10.5" id="red-1" class='hide'></ellipse>
+  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" rx="10.5" ry="10.5" id="red-2" class='hide'></ellipse>
+  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" rx="10.5" ry="10.5" id="red-3" class='hide'></ellipse>
+  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" rx="10.5" ry="10.5" id="red-4" class='hide'></ellipse>
  </g>
 </svg>
