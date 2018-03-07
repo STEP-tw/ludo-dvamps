@@ -1,13 +1,29 @@
+.container {
+  margin: 50px;
+  height: 60%;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
 .playerNames {
   margin: 2% 2% 5% 2%;
   border: 3px outset darkGray;
   border-radius: 5px;
   height: 10vh;
-  width: 15vw;
+  width: 30%;
+  line-height: 1px;
   text-align: center;
+  box-sizing: border-box;
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
   font-size: 170%;
+  padding: 3%;
   background-color: #d6d6d600;
 }
 

@@ -35,12 +35,9 @@ const removeIntervals = function() {
 };
 
 const displayPlayerNames = function(players) {
-  players.forEach((player, index) => {
-    if (getElement(`#player${index+2}`)) {
-      getElement(`#player${index+2}`).value = "";
-    }
-    getElement(`#player${index+1}`).value = player;
-  });
+  for(let count=0;count<players.length;count++){
+    getElement(`#player${count+1}`).innerText = players[count];
+  }
 };
 
 const startTimer = function() {
@@ -50,7 +47,17 @@ const startTimer = function() {
   setTimeout(goToBoard, 3000);
 };
 
+const showPlayerSpaces = function(capacity){
+  let displaySec = getElement('.container');
+  let label = '';
+  for (let count=0;count<capacity;count++){
+    label+=`<label class="playerNames" id="player${count+1}"></label>`;
+  }
+  displaySec.innerHTML = label;
+};
+
 const getGameDetails = function(color,players){
+  showPlayerSpaces(players.length);
   displayPlayerNames(players);
   removeIntervals();
   getElement('#message').style.visibility = 'hidden';
@@ -72,6 +79,7 @@ const updatePlayers = function() {
   if (!players) {
     return;
   }
+  showPlayerSpaces(roomDetails.capacity);
   displayPlayerNames(players);
   if (players.length < roomDetails.capacity) {
     return;
