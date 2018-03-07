@@ -189,6 +189,15 @@ describe('#App', () => {
         .expect(JSON.stringify({status:false,message:'empty field'}))
         .end(done);
     });
+    it('should response with error message number of players are other than 2,3,4',(done)=>{
+      request(app)
+        .post('/createGame')
+        .send('gameName=ludo&playerName=badMan&noOfPlayers=9')
+        .expect(400)
+        .expect(JSON.stringify({status:false,
+          message:'invalid number of players'}))
+        .end(done);
+    });
   });
   describe('POST /joinGame', () => {
     beforeEach(function() {

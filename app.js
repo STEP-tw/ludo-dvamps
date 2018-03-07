@@ -30,7 +30,7 @@ app.use('/game',GameRoute);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
 app.get('/waitingStatus',lib.checkGameStarted,lib.checkIsRoomPresent,getHandlers.serveWaitingStatus);
 app.post('/createGame',lib.verifyReqBody,lib.verifyCreateGameReq,
-  lib.checkCharacterLimit,lib.blockIfUserHasGame,
+  lib.checkCharacterLimit,lib.blockIfUserHasGame,lib.verifyNoOfPlayers,
   postHandlers.createNewGame);
 app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
 app.delete('/player',lib.checkCookie,lib.verifyIsGuest,deleteHandler.removePlayer);

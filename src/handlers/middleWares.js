@@ -5,6 +5,15 @@ const resForBadRequest = function(res,message){
   return;
 };
 
+const verifyNoOfPlayers = function(req,res,next){
+  let noOfPlayers = req.body.noOfPlayers;
+  if(!['2','3','4'].includes(noOfPlayers)){
+    resForBadRequest(res,'invalid number of players');
+    return;
+  }
+  next();
+};
+
 const checkCookie = function(req,res,next) {
   let gameName = req.cookies.gameName;
   let playerName = req.cookies.playerName;
@@ -223,5 +232,6 @@ module.exports = {
   verifyJoinGameReq,
   checkRoomExists,
   verifyIsGuest,
-  checkGameStarted
+  checkGameStarted,
+  verifyNoOfPlayers
 };
