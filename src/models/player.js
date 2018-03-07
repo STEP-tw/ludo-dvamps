@@ -21,25 +21,13 @@ class Player {
   getCoins() {
     return this.coins;
   }
-  getPairedCellPos(positions) {
-    let pairedPositions=[];
-    for (let first = 0; first < positions.length; first++) {
-      for (let second = first+1; second < positions.length; second++) {
-        if(positions[first]==positions[second]) {
-          pairedPositions.push(positions[first]);
-        }
-      }
-    }
-    return pairedPositions;
-  }
-
+  
   getStatus() {
     let coinsPositions = this.coins.map(coin => coin.getStatus());
     return {
       name: this.name,
       color: this.color,
-      coins: coinsPositions,
-      pairedCellPos: this.getPairedCellPos(coinsPositions)
+      coins: coinsPositions
     };
   }
   getPath() {

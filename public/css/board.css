@@ -15,7 +15,7 @@ main {
   margin-left: 47vh;
 }
 
-ellipse.focus {
+circle.focus {
   stroke-dasharray: 3,3;
   stroke-width: 4;
   animation: dash 5s linear infinite;
@@ -272,4 +272,8 @@ ul {
   font-family: Roboto,sans-serif;
   color: white;
   text-shadow: 3px 3px 7px black;
+}
+svg text{
+  cursor:pointer;
+  user-select: none;
 }

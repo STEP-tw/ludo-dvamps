@@ -1,139 +1,291 @@
 <svg viewBox="0 0 602 602" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <rect x="0" y="0" width="600" height="600" id="canvas_background" fill="#fff"></rect>
-  <g id="canvasGrid" display="none">
-   <rect id="svg_1" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"></rect>
+  <g>
+    <rect x="0" y="0" width="600" height="600" id="canvas_background" fill="#fff"></rect>
+    <g id="canvasGrid" display="none">
+      <rect id="svg_1" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"></rect>
+    </g>
   </g>
- </g>
 
- <g>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="1" width="40" height="40" id="23"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="1" width="40" height="40" id="24"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="1" width="40" height="40" id="25"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="41" width="40" height="40" id="22"></rect>
-  <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="41" width="40" height="40" id="124"></rect>
-  <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="320.5" y="41" width="40" height="40" id="26"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="81" width="40" height="40" id="21"></rect>
-  <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="81" width="40" height="40" id="125"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="81" width="40" height="40" id="27"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="121" width="40" height="40" id="20"></rect>
-  <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="121" width="40" height="40" id="126"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="121" width="40" height="40" id="28"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="161" width="40" height="40" id="19"></rect>
-  <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="161" width="40" height="40" id="127"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="161" width="40" height="40" id="29"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="201" width="40" height="40" id="18"></rect>
-  <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="201" width="40" height="40" id="128"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="201" width="40" height="40" id="30"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="361" width="40" height="40" id="4"></rect>
-  <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="361" width="40" height="40" id="154"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="361" width="40" height="40" id="44"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="401" width="40" height="40" id="3"></rect>
-  <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="401" width="40" height="40" id="153"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="401" width="40" height="40" id="45"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="441" width="40" height="40" id="2"></rect>
-  <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="441" width="40" height="40" id="152"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="441" width="40" height="40" id="46"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="481" width="40" height="40" id="1"></rect>
-  <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="481" width="40" height="40" id="151"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="481" width="40" height="40" id="47"></rect>
-  <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="240.5" y="521" width="40" height="40" id="0"></rect>
-  <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="521" width="40" height="40" id="150"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="521" width="40" height="40" id="48"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="561" width="40" height="40" id="51"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="561" width="40" height="40" id="50"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="561" width="40" height="40" id="49"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="360.5" y="241" width="40" height="40" id="31"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="400.5" y="241" width="40" height="40" id="32"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="440.5" y="241" width="40" height="40" id="33"></rect>
-  <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="281" width="40" height="40" id="141"></rect>
-  <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="400.5" y="281" width="40" height="40" id="140"></rect>
-  <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="440.5" y="281" width="40" height="40" id="139"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="360.5" y="321" width="40" height="40" id="43"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="400.5" y="321" width="40" height="40" id="42"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="440.5" y="321" width="40" height="40" id="41"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="480.5" y="241" width="40" height="40" id="34"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="520.5" y="241" width="40" height="40" id="35"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="560.5" y="241" width="40" height="40" id="36"></rect>
-  <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="480.5" y="281" width="40" height="40" id="138"></rect>
-  <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="520.5" y="281" width="40" height="40" id="137"></rect>
-  <rect fill="#ffffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="560.5" y="281" width="40" height="40" id="37"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="480.5" y="321" width="40" height="40" id="40"></rect>
-  <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="520.5" y="321" width="39" height="40" id="39"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="560.5" y="321" width="40" height="40" id="38"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="0.5" y="241" width="40" height="40" id="12"></rect>
-  <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="40.5" y="241" width="40" height="40" id="13"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="80.5" y="241" width="40" height="40" id="14"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="0.5" y="281" width="40" height="40" id="11"></rect>
-  <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="40.5" y="281" width="40" height="40" id="111"></rect>
-  <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="80.5" y="281" width="40" height="40" id="112"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="0.5" y="321" width="40" height="40" id="10"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="40.5" y="321" width="40" height="40" id="9"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="80.5" y="321" width="40" height="40" id="8"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="120.5" y="241" width="40" height="40" id="15"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="160.5" y="241" width="40" height="40" id="16"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="200.5" y="241" width="40" height="40" id="17"></rect>
-  <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="120.5" y="281" width="40" height="40" id="113"></rect>
-  <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="160.5" y="281" width="40" height="40" id="114"></rect>
-  <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="200.5" y="281" width="40" height="40" id="115"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="120.5" y="321" width="40" height="40" id="7"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="160.5" y="321" width="40" height="40" id="6"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="200.5" y="321" width="40" height="40" id="5"></rect>
-  <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="1" width="240" height="240" id="svg_yellow"></rect>
-  <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="1" width="240" height="240" id="svg_green"></rect>
-  <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="361" width="240" height="240" id="svg_red"></rect>
-  <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="361" width="240" height="240" id="svg_blue"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="43.449997" width="63" height="63" id="home-5"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="137.449997" width="63" height="63" id="home-8"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="43" width="63" height="63" id="home-6"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="137" width="63" height="63" id="home-7"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="43.449997" width="63" height="63" id="home-9"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="137.449997" width="63" height="63" id="home-12"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="43" width="63" height="63" id="home-10"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="137" width="63" height="63" id="home-11"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="403.449997" width="63" height="63" id="home-13"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="497.449997" width="63" height="63" id="home-16"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="403" width="63" height="63" id="home-14"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="497" width="63" height="63" id="home-15"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="403.449997" width="63" height="63" id="home-1"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="497.449997" width="63" height="63" id="home-4"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="403" width="63" height="63" id="home-2"></rect>
-  <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="497" width="63" height="63" id="home-3"></rect>
-  <path id="svg_4" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#1436e9"></path>
-  <path id="svg_5" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#1436e9"></path>
-<text transform="matrix(1.55331, 0, 0, 1.48633, -44.9029, -118.19)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_7" y="260" x="59" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <text transform="matrix(1.47481, 0, 0, 1.52185, -59.8899, -164.765)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_8" y="338" x="100" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <text transform="matrix(1.67418, 0, 0, 1.65832, -243.452, -316.772)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_9" y="498.5" x="340" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <text transform="matrix(1.51388, 0, 0, 1.56774, -143.45, -296.946)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_10" y="540.449997" x="258.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <text transform="matrix(1.71538, 0, 0, 1.74093, -264.035, -28.1911)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_11" y="57.024403" x="345" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <text transform="matrix(1.51351, 0, 0, 1.55859, -143.351, -46.7459)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_12" y="100.16679" x="259" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <text transform="matrix(1.51306, 0, 0, 1.52693, -287.403, -170.257)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_13" y="340.449997" x="538.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
-  <text transform="matrix(1.71503, 0, 0, 1.73319, -375.455, -174.369)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="15" stroke-width="0.5" id="svg_14" y="257" x="503" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">☆</text>
+  <g>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="1" width="40" height="40" id="23"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="1" width="40" height="40" id="24"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="1" width="40" height="40" id="25"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="41" width="40" height="40" id="22"></rect>
+    <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="41" width="40" height="40" id="124"></rect>
+    <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="320.5" y="41" width="40" height="40" id="26"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="81" width="40" height="40" id="21"></rect>
+    <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="81" width="40" height="40" id="125"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="81" width="40" height="40" id="27"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="121" width="40" height="40" id="20"></rect>
+    <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="121" width="40" height="40" id="126"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="121" width="40" height="40" id="28"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="161" width="40" height="40" id="19"></rect>
+    <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="161" width="40" height="40" id="127"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="161" width="40" height="40" id="29"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="201" width="40" height="40" id="18"></rect>
+    <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="201" width="40" height="40" id="128"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="201" width="40" height="40" id="30"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="361" width="40" height="40" id="4"></rect>
+    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="361" width="40" height="40" id="154"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="361" width="40" height="40" id="44"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="401" width="40" height="40" id="3"></rect>
+    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="401" width="40" height="40" id="153"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="401" width="40" height="40" id="45"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="441" width="40" height="40" id="2"></rect>
+    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="441" width="40" height="40" id="152"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="441" width="40" height="40" id="46"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="481" width="40" height="40" id="1"></rect>
+    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="481" width="40" height="40" id="151"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="481" width="40" height="40" id="47"></rect>
+    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="240.5" y="521" width="40" height="40" id="0"></rect>
+    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="521" width="40" height="40" id="150"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="521" width="40" height="40" id="48"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="561" width="40" height="40" id="51"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="561" width="40" height="40" id="50"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="561" width="40" height="40" id="49"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="360.5" y="241" width="40" height="40" id="31"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="400.5" y="241" width="40" height="40" id="32"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="440.5" y="241" width="40" height="40" id="33"></rect>
+    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="281" width="40" height="40" id="141"></rect>
+    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="400.5" y="281" width="40" height="40" id="140"></rect>
+    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="440.5" y="281" width="40" height="40" id="139"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="360.5" y="321" width="40" height="40" id="43"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="400.5" y="321" width="40" height="40" id="42"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="440.5" y="321" width="40" height="40" id="41"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="480.5" y="241" width="40" height="40" id="34"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="520.5" y="241" width="40" height="40" id="35"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="560.5" y="241" width="40" height="40" id="36"></rect>
+    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="480.5" y="281" width="40" height="40" id="138"></rect>
+    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="520.5" y="281" width="40" height="40" id="137"></rect>
+    <rect fill="#ffffff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="560.5" y="281" width="40" height="40" id="37"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="480.5" y="321" width="40" height="40" id="40"></rect>
+    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="520.5" y="321" width="39" height="40" id="39"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="560.5" y="321" width="40" height="40" id="38"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="0.5" y="241" width="40" height="40" id="12"></rect>
+    <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="40.5" y="241" width="40" height="40" id="13"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="80.5" y="241" width="40" height="40" id="14"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="0.5" y="281" width="40" height="40" id="11"></rect>
+    <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="40.5" y="281" width="40" height="40" id="111"></rect>
+    <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="80.5" y="281" width="40" height="40" id="112"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="0.5" y="321" width="40" height="40" id="10"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="40.5" y="321" width="40" height="40" id="9"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="80.5" y="321" width="40" height="40" id="8"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="120.5" y="241" width="40" height="40" id="15"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="160.5" y="241" width="40" height="40" id="16"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="200.5" y="241" width="40" height="40" id="17"></rect>
+    <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="120.5" y="281" width="40" height="40" id="113"></rect>
+    <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="160.5" y="281" width="40" height="40" id="114"></rect>
+    <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="200.5" y="281" width="40" height="40" id="115"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="120.5" y="321" width="40" height="40" id="7"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="160.5" y="321" width="40" height="40" id="6"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="200.5" y="321" width="40" height="40" id="5"></rect>
+    <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="1" width="240" height="240" id="svg_yellow"></rect>
+    <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="1" width="240" height="240" id="svg_green"></rect>
+    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="361" width="240" height="240" id="svg_red"></rect>
+    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="361" width="240" height="240" id="svg_blue"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="43.449997" width="63" height="63" id="home-5"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="137.449997" width="63" height="63" id="home-8"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="43" width="63" height="63" id="home-6"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="137" width="63" height="63" id="home-7"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="43.449997" width="63" height="63" id="home-9"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="137.449997" width="63" height="63" id="home-12"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="43" width="63" height="63" id="home-10"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="137" width="63" height="63" id="home-11"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="403.449997" width="63" height="63" id="home-13"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="399" y="497.449997" width="63" height="63" id="home-16"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="403" width="63" height="63" id="home-14"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="498" y="497" width="63" height="63" id="home-15"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="403.449997" width="63" height="63" id="home-1"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="497.449997" width="63" height="63" id="home-4"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="403" width="63" height="63" id="home-2"></rect>
+    <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="497" width="63" height="63" id="home-3"></rect>
+    <path id="svg_4" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#1436e9"></path>
+    <path id="svg_5" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#1436e9"></path>
+    <text
+      transform="matrix(1.55331, 0, 0, 1.48633, -44.9029, -118.19)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_7"
+      y="260"
+      x="59"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
+    <text
+      transform="matrix(1.47481, 0, 0, 1.52185, -59.8899, -164.765)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_8"
+      y="338"
+      x="100"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
+    <text
+      transform="matrix(1.67418, 0, 0, 1.65832, -243.452, -316.772)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_9"
+      y="498.5"
+      x="340"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
+    <text
+      transform="matrix(1.51388, 0, 0, 1.56774, -143.45, -296.946)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_10"
+      y="540.449997"
+      x="258.5"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
+    <text
+      transform="matrix(1.71538, 0, 0, 1.74093, -264.035, -28.1911)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_11"
+      y="57.024403"
+      x="345"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
+    <text
+      transform="matrix(1.51351, 0, 0, 1.55859, -143.351, -46.7459)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_12"
+      y="100.16679"
+      x="259"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
+    <text
+      transform="matrix(1.51306, 0, 0, 1.52693, -287.403, -170.257)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_13"
+      y="340.449997"
+      x="538.5"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
+    <text
+      transform="matrix(1.71503, 0, 0, 1.73319, -375.455, -174.369)"
+      xml:space="preserve"
+      text-anchor="start"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="15"
+      stroke-width="0"
+      id="svg_14"
+      y="257"
+      x="503"
+      fill-opacity="null"
+      stroke-opacity="null"
+      stroke="#000"
+      fill="#000000">☆</text>
 
-  <rect fill="#fff" class="155" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="321" width="40" height="40" id="155"></rect>
-  <rect fill="#fff" class="116" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="281" width="40" height="40" id="116"></rect>
-  <rect fill="#fff" class="142" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="281" width="40" height="40" id="142"></rect>
-  <rect fill="#fff" class="129" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="241" width="40" height="40" id="129"></rect>
+    <rect fill="#fff" class="155" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="321" width="40" height="40" id="155"></rect>
+    <rect fill="#fff" class="116" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="281" width="40" height="40" id="116"></rect>
+    <rect fill="#fff" class="142" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="281" width="40" height="40" id="142"></rect>
+    <rect fill="#fff" class="129" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="241" width="40" height="40" id="129"></rect>
 
-  <polygon class="116" points="240,240 240,360 300,300" stroke="black" stroke-width="1.5" fill="#0b9d22"/>
-  <polygon class="155" points="240,360 300,300 360,360" stroke="black" stroke-width="1.5" fill="#f21010"/>
-  <polygon class="142" points="360,240 300,300 360,360" stroke="black" stroke-width="1.5" fill="#1436e9"/>
-  <polygon class="129" points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#ffff00"/>
-  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" rx="10.5" ry="10.5" id="green-5" class='hide'></ellipse>
-  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" rx="10.5" ry="10.5" id="green-6" class='hide'></ellipse>
-  <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" rx="10.5" ry="10.5" id="green-7" class='hide'></ellipse>
-    <ellipse fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" rx="10.5" ry="10.5" id="green-8" class='hide'></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" rx="10.5" ry="10.5" id="yellow-9" class='hide'></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" rx="10.5" ry="10.5" id="yellow-10" class='hide'></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" rx="10.5" ry="10.5" id="yellow-11" class='hide'></ellipse>
-  <ellipse fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" rx="10.5" ry="10.5" id="yellow-12" class='hide'></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" rx="10.5" ry="10.5" id="blue-13" class='hide'></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" rx="10.5" ry="10.5" id="blue-14" class='hide'></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" rx="10.5" ry="10.5" id="blue-15" class='hide'></ellipse>
-  <ellipse fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" rx="10.5" ry="10.5" id="blue-16" class='hide'></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" rx="10.5" ry="10.5" id="red-1" class='hide'></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" rx="10.5" ry="10.5" id="red-2" class='hide'></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" rx="10.5" ry="10.5" id="red-3" class='hide'></ellipse>
-  <ellipse fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" rx="10.5" ry="10.5" id="red-4" class='hide'></ellipse>
- </g>
+    <polygon class="116" points="240,240 240,360 300,300" stroke="black" stroke-width="1.5" fill="#0b9d22"/>
+    <polygon class="155" points="240,360 300,300 360,360" stroke="black" stroke-width="1.5" fill="#f21010"/>
+    <polygon class="142" points="360,240 300,300 360,360" stroke="black" stroke-width="1.5" fill="#1436e9"/>
+    <polygon class="129" points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#ffff00"/>
+    <g id="green-coin-5">
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" r="10.5" id="green-5"></circle>
+      <text x="70" y="75.949997" font-family='roboto,sans-serif' id="green-5-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="green-coin-6">
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" r="10.5" id="green-6"></circle>
+      <text x="170" y="75.949997" font-family='roboto,sans-serif' id="green-6-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="green-coin-7">
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" r="10.5" id="green-7"></circle>
+      <text x="170" y="168.949997" font-family='roboto,sans-serif' id="green-7-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="green-coin-8">
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" r="10.5" id="green-8"></circle>
+      <text x="70" y="168.949997" font-family='roboto,sans-serif' id="green-8-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="yellow-coin-9">
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" r="10.5" id="yellow-9"></circle>
+      <text x="430" y="75.949997" font-family='roboto,sans-serif' id="yellow-9-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="yellow-coin-10">
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" r="10.5" id="yellow-10"></circle>
+      <text x="530" y="75.949997" font-family='roboto,sans-serif' id="yellow-10-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="yellow-coin-11">
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" r="10.5" id="yellow-11"></circle>
+      <text x="530" y="168.949997" font-family='roboto,sans-serif' id="yellow-11-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="yellow-coin-12">
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" r="10.5" id="yellow-12"></circle>
+      <text x="430" y="168.949997" font-family='roboto,sans-serif' id="yellow-12-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="blue-coin-13">
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" r="10.5" id="blue-13"></circle>
+      <text x="430" y="435.949997" fill="white" font-family='roboto,sans-serif' id="blue-13-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="blue-coin-14">
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" r="10.5" id="blue-14"></circle>
+      <text x="530" y="435.949997" fill="white" font-family='roboto,sans-serif' id="blue-14-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="blue-coin-15">
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" r="10.5" id="blue-15"></circle>
+      <text x="530" y="528.949997" fill="white" font-family='roboto,sans-serif' id="blue-15-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="blue-coin-16">
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" r="10.5" id="blue-16"></circle>
+      <text x="430" y="528.949997" fill="white" font-family='roboto,sans-serif' id="blue-16-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="red-coin-1">
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" r="10.5" id="red-1"></circle>
+      <text x="70" y="435.949997" font-family='roboto,sans-serif' id="red-1-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="red-coin-2">
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" r="10.5" id="red-2"></circle>
+      <text x="170" y="435.949997" font-family='roboto,sans-serif' id="red-2-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="red-coin-3">
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" r="10.5" id="red-3"></circle>
+      <text x="170" y="528.949997" font-family='roboto,sans-serif' id="red-3-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+    <g id="red-coin-4">
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" r="10.5" id="red-4"></circle>
+      <text x="70" y="528.949997" font-family='roboto,sans-serif' id="red-4-text" text-anchor="middle" dy=".3em"></text>
+    </g>
+  </g>
 </svg>

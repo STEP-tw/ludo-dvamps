@@ -100,7 +100,7 @@ const makeSortedCoin = function(coins) {
   let sortedCoins = coins.reduce((sortedCoins,coin)=>{
     sortedCoins[coin.position] ?
       sortedCoins[coin.position].push(`${coin.color}-${coin.id}`)
-      : sortedCoins[coin.position] = [`${coin.color}-${coin.id}`];
+      : sortedCoins[coin.position] = [ `${coin.color}-${coin.id}`];
     return sortedCoins;
   },{});
   return sortedCoins;
@@ -108,9 +108,9 @@ const makeSortedCoin = function(coins) {
 const setCountOnCoin = function(coinIds,coinsCounts){
   coinIds.forEach((coinId)=>{
     let text = coinsCounts[coinId];
-    if (text>1) {
-      setInnerText(coins,text);
-    }
+    let textEle = getElement(`#${coinId}-text`);
+    textEle.textContent = "";
+    if(text>1) textEle.textContent = text ;
   });
 };
 const updateCoinPosition = function(players){
@@ -122,10 +122,10 @@ const updateCoinPosition = function(players){
   let sortedCoins = makeSortedCoin(overlappedCoins);
   let belowCoinsCount = arrBelowCoinsCount(overlappedCoins);
   arrOverlappingCoins(sortedCoins);
-  setCountOnCoin(Object.keys(sortedCoins),belowCoinsCount);
+  setCountOnCoin(Object.values(sortedCoins),belowCoinsCount);
 };
-let moveCoin = function(event) {
-  let coinToMove = event.target.id.split('-')[1];
+const moveCoin = function(coinToMove) {
+  let coinID=coinToMove.replace('-coin','');
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);
     if (status.won) {
@@ -137,7 +137,7 @@ let moveCoin = function(event) {
     status.players.forEach((player)=>{
       actionOnMovableCoins(player.coins,"remove");
     });
-  }, `coinId=${coinToMove}`);
+  }, `coinId=${coinID}`);
 };
 
 const highlightNextPosition = function(responseText,coinToMove){
@@ -163,14 +163,14 @@ const highlightNextPosition = function(responseText,coinToMove){
 }
 
 const getNextPos = function(event){
-  let coinToMove = event.target.id.split('-')[1];
+  let coinToMove=event.target.id.split('-')[1];
   sendAjaxRequest('POST','/game/nextPos',function(){
     highlightNextPosition(this.responseText,coinToMove);
   },`coinID=${coinToMove}`);
 };
 const addListenerTOCoin = function(coins) {
   coins.forEach((coin) => {
-    setClickListener(`#${coin.color}-${coin.id}`, getNextPos);
+    setClickListener(`#${coin.color}-coin-${coin.id}`, getNextPos);
   });
 };
 const actionOnMovableCoins = function(coins,action) {
@@ -361,6 +361,24 @@ const load = function() {
   });
   gameStatusReqInterval=setInterval(getGameStatus, 1000);
   logStatusReqInterval=setInterval(getLogs, 2000);
+};
+
+const endGame = function() {
+  clearInterval(gameStatusReqInterval);
+  clearInterval(logStatusReqInterval);
+  moveCoin=null;
+  requestRollDice = null;
+};
+const changeCoinPosition = (coinId,cellId,marginForX,marginForY) => {
+  let coin = document.getElementById(coinId);
+  let cell = document.getElementById(cellId);
+  let text = document.querySelector(`#${coinId}-text`);
+  let xCoOrd=cell.x.animVal.value + marginForX;
+  let yCoOrd=cell.y.animVal.value + marginForY;
+  coin.setAttribute('cx',xCoOrd);
+  coin.setAttribute('cy',yCoOrd);
+  text.setAttribute('x',xCoOrd);
+  text.setAttribute('y',yCoOrd);
 };
 window.onload = load;
 /*eslint-enable*/

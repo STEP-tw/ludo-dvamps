@@ -51,8 +51,7 @@ describe('#Player', () => {
         name:'john',
         color:'red',
         coins:[{id:1,color:'red',position:-2},
-          {id:2,color:'red',position:-3}],
-        pairedCellPos:[]
+          {id:2,color:'red',position:-3}]
       };
       assert.deepEqual(player.getStatus(),expectedStatus);
     });
@@ -98,18 +97,6 @@ describe('#Player', () => {
       player.setKilledOpponent()
       player.path.getCell(3).addCoin(secondCoin);
       assert.deepEqual(player.getMovableCoins(1),[secondCoin]);
-    });
-  });
-  describe('#getPairedCellPos', () => {
-    it('should return paired cell pos if paring of coins happend', () => {
-      let firstCoin = new Coin(1,2);
-      let secondCoin = new Coin(2,2);
-      let positions = [2,2];
-      firstCoin.color = 'red';
-      secondCoin.color = 'red';
-      let coins = [firstCoin,secondCoin];
-      let player = new Player('john','red',coins);
-      assert.deepEqual(player.getPairedCellPos(positions),[2]);
     });
   });
   describe('#hasMovableCoins', () => {
