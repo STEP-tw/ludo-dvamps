@@ -51,10 +51,10 @@ const highlightDestinationCells = function(cellId){
 };
 
 const dehighlightDestinationCells = function(cellId){
-  let highlightedCells = document.querySelectorAll(`[id="${cellId}"]`);
-  highlightedCells.forEach((cell)=>{
-    cell.classList.remove('highlight');
-  })
+  let highlightedCells = document.getElementsByClassName(`${cellId}`);
+  for (let i = 0; i < highlightedCells.length; i++) {
+    highlightedCells[i].classList.remove('highlight');
+  }
 };
 
 const isHighlighted = function(cellID){
@@ -362,9 +362,10 @@ const endGame = function() {
 const changeCoinPosition = (coinId,cellId,marginForX,marginForY) => {
   let coin = document.getElementById(coinId);
   let cell = document.getElementById(cellId);
+  console.log(coin, cell.x);
   coin.setAttribute('cx',cell.x.animVal.value + marginForX);
   coin.setAttribute('cy',cell.y.animVal.value + marginForY);
-};
+};/////////did'nt get...
 
 window.onload = load;
 /*eslint-enable*/
