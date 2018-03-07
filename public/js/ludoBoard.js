@@ -335,19 +335,6 @@ const getLogs = function() {
 };
 let gameStatusReqInterval;
 let logStatusReqInterval;
-const endGame = function() {
-  clearInterval(gameStatusReqInterval);
-  clearInterval(logStatusReqInterval);
-  moveCoin=null;
-  requestRollDice = null;
-};
-const changeCoinPosition = (coinId,cellId,marginForX,marginForY) => {
-  let coin = document.getElementById(coinId);
-  let cell = document.getElementById(cellId);
-  console.log(coin, cell.x);
-  coin.setAttribute('cx',cell.x.animVal.value + marginForX);
-  coin.setAttribute('cy',cell.y.animVal.value + marginForY);
-};/////////did'nt get...
 
 const load = function() {
   showPlayers();
