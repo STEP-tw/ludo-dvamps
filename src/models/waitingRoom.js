@@ -17,7 +17,7 @@ class WaitingRoom {
     this.guests.push(guest);
   }
   removeGuest(guestToRemove){
-    let indexOfGuest = this.guests.find((guest)=>guest==guestToRemove);
+    let indexOfGuest = this.guests.indexOf(guestToRemove);
     this.guests.splice(indexOfGuest,1);
   }
   isGuest(name){
