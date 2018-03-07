@@ -1,5 +1,5 @@
 ColorDistributer = function() {
-  this.colors = ['red', 'green', 'blue', 'yellow'];
+  this.colors = ['red', 'green', 'yellow', 'blue'];
 }
 ColorDistributer.prototype = {
   getColor: function() {

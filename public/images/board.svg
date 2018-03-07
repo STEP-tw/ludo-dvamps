@@ -224,68 +224,68 @@
     <polygon class="142" points="360,240 300,300 360,360" stroke="black" stroke-width="1.5" fill="#1436e9"/>
     <polygon class="129" points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#ffff00"/>
     <g id="green-coin-5">
-      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" r="10.5" id="green-5"></circle>
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" r="10.5" id="green-5"class = "hide"></circle>
       <text x="70" y="75.949997" font-family='roboto,sans-serif' id="green-5-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="green-coin-6">
-      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" r="10.5" id="green-6"></circle>
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="75.949997" r="10.5" id="green-6"class = "hide"></circle>
       <text x="170" y="75.949997" font-family='roboto,sans-serif' id="green-6-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="green-coin-7">
-      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" r="10.5" id="green-7"></circle>
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="168.949997" r="10.5" id="green-7"class = "hide"></circle>
       <text x="170" y="168.949997" font-family='roboto,sans-serif' id="green-7-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="green-coin-8">
-      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" r="10.5" id="green-8"></circle>
+      <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="168.949997" r="10.5" id="green-8"class = "hide"></circle>
       <text x="70" y="168.949997" font-family='roboto,sans-serif' id="green-8-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="yellow-coin-9">
-      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" r="10.5" id="yellow-9"></circle>
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="75.949997" r="10.5" id="yellow-9"class = "hide"></circle>
       <text x="430" y="75.949997" font-family='roboto,sans-serif' id="yellow-9-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="yellow-coin-10">
-      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" r="10.5" id="yellow-10"></circle>
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="75.949997" r="10.5" id="yellow-10"class = "hide"></circle>
       <text x="530" y="75.949997" font-family='roboto,sans-serif' id="yellow-10-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="yellow-coin-11">
-      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" r="10.5" id="yellow-11"></circle>
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="168.949997" r="10.5" id="yellow-11"class = "hide"></circle>
       <text x="530" y="168.949997" font-family='roboto,sans-serif' id="yellow-11-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="yellow-coin-12">
-      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" r="10.5" id="yellow-12"></circle>
+      <circle fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="168.949997" r="10.5" id="yellow-12"class = "hide"></circle>
       <text x="430" y="168.949997" font-family='roboto,sans-serif' id="yellow-12-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="blue-coin-13">
-      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" r="10.5" id="blue-13"></circle>
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="435.949997" r="10.5" id="blue-13"class = "hide"></circle>
       <text x="430" y="435.949997" fill="white" font-family='roboto,sans-serif' id="blue-13-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="blue-coin-14">
-      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" r="10.5" id="blue-14"></circle>
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="435.949997" r="10.5" id="blue-14"class = "hide"></circle>
       <text x="530" y="435.949997" fill="white" font-family='roboto,sans-serif' id="blue-14-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="blue-coin-15">
-      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" r="10.5" id="blue-15"></circle>
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="530" cy="528.949997" r="10.5" id="blue-15"class = "hide"></circle>
       <text x="530" y="528.949997" fill="white" font-family='roboto,sans-serif' id="blue-15-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="blue-coin-16">
-      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" r="10.5" id="blue-16"></circle>
+      <circle fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="430" cy="528.949997" r="10.5" id="blue-16"class = "hide"></circle>
       <text x="430" y="528.949997" fill="white" font-family='roboto,sans-serif' id="blue-16-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="red-coin-1">
-      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" r="10.5" id="red-1"></circle>
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="435.949997" r="10.5" id="red-1"class = "hide"></circle>
       <text x="70" y="435.949997" font-family='roboto,sans-serif' id="red-1-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="red-coin-2">
-      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" r="10.5" id="red-2"></circle>
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="435.949997" r="10.5" id="red-2"class = "hide"></circle>
       <text x="170" y="435.949997" font-family='roboto,sans-serif' id="red-2-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="red-coin-3">
-      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" r="10.5" id="red-3"></circle>
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="170" cy="528.949997" r="10.5" id="red-3"class = "hide"></circle>
       <text x="170" y="528.949997" font-family='roboto,sans-serif' id="red-3-text" text-anchor="middle" dy=".3em"></text>
     </g>
     <g id="red-coin-4">
-      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" r="10.5" id="red-4"></circle>
-      <text x="70" y="528.949997" font-family='roboto,sans-serif' id="red-4-text" text-anchor="middle" dy=".3em"></text>
+      <circle fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="528.949997" r="10.5" id="red-4" class='hide'></circle>
+      <text x="70" y="528.949997" font-family='roboto,sans-serif' id="red-4-text"  text-anchor="middle" dy=".3em"></text>
     </g>
   </g>
 </svg>

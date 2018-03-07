@@ -108,7 +108,7 @@ describe('#Game', () => {
   });
   describe('#arrangePlayers', () => {
     it('should arrange Players in required sequence', () => {
-      game = initGame(['lala','kaka','ram','shyam'],fourPointDice);
+      let game = initGame(['lala','kaka','ram','shyam'],fourPointDice);
       let expection = ['lala', 'kaka', 'ram', 'shyam'];
       assert.deepEqual(expection, game.arrangePlayers());
     });

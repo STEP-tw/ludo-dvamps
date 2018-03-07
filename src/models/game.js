@@ -112,7 +112,16 @@ class Game {
     return this.getInfoPer(move);
   }
   arrangePlayers(){
-    return this.players.map((player)=>player.getName());
+    let players = this.players;
+    let arrangedPlayers=[];
+    let colors = ['red','green','yellow','blue'];
+    colors.forEach(function(color){
+      let playerWithColor=players.find((player)=>player.getColor()==color);
+      if(playerWithColor){
+        arrangedPlayers.push(playerWithColor.getName());
+      }
+    });
+    return arrangedPlayers;
   }
   start(){
     let players = this.arrangePlayers();

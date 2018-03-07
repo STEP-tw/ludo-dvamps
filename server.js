@@ -2,7 +2,6 @@ const http = require('http');
 const app = require('./app.js');
 const Dice = require('./src/models/dice.js');
 const path = require('path');
-const EventEmitter = require('events');
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const ColorDistributer = require('./src/models/colorDistributer.js');
 
