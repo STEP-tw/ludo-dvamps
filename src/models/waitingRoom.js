@@ -36,7 +36,8 @@ class WaitingRoom {
     return {
       name: this.name,
       remain: this.availableSpace(),
-      createdBy: this.guests[0]
+      createdBy: this.guests[0],
+      capacity:this.capacity
     };
   }
   getStatus(){

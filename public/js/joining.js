@@ -18,7 +18,8 @@ const createTrWithData = function(tag, ...args) {
 };
 
 const showGameData = function(table, game) {
-  let tr = createTrWithData('td', game.name, game.createdBy, game.remain);
+  let tr = createTrWithData('td', game.name, game.createdBy, game.capacity,
+    game.remain);
   let button = createElement('button', 'Join', 'join');
   let buttonData = createElement('td');
   appendChilds(buttonData, button);
@@ -72,7 +73,7 @@ const displayGamesToJoin = function() {
   let shownGames = document.querySelector('table');
   let updatedGames = createElement('table');
   let heading = createTrWithData('th', 'Game Name', 'Created By',
-    'Player yet to join', 'Join Game');
+    'Max players', 'Player yet to join', 'Join Game');
   updatedGames.appendChild(heading);
   games.forEach(showGameData.bind(0, updatedGames));
   shownGames.replaceWith(updatedGames);

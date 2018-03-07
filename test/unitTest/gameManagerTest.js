@@ -39,6 +39,7 @@ describe('GameManager', () => {
       gameManager.joinRoom('ludo', 'john');
       gameManager.joinRoom('ludo', 'sandy');
       let expectation = [{
+        capacity:3,
         name:'ludo',
         remain:1,
         createdBy: 'john'
