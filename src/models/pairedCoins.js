@@ -3,11 +3,15 @@ class PairedCoins {
     this.pairs = [];
   }
   addPair(coinIds,position){
+    if(coinIds.some((coin)=>this.isCoinPaired(coin)) || coinIds.length!=2){
+      return false;
+    }
     let pair = {
       position,
       coinIds
     };
     this.pairs.push(pair);
+    return true;
   }
   isCoinPaired(coinId){
     return this.pairs.some((paired)=>{

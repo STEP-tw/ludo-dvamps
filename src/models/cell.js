@@ -4,6 +4,16 @@ class Cell {
     this.coins = [];
   }
 
+  getCoins(){
+    return this.coins.map((coin)=>{
+      return coin.getId();
+    });
+  }
+
+  get noOfCoins(){
+    return this.coins.length;
+  }
+
   addCoin(coin){
     coin.setPosition(this.position);
     this.coins.push(coin);
@@ -14,11 +24,17 @@ class Cell {
     let coinIndex = this.coins.findIndex(coin=>coin.id == coinId);
     return this.coins.splice(coinIndex,1).pop();
   }
+
   getPosition(){
     return this.position;
   }
+
   canPlace(coin){
     return true;
+  }
+
+  isUnsafe(){
+    return false;
   }
 }
 

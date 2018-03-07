@@ -28,6 +28,10 @@ class UnsafeCell extends Cell {
   canPlace(coin){
     return this.coins.length<2;
   }
+
+  isUnsafe(){
+    return true;
+  }
 }
 
 module.exports = UnsafeCell;

@@ -77,26 +77,47 @@ describe('#Player', () => {
       player.path.addCell(new UnsafeCell(2));
       player.path.addCell(new UnsafeCell(3));
       player.path.addCell(new UnsafeCell(4));
+      player.path.addCell(new UnsafeCell(5));
+      player.path.addCell(new UnsafeCell(6));
+      player.path.addCell(new UnsafeCell(7));
     })
-    it('should return empty list if there are no movable coins', () => {
-      let expected = [];
-      assert.deepEqual(player.getMovableCoins(3),expected);
+    describe('#unPairedCoins', () => {
+      it('should return empty list if there are no movable coins', () => {
+        let expected = [];
+        assert.deepEqual(player.getMovableCoins(3),expected);
+      });
+      it('should return coins list if there are movable coins', () => {
+        [-2,-3,1,2,3,4,5,6].forEach(function(cellPos){
+          player.path.addCell(new UnsafeCell(cellPos));
+        })
+        let expected = [new Coin(1,-2),new Coin(2,-3)]
+        assert.deepEqual(player.getMovableCoins(6),expected);
+      });
+      it('should not allow coin to reach Destination if players has not killed opp. coin',()=>{
+        player.path.getCell(6).addCoin(secondCoin);
+        assert.deepEqual(player.getMovableCoins(1),[]);
+      });
+      it('should allow coin to reach Destination if players has killed opp. coin',()=>{
+        player.setKilledOpponent()
+        player.path.getCell(3).addCoin(secondCoin);
+        assert.deepEqual(player.getMovableCoins(1),[secondCoin]);
+      });
     });
-    it('should return coins list if there are movable coins', () => {
-      [-2,-3,1,2,3,4,5,6].forEach(function(cellPos){
-        player.path.addCell(new UnsafeCell(cellPos));
+    describe('#pairedCoins', () => {
+      beforeEach(()=>{
+        player.moveCoin(1,6);
+        player.moveCoin(2,6);
       })
-      let expected = [new Coin(1,-2),new Coin(2,-3)]
-      assert.deepEqual(player.getMovableCoins(6),expected);
-    });
-    it('should not allow coin to reach Destination if players has not killed opp. coin',()=>{
-      player.path.getCell(3).addCoin(secondCoin);
-      assert.deepEqual(player.getMovableCoins(1),[]);
-    });
-    it('should allow coin to reach Destination if players has killed opp. coin',()=>{
-      player.setKilledOpponent()
-      player.path.getCell(3).addCoin(secondCoin);
-      assert.deepEqual(player.getMovableCoins(1),[secondCoin]);
+      it('should not return paired coins if move is odd', () => {
+        let expected = [];
+        assert.deepEqual(player.getMovableCoins(),expected);
+      });
+      it('should return paired coins if move is even', () => {
+        let expected = [new Coin(1,-2),new Coin(2,-3)];
+        expected[0].setPosition(1);
+        expected[1].setPosition(1);
+        assert.deepEqual(player.getMovableCoins(2),expected);
+      });
     });
   });
   describe('#hasMovableCoins', () => {
@@ -117,7 +138,8 @@ describe('#Player', () => {
     oppCoin.setColor('blue');
     beforeEach(()=>{
       firstCoin.setColor('red');
-      [1,2,3,4,5,6].forEach(function(numb){
+      secondCoin.setColor('red');
+      [1,2,3,4,5,6,7,8,9].forEach(function(numb){
         player.path.addCell(new UnsafeCell(numb));
       })
     })
@@ -137,6 +159,17 @@ describe('#Player', () => {
       assert.lengthOf(player.path.getCell(-2).coins,1);
       assert.lengthOf(player.path.getCell(1).coins,0);
     });
+    it('should move double coin by half of the move ', () => {
+      player.moveCoin(1,6);
+      player.moveCoin(2,6);
+      let initPosOfFirstCoin = firstCoin.getPosition();
+      let initPosOfSecondCoin = secondCoin.getPosition();
+      player.moveCoin(1,4);
+      let finalPosOfFirstCoin = firstCoin.getPosition();
+      let finalPosOfSecondCoin = secondCoin.getPosition();
+      assert.equal(finalPosOfFirstCoin,initPosOfFirstCoin+2)
+      assert.equal(finalPosOfSecondCoin,initPosOfSecondCoin+2)
+    });
   });
   describe('#getNoOfCoinsInDest', () => {
     beforeEach(()=>{
@@ -155,6 +188,8 @@ describe('#Player', () => {
   });
   describe('#getNextPos', () => {
     beforeEach(()=>{
+      firstCoin.setColor('red');
+      secondCoin.setColor('red');
       player.path.addCell(new UnsafeCell(0));
       player.path.addCell(new UnsafeCell(1));
       player.path.addCell(new UnsafeCell(2));
@@ -162,6 +197,13 @@ describe('#Player', () => {
     })
     it('should return next postion of given coinId ', () => {
       assert.equal(player.getNextPos(1,6),0);
+    });
+    it('should return next position as half of even dice roll',()=>{
+      player.moveCoin(1,6);
+      player.moveCoin(2,6);
+      let initPos = firstCoin.getPosition();
+      let nextPos = player.getNextPos(1,4);
+      assert.equal(nextPos,initPos+2);
     });
   });
 });

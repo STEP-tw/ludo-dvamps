@@ -6,18 +6,26 @@ let pairedCoins;
 describe('#PairedCoins', () => {
   beforeEach(() => {
     pairedCoins = new PairedCoins();
-    pairedCoins.addPair([1, 2], 13);
   })
   describe('#addPair', () => {
+    it('shouldn\'t add a pair if there are more than 2 coins', () => {
+      assert.isNotOk(pairedCoins.addPair([4,5,6],40));
+    });
+    it('shouldn\'t add a pair if there are less than 2 coins', () => {
+      assert.isNotOk(pairedCoins.addPair([4],40));
+    });
+    it('shouldn\'t add a pair if there are less than 2 coins', () => {
+      assert.isNotOk(pairedCoins.addPair([4],40));
+    });
     it('should add a pair', () => {
-      let expected = {
-        position: 13,
-        coinIds: [1, 2]
-      };
-      assert.deepEqual(pairedCoins.getPairOf(1), expected);
+      assert.isOk(pairedCoins.addPair([1, 2], 13));
     });
   });
   describe('#isCoinPaired', () => {
+    beforeEach(() => {
+      pairedCoins = new PairedCoins();
+      pairedCoins.addPair([1, 2], 13);
+    })
     it('should return true if given coin pair exist', () => {
       assert.isOk(pairedCoins.isCoinPaired(1));
     });
@@ -25,7 +33,11 @@ describe('#PairedCoins', () => {
       assert.isNotOk(pairedCoins.isCoinPaired(7));
     });
   });
-  describe('#getPair', () => {
+  describe('#getPairs', () => {
+    beforeEach(() => {
+      pairedCoins = new PairedCoins();
+      pairedCoins.addPair([1, 2], 13);
+    })
     it('should return all pairs', () => {
       pairedCoins.addPair([3, 4], 10);
       let expected = [{
@@ -38,6 +50,19 @@ describe('#PairedCoins', () => {
         }
       ];
       assert.deepEqual(pairedCoins.getPairs(), expected);
+    });
+  });
+  describe('#getPairOf', () => {
+    beforeEach(() => {
+      pairedCoins = new PairedCoins();
+      pairedCoins.addPair([1, 2], 13);
+    })
+    it('should return the pair of coins', () => {
+      let expected = {
+        position: 13,
+        coinIds: [1, 2]
+      };
+      assert.deepEqual(pairedCoins.getPairOf(2),expected)
     });
   });
 });
