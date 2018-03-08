@@ -110,7 +110,7 @@ const setCountOnCoin = function(coinIds,coinsCounts){
     let text = coinsCounts[coinId];
     let textEle = getElement(`#${coinId}-text`);
     textEle.textContent = "";
-    if(text>1) textEle.textContent = text ;
+    text>1 ? textEle.textContent = text : textEle.textContent = "";;
   });
 };
 const updateCoinPosition = function(players){
