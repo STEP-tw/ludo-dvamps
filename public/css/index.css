@@ -90,3 +90,30 @@ input[type="text"]:hover {
   color: red;
   text-transform: uppercase;
 }
+
+.playersCount {
+  width: 33%;
+  height: 50px;
+  margin: 10px;
+  font-size: 140%;
+  font-family: 'Open Sans', sans-serif;
+  border: none;
+  border-bottom: 2px solid #605d5d;
+  background-color:#d6d6d600;
+  text-align: center;
+}
+
+select {
+  width: 30%;
+  height: 50px;
+  font-size: 100%;
+  font-family: 'Open Sans', sans-serif;
+  border: none;
+  background-color:#d6d6d600;
+  text-align: center;
+}
+
+select:focus {
+  border-block-end-color: white;
+}
+
