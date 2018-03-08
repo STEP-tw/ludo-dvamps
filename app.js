@@ -34,8 +34,4 @@ app.post('/createGame',lib.verifyReqBody,lib.verifyCreateGameReq,
   postHandlers.createNewGame);
 app.post('/joinGame',lib.verifyReqBody,postHandlers.joinPlayerToGame);
 app.delete('/player',lib.checkCookie,lib.verifyIsGuest,deleteHandler.removePlayer);
-app.get('/debug',function(req,res,next){
-  debugger;
-  next();
-});
 module.exports = app;
