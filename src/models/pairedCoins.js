@@ -24,6 +24,13 @@ class PairedCoins {
   getPairOf(coinId){
     return this.pairs.find(pair=>pair.coinIds.includes(coinId));
   }
+  removePair(coinId){
+    let pairedCoins = this.getPairOf(coinId);
+    if(pairedCoins) {
+      let indexOfPair = this.pairs.indexOf();
+      this.getPairs().splice(indexOfPair,1);
+    }
+  }
 }
 
 module.exports = PairedCoins;
