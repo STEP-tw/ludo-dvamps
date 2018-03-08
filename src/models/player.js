@@ -53,14 +53,15 @@ class Player {
     let currentMove;
     let hasKilledOpp = this.hasKilledOpp;
     return this.coins.filter(coin => {
+      let isPaired = this.isCoinPaired(coin.getId());
       currentMove = move;
-      if(this.isCoinPaired(coin.id)){
+      if(isPaired){
         currentMove = move / 2;
       }
-      if(isOdd(move) && this.isCoinPaired(coin.id)){
+      if(isOdd(move) && isPaired){
         return false;
       }
-      return this.path.isMovePossible(coin, currentMove, hasKilledOpp);
+      return this.path.isMovePossible(coin, currentMove, hasKilledOpp,isPaired);
     });
   }
   hasMovableCoins(move) {

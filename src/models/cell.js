@@ -33,6 +33,10 @@ class Cell {
     return true;
   }
 
+  canPassOver(isPaired){
+    return true;
+  }
+
   isUnsafe(){
     return false;
   }

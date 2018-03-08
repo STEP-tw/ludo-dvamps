@@ -45,11 +45,18 @@ class Path {
     }
     return nextMovableCell;
   }
-  isMovePossible(coin,move,hasKilledOpp) {
+  canGoThrough(initPos,finalPos,coin,isPaired){
+    let initIndex = this.cells.indexOf(this.getCell(initPos));
+    let finalIndex = this.cells.indexOf(this.getCell(finalPos));
+    let inBetweenCells = this.cells.slice(initIndex+1,finalIndex);
+    return inBetweenCells.every((cell)=>cell.canPassOver(isPaired));
+  }
+  isMovePossible(coin,move,hasKilledOpp,isPaired) {
     let cellHoldingCoin = this.getCell(coin.getPosition());
     let currentPos = cellHoldingCoin.getPosition();
     let nextPos = this.getNextMove(coin,move,hasKilledOpp).getPosition();
-    return currentPos!=nextPos;
+    let canPass = this.canGoThrough(currentPos,nextPos,coin,isPaired);
+    return canPass && currentPos != nextPos;
   }
   moveCoin(coin,move,hasKilledOpp){
     let currentCell = this.getCell(coin.position);

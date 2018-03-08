@@ -25,8 +25,15 @@ class UnsafeCell extends Cell {
     return status;
   }
 
-  canPlace(coin){
-    return this.coins.length<2;
+  canPlace(coin,isPaired){
+    if(isPaired && this.hasCoinOfSameColor(coin)){
+      return false;
+    }
+    return isPaired || this.noOfCoins<2;
+  }
+
+  canPassOver(isPaired){
+    return isPaired || this.noOfCoins<2;
   }
 
   isUnsafe(){

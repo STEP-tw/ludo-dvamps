@@ -41,4 +41,11 @@ describe('Cell', () => {
       assert.equal(cell.getPosition(),2);
     });
   });
+  describe('#canPassOver',()=>{
+    it('should return true whenever asked for canPassOver',()=>{
+      let cell = new Cell(1);
+      assert.isOk(cell.canPassOver(true));
+      assert.isOk(cell.canPassOver(false));
+    });
+  })
 });

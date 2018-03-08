@@ -16,13 +16,18 @@ const generateSafeCells = function(from,to) {
 };
 
 describe('#Player', () => {
+  const initCoin = function(id,homePos,color){
+    let coin = new Coin(id,homePos);
+    coin.setColor(color);
+    return coin;
+  }
   let player,coins,path,firstCoin,secondCoin,thirdCoin,fourthCoin,oppCoin;
   beforeEach(function(){
     path = new Path(2);
-    firstCoin = new Coin(1,-2);
-    secondCoin = new Coin(2,-3);
-    thirdCoin = new Coin(3,-4);
-    fourthCoin = new Coin(4,-5);
+    firstCoin = initCoin(1,-2,'red');
+    secondCoin = initCoin(2,-3,'red');
+    thirdCoin = initCoin(3,-4,'red');
+    fourthCoin = initCoin(4,-5,'red');
     coins = [firstCoin,secondCoin];
     path.addCell(new UnsafeCell(-2));
     path.addCell(new UnsafeCell(-3));
@@ -58,7 +63,7 @@ describe('#Player', () => {
   });
   describe('#getCoins', () => {
     it('should return the coins of the player', () => {
-      coins = [new Coin(1,-2),new Coin(2,-3)];
+      coins = [initCoin(1,-2,'red'),initCoin(2,-3,'red')];
       assert.deepEqual(player.getCoins(),coins);
     });
   });
@@ -73,13 +78,7 @@ describe('#Player', () => {
   });
   describe('#getMovableCoins', () => {
     beforeEach(()=>{
-      player.path.addCell(new UnsafeCell(1));
-      player.path.addCell(new UnsafeCell(2));
-      player.path.addCell(new UnsafeCell(3));
-      player.path.addCell(new UnsafeCell(4));
-      player.path.addCell(new UnsafeCell(5));
-      player.path.addCell(new UnsafeCell(6));
-      player.path.addCell(new UnsafeCell(7));
+      [1,2,3,4,5,6,7].forEach((num)=>player.path.addCell(new UnsafeCell(num)));
     })
     describe('#unPairedCoins', () => {
       it('should return empty list if there are no movable coins', () => {
@@ -90,7 +89,7 @@ describe('#Player', () => {
         [-2,-3,1,2,3,4,5,6].forEach(function(cellPos){
           player.path.addCell(new UnsafeCell(cellPos));
         })
-        let expected = [new Coin(1,-2),new Coin(2,-3)]
+        let expected = [initCoin(1,-2,'red'),initCoin(2,-3,'red')];
         assert.deepEqual(player.getMovableCoins(6),expected);
       });
       it('should not allow coin to reach Destination if players has not killed opp. coin',()=>{
@@ -102,6 +101,26 @@ describe('#Player', () => {
         player.path.getCell(3).addCoin(secondCoin);
         assert.deepEqual(player.getMovableCoins(1),[secondCoin]);
       });
+      it('should return empty list if two opp coins block player coin path',function(){
+        player.moveCoin(1,6);
+        [1,2].forEach(function(id){
+          let coin = new Coin(id,2);
+          coin.setColor('green');
+          player.path.cells[3].addCoin(coin)
+        });
+        let actual = player.getMovableCoins(2);
+        assert.deepEqual(actual,[]);
+      });
+      it('should not allow to pass single coin over double coins of same colors',()=>{
+        player.moveCoin(1,6);
+        [thirdCoin,fourthCoin].forEach(function(coin){
+          player.path.cells[3].addCoin(coin);
+          player.coins.push(coin);
+          player.moveCoin(coin.getId(),1);
+        });
+        let actual = player.getMovableCoins(3);
+        assert.deepEqual(actual,[]);
+      })
     });
     describe('#pairedCoins', () => {
       beforeEach(()=>{
@@ -113,10 +132,32 @@ describe('#Player', () => {
         assert.deepEqual(player.getMovableCoins(),expected);
       });
       it('should return paired coins if move is even', () => {
-        let expected = [new Coin(1,-2),new Coin(2,-3)];
+        let expected = [initCoin(1,-2,'red'),initCoin(2,-3,'red')];
         expected[0].setPosition(1);
         expected[1].setPosition(1);
         assert.deepEqual(player.getMovableCoins(2),expected);
+      });
+      it('should allow double coin to pass over single coin of same color',function(){
+        player.path.cells[3].addCoin(thirdCoin);
+        player.coins.push(thirdCoin);
+        let actual = player.getMovableCoins(4);
+        assert.deepEqual(actual,[firstCoin,secondCoin,thirdCoin]);
+      });
+      it('should allow double coin to pass over double coin of same color',function(){
+        player.path.cells[3].addCoin(thirdCoin);
+        player.path.cells[3].addCoin(fourthCoin);
+        player.coins.push(thirdCoin);
+        player.coins.push(fourthCoin);
+        let actual = player.getMovableCoins(4);
+        assert.deepEqual(actual,[firstCoin,secondCoin,thirdCoin,fourthCoin]);
+      });
+      it('should allow double coin to pass over double coin of different color',function(){
+        thirdCoin.setColor('green');
+        fourthCoin.setColor('green');
+        player.path.cells[3].addCoin(thirdCoin);
+        player.path.cells[3].addCoin(fourthCoin);
+        let actual = player.getMovableCoins(4);
+        assert.deepEqual(actual,[firstCoin,secondCoin]);
       });
     });
   });

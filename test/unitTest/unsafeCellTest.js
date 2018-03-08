@@ -40,7 +40,6 @@ describe('UnsafeCell', () => {
       assert.deepEqual(status.diedCoin,coin.getStatus());
     });
   });
-
   describe('#hasCoinOfSameColor', () => {
     it('should return true if there is a coin of same color in the cell',()=>{
       let secondCoin =new Coin(2,-2);
@@ -55,8 +54,14 @@ describe('UnsafeCell', () => {
       assert.isOk(unsafeCell.canPlace(secondCoin));
     });
   });
-
   describe('#canPlace', () => {
+    let secondCoin,thirdCoin;
+    beforeEach(()=>{
+      secondCoin =new Coin(2,-2);
+      thirdCoin =new Coin(2,-2);
+      secondCoin.setColor('red');
+      thirdCoin.setColor('red');
+    })
     it('should return true if there is a coin of same color in the cell',()=>{
       let secondCoin =new Coin(2,-2);
       secondCoin.setColor('red');
@@ -69,13 +74,50 @@ describe('UnsafeCell', () => {
       assert.isOk(unsafeCell.canPlace(secondCoin));
     });
     it('should return false if there are 2 coins of same color in the cell',()=>{
-      let secondCoin =new Coin(2,-2);
-      let thirdCoin =new Coin(2,-2);
-      secondCoin.setColor('red');
-      thirdCoin.setColor('red');
       unsafeCell.addCoin(coin);
       unsafeCell.addCoin(secondCoin);
-      assert.isNotOk(unsafeCell.canPlace(thirdCoin));
+      assert.isNotOk(unsafeCell.canPlace(thirdCoin,false));
+    });
+    it('should return false for paired coin to be placed if single coin of same color is there',()=>{
+      unsafeCell.addCoin(coin);
+      assert.isNotOk(unsafeCell.canPlace(secondCoin,true));
+    });
+    it('should return true for paired coin to be placed if single coin of different color is there',()=>{
+      let green1 = new Coin(4,-4);
+      green1.setColor('green');
+      unsafeCell.addCoin(green1);
+      assert.isOk(unsafeCell.canPlace(secondCoin,true));
+    });
+    it('should return true for paired coin to be placed if paired Coin of different color is there',()=>{
+      let green1 = new Coin(4,-4);
+      green1.setColor('green');
+      unsafeCell.addCoin(secondCoin);
+      unsafeCell.addCoin(thirdCoin);
+      assert.isOk(unsafeCell.canPlace(green1,true));
+    });
+    it('should return false for paired coin to be placed if paired Coin of same color is there',()=>{
+      unsafeCell.addCoin(secondCoin);
+      unsafeCell.addCoin(thirdCoin);
+      assert.isNotOk(unsafeCell.canPlace(coin,true));
+    });
+  });
+  describe('#canPassOver',()=>{
+    it('should return true when there is no coin in cell',()=>{
+      assert.isOk(unsafeCell.canPassOver(true));
+      assert.isOk(unsafeCell.canPassOver(false));
+    });
+    it('should return true when there is only one coin in cell',()=>{
+      unsafeCell.addCoin(coin);
+      assert.isOk(unsafeCell.canPassOver(true));
+      assert.isOk(unsafeCell.canPassOver(false));
+    });
+    it('should return true when there is two coin in cell and given coin is paired',()=>{
+      unsafeCell.addCoin(coin);
+      let coin2 = new Coin(2,-2);
+      coin2.setColor('red');
+      unsafeCell.addCoin(coin2);
+      assert.isOk(unsafeCell.canPassOver(true));
+      assert.isNotOk(unsafeCell.canPassOver(false));
     });
   });
 });
