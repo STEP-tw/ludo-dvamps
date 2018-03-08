@@ -152,7 +152,7 @@ const highlightNextPosition = function(responseText,coinToMove){
   if(isHighlighted(nextPos)){
     dehighlightCells(nextPos);
     moveCoin(coinToMove);
-    removeClickListeners('.focus');
+    removeClickListeners('g');
     return;
   }
   if(highlightedCell || highlightedCell == '0'){
