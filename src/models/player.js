@@ -73,20 +73,20 @@ class Player {
   moveCoin(coinId, move) {
     let coin = this.getCoin(coinId);
     let coinPair = this.pairedCoins.getPairOf(+coinId);
-    let status;
+    let status = [];
     let coinsToMove = [];
     if(coinPair){
       let coinIds = coinPair.coinIds;
       move = move/2;
       coinIds.forEach((coinId)=>{
         coin = this.getCoin(coinId);
-        status = this.path.moveCoin(coin, move, this.hasKilledOpp);
+        status.push(this.path.moveCoin(coin, move, this.hasKilledOpp));
       });
     }else{
-      status = this.path.moveCoin(coin, move, this.hasKilledOpp);
+      status.push(this.path.moveCoin(coin, move, this.hasKilledOpp));
     }
     this.decidePair(this.getPath().getCell(coin.position));
-    return status;
+    return status.shift();
   }
   moveCoinToHome(coinDetail) {
     let coin = this.coins.find((coin) => coin.id == coinDetail.id);

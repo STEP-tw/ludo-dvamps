@@ -43,7 +43,6 @@ describe('#Player', () => {
       assert.equal(player.getColor(),'red');
     })
   });
-
   describe('#getStatus', () => {
     it('should return playerStatus', () => {
       let firstCoin = new Coin(1,-2);
@@ -210,6 +209,13 @@ describe('#Player', () => {
       let finalPosOfSecondCoin = secondCoin.getPosition();
       assert.equal(finalPosOfFirstCoin,initPosOfFirstCoin+2)
       assert.equal(finalPosOfSecondCoin,initPosOfSecondCoin+2)
+    });
+    it('should give moved status of first move coin',function(){
+      player.moveCoin(1,6);
+      player.moveCoin(2,6);
+      player.path.cells[3].addCoin(initCoin(1,2,'green'));
+      let status = player.moveCoin(1,2);
+      assert.isOk(status.killedOppCoin);
     });
   });
   describe('#getNoOfCoinsInDest', () => {
