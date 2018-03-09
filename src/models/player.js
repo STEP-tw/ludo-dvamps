@@ -77,10 +77,12 @@ class Player {
     let coinsToMove = [];
     if(coinPair){
       let coinIds = coinPair.coinIds;
-      move = move/2;
+      let isPaired = true;
+      move = move / 2;
       coinIds.forEach((coinId)=>{
         coin = this.getCoin(coinId);
-        status.push(this.path.moveCoin(coin, move, this.hasKilledOpp));
+        status.push(this.path.moveCoin(coin, move, this.hasKilledOpp,isPaired));
+        isPaired = false;
       });
     }else{
       status.push(this.path.moveCoin(coin, move, this.hasKilledOpp));
@@ -89,8 +91,16 @@ class Player {
     return status.shift();
   }
   moveCoinToHome(coinDetail) {
-    let coin = this.coins.find((coin) => coin.id == coinDetail.id);
-    this.path.putAtHome(coin);
+    let coinPair = this.pairedCoins.getPairOf(coinDetail.id);
+    let coins = [];
+    if(coinPair){
+      this.pairedCoins.removePair(coinDetail.id);
+      coinPair.coinIds.forEach((coinId)=>{
+        this.path.putAtHome(this.getCoin(coinId));
+      });
+      return;
+    }
+    this.path.putAtHome(this.getCoin(coinDetail.id));
   }
   getNoOfCoinsInDest() {
     let path = this.getPath();

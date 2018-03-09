@@ -59,9 +59,9 @@ class Path {
     let canPass = this.canGoThrough(currentPos,nextPos,coin,isPaired);
     return canPass && currentPos != nextPos;
   }
-  moveCoin(coin,move,hasKilledOpp){
+  moveCoin(coin,move,hasKilledOpp,isPaired){
     let currentCell = this.getCell(coin.position);
-    let nextCell = this.getNextMove(coin,move,hasKilledOpp);
+    let nextCell = this.getNextMove(coin,move,hasKilledOpp,isPaired);
     currentCell.removeCoin(coin);
     let status = nextCell.addCoin(coin);
     return status;

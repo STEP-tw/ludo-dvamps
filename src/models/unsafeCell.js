@@ -14,6 +14,7 @@ class UnsafeCell extends Cell {
     coin.setPosition(this.getPosition());
     if(this.hasCoins() && !super.hasCoinOfSameColor(coin)){
       let oldCoin = this.coins.shift();
+      this.coins = [];
       status.killedOppCoin = true;
       status.diedCoin = oldCoin.getStatus();
     }

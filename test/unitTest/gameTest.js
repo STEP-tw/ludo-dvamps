@@ -226,6 +226,38 @@ describe('#Game', () => {
       assert.equal(game.players[0].coins[0].getPosition(),-1);
       assert.equal(game.getCurrentPlayer().getName(),'lala');
     });
+    it('opp player coin should die when current player coin reach same unsafe cell in which opp coin is present',function(){
+      let biasDice = {moves:[6,6,1,6,6,1,1,1,26],roll:()=>biasDice.moves.shift()}
+      game = initGame(['salman','lala'],biasDice);
+      game.start();
+
+      let player1Coins = game.players[0].coins;
+      let player2Coins = game.players[1].coins;
+
+      game.rollDice();
+        game.moveCoin(1);
+        game.rollDice();
+        game.moveCoin(2);
+        game.rollDice();
+        game.moveCoin(1); //salman's turn over
+        game.rollDice();  //lala's turn starts
+        game.moveCoin(5)
+        game.rollDice();
+        game.moveCoin(6);
+        game.rollDice();
+        game.moveCoin(5) // lala's turn over;
+        game.rollDice(); //salman's turn starts;
+        game.moveCoin(2);//salman's turn over
+        game.rollDice(); //lala's turn starts
+        game.moveCoin(6) //lala's turn ends
+        game.rollDice(); //salman's turn starts
+        game.moveCoin(1);
+      assert.equal(player1Coins[0].position,14);
+      assert.equal(player1Coins[1].position,14);
+
+      assert.equal(player2Coins[0].position,-5);
+      assert.equal(player2Coins[1].position,-6);
+    });
   });
   describe('#finish', () => {
     it('should finish game with no current player and no chances to play', () => {
