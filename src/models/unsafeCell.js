@@ -5,10 +5,6 @@ class UnsafeCell extends Cell {
     super(position);
   }
 
-  hasCoinOfSameColor(coin) {
-    return this.coins.some(prevCoin=>prevCoin.getColor()==coin.getColor());
-  }
-
   hasCoins() {
     return this.coins.length>0;
   }
@@ -16,7 +12,7 @@ class UnsafeCell extends Cell {
   addCoin(coin){
     let status = {killedOppCoin:false};
     coin.setPosition(this.getPosition());
-    if(this.hasCoins() && !this.hasCoinOfSameColor(coin)){
+    if(this.hasCoins() && !super.hasCoinOfSameColor(coin)){
       let oldCoin = this.coins.shift();
       status.killedOppCoin = true;
       status.diedCoin = oldCoin.getStatus();
@@ -26,7 +22,7 @@ class UnsafeCell extends Cell {
   }
 
   canPlace(coin,isPaired){
-    if(isPaired && this.hasCoinOfSameColor(coin)){
+    if(isPaired && super.hasCoinOfSameColor(coin)){
       return false;
     }
     return isPaired || this.noOfCoins<2;

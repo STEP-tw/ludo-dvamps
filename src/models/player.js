@@ -27,12 +27,12 @@ class Player {
   getCoins() {
     return this.coins;
   }
-  decidePair(cell){
+  decidePair(cell,coin){
     if(cell.isUnsafe() && cell.noOfCoins==2){
       this.pairedCoins.addPair(cell.getCoins(),cell.position);
     }
-    if(!cell.isUnsafe() && cell.noOfCoins==2){
-      this.pairedCoins.removePair(cell.getCoins().pop(),cell.position);
+    if(!cell.isUnsafe()){
+      this.pairedCoins.removePair(coin.getId(),cell.position);
     }
   }
   getStatus() {
@@ -85,7 +85,7 @@ class Player {
     }else{
       status.push(this.path.moveCoin(coin, move, this.hasKilledOpp));
     }
-    this.decidePair(this.getPath().getCell(coin.position));
+    this.decidePair(this.getPath().getCell(coin.position),coin);
     return status.shift();
   }
   moveCoinToHome(coinDetail) {

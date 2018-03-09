@@ -14,6 +14,10 @@ class Cell {
     return this.coins.length;
   }
 
+  hasCoinOfSameColor(coin) {
+    return this.coins.some(prevCoin=>prevCoin.getColor()==coin.getColor());
+  }
+
   addCoin(coin){
     coin.setPosition(this.position);
     this.coins.push(coin);
