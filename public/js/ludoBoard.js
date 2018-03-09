@@ -70,6 +70,7 @@ const placeCoin = (coin)=>{
   let coinId = `${coin.color}-${coin.id}`;
   if (+coin.position < 0) {
     coin.position = `home${coin.position}`;
+    setCountOnCoin([coinId],{[coinId]:""});
     changeCoinPosition(coinId,coin.position,31.5,31.5);
     return;
   }
@@ -110,7 +111,7 @@ const setCountOnCoin = function(coinIds,coinsCounts){
     let text = coinsCounts[coinId];
     let textEle = getElement(`#${coinId}-text`);
     textEle.textContent = "";
-    text>1 ? textEle.textContent = text : textEle.textContent = "";;
+    text>1 ? textEle.textContent = text : textEle.textContent = "";
   });
 };
 const updateCoinPosition = function(players){
