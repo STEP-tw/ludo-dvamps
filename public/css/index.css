@@ -92,28 +92,24 @@ input[type="text"]:hover {
 }
 
 .playersCount {
-  width: 33%;
-  height: 50px;
-  margin: 10px;
+  width: 32%;
+  position: relative;
   font-size: 140%;
-  font-family: 'Open Sans', sans-serif;
-  border: none;
-  border-bottom: 2px solid #605d5d;
-  background-color:#d6d6d600;
-  text-align: center;
+  margin-top: 17px;
+  margin-bottom: 10px;
+  color: black;
+  font-family: 'Open Sans', sans-serif;  
+  font-weight: 500;
+  border-bottom: 2px solid #605d5d;  
 }
 
 select {
-  width: 30%;
-  height: 50px;
-  font-size: 100%;
-  font-family: 'Open Sans', sans-serif;
-  border: none;
-  background-color:#d6d6d600;
-  text-align: center;
+  margin-right: 19%;
+  font-size: 25px;
+  width: 15%;
+  background-color: transparent;
 }
 
-select:focus {
-  border-block-end-color: white;
+option {
+  background-color: transparent;
 }
-
