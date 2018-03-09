@@ -71,7 +71,7 @@ label {
 }
 
 input[type="text"] {
-  width: 80%;
+  width: 90%;
   height: 50px;
   margin: 10px;
   font-size: 140%;
@@ -92,7 +92,7 @@ input[type="text"]:hover {
 }
 
 .playersCount {
-  width: 32%;
+  width: 37%;
   position: relative;
   font-size: 140%;
   margin-top: 17px;
@@ -104,9 +104,8 @@ input[type="text"]:hover {
 }
 
 select {
-  margin-right: 19%;
   font-size: 25px;
-  width: 15%;
+  width: 20%;
   background-color: transparent;
 }
 

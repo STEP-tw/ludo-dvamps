@@ -30,7 +30,7 @@ class Board {
       let playerSquenceLoc = (playerNum + 1) % this.numOfPlayers;
       allPaths[playerSquenceLoc] = Array(5).fill(0).map((ele,cellNum) =>{
         let pos = (playerNum*this.cellsPerPlayer) +this.finalPathStart+cellNum;
-        return new Cell(pos);
+        return new UnsafeCell(pos);
       });
       return allPaths;
     }, {});
