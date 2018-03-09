@@ -65,10 +65,11 @@ describe('#PairedCoins', () => {
       assert.deepEqual(pairedCoins.getPairOf(2),expected)
     });
   });
-  describe('#removePair', () => {
+  describe.only('#removePair', () => {
     beforeEach(() => {
       pairedCoins = new PairedCoins();
       pairedCoins.addPair([1, 2], 13);
+      pairedCoins.addPair([3, 4], 14);
     })
     it('should remove the pair of given coin if pair is present ', () => {
       let expected = {
@@ -78,6 +79,15 @@ describe('#PairedCoins', () => {
       assert.deepInclude(pairedCoins.getPairs(),expected);
       pairedCoins.removePair(1);
       assert.notDeepInclude(pairedCoins.getPairs(),expected);
+    });
+    it('should not remove any pair if there is no pair of given coin ', () => {
+      let expected = [
+        {position: 13, coinIds: [1, 2]},
+        {position: 14, coinIds: [3, 4]},
+      ]
+      assert.deepEqual(pairedCoins.getPairs(),expected);
+      pairedCoins.removePair(5);
+      assert.deepEqual(pairedCoins.getPairs(),expected);
     });
   });
 });

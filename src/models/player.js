@@ -32,7 +32,7 @@ class Player {
       this.pairedCoins.addPair(cell.getCoins(),cell.position);
     }
     if(!cell.isUnsafe()){
-      this.pairedCoins.removePair(coin.getId(),cell.position);
+      this.pairedCoins.removePair(coin.getId());
     }
   }
   getStatus() {

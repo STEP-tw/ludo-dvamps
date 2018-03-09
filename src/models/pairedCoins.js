@@ -27,7 +27,7 @@ class PairedCoins {
   removePair(coinId){
     let pairedCoins = this.getPairOf(coinId);
     if(pairedCoins) {
-      let indexOfPair = this.pairs.indexOf();
+      let indexOfPair = this.pairs.indexOf(pairedCoins);
       this.getPairs().splice(indexOfPair,1);
     }
   }
