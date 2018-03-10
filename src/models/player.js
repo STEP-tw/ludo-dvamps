@@ -111,11 +111,13 @@ class Player {
   }
   getNextPos(coinId,move){
     let coinPair = this.pairedCoins.getPairOf(+coinId);
+    let isPaired = false;
     if(coinPair && !isOdd(move)){
+      isPaired = true;
       move = move / 2;
     }
     let coin = this.coins.find(coin=>coin.id==coinId);
-    let status = this.path.getNextMove(coin,move,this.hasKilledOpp);
+    let status = this.path.getNextMove(coin,move,this.hasKilledOpp,isPaired);
     return status.position;
   }
 }
