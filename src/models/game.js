@@ -29,9 +29,10 @@ class Game {
     this.board = new Board();
     this.board.generate();
     this.coins = generateCoins(this.numberOfPlayers);
+    this.colors = ['red','green','yellow','blue'];
   }
   getCoins(color){
-    let colors = ['red','green','yellow','blue'];
+    let colors = this.colors;
     let coinIndex = colors.indexOf(color);
     let coins = this.coins.slice(coinIndex*4,(coinIndex+1)*4);
     return coins.map(function(coin){
@@ -57,7 +58,15 @@ class Game {
   createPlayer(playerName){
     let playerColor = this.colorDistributor.getColor();
     let coins = this.getCoins(playerColor);
-    return new Player(playerName,playerColor,coins,new Path(coins.length));
+    let playerColorIndex = this.colors.indexOf(playerColor);
+    let path = new Path(coins.length,this.board.getPathFor(playerColorIndex));
+    return new Player(playerName,playerColor,coins,path);
+  }
+  start(){
+    let players = this.arrangePlayers();
+    this.turn =new Turn(players);
+    let color = this.colors;
+    this.activityLog.registerTurn(this.turn.currentPlayer,'red');
   }
   addPlayer(playerName) {
     this.players.push(this.createPlayer(playerName));
@@ -114,7 +123,7 @@ class Game {
   arrangePlayers(){
     let players = this.players;
     let arrangedPlayers=[];
-    let colors = ['red','green','yellow','blue'];
+    let colors = this.colors;
     colors.forEach(function(color){
       let playerWithColor=players.find((player)=>player.getColor()==color);
       if(playerWithColor){
@@ -123,18 +132,7 @@ class Game {
     });
     return arrangedPlayers;
   }
-  start(){
-    let players = this.arrangePlayers();
-    this.turn =new Turn(players);
-    let color = ['red','green','yellow','blue'];
-    players.forEach((playerName)=>{
-      let player = this.getPlayer(playerName);
-      let index = color.indexOf(player.getColor());
-      let path = this.board.getPathFor(index);
-      player.assignPath(path);
-    });
-    this.activityLog.registerTurn(this.turn.currentPlayer,'red');
-  }
+  
   getMovableCoinsOf(move){
     let currentPlayer = this.getCurrentPlayer();
     return currentPlayer.getMovableCoins(move);

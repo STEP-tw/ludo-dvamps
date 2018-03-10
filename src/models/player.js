@@ -1,5 +1,3 @@
-const Coin = require('./coin.js');
-const Path = require('./path.js');
 const PairedCoins = require('./pairedCoins.js');
 
 const isOdd = number => {

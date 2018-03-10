@@ -1,16 +1,10 @@
 class Path {
-  constructor(numberOfHomes) {
-    this.cells = [];
+  constructor(numberOfHomes,cells) {
+    this.cells = cells;
     this.numberOfHomes = numberOfHomes;
-  }
-  add(path){
-    this.cells = path;
   }
   getPath() {
     return this.cells;
-  }
-  addCell(cell) {
-    this.cells.push(cell);
   }
   getCell(cellPos){
     return this.cells.find(cell=>cell.position == cellPos);

@@ -235,22 +235,10 @@ describe('#Game', () => {
       let player2Coins = game.players[1].coins;
 
       game.rollDice();
-        game.moveCoin(1);
+      [1,2,1,5,6,5,2,6].forEach(function(move){
+        game.moveCoin(move);
         game.rollDice();
-        game.moveCoin(2);
-        game.rollDice();
-        game.moveCoin(1); //salman's turn over
-        game.rollDice();  //lala's turn starts
-        game.moveCoin(5)
-        game.rollDice();
-        game.moveCoin(6);
-        game.rollDice();
-        game.moveCoin(5) // lala's turn over;
-        game.rollDice(); //salman's turn starts;
-        game.moveCoin(2);//salman's turn over
-        game.rollDice(); //lala's turn starts
-        game.moveCoin(6) //lala's turn ends
-        game.rollDice(); //salman's turn starts
+      })
         game.moveCoin(1);
       assert.equal(player1Coins[0].position,14);
       assert.equal(player1Coins[1].position,14);
