@@ -65,6 +65,11 @@ const hideCoin = function(coin){
   ele.classList.contains('show')?
     ele.classList.replace('show','hide')
     : ele.classList.add('hide');
+  let text = getElement(`#${coin.color}-${coin.id}-text`);
+  text.classList.contains('show')?
+    text.classList.replace('show','hide')
+    : text.classList.add('hide');
+
 };
 const placeCoin = (coin)=>{
   let coinId = `${coin.color}-${coin.id}`;
@@ -125,7 +130,7 @@ const updateCoinPosition = function(players){
   arrOverlappingCoins(sortedCoins);
   setCountOnCoin(Object.values(sortedCoins),belowCoinsCount);
 };
-const moveCoin = function(coinToMove) {
+let moveCoin = function(coinToMove) { //don't change it to const
   let coinID=coinToMove.replace('-coin','');
   sendAjaxRequest('POST', '/game/moveCoin', function() {
     let status = JSON.parse(this.responseText);

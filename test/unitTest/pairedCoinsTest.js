@@ -65,7 +65,7 @@ describe('#PairedCoins', () => {
       assert.deepEqual(pairedCoins.getPairOf(2),expected)
     });
   });
-  describe.only('#removePair', () => {
+  describe('#removePair', () => {
     beforeEach(() => {
       pairedCoins = new PairedCoins();
       pairedCoins.addPair([1, 2], 13);
