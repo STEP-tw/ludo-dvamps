@@ -24,6 +24,8 @@ const showMovableCoins = function(coins){
 const showCoin = function(coin){
   let ele = getElement(`#${coin.color}-${coin.id}`);
   ele.classList.replace('hide','show');
+  let textElement = getElement(`#${coin.color}-${coin.id}-text`);
+  textElement.classList.replace('hide','show');
 };
 
 const isDestinationCell = function(cellID){
