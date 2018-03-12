@@ -3,9 +3,6 @@ class Path {
     this.cells = cells;
     this.numberOfHomes = numberOfHomes;
   }
-  getPath() {
-    return this.cells;
-  }
   getCell(cellPos){
     return this.cells.find(cell=>cell.position == cellPos);
   }

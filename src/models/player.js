@@ -65,9 +65,6 @@ class Player {
   hasMovableCoins(move) {
     return this.getMovableCoins(move).length > 0;
   }
-  assignPath(path) {
-    this.path.add(path);
-  }
   moveCoin(coinId, move) {
     let coin = this.getCoin(coinId);
     let coinPair = this.pairedCoins.getPairOf(+coinId);

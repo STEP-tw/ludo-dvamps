@@ -5,13 +5,13 @@ const Coin = require(path.resolve('src/models/coin.js'));
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
-let doesNotHaveCookies = (res) => {
-  const keys = Object.keys(res.headers);
-  let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
-  if (key) {
-    throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
-  }
-};
+// let doesNotHaveCookies = (res) => {
+//   const keys = Object.keys(res.headers);
+//   let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
+//   if (key) {
+//     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
+//   }
+// };
 
 let sessionManager = {};
 
@@ -60,7 +60,7 @@ describe('GameRoute', () => {
     it('should response with bad request if game does not exists', (done) => {
       request(app)
         .get('/game/board.html')
-        .set('Cookie',['gameName=cludo','playerName=ashish'])
+        .set('Cookie',['gameName=cludo','playerName=ashish','sessionId=1234'])
         .expect(302)
         .expect('Location','/index.html')
         .end(done)
@@ -69,6 +69,13 @@ describe('GameRoute', () => {
       request(app)
         .get('/game/board.html')
         .set('Cookie',['gameName=ludo','playerName=unknown','sessionId=1222'])
+        .expect(400)
+        .end(done)
+    });
+    it('should response with bad request if there is not any sessionId', (done) => {
+      request(app)
+        .get('/game/board.html')
+        .set('Cookie',['gameName=ludo','playerName=lala','sessionId=1276'])
         .expect(400)
         .end(done)
     });
@@ -135,7 +142,7 @@ describe('GameRoute', () => {
     it('should redirect to landing page if game not exists', function(done) {
       request(app)
         .get('/game/gameStatus')
-        .set('Cookie',['gameName=badGame','playerName=badPlayer'])
+        .set('Cookie',['gameName=badGame','playerName=badPlayer','sessionId=1234'])
         .expect(302)
         .expect('Location','/index.html')
         .end(done);
@@ -245,25 +252,20 @@ describe('GameRoute', () => {
       app.initialize(gameManager,sessionManager);
       request(app)
       .post('/game/moveCoin')
-      .set('Cookie',['gameName=ludo','playerName=john'])
+      .set('Cookie',['gameName=ludo','playerName=john','sessionId=1234'])
       .send('coinId=4')
       .expect(200)
-      .end(()=>{
-        // setTimeout(()=>{
-        //   assert.isUndefined(gameManager.getGame('ludo'));
-          done();
-        // },10500);
-      });
+      .end(done);
     });
   });
-  describe('GET /game/playerDetails',function(done){
-    it('should give players colors details',function(){
+  describe('GET /game/playerDetails',function(){
+    it('should give players colors details',function(done){
       let players = ['john','johnny','roy','albert'];
       let gameManager = initGameManager(players,dice,'ludo',sessionManager);
       app.initialize(gameManager,sessionManager);
       request(app)
         .get('/game/playerDetails')
-        .set('Cookie',['gameName=ludo','playerName=john','sessionId=1232'])
+        .set('Cookie',['gameName=ludo','playerName=john','sessionId=1234'])
         .expect(200)
         .expect(/john/)
         .expect(/red/)
