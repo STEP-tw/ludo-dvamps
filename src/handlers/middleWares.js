@@ -17,7 +17,8 @@ const verifyNoOfPlayers = function(req,res,next){
 const checkCookie = function(req,res,next) {
   let gameName = req.cookies.gameName;
   let playerName = req.cookies.playerName;
-  if(gameName && playerName){
+  let sessionId = req.cookies.sessionId;
+  if(gameName && playerName && sessionId){
     next();
     return;
   }
@@ -41,7 +42,8 @@ const verifyReqBody = function(req,res,next) {
 
 const isPlayerInRoom = function(req){
   let room = req.app.gamesManager.getRoom(req.cookies.gameName);
-  return room && room.isGuest(req.cookies.playerName);
+  let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);``;
+  return room && room.isGuest(playerName);
 };
 
 const isPlayerInGame = function(req){
@@ -91,7 +93,8 @@ const checkGame = function(req,res,next) {
 
 const verifyPlayer =function(req,res,next) {
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  let playerName = req.cookies.playerName;
+  // let playerName = req.cookies.playerName;
+  let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);
   if(!game.doesPlayerExist(playerName)){
     resForBadRequest(res,"invalid cookies");
     return;
@@ -112,7 +115,9 @@ const checkCharacterLimit = function(req,res,next) {
 
 const checkCurrentPlayer= function(req,res,next){
   let currentPlayer = req.game.getCurrentPlayer().name;
-  if (currentPlayer != req.cookies.playerName) {
+  let sessionId = req.cookies.sessionId;
+  let playerName = req.app.sessionManager.getPlayerBy(sessionId);
+  if (currentPlayer != playerName) {
     res.status(400);
     res.send({status:false,message:'Not your turn!'});
     return;

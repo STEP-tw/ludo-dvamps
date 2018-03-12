@@ -11,8 +11,9 @@ const GameRoute = require(path.resolve('src/handlers/gameRoute.js'));
 
 const app = express();
 
-app.initialize = function(gamesManager,fs) {
+app.initialize = function(gamesManager,sessionManager,fs) {
   app.gamesManager = gamesManager;
+  app.sessionManager = sessionManager;
   app.fs = fs;
 };
 /*eslint-disable*/

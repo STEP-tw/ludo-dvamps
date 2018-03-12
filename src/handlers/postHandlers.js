@@ -1,8 +1,9 @@
 const path = require('path');
 const lib = require(path.resolve('src/handlers/middleWares.js'));
-const resWithGameJoined = function(res,gameName,playerName) {
+const resWithGameJoined = function(res,gameName,playerName,sessionId) {
   res.cookie('gameName',gameName,{path:''});
   res.cookie('playerName',playerName,{path:''});
+  res.cookie('sessionId',sessionId,{path:''});
   res.json({status:true});
   res.end();
 };
@@ -17,24 +18,29 @@ const createNewGame = function(req,res) {
   let gameName = req.body.gameName;
   let playerName = req.body.playerName;
   let roomCapacity = req.body.noOfPlayers;
+  let sessionManager = req.app.sessionManager;
   if(!gamesManager.canCreateGame(gameName)){
     return resGameAlreadyExists(res);
   }
   let room = gamesManager.createRoom(gameName,roomCapacity);
   room.addGuest(playerName);
-  resWithGameJoined(res,gameName,playerName);
+  let sessionId = sessionManager.createSession(playerName);
+  resWithGameJoined(res,gameName,playerName,sessionId);
 };
 
 const joinPlayerToGame = function(req,res){
   let gamesManager = req.app.gamesManager;
   let gameName = req.body.gameName;
   let playerName = req.body.playerName;
+  let sessionManager = req.app.sessionManager;
+
   if(!gamesManager.canJoinRoom(gameName,playerName)){
     res.json({status:false});
     return;
   }
   gamesManager.joinRoom(gameName,playerName);
-  resWithGameJoined(res,gameName,playerName);
+  let sessionId = sessionManager.createSession(playerName);
+  resWithGameJoined(res,gameName,playerName,sessionId);
 };
 
 const checkCanMoveCoin = function(req,res,next) {

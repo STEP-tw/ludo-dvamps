@@ -3,6 +3,7 @@ const request = require('supertest');
 const path = require('path');
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
+
 const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
 let doesNotHaveCookies = (res) => {
   const keys = Object.keys(res.headers);
@@ -11,6 +12,22 @@ let doesNotHaveCookies = (res) => {
     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
   }
 };
+
+let sessionManager = {
+  sessions : {'1234':'lala'},
+  Ids: ['1234','1235','1236','1237'],
+  createSession :function(name){
+    let sessionId = this.Ids.shift();
+    this.sessions[sessionId] = name;
+    return sessionId;
+  },
+  deleteSession : function(sessionId){
+    delete this.sessions[sessionId];
+  },
+  getPlayerBy: function(sessionId){
+    return this.sessions[sessionId];
+  }
+}
 
 const dice = {
   roll: function() {
@@ -23,14 +40,15 @@ describe('#App', () => {
   let gamesManager = {};
   beforeEach(function(done) {
     gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-    app.initialize(gamesManager);
+    app.initialize(gamesManager,sessionManager);
     done();
   });
   describe('GET /', () => {
     beforeEach(function(){
       gamesManager.createRoom('newGame',4);
       gamesManager.joinRoom('newGame', 'lala');
-      app.initialize(gamesManager);
+      sessionManager.createSession('lala');
+      app.initialize(gamesManager,sessionManager);
     });
     it('should serve index page', done => {
       request(app)
@@ -43,7 +61,7 @@ describe('#App', () => {
     it('should redirect to waiting page if valid cookies are present', done => {
       request(app)
         .get('/')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+        .set('Cookie', ['gameName=newGame', 'playerName=lala','sessionId=1234'])
         .expect(302)
         .expect('Location', '/waiting.html')
         .end(done);
@@ -51,7 +69,7 @@ describe('#App', () => {
     it('should serve index page if invalid cookies are present', done => {
       request(app)
         .get('/')
-        .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
+        .set('Cookie', ['gameName=badGame', 'playerName=badUser','sessionId=1111'])
         .expect(200)
         .end(done);
     });
@@ -60,12 +78,13 @@ describe('#App', () => {
     beforeEach(function(){
       gamesManager.createRoom('newGame',4);
       gamesManager.joinRoom('newGame', 'lala');
-      app.initialize(gamesManager);
+      sessionManager.createSession('lala');
+      app.initialize(gamesManager,sessionManager);
     });
     it('should redirect to waiting page if valid cookies are present', done => {
       request(app)
       .get('/index.html')
-      .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+      .set('Cookie', ['gameName=newGame', 'playerName=lala','sessionId=1234'])
       .expect(302)
       .expect('Location', '/waiting.html')
       .end(done);
@@ -73,7 +92,7 @@ describe('#App', () => {
     it('should serve index page if invalid cookies are present', done => {
       request(app)
       .get('/index.html')
-      .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
+      .set('Cookie', ['gameName=badGame', 'playerName=badUser','sessionId=1111'])
       .expect(200)
       .end(done);
     });
@@ -91,7 +110,8 @@ describe('#App', () => {
     beforeEach(function(){
       gamesManager.createRoom('newGame',4);
       gamesManager.joinRoom('newGame', 'lala');
-      app.initialize(gamesManager);
+      sessionManager.createSession('lala');
+      app.initialize(gamesManager,sessionManager);
     });
     it('should redirect to waiting page if valid cookies are present', done => {
       request(app)
@@ -104,18 +124,36 @@ describe('#App', () => {
     it('should serve joining page if invalid cookies are present', done => {
       request(app)
       .get('/joining.html')
-      .set('Cookie', ['gameName=badGame', 'playerName=badUser'])
+      .set('Cookie', ['gameName=badGame', 'playerName=badUser','sessionId=1111'])
       .expect(200)
       .end(done);
     });
   });
   describe('POST /createGame', () => {
+    beforeEach(()=>{
+      sessionManager = {
+        sessions : {'1234':'lala'},
+        Ids: ['1234','1235','1236','1237'],
+        createSession :function(name){
+          let sessionId = this.Ids.shift();
+          this.sessions[sessionId] = name;
+          return sessionId;
+        },
+        deleteSession : function(sessionId){
+          delete this.sessions[sessionId];
+        },
+        getPlayerBy: function(sessionId){
+          return this.sessions[sessionId];
+        }
+      }
+      app.initialize(gamesManager,sessionManager);
+    })
     it('should set gameName and playerName in cookie', (done) => {
       request(app)
         .post('/createGame')
         .send('gameName=newGame&playerName=dhana&noOfPlayers=4')
         .expect(200)
-        .expect('set-cookie', 'gameName=newGame,playerName=dhana')
+        .expect('set-cookie', 'gameName=newGame,playerName=dhana,sessionId=1234')
         .expect(JSON.stringify({
           status: true
         }))
@@ -123,7 +161,7 @@ describe('#App', () => {
     });
     it('should not create game if game name already exist', (done) => {
       gamesManager.addGame('newGame',4);
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .post('/createGame')
         .send('gameName=newGame&playerName=dhana&noOfPlayers=4')
@@ -171,10 +209,10 @@ describe('#App', () => {
       let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
       gamesManager.createRoom('newGame',4);
       gamesManager.joinRoom('newGame', 'lala');
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .post('/createGame')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+        .set('Cookie', ['gameName=newGame', 'playerName=lala','sessionId=1234'])
         .send('gameName=bad&playerName=dhana&noOfPlayers=4')
         .expect(200)
         .expect(/status/)
@@ -203,6 +241,7 @@ describe('#App', () => {
     beforeEach(function() {
       app.gamesManager.createRoom('newGame');
       app.gamesManager.joinRoom('newGame', 'lala');
+      sessionManager.createSession('lala');
       })
     it('should return joiningStatus as true if new player is joining', done => {
       request(app)
@@ -269,7 +308,7 @@ describe('#App', () => {
   describe('GET /getAvailableGames', () => {
     it('should give all available games', done => {
       gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/getAvailableGames')
         .expect(200)
@@ -282,12 +321,12 @@ describe('#App', () => {
       gamesManager.createRoom('ludo',4);
       let room = gamesManager.getRoom('ludo');
       room.addGuest('player');
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .delete('/player')
-        .set('Cookie', ['playerName=player;', 'gameName=ludo;'])
+        .set('Cookie', ['playerName=player;', 'gameName=ludo;','sessionId=1234'])
         .expect(200)
-        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()}`)
+        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()},sessionId=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
     });
     it('should delete Player if a player lefts', (done) => {
@@ -295,27 +334,27 @@ describe('#App', () => {
       let room = gamesManager.getRoom('ludo');
       room.addGuest('player1');
       room.addGuest('player2');
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .delete('/player')
-        .set('Cookie', ['playerName=player1;', 'gameName=ludo;'])
+        .set('Cookie', ['playerName=player1;', 'gameName=ludo;','sessionId=1234'])
         .expect(200)
-        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()}`)
+        .expect('set-cookie', `playerName=; Expires=${new Date(1).toUTCString()},gameName=; Expires=${new Date(1).toUTCString()},sessionId=; Expires=${new Date(1).toUTCString()}`)
         .end(done);
     });
     it('should give bad request if there is no game', (done) => {
       request(app)
       .delete('/player')
-      .set('Cookie', ['playerName=player1;', 'gameName=ludo;'])
+      .set('Cookie', ['playerName=player1;', 'gameName=ludo;','sessionId=1234'])
       .expect(400)
       .end(done);
     });
     it('should give bad request if room has no player with given name', (done) => {
       gamesManager.createRoom('ludo',3);
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
       .delete('/player')
-      .set('Cookie', ['playerName=player1;', 'gameName=ludo;'])
+      .set('Cookie', ['playerName=player1;', 'gameName=ludo;','sessionId=2222'])
       .expect(400)
       .end(done);
     });
@@ -324,7 +363,7 @@ describe('#App', () => {
     it('should serve roomStatus', (done) => {
       let room = gamesManager.createRoom('ludo')
       room.addGuest('batman');
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/waitingStatus')
         .set('Cookie', 'gameName=ludo')
@@ -334,7 +373,7 @@ describe('#App', () => {
     });
     it('should send empty response', (done) => {
       gamesManager.addGame('ludo',4);
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/waitingStatus')
         .expect("")
@@ -344,10 +383,10 @@ describe('#App', () => {
     it('should give status with player color and gameStarted as true', (done) => {
       gamesManager.createRoom('ludo',2);
       ['player1','player2'].forEach((player)=>gamesManager.joinRoom('ludo',player));
-      app.initialize(gamesManager);
+      app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/waitingStatus')
-        .set('Cookie',['gameName=ludo','playerName=player1'])
+        .set('Cookie',['gameName=ludo','playerName=player1','sessionId=1234'])
         .expect(/true/)
         .expect(/yourColor/)
         .expect(200)
