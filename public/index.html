@@ -7,8 +7,14 @@
   <link rel="stylesheet" href="css/master.css">
   <link rel="stylesheet" href="css/index.css">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="css/demo.css" /> -->
+  <link rel="stylesheet" type="text/css" href="css/cs-select.css" />
+  <link rel="stylesheet" type="text/css" href="css/cs-skin-elastic.css" />
   <script src="/js/index.js" charset="utf-8" defer></script>
   <script src="/js/commonScripts.js" charset="utf-8" defer></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
 
 <body>
@@ -26,17 +32,17 @@
     <input type="submit" name="createFormOption" value="Create Game">
     <div class="createForm hidden">
       <span class="hidden">
-          <input type="text" name='gameName' id="gamename" placeholder="Enter Game Name" maxlength="15">
-        </span>
+        <input type="text" name='gameName' id="gamename" placeholder="Enter Game Name" maxlength="15">
+      </span>
       <span class="hidden">
-          <input type="text" name='playerName' id="playername" placeholder="Enter Your Name" maxlength="8">
-        </span>
-      <span class="playersCount hidden ">
-        <span>Number Of Players</span>
-        <select name='noOfPlayers'>
-          <option value="4">4</option>
-          <option value="3">3</option>
-          <option value="2" selected>2</option>
+        <input type="text" name='playerName' id="playername" placeholder="Enter Your Name" maxlength="8">
+      </span>
+      <span class="hidden">
+        <select class="cs-select cs-skin-elastic dropbtn">
+          <option value="" disabled selected>Number of players</option>
+          <option value="2">2 Players</option>
+          <option value="3">3 Players</option>
+          <option value="4">4 Players</option>
         </select>
       </span>
       <div class="message"></div>
@@ -44,6 +50,16 @@
     </div>
     <input type="submit" name="joinGame" id="joinGame" value="Join Game">
   </main>
+
+  <script src="/js/classie.js"></script>
+  <script src="/js/selectFx.js"></script>
+  <script>
+  (function() {
+    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+      new SelectFx(el);
+    } );
+  })();
+  </script>
 </body>
 
 </html>

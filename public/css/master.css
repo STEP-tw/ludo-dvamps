@@ -44,11 +44,11 @@ main{
   text-align: center;
 }
 
-.hide{
+.hide {
   visibility: hidden;
 }
 
-.show{
+.show {
   visibility: visible;
 }
 

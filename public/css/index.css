@@ -2,6 +2,11 @@
   display: none;
 }
 
+#desc {
+  margin: 10px;
+  padding-right: 25px;
+}
+
 main {
   margin:7% 24%;
   height: 60vh;
@@ -37,6 +42,8 @@ input[type="submit"] {
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
   font-size: 160%;
+  box-shadow: 7px 6px 5px 0px rgba(61,60,61,1);
+  transition: 0.3s;
 }
 
 input[name="createFormOption"] {
@@ -80,6 +87,7 @@ input[type="text"] {
   border-bottom: 2px solid #605d5d;
   background-color:#d6d6d600;
 }
+
 input[type="text"]:hover {
   border-bottom: 2px solid #605d5d;
 }
@@ -98,9 +106,9 @@ input[type="text"]:hover {
   margin-top: 17px;
   margin-bottom: 10px;
   color: black;
-  font-family: 'Open Sans', sans-serif;  
+  font-family: 'Open Sans', sans-serif;
   font-weight: 500;
-  border-bottom: 2px solid #605d5d;  
+
 }
 
 select {
@@ -111,4 +119,29 @@ select {
 
 option {
   background-color: transparent;
+}
+
+input[type="text"]:focus, select:focus {
+  border-width: 3px;
+  border-color: #000000;
+  outline: none;
+}
+
+input[type="submit"]:focus, input[type="submit"]:hover {
+  outline: none;
+  box-shadow: 13px 14px 23px 0px rgba(61,60,61,1);
+}
+
+.dropbtn {
+  width: 170% !important;
+  margin-left: 8%;
+}
+
+svg {
+  width: 2em !important;
+  height: 2em !important;
+}
+
+.dropbtn:focus {
+  outline: none;
 }

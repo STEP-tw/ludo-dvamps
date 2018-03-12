@@ -15,7 +15,7 @@ const handleServerResponse = function(serverResponse) {
 const createGame = function() {
   let gameName = getFormInput('input[name="gameName"]');
   let playerName = getFormInput('input[name="playerName"]');
-  let noOfPlayers = getFormInput('select');
+  let noOfPlayers = getElement('select.dropbtn').value;
   if(anyEmptyField([gameName,playerName])){
     setInnerText('.message','* Fields should not be empty');
     return;
@@ -33,6 +33,7 @@ const createGame = function() {
 const goToJoin = function(){
   window.location = "/joining.html";
 };
+
 
 const setClickListeners = function() {
   setClickListener('input[name="createFormOption"]',showCreateForm);
