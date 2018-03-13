@@ -23,16 +23,18 @@ const removeClickListeners = function(selector){
   });
 };
 
-const sendAjaxRequest = function(method,url,callBack,reqBody){
+
+const sendAjaxRequest = function(method,url,callBack,reqBody,asyn=true){
   let ajax = new XMLHttpRequest();
   ajax.onload=callBack;
-  ajax.open(method,url);
+  ajax.open(method,url,asyn);
   if(reqBody){
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     return ajax.send(reqBody);
   }
   ajax.send();
 };
+
 
 const isEmptyString = function(string) {
   return string.trim() == "";
@@ -62,9 +64,11 @@ const setInnerText = function(selector,text) {
     element.innerText = text;
   }
 };
+
 const goToBoard = function() {
   location.href = 'game/board.html';
 };
+
 const goToHome = function() {
   location.href = '/index.html';
 };
@@ -75,10 +79,4 @@ const keyValParse = function(text){
     parsedText[seperatedKeyVal[0]] = seperatedKeyVal[1];
     return parsedText;
   },{});
-};
-
-const setGameAndUser = function(playerEle,gameEle) {
-  let cookies = keyValParse(decodeURIComponent(document.cookie));
-  getElement(playerEle).innerText = cookies.playerName;
-  getElement(gameEle).innerText = cookies.gameName;
 };

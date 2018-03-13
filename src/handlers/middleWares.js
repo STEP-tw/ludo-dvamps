@@ -16,9 +16,8 @@ const verifyNoOfPlayers = function(req,res,next){
 
 const checkCookie = function(req,res,next) {
   let gameName = req.cookies.gameName;
-  let playerName = req.cookies.playerName;
   let sessionId = req.cookies.sessionId;
-  if(gameName && playerName && sessionId){
+  if(gameName && sessionId){
     next();
     return;
   }
@@ -195,8 +194,10 @@ const checkRoomExists = function(req,res,next) {
 
 const verifyIsGuest = function(req,res,next) {
   let game = req.cookies.gameName;
-  let player = req.cookies.playerName;
+  let sessionId = req.cookies.sessionId;
   let gamesManager = req.app.gamesManager;
+  let sessionManager = req.app.sessionManager;
+  let player = sessionManager.getPlayerBy(sessionId);
   let room = gamesManager.getRoom(game);
   if(!room || !room.isGuest(player)){
     res.statusCode = 400;
@@ -208,7 +209,8 @@ const verifyIsGuest = function(req,res,next) {
 
 const checkGameStarted = function(req,res,next) {
   let gameName = req.cookies.gameName;
-  let playerName = req.cookies.playerName;
+  let sessionId = req.cookies.sessionId;
+  let playerName = req.app.sessionManager.getPlayerBy(sessionId);
   let game = req.app.gamesManager.getGame(gameName);
   if(game && game.getPlayer(playerName)) {
     let color = game.getPlayer(playerName).getColor();

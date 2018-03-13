@@ -38,7 +38,8 @@ const getNextPos = function(req,res){
 
 const getPlayerDetails = function(req,res) {
   let game = req.game;
-  res.json(game.getStatus());
+  let status = game.getStatus();
+  res.json(status);
 };
 
 module.exports = {

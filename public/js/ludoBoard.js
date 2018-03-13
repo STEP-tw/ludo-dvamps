@@ -187,12 +187,7 @@ const actionOnMovableCoins = function(coins,action) {
     coinInBoard.classList[action]('focus');
   });
 };
-const coinsId = [
-  'red-1','red-2','red-3','red-4',
-  'green-5','green-6','green-7','green-8',
-  'yellow-9','yellow-10','yellow-11','yellow-12',
-  'blue-13','blue-14','blue-15','blue-16'
-];
+
 const arrOverlappingCoins = function(sortedCoins) {
   Object.keys(sortedCoins).forEach((cellPos) => {
     let marginsFor = {
@@ -216,8 +211,11 @@ const showDice = function(event,move) {
 };
 const isCurrentPlayer = function(currentPlayer){
   let cookiePlayer = decodeURIComponent(document.cookie);
-  return keyValParse(cookiePlayer).playerName == currentPlayer;
+  let sessionId = keyValParse(cookiePlayer).sessionId;
+  let player = getElement('#userName').innerText;
+  return currentPlayer == player;
 };
+
 const animateDice = function(event) {
   let faces = [1,2,3,4,5,6];
   let randomIndex = Math.floor(Math.random()*6);
@@ -344,9 +342,21 @@ const getLogs = function() {
 let gameStatusReqInterval;
 let logStatusReqInterval;
 
+const setGameAndUser = function() {
+  if(!this.responseText){
+    return;
+  }
+  let cookies = keyValParse(decodeURIComponent(document.cookie));
+  player = JSON.parse(this.responseText).playerName;
+  getElement('#userName').innerText = player;
+  getElement('#nameOfGame').innerText = cookies.gameName;
+};
+
 const load = function() {
+  let cookies = keyValParse(decodeURIComponent(document.cookie));
+  let sessionId = cookies.sessionId;
   showPlayers();
-  setGameAndUser('#userName','#nameOfGame');
+  sendAjaxRequest('POST','/game/sessionId',setGameAndUser,`sessionId=${sessionId}`);
   sendAjaxRequest('GET', '/images/board.svg', function() {
     if(!this.responseText){
       return;

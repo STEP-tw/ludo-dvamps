@@ -6,6 +6,7 @@ const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const SessionManager = require(path.resolve('src/models/sessionManager.js'));
 
+const getIdGen = require(path.resolve('test/idGenerator.js'));
 const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
 
 
@@ -28,15 +29,8 @@ const dice = {
 };
 
 let sessionManager = {};
+let idGenerator = getIdGen();
 let players = ['lala','kaka','ram','shyam'];
-let Ids =  ['1234','1235','1236','1237'];
-
-const idGenerator = function(){
-  if (!Ids.length) {
-    Ids =  ['1234','1235','1236','1237'];
-  }
-  return Ids.shift();
-}
 
 const timeStamp = () => 1234;
 const dummyShuffler = (array) => {return array};
@@ -51,10 +45,11 @@ const initGameManager = function(players,dice,gameName,sessionManager) {
   return gameManager;
 }
 
+let gamesManager;
 const sixPointDice = {roll:()=>6};
 describe('GameRoute', () => {
-  let gamesManager;
   beforeEach(function(done) {
+    idGenerator = getIdGen();
     sessionManager = new SessionManager(idGenerator);
     gamesManager = new GamesManager(ColorDistributer,dice,timeStamp,dummyShuffler);
     app.initialize(gamesManager,sessionManager,client);
@@ -62,13 +57,15 @@ describe('GameRoute', () => {
   });
   describe('GET /game/board.html', () => {
     beforeEach(function(){
-      let gamesManager = initGameManager(players,dice,'ludo',sessionManager);
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gamesManager = initGameManager(players,dice,'ludo',sessionManager);
       app.initialize(gamesManager,sessionManager);
     })
     it('should response with bad request if game does not exists', (done) => {
       request(app)
         .get('/game/board.html')
-        .set('Cookie',['gameName=cludo','playerName=ashish','sessionId=1234'])
+        .set('Cookie',['gameName=cludo','sessionId=1234'])
         .expect(302)
         .expect('Location','/index.html')
         .end(done)
@@ -76,28 +73,29 @@ describe('GameRoute', () => {
     it('should response with bad request if player is not registered', (done) => {
       request(app)
         .get('/game/board.html')
-        .set('Cookie',['gameName=ludo','playerName=unknown','sessionId=1222'])
+        .set('Cookie',['gameName=ludo','sessionId=1222'])
         .expect(400)
         .end(done)
     });
     it('should response with bad request if there is not any sessionId', (done) => {
       request(app)
         .get('/game/board.html')
-        .set('Cookie',['gameName=ludo','playerName=lala','sessionId=1276'])
+        .set('Cookie',['gameName=ludo','sessionId=1276'])
         .expect(400)
         .end(done)
     });
   });
   describe('#GET /game/rollDice', () => {
     beforeEach(function(){
-      let sessionManager = new SessionManager(idGenerator);
-      let gamesManager = initGameManager(players,dice,'newGame',sessionManager);
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gamesManager = initGameManager(players,dice,'newGame',sessionManager);
       app.initialize(gamesManager,sessionManager,client);
     });
     it('should roll the dice for currentPlayer', (done) => {
       request(app)
         .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala', 'sessionId=1234'])
+        .set('Cookie', ['gameName=newGame', 'sessionId=1234'])
         .expect(200)
         .expect('{"move":4,"currentPlayer":"kaka"}')
         .end(done);
@@ -105,20 +103,22 @@ describe('GameRoute', () => {
     it('should response with bad request if player is not there', (done) => {
       request(app)
         .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=kaka', 'sessionId=1231'])
+        .set('Cookie', ['gameName=newGame', 'sessionId=1231'])
         .expect(400)
         .end(done);
     });
   });
   describe('#GET /game/rollDice', () => {
     beforeEach(function(){
-      let gamesManager = initGameManager(players,dice,'newGame',sessionManager);
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gamesManager = initGameManager(players,dice,'newGame',sessionManager);
       app.initialize(gamesManager,sessionManager,clientErr);
     });
     it('should roll the dice for currentPlayer', (done) => {
       request(app)
         .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala','sessionId=1234'])
+        .set('Cookie', ['gameName=newGame','sessionId=1234'])
         .expect(200)
         .expect('{"move":4,"currentPlayer":"kaka"}')
         .end(done);
@@ -126,20 +126,22 @@ describe('GameRoute', () => {
     it('should response with bad request if player is not there', (done) => {
       request(app)
         .get('/game/rollDice')
-        .set('Cookie', ['gameName=newGame', 'playerName=kaka','sessionId=2344'])
+        .set('Cookie', ['gameName=newGame','sessionId=2344'])
         .expect(400)
         .end(done);
     });
   });
   describe('get /game/gameStatus', () => {
     beforeEach(function() {
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
       gamesManager = initGameManager(players,dice,'newGame',sessionManager);
       app.initialize(gamesManager,sessionManager);
     });
     it('should give game status', (done) => {
       request(app)
         .get('/game/gameStatus')
-        .set('Cookie',['gameName=newGame','playerName=lala','sessionId=1234'])
+        .set('Cookie',['gameName=newGame','sessionId=1234'])
         .expect(200)
         .expect(/lala/)
         .expect(/red/)
@@ -156,7 +158,7 @@ describe('GameRoute', () => {
       destination.addCoin(new Coin(4));
       request(app)
         .get('/game/gameStatus')
-        .set('Cookie',['gameName=newGame','playerName=lala','sessionId=1234'])
+        .set('Cookie',['gameName=newGame','sessionId=1234'])
         .expect(200)
         .expect(/lala/)
         .expect(/red/)
@@ -172,7 +174,7 @@ describe('GameRoute', () => {
     it('should redirect to landing page if game not exists', function(done) {
       request(app)
         .get('/game/gameStatus')
-        .set('Cookie',['gameName=badGame','playerName=badPlayer','sessionId=1234'])
+        .set('Cookie',['gameName=badGame','sessionId=1234'])
         .expect(302)
         .expect('Location','/index.html')
         .end(done);
@@ -194,7 +196,7 @@ describe('GameRoute', () => {
       app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/game/logs')
-        .set('Cookie', ['gameName=newGame', 'playerName=lala','sessionId=1234'])
+        .set('Cookie', ['gameName=newGame','sessionId=1234'])
         .expect(200)
         .expect(/&#9859;/)
         .expect(/lala/)
@@ -208,6 +210,8 @@ describe('GameRoute', () => {
       let dice = {
         roll:()=>6
       }
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
       gamesManager = initGameManager(players,dice,'newGame',sessionManager);
       game = gamesManager.getGame('newGame');
       app.initialize(gamesManager,sessionManager,client);
@@ -216,7 +220,7 @@ describe('GameRoute', () => {
       game.rollDice();
       request(app)
         .post('/game/moveCoin')
-        .set('Cookie',['gameName=newGame','playerName=lala','sessionId=1234'])
+        .set('Cookie',['gameName=newGame','sessionId=1234'])
         .send('coinId=1')
         .expect(200)
         .expect(/"status":true/)
@@ -228,7 +232,7 @@ describe('GameRoute', () => {
       game.rollDice();
       request(app)
       .post('/game/moveCoin')
-      .set('Cookie',['gameName=newGame','playerName=kaka','sessionId=1235'])
+      .set('Cookie',['gameName=newGame','sessionId=1235'])
       .send('coinId=6')
       .expect(400)
       .expect(/"status":false/)
@@ -249,7 +253,7 @@ describe('GameRoute', () => {
       app.initialize(gamesManager,sessionManager);
       request(app)
         .post('/game/moveCoin')
-        .set('Cookie',['gameName=newGame','playerName=lala','sessionId=1234'])
+        .set('Cookie',['gameName=newGame','sessionId=1234'])
         .send('coinId=2')
         .expect(200)
         .expect(/"status":false/)
@@ -259,12 +263,14 @@ describe('GameRoute', () => {
   });
   describe('#POST /game/nextPos', () => {
     it('should return the next postion of a coin', (done) => {
-      let gamesManager = initGameManager(players,sixPointDice,'newGame',sessionManager);
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gamesManager = initGameManager(players,sixPointDice,'newGame',sessionManager);
       gamesManager.getGame('newGame').rollDice();
       app.initialize(gamesManager,sessionManager);
       request(app)
         .post('/game/nextPos')
-        .set('Cookie',['gameName=newGame','playerName=lala','sessionId=1234'])
+        .set('Cookie',['gameName=newGame','sessionId=1234'])
         .send('coinID=1')
         .expect(/0/)
         .end(done);
@@ -275,7 +281,9 @@ describe('GameRoute', () => {
     let moves = [6,56,6,56,6,56,6,56,6];
     let winningDice = {roll:()=>moves.shift()};
     it('should delete game when someone won game', (done) => {
-      let gameManager = initGameManager(players,winningDice,'ludo',sessionManager);
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gameManager = initGameManager(players,winningDice,'ludo',sessionManager);
       let game = gameManager.getGame('ludo');
       game.getCurrentPlayer().setKilledOpponent();
       [1,1,2,2,3,3,4].forEach(function(coinId){
@@ -286,7 +294,7 @@ describe('GameRoute', () => {
       app.initialize(gameManager,sessionManager,client);
       request(app)
       .post('/game/moveCoin')
-      .set('Cookie',['gameName=ludo','playerName=john','sessionId=1234'])
+      .set('Cookie',['gameName=ludo','sessionId=1234'])
       .send('coinId=4')
       .expect(200)
       .end(done);
@@ -295,15 +303,35 @@ describe('GameRoute', () => {
   describe('GET /game/playerDetails',function(){
     it('should give players colors details',function(done){
       let players = ['john','johnny','roy','albert'];
-      let gameManager = initGameManager(players,dice,'ludo',sessionManager);
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gameManager = initGameManager(players,dice,'ludo',sessionManager);
       app.initialize(gameManager,sessionManager);
       request(app)
         .get('/game/playerDetails')
-        .set('Cookie',['gameName=ludo','playerName=john','sessionId=1234'])
+        .set('Cookie',['gameName=ludo','sessionId=1234'])
         .expect(200)
         .expect(/john/)
         .expect(/red/)
         .end(done);
+    });
+  });
+  describe('#POST /game/sessionId',() => {
+    let players = ['john','johnny','roy','albert'];
+    it('should give playerName of given sessionId', (done) => {
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gamesManager = initGameManager(players,dice,'ludo',sessionManager);
+      let game = gamesManager.getGame('ludo');
+      app.initialize(gamesManager,sessionManager,client);
+      request(app)
+      .post('/game/sessionId')
+      .set('Cookie',['gameName=ludo','sessionId=1234'])
+      .send('sessionId=1234')
+      .expect(200)
+      .expect(/playerName/)
+      .expect(/john/)
+      .end(done);
     });
   });
 });

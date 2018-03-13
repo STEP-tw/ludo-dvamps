@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
 const SessionManager = require(path.resolve('src/models/sessionManager.js'));
-
 const getHandlers = require(path.resolve('src/handlers/getHandlers.js'));
 const postHandlers = require(path.resolve('src/handlers/postHandlers.js'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler.js'));

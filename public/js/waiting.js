@@ -21,11 +21,8 @@ const updateSeconds = function() {
 const showColor = function(color) {
   let overlay = getElement(".overlay");
   let colorHolder = getElement('#color');
-  // let playerName = getElement('#userName').innerText;
-  // let player = players.find((player) => player.name == playerName);
   colorHolder.style.backgroundColor = color;
   overlay.classList.replace('hide','show');
-  // overlay.classList.add('show');
 };
 
 const removeIntervals = function() {
@@ -96,7 +93,7 @@ const getStatus = function() {
 };
 
 const begin = function() {
-  setGameAndUser('#userName','#gameName');
+  updateGameName();
   getStatus();
   intervalID = setInterval(getStatus, 1000);
   blinkID = setInterval(blinkText, 500);

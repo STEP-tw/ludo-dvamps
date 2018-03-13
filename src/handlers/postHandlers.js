@@ -1,10 +1,7 @@
 const path = require('path');
 const lib = require(path.resolve('src/handlers/middleWares.js'));
-const dbQuery = require(path.resolve('src/handlers/dbHandler.js'));
-
-const resWithGameJoined = function(res,gameName,playerName,sessionId) {
+const resWithGameJoined = function(res,gameName,sessionId) {
   res.cookie('gameName',gameName,{path:''});
-  res.cookie('playerName',playerName,{path:''});
   res.cookie('sessionId',sessionId,{path:''});
   res.json({status:true});
   res.end();
@@ -27,7 +24,7 @@ const createNewGame = function(req,res) {
   let room = gamesManager.createRoom(gameName,roomCapacity);
   room.addGuest(playerName);
   let sessionId = sessionManager.createSession(playerName);
-  resWithGameJoined(res,gameName,playerName,sessionId);
+  resWithGameJoined(res,gameName,sessionId);
 };
 
 const joinPlayerToGame = function(req,res){
@@ -42,7 +39,7 @@ const joinPlayerToGame = function(req,res){
   }
   gamesManager.joinRoom(gameName,playerName);
   let sessionId = sessionManager.createSession(playerName);
-  resWithGameJoined(res,gameName,playerName,sessionId);
+  resWithGameJoined(res,gameName,sessionId);
 };
 
 const checkCanMoveCoin = function(req,res,next) {
@@ -64,8 +61,14 @@ const moveCoin = function(req,res){
     req.app.gamesManager.finishGame(finishedGameName,10);
   }
   status.status = true;
-  dbQuery.saveGamedata(req);
   res.json(status);
+};
+
+const getPlayerNameBy = function(req,res) {
+  let sessionManager = req.app.sessionManager;
+  let playerName = sessionManager.getPlayerBy(req.body.sessionId);
+  let player = {playerName : playerName};
+  res.json(player);
 };
 
 let joinGameRoute = [
@@ -78,5 +81,6 @@ let joinGameRoute = [
 module.exports = {
   createNewGame:[lib.verifyReqBody,lib.checkCharacterLimit,createNewGame],
   joinPlayerToGame:joinGameRoute,
-  moveCoin:[checkCanMoveCoin,moveCoin]
+  moveCoin:[checkCanMoveCoin,moveCoin],
+  getPlayerNameBy:getPlayerNameBy
 };

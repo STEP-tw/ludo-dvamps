@@ -18,6 +18,7 @@ ludo.get('/playerDetails',getHandlers.getPlayerDetails);
 ludo.get('/gameStatus',getHandlers.getGameStatus);
 ludo.get('/logs',getHandlers.getLogs);
 ludo.get('/rollDice',lib.checkCurrentPlayer,getHandlers.rollDice);
+ludo.post('/sessionId',postHandlers.getPlayerNameBy);
 ludo.post('/nextPos',lib.checkCurrentPlayer,getHandlers.getNextPos);
 ludo.post('/moveCoin',lib.checkCurrentPlayer,postHandlers.moveCoin);
 
