@@ -319,7 +319,7 @@ const getLogStatements =function(logs) {
     let move = log.move && `<label class ="redDice">${log.move}</label>` || '';
     let time = `<label class="time">${convTime}</label>`;
     let coinColor = getCoin(log.color,'&#x25C9;');
-    let killedCoin = getCoin(log.killedCoinColor,'&#x2639;');
+    let killedCoin = getCoin(log.killedCoinColor,'&#x29bb;');
     let statement = `<span class="log">${log.statement}</span>`;
     return `<p class="logItems">${time}${playerColor}
     ${statement}${move}${coinColor}${killedCoin}</p>`;
