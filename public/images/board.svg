@@ -1,4 +1,5 @@
-<svg viewBox="0 0 602 602" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 602 602" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
     <rect x="0" y="0" width="600" height="600" id="canvas_background" fill="#fff"></rect>
     <g id="canvasGrid" display="none">
