@@ -42,13 +42,15 @@ const verifyReqBody = function(req,res,next) {
 
 const isPlayerInRoom = function(req){
   let room = req.app.gamesManager.getRoom(req.cookies.gameName);
-  let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);``;
+  let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);
   return room && room.isGuest(playerName);
 };
 
 const isPlayerInGame = function(req){
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  return game && game.doesPlayerExist(req.cookies.playerName);
+  let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);
+
+  return game && game.doesPlayerExist(playerName);
 };
 
 const isPlayerValid = function(req){
@@ -93,7 +95,6 @@ const checkGame = function(req,res,next) {
 
 const verifyPlayer =function(req,res,next) {
   let game = req.app.gamesManager.getGame(req.cookies.gameName);
-  // let playerName = req.cookies.playerName;
   let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);
   if(!game.doesPlayerExist(playerName)){
     resForBadRequest(res,"invalid cookies");

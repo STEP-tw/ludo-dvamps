@@ -4,16 +4,10 @@ const path = require('path');
 const Coin = require(path.resolve('src/models/coin.js'));
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
-const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
-// let doesNotHaveCookies = (res) => {
-//   const keys = Object.keys(res.headers);
-//   let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
-//   if (key) {
-//     throw new Error(`Didnot expect Set-Cookie in header of ${keys}`);
-//   }
-// };
+const SessionManager = require(path.resolve('src/models/sessionManager.js'));
 
-let sessionManager = {};
+const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
+
 
 const client = {
   query: function(param1,param2) {
@@ -32,8 +26,21 @@ const dice = {
     return 4;
   }
 };
+
+let sessionManager = {};
+let players = ['lala','kaka','ram','shyam'];
+let Ids =  ['1234','1235','1236','1237'];
+
+const idGenerator = function(){
+  if (!Ids.length) {
+    Ids =  ['1234','1235','1236','1237'];
+  }
+  return Ids.shift();
+}
+
 const timeStamp = () => 1234;
 const dummyShuffler = (array) => {return array};
+
 const initGameManager = function(players,dice,gameName,sessionManager) {
   let gameManager = new GamesManager(ColorDistributer,dice,timeStamp,
     dummyShuffler);
@@ -43,23 +50,12 @@ const initGameManager = function(players,dice,gameName,sessionManager) {
     sessionManager.createSession(player);});
   return gameManager;
 }
+
 const sixPointDice = {roll:()=>6};
-let players = ['lala','kaka','ram','shyam'];
 describe('GameRoute', () => {
   let gamesManager;
   beforeEach(function(done) {
-    sessionManager = {
-      sessions : {'1234':'lala'},
-      Ids: ['1234','1235','1236','1237'],
-      createSession :function(name){
-        let sessionId = this.Ids.shift();
-        this.sessions[sessionId] = name;
-        return sessionId;
-      },
-      getPlayerBy: function(sessionId){
-        return this.sessions[sessionId];
-      }
-    }
+    sessionManager = new SessionManager(idGenerator);
     gamesManager = new GamesManager(ColorDistributer,dice,timeStamp,dummyShuffler);
     app.initialize(gamesManager,sessionManager,client);
     done();
@@ -94,6 +90,7 @@ describe('GameRoute', () => {
   });
   describe('#GET /game/rollDice', () => {
     beforeEach(function(){
+      let sessionManager = new SessionManager(idGenerator);
       let gamesManager = initGameManager(players,dice,'newGame',sessionManager);
       app.initialize(gamesManager,sessionManager,client);
     });
@@ -185,9 +182,13 @@ describe('GameRoute', () => {
     it('should give game activity log', (done) => {
       let game = gamesManager.addGame('newGame',4);
       game.addPlayer('lala');
+      sessionManager.createSession('lala');
       game.addPlayer('kaka');
+      sessionManager.createSession('kaka');
       game.addPlayer('ram');
+      sessionManager.createSession('ram');
       game.addPlayer('shyam');
+      sessionManager.createSession('shyam');
       game.start();
       game.rollDice();
       app.initialize(gamesManager,sessionManager);

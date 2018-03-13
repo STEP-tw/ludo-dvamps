@@ -3,8 +3,11 @@ const request = require('supertest');
 const path = require('path');
 const app = require(path.resolve('app.js'));
 const GamesManager = require(path.resolve('src/models/gamesManager.js'));
+const SessionManager = require(path.resolve('src/models/sessionManager.js'));
+
 
 const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
+
 let doesNotHaveCookies = (res) => {
   const keys = Object.keys(res.headers);
   let key = keys.find(currentKey => currentKey.match(/set-cookie/i));
@@ -13,20 +16,9 @@ let doesNotHaveCookies = (res) => {
   }
 };
 
-let sessionManager = {
-  sessions : {'1234':'lala'},
-  Ids: ['1234','1235','1236','1237'],
-  createSession :function(name){
-    let sessionId = this.Ids.shift();
-    this.sessions[sessionId] = name;
-    return sessionId;
-  },
-  deleteSession : function(sessionId){
-    delete this.sessions[sessionId];
-  },
-  getPlayerBy: function(sessionId){
-    return this.sessions[sessionId];
-  }
+const idGenerator = function(){
+  let Ids =  ['1234','1235','1236','1237'];
+  return Ids.shift();
 }
 
 const dice = {
@@ -40,13 +32,14 @@ describe('#App', () => {
   let gamesManager = {};
   beforeEach(function(done) {
     gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-    app.initialize(gamesManager,sessionManager);
+    app.initialize(gamesManager,new SessionManager(idGenerator));
     done();
   });
   describe('GET /', () => {
     beforeEach(function(){
       gamesManager.createRoom('newGame',4);
       gamesManager.joinRoom('newGame', 'lala');
+      let sessionManager = new SessionManager(idGenerator);
       sessionManager.createSession('lala');
       app.initialize(gamesManager,sessionManager);
     });
@@ -78,6 +71,7 @@ describe('#App', () => {
     beforeEach(function(){
       gamesManager.createRoom('newGame',4);
       gamesManager.joinRoom('newGame', 'lala');
+      let sessionManager = new SessionManager(idGenerator);
       sessionManager.createSession('lala');
       app.initialize(gamesManager,sessionManager);
     });
@@ -110,13 +104,14 @@ describe('#App', () => {
     beforeEach(function(){
       gamesManager.createRoom('newGame',4);
       gamesManager.joinRoom('newGame', 'lala');
+      let sessionManager = new SessionManager(idGenerator);
       sessionManager.createSession('lala');
       app.initialize(gamesManager,sessionManager);
     });
     it('should redirect to waiting page if valid cookies are present', done => {
       request(app)
       .get('/joining.html')
-      .set('Cookie', ['gameName=newGame', 'playerName=lala'])
+      .set('Cookie', ['gameName=newGame', 'playerName=lala','sessionId=1234'])
       .expect(302)
       .expect('Location', '/waiting.html')
       .end(done);
@@ -131,21 +126,8 @@ describe('#App', () => {
   });
   describe('POST /createGame', () => {
     beforeEach(()=>{
-      sessionManager = {
-        sessions : {'1234':'lala'},
-        Ids: ['1234','1235','1236','1237'],
-        createSession :function(name){
-          let sessionId = this.Ids.shift();
-          this.sessions[sessionId] = name;
-          return sessionId;
-        },
-        deleteSession : function(sessionId){
-          delete this.sessions[sessionId];
-        },
-        getPlayerBy: function(sessionId){
-          return this.sessions[sessionId];
-        }
-      }
+      let sessionManager = new SessionManager(idGenerator);
+      // console.log(sessionManager.idGenerator());
       app.initialize(gamesManager,sessionManager);
     })
     it('should set gameName and playerName in cookie', (done) => {
@@ -161,7 +143,7 @@ describe('#App', () => {
     });
     it('should not create game if game name already exist', (done) => {
       gamesManager.addGame('newGame',4);
-      app.initialize(gamesManager,sessionManager);
+      app.initialize(gamesManager,new SessionManager(idGenerator));
       request(app)
         .post('/createGame')
         .send('gameName=newGame&playerName=dhana&noOfPlayers=4')
@@ -208,7 +190,9 @@ describe('#App', () => {
     it('should redirect to waiting if user has already a game', function(done) {
       let gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
       gamesManager.createRoom('newGame',4);
-      gamesManager.joinRoom('newGame', 'lala');
+      gamesManager.joinRoom('newGame','lala');
+      let sessionManager = new SessionManager(idGenerator);
+      sessionManager.createSession('lala');
       app.initialize(gamesManager,sessionManager);
       request(app)
         .post('/createGame')
@@ -241,7 +225,7 @@ describe('#App', () => {
     beforeEach(function() {
       app.gamesManager.createRoom('newGame');
       app.gamesManager.joinRoom('newGame', 'lala');
-      sessionManager.createSession('lala');
+      app.sessionManager.createSession('lala');
       })
     it('should return joiningStatus as true if new player is joining', done => {
       request(app)
@@ -308,7 +292,7 @@ describe('#App', () => {
   describe('GET /getAvailableGames', () => {
     it('should give all available games', done => {
       gamesManager = new GamesManager(ColorDistributer,dice,timeStamp);
-      app.initialize(gamesManager,sessionManager);
+      app.initialize(gamesManager,new SessionManager(idGenerator));
       request(app)
         .get('/getAvailableGames')
         .expect(200)
@@ -320,7 +304,9 @@ describe('#App', () => {
     it('should delete Player and game if all the players left', (done) => {
       gamesManager.createRoom('ludo',4);
       let room = gamesManager.getRoom('ludo');
+      let sessionManager = new SessionManager(idGenerator);
       room.addGuest('player');
+      sessionManager.createSession('player');
       app.initialize(gamesManager,sessionManager);
       request(app)
         .delete('/player')
@@ -334,6 +320,7 @@ describe('#App', () => {
       let room = gamesManager.getRoom('ludo');
       room.addGuest('player1');
       room.addGuest('player2');
+      sessionManager = new SessionManager(idGenerator);
       app.initialize(gamesManager,sessionManager);
       request(app)
         .delete('/player')
@@ -351,6 +338,7 @@ describe('#App', () => {
     });
     it('should give bad request if room has no player with given name', (done) => {
       gamesManager.createRoom('ludo',3);
+      sessionManager = new SessionManager(idGenerator);
       app.initialize(gamesManager,sessionManager);
       request(app)
       .delete('/player')
@@ -363,6 +351,7 @@ describe('#App', () => {
     it('should serve roomStatus', (done) => {
       let room = gamesManager.createRoom('ludo')
       room.addGuest('batman');
+      sessionManager = new SessionManager(idGenerator);
       app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/waitingStatus')
@@ -373,6 +362,7 @@ describe('#App', () => {
     });
     it('should send empty response', (done) => {
       gamesManager.addGame('ludo',4);
+      sessionManager = new SessionManager(idGenerator);
       app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/waitingStatus')
@@ -383,6 +373,7 @@ describe('#App', () => {
     it('should give status with player color and gameStarted as true', (done) => {
       gamesManager.createRoom('ludo',2);
       ['player1','player2'].forEach((player)=>gamesManager.joinRoom('ludo',player));
+      sessionManager = new SessionManager(idGenerator);
       app.initialize(gamesManager,sessionManager);
       request(app)
         .get('/waitingStatus')
