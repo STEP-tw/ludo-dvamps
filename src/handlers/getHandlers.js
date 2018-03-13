@@ -1,3 +1,6 @@
+const path = require('path');
+const dbQuery = require(path.resolve('src/handlers/dbHandler.js'));
+
 const serveAvailableGames = function(req, res) {
   let availableGames = req.app.gamesManager.getAvailableRooms();
   res.send(availableGames);
@@ -23,6 +26,7 @@ const getLogs = function(req,res){
 const rollDice = function(req, res) {
   let game = req.game;
   let diceRollStatus = game.rollDice();
+  dbQuery.saveGamedata(req);
   res.json(diceRollStatus);
 };
 

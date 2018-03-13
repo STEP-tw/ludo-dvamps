@@ -1,5 +1,7 @@
 const path = require('path');
 const lib = require(path.resolve('src/handlers/middleWares.js'));
+const dbQuery = require(path.resolve('src/handlers/dbHandler.js'));
+
 const resWithGameJoined = function(res,gameName,playerName,sessionId) {
   res.cookie('gameName',gameName,{path:''});
   res.cookie('playerName',playerName,{path:''});
@@ -62,6 +64,7 @@ const moveCoin = function(req,res){
     req.app.gamesManager.finishGame(finishedGameName,10);
   }
   status.status = true;
+  dbQuery.saveGamedata(req);
   res.json(status);
 };
 

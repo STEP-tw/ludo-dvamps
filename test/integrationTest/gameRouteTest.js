@@ -15,6 +15,18 @@ const ColorDistributer = require(path.resolve('test/colorDistributer.js'));
 
 let sessionManager = {};
 
+const client = {
+  query: function(param1,param2) {
+    if(!Array.isArray(param2)) return param2();
+  }
+};
+
+const clientErr = {
+  query: function(param1,param2) {
+    if(!Array.isArray(param2)) return param2(new Error());
+  }
+};
+
 const dice = {
   roll: function() {
     return 4;
@@ -49,7 +61,7 @@ describe('GameRoute', () => {
       }
     }
     gamesManager = new GamesManager(ColorDistributer,dice,timeStamp,dummyShuffler);
-    app.initialize(gamesManager,sessionManager);
+    app.initialize(gamesManager,sessionManager,client);
     done();
   });
   describe('GET /game/board.html', () => {
@@ -83,7 +95,28 @@ describe('GameRoute', () => {
   describe('#GET /game/rollDice', () => {
     beforeEach(function(){
       let gamesManager = initGameManager(players,dice,'newGame',sessionManager);
-      app.initialize(gamesManager,sessionManager);
+      app.initialize(gamesManager,sessionManager,client);
+    });
+    it('should roll the dice for currentPlayer', (done) => {
+      request(app)
+        .get('/game/rollDice')
+        .set('Cookie', ['gameName=newGame', 'playerName=lala', 'sessionId=1234'])
+        .expect(200)
+        .expect('{"move":4,"currentPlayer":"kaka"}')
+        .end(done);
+    });
+    it('should response with bad request if player is not there', (done) => {
+      request(app)
+        .get('/game/rollDice')
+        .set('Cookie', ['gameName=newGame', 'playerName=kaka', 'sessionId=1231'])
+        .expect(400)
+        .end(done);
+    });
+  });
+  describe('#GET /game/rollDice', () => {
+    beforeEach(function(){
+      let gamesManager = initGameManager(players,dice,'newGame',sessionManager);
+      app.initialize(gamesManager,sessionManager,clientErr);
     });
     it('should roll the dice for currentPlayer', (done) => {
       request(app)
@@ -176,7 +209,7 @@ describe('GameRoute', () => {
       }
       gamesManager = initGameManager(players,dice,'newGame',sessionManager);
       game = gamesManager.getGame('newGame');
-      app.initialize(gamesManager,sessionManager);
+      app.initialize(gamesManager,sessionManager,client);
     })
     it('should return move coin status if valid player gives valid coin Id', done => {
       game.rollDice();
@@ -249,7 +282,7 @@ describe('GameRoute', () => {
         game.moveCoin(coinId);
       });
       game.rollDice();
-      app.initialize(gameManager,sessionManager);
+      app.initialize(gameManager,sessionManager,client);
       request(app)
       .post('/game/moveCoin')
       .set('Cookie',['gameName=ludo','playerName=john','sessionId=1234'])

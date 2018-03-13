@@ -27,6 +27,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "nyc": "^11.4.1"
+    "nyc": "^11.4.1",
+    "pg": "^7.4.1"
   }
 }
