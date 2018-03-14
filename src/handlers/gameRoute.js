@@ -12,7 +12,7 @@ const ludo = express.Router();
 ludo.use(lib.checkCookie);
 ludo.use(lib.loadGame);
 ludo.use(lib.verifyPlayer);
-
+ludo.get('/board.html',getHandlers.renderBoardPage);
 ludo.use(express.static('public'));
 ludo.get('/playerDetails',getHandlers.getPlayerDetails);
 ludo.get('/gameStatus',getHandlers.getGameStatus);

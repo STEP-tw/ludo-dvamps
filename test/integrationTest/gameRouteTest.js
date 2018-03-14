@@ -84,6 +84,15 @@ describe('GameRoute', () => {
         .expect(400)
         .end(done)
     });
+    it('should give board page with player and gamename',function(done){
+      request(app)
+        .get('/game/board.html')
+        .set('Cookie',['gameName=ludo','sessionId=1234'])
+        .expect(200)
+        .expect(/ludo/)
+        .expect(/lala/)
+        .end(done)
+    })
   });
   describe('#GET /game/rollDice', () => {
     beforeEach(function(){

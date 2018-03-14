@@ -345,31 +345,6 @@ const getLogs = function() {
 let gameStatusReqInterval;
 let logStatusReqInterval;
 
-const setGameAndUser = function() {
-  if(!this.responseText){
-    return;
-  }
-  let cookies = keyValParse(decodeURIComponent(document.cookie));
-  player = JSON.parse(this.responseText).playerName;
-  getElement('#userName').innerText = player;
-  getElement('#nameOfGame').innerText = cookies.gameName;
-};
-
-const load = function() {
-  let cookies = keyValParse(decodeURIComponent(document.cookie));
-  let sessionId = cookies.sessionId;
-  showPlayers();
-  sendAjaxRequest('POST','/game/sessionId',setGameAndUser,`sessionId=${sessionId}`);
-  sendAjaxRequest('GET', '/images/board.svg', function() {
-    if (!this.responseText) {
-      return;
-    }
-    let main = document.querySelector('.board');
-    main.innerHTML = this.responseText;
-  });
-  gameStatusReqInterval = setInterval(getGameStatus, 500);
-  logStatusReqInterval = setInterval(getLogs, 2000);
-};
 
 const endGame = function() {
   clearInterval(gameStatusReqInterval);
@@ -403,6 +378,23 @@ const changeCoinPosition = (coinId, cellId, marginForX, marginForY) => {
     text.setAttribute('x', xCoOrd);
     text.setAttribute('y', yCoOrd);
   },1500);
+};
+
+const setBoardSvg = function(boardSvg){
+  let main = document.querySelector('.board');
+  main.innerHTML = boardSvg;
+}
+
+const load = function() {
+  let cookies = keyValParse(decodeURIComponent(document.cookie));
+  let sessionId = cookies.sessionId;
+  showPlayers();
+  sendAjaxRequest('GET', '/images/board.svg', function() {
+    if (!this.responseText) return;
+    setBoardSvg(this.responseText);
+  });
+  gameStatusReqInterval = setInterval(getGameStatus, 500);
+  logStatusReqInterval = setInterval(getLogs, 2000);
 };
 window.onload = load;
 /*eslint-enable*/

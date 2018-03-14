@@ -42,6 +42,12 @@ const getPlayerDetails = function(req,res) {
   res.json(status);
 };
 
+const renderBoardPage = function(req,res) {
+  let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);
+  let gameName = req.cookies.gameName;
+  res.render('board',{title:'ludo',gameName:gameName,playerName:playerName});
+};
+
 module.exports = {
   serveAvailableGames,
   serveWaitingStatus,
@@ -49,5 +55,6 @@ module.exports = {
   rollDice,
   getLogs,
   getNextPos,
-  getPlayerDetails
+  getPlayerDetails,
+  renderBoardPage
 };

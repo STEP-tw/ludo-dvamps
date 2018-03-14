@@ -1,0 +1,65 @@
+html
+  head
+    title= title
+    -
+      var scriptSrc = ['/js/commonScripts.js','/js/ludoBoard.js','/library/moment.js','/library/momentTimeZone.js']
+    each fileSrc in scriptSrc
+      script(src= fileSrc charset='utf-8' defer)
+
+    -
+      var cssSrc = ['/css/master.css','/css/board.css','https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css']
+    each fileSrc in cssSrc
+      link(rel= 'stylesheet' href= fileSrc)
+
+      link(
+        rel= 'icon'
+        href= 'images/favicon.ico'
+        type= 'image/x-icon'
+      )
+
+body
+  img(src="/images/ludobackground.png" id="bgimg")
+  header
+    img(src="/images/dice2.png", alt="DICE", class="diceimg" height="50px" width="60px")
+    h1(class="inline heading")
+      - var colors = ["red","green","yellow","blue"]
+      - var letters = ['L','U','D','O']
+      - for(var index=0;index<4;index++)
+        span(class=colors[index])= letters[index]
+    div(class="message inline" id="nameOfGame")= gameName
+    div(class="inline exit")
+      label(id="userName")= playerName
+  main
+    div(class="mainContainer")
+      div(class="playerGroup left")
+        div(class="greenSec holder")
+          input(class="players" id="greenplayer" type="text" readonly)
+          div(class="dice")
+            div(class="diceHolder hide")
+              img(src="/images/diceFaces.png", alt="DICE FACES", id="dice1")
+
+        div(class="redSec holder")
+          div(class="dice")
+            div(class="diceHolder hide")
+              img(src="/images/diceFaces.png", alt="DICE FACES", id="dice2")
+          input(class="players" id="redplayer" type="text" readonly)
+
+      div(class="board")
+      div(class="playerGroup right")
+        div(class="yellowSec holder")
+          input(class="players" id="yellowplayer" type="text" readonly)
+          div(class="dice")
+            div(class="diceHolder hide")
+              img(src="/images/diceFaces.png" alt="DICE FACES" id="dice3")
+        div(class="blueSec holder")
+          div(class="dice")
+            div(class="diceHolder hide")
+              img(src="/images/diceFaces.png" alt="DICE FACES" id="dice3")
+          input(class="players" id="yellowplayer" type="text" readonly)
+    div(class="nav inline")
+      div(class="logs")
+        h4(id="logHeading")='GAME LOG'
+        div(id='logStatements')
+    div(class="popup")
+      div(class="popup-content")
+        p()=""

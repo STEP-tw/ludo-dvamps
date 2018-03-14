@@ -27,6 +27,8 @@ app.use(lib.trimRequestBody);
 app.use(lib.checkGame);
 app.use(lib.logger);
 app.use(lib.restrictValidPlayer);
+app.set('views','templates');
+app.set('view engine','pug');
 app.use(express.static('public'));
 app.use('/game',GameRoute);
 app.get('/getAvailableGames', getHandlers.serveAvailableGames);
