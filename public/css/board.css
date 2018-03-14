@@ -247,8 +247,7 @@ li span{
   width: 8%;
   padding-left: 3%;
 }
-.redDice {
-  color: red;
+.blDice {
   padding-left: 3%;
   font-size: 35px;
 }
@@ -277,4 +276,3 @@ svg text{
   cursor:pointer;
   user-select: none;
 }
-

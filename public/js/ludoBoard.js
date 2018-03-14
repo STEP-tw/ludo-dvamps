@@ -317,7 +317,7 @@ const getLogStatements = function(logs) {
   let logStatements = logs.map((log) => {
     let convTime = toLocalTime(log.time);
     let playerColor = getPlayer(log.pColor);
-    let move = log.move && `<label class ="redDice">${log.move}</label>` || '';
+    let move = log.move && `<label class ="blDice">${log.move}</label>` || '';
     let time = `<label class="time">${convTime}</label>`;
     let coinColor = getCoin(log.color, '&#x25C9;');
     let killedCoin = getCoin(log.killedCoinColor, '&#x29bb;');
@@ -362,7 +362,6 @@ const animateCoin = function(coin, x, y) {
   let animation = `<animateTransform attributeName="transform" type="translate" from="0 0" to="${x-xCord} ${y-yCord}" begin="0s" dur="5s" repeatCount="indefinite"/>`;
   coin.innerHTML = animation;
 }
-
 const changeCoinPosition = (coinId, cellId, marginForX, marginForY) => {
   let coin = document.getElementById(coinId);
   let cell = document.getElementById(cellId);

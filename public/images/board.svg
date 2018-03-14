@@ -12,19 +12,19 @@
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="280.5" y="1" width="40" height="40" id="24"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="1" width="40" height="40" id="25"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="41" width="40" height="40" id="22"></rect>
-    <rect fill="#fefe7d" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="41" width="40" height="40" id="124"></rect>
-    <rect fill="#fefe7d" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="320.5" y="41" width="40" height="40" id="26"></rect>
+    <rect fill="#fdfd97" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="41" width="40" height="40" id="124"></rect>
+    <rect fill="#fdfd97" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="320.5" y="41" width="40" height="40" id="26"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="81" width="40" height="40" id="21"></rect>
-    <rect fill="#fefe7d" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="81" width="40" height="40" id="125"></rect>
+    <rect fill="#fdfd97" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="81" width="40" height="40" id="125"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="81" width="40" height="40" id="27"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="121" width="40" height="40" id="20"></rect>
-    <rect fill="#fefe7d" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="121" width="40" height="40" id="126"></rect>
+    <rect fill="#fdfd97" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="121" width="40" height="40" id="126"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="121" width="40" height="40" id="28"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="161" width="40" height="40" id="19"></rect>
-    <rect fill="#fefe7d" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="161" width="40" height="40" id="127"></rect>
+    <rect fill="#fdfd97" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="161" width="40" height="40" id="127"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="161" width="40" height="40" id="29"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="201" width="40" height="40" id="18"></rect>
-    <rect fill="#fefe7d" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="201" width="40" height="40" id="128"></rect>
+    <rect fill="#fdfd97" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="201" width="40" height="40" id="128"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="320.5" y="201" width="40" height="40" id="30"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="240.5" y="361" width="40" height="40" id="4"></rect>
     <rect fill="#df6b6b" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="280.5" y="361" width="40" height="40" id="154"></rect>
@@ -82,8 +82,8 @@
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" x="200.5" y="321" width="40" height="40" id="5"></rect>
     <rect fill="#ffff00" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="1" width="240" height="240" id="svg_yellow"></rect>
     <rect fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="1" width="240" height="240" id="svg_green"></rect>
-    <rect fill="#f21010" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="361" width="240" height="240" id="svg_red"></rect>
-    <rect fill="#1436e9" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="361" width="240" height="240" id="svg_blue"></rect>
+    <rect fill="#eb2929" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="0.5" y="361" width="240" height="240" id="svg_red"></rect>
+    <rect fill="#2847e6" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="360.5" y="361" width="240" height="240" id="svg_blue"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="43.449997" width="63" height="63" id="home-5"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="39" y="137.449997" width="63" height="63" id="home-8"></rect>
     <rect fill="#fff" stroke="#000" stroke-width="1.5" stroke-opacity="null" x="138" y="43" width="63" height="63" id="home-6"></rect>
@@ -223,7 +223,7 @@
     <polygon class="116" points="240,240 240,360 300,300" stroke="black" stroke-width="1.5" fill="#6caf76"/>
     <polygon class="155" points="240,360 300,300 360,360" stroke="black" stroke-width="1.5" fill="#df6b6b"/>
     <polygon class="142" points="360,240 300,300 360,360" stroke="black" stroke-width="1.5" fill="#6277e0"/>
-    <polygon class="129" points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#fefe7d"/>
+    <polygon class="129" points="240,240 300,300 360,240" stroke="black" stroke-width="1.5" fill="#fdfd97"/>
     <g id="green-coin-5">
       <circle fill="#0b9d22" stroke="#000" stroke-width="1.5" stroke-opacity="null" cx="70" cy="75.949997" r="10.5" id="green-5" class = "hide"></circle>
       <text x="70" y="75.949997" font-family='roboto,sans-serif' id="green-5-text" text-anchor="middle" dy=".3em" fill="white"></text>

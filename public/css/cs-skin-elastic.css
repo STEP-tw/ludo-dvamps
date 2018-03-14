@@ -94,7 +94,7 @@ div.cs-skin-elastic {
 	background-size: 2em auto;
 }
 
-.cs-skin-elastic .cs-options span:hover,
+.cs-skin-elastic .cs-options li:hover,
 .cs-skin-elastic .cs-options li.cs-focus span,
 .cs-skin-elastic .cs-options .cs-selected span {
 	color: #2f7a76;
