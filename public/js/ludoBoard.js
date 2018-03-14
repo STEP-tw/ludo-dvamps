@@ -28,6 +28,18 @@ const showCoin = function(coin) {
   textElement.classList.replace('hide', 'show');
 };
 
+const placeCoin = (coin)=>{
+ let coinId = `${coin.color}-${coin.id}`;
+ if (+coin.position < 0) {
+   coin.position = `home${coin.position}`;
+   setCountOnCoin([coinId],{[coinId]:""});
+   changeCoinPosition(coinId,coin.position,31.5,31.5);
+   return;
+ }
+ changeCoinPosition(coinId,coin.position,20,20);
+ return;
+};
+
 const isDestinationCell = function(cellID) {
   return [116, 155, 129, 142].includes(+cellID);
 };
@@ -83,7 +95,7 @@ const decideCoinsToShow = (playerCoinsToShow, coin) => {
   coin.belowCoins = 1;
   coin.position >= 0 && playerCoinsToShow.push(coin);
   showCoin(coin);
-  getGameStatus();
+  placeCoin(coin)
   return playerCoinsToShow;
 };
 const arrBelowCoinsCount = function(coins) {
