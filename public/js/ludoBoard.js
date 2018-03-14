@@ -36,7 +36,7 @@ const placeCoin = (coin)=>{
    changeCoinPosition(coinId,coin.position,31.5,31.5);
    return;
  }
- changeCoinPosition(coinId,coin.position,20,20);
+ getGameStatus();
  return;
 };
 
@@ -275,7 +275,7 @@ const setWinningMsg = function(player) {
   getElement('.message').innerText = `${player} has won`;
   endGame();
 };
-let lastStatus = '';
+let lastStatus = ''; //don't change it to const
 const setCurrPlayer = function(players, currentPlayer) {
   let currentPlayerColor = getCurrPlayerColor(players, currentPlayer);
   changeCurrPlayerDice(currentPlayer, currentPlayerColor);
