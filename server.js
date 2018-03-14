@@ -12,7 +12,8 @@ const idGenerator = function(){
 };
 
 const PORT = process.env.PORT || 8000;
-const connectionString = 'postgres://localhost:5432/ludo';
+const defaultCs = 'postgres://localhost:5432/ludo';
+const connectionString = process.env.DATABASE_URL||defaultCs;
 const timeStamp = ()=>new Date();
 
 const client = new Client(connectionString);
