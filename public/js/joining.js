@@ -24,7 +24,6 @@ const showGameData = function(table, game) {
   let buttonData = createElement('td');
   appendChilds(buttonData, button);
   appendChilds(tr, buttonData);
-
   appendChilds(table, tr);
 };
 

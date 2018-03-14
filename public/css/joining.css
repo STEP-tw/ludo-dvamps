@@ -15,21 +15,21 @@ main{
 input[type="text"] {
   width: 15%;
   height: 50px;
-  margin: 10px;
+  margin: 6px;
   font-size: 150%;
   font-family: 'Open Sans', sans-serif;
   border: none;
-  border-bottom: 2px solid lightGray;
+  border-bottom: 2px solid black;
   background-color:#d6d6d600;
 }
-input[type="text"]:hover {
-  border-bottom: 2px solid #090a09;
+input[type="text"]:focus {
+  border-bottom: 3px solid #090a09;
+  outline: none;
 }
-
 th{
   width:20%;
-  height: 1%;
-  padding: 5px 3px;
+  height: 2%;
+  padding: 5px 5px;
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 120%;
@@ -39,15 +39,14 @@ th{
 }
 td{
   width:20%;
-  height: 1%;
-  padding: 5px 3px;
+  padding: 5px 10px;
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 120%;
-  border-bottom: 1px solid lightGray;
+  border-bottom: 1px solid darkGray;
 }
 table{
-  margin:1% 19%;
+  margin:1% 19.5%;
   border-collapse: collapse;
 }
 tr:hover {background-color: #f5f5f5;}
@@ -55,12 +54,12 @@ button{
   font-family: 'Open Sans', sans-serif;
   font-size: 110%;
   font-weight: 600;
-  padding: 2px 5px;
+  padding: 3px 5px;
   border:0px;
   background-color: #e1e7e4;
   border-radius: 5px;
   width:35%;
-  margin: 0.5%;
+  margin: 1%;
 }
 button[name="back"]{
   font-family: 'Open Sans', sans-serif;
@@ -79,4 +78,18 @@ button[name="back"]{
   font-size: 120%;
   font-weight: 600;
   text-transform: uppercase;
+}
+button.join:focus, button.join:hover {
+  outline: none;
+  box-shadow: 10px 12px 20px 0px rgba(61,60,61,1);
+}
+.join{
+  padding: 6px;
+  box-shadow: 6px 4px 10px 0px rgba(61,60,61,1);
+  transition: 0.3s;
+}
+h2{
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 600;
+  font-size: 200%;
 }

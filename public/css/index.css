@@ -89,7 +89,7 @@ input[type="text"] {
 }
 
 input[type="text"]:hover {
-  border-bottom: 2px solid #605d5d;
+  border-bottom: 2px solid darkGray;
 }
 
 .message{
