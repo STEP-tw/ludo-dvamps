@@ -325,22 +325,4 @@ describe('GameRoute', () => {
         .end(done);
     });
   });
-  describe('#POST /game/sessionId',() => {
-    let players = ['john','johnny','roy','albert'];
-    it('should give playerName of given sessionId', (done) => {
-      idGenerator = getIdGen();
-      sessionManager = new SessionManager(idGenerator);
-      gamesManager = initGameManager(players,dice,'ludo',sessionManager);
-      let game = gamesManager.getGame('ludo');
-      app.initialize(gamesManager,sessionManager,client);
-      request(app)
-      .post('/game/sessionId')
-      .set('Cookie',['gameName=ludo','sessionId=1234'])
-      .send('sessionId=1234')
-      .expect(200)
-      .expect(/playerName/)
-      .expect(/john/)
-      .end(done);
-    });
-  });
 });

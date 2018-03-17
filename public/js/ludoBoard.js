@@ -385,8 +385,8 @@ const setBoardSvg = function(boardSvg){
 }
 
 const load = function() {
-  let cookies = keyValParse(decodeURIComponent(document.cookie));
-  let sessionId = cookies.sessionId;
+  // let cookies = keyValParse(decodeURIComponent(document.cookie));
+  // let sessionId = cookies.sessionId;
   showPlayers();
   sendAjaxRequest('GET', '/images/board.svg', function() {
     if (!this.responseText) return;

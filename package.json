@@ -22,13 +22,12 @@
   "homepage": "https://github.com/STEP-tw/ludo-dvamps#readme",
   "devDependencies": {
     "chai": "^4.1.2",
-    "pug": "^2.0.1",
     "supertest": "git+https://github.com/visionmedia/supertest.git"
   },
   "dependencies": {
+    "pug": "^2.0.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "nyc": "^11.4.1",
     "pg": "^7.4.1"
   }
 }

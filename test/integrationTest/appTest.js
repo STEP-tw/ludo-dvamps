@@ -398,4 +398,23 @@ describe('#App', () => {
         .end(done);
     });
   });
+  describe('get /waiting.html', () => {
+    it('should response with waiting page for valid player', (done) => {
+      idGenerator = getIdGen();
+      sessionManager = new SessionManager(idGenerator);
+      gamesManager.createRoom('ludo',2);
+      ['player1','player2'].forEach((player)=>{
+        gamesManager.joinRoom('ludo',player);
+        sessionManager.createSession(player);
+      });
+      app.initialize(gamesManager,sessionManager);
+      request(app)
+        .get('/waiting.html')
+        .set('Cookie',['gameName=ludo','sessionId=1234'])
+        .expect(200)
+        .expect(/userName/)
+        .expect(/gameName/)
+        .end(done)
+    });
+  });
 });

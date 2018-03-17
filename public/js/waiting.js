@@ -19,8 +19,10 @@ const updateSeconds = function() {
 };
 
 const showColor = function(color) {
+  console.log(color);
   let overlay = getElement(".overlay");
   let colorHolder = getElement('#color');
+  console.log(colorHolder);
   colorHolder.style.backgroundColor = color;
   overlay.classList.replace('hide','show');
 };
@@ -69,6 +71,7 @@ const updatePlayers = function() {
   }
   let roomDetails = JSON.parse(this.responseText);
   if(roomDetails.gameStarted){
+    console.log(roomDetails.yourColor);
     getGameDetails(roomDetails.yourColor,roomDetails.players);
     return;
   }
@@ -83,17 +86,12 @@ const updatePlayers = function() {
   }
 };
 
-const updateGameName = function() {
-  let cookies = keyValParse(document.cookie);
-  getElement('#gameName').innerText = decodeURIComponent(cookies.gameName);
-};
 
 const getStatus = function() {
   sendAjaxRequest('GET', '/waitingStatus', updatePlayers);
 };
 
 const begin = function() {
-  updateGameName();
   getStatus();
   intervalID = setInterval(getStatus, 1000);
   blinkID = setInterval(blinkText, 500);

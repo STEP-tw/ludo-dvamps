@@ -64,13 +64,6 @@ const moveCoin = function(req,res){
   res.json(status);
 };
 
-const getPlayerNameBy = function(req,res) {
-  let sessionManager = req.app.sessionManager;
-  let playerName = sessionManager.getPlayerBy(req.body.sessionId);
-  let player = {playerName : playerName};
-  res.json(player);
-};
-
 let joinGameRoute = [
   lib.verifyJoinGameReq,
   lib.verifyReqBody,
@@ -82,5 +75,4 @@ module.exports = {
   createNewGame:[lib.verifyReqBody,lib.checkCharacterLimit,createNewGame],
   joinPlayerToGame:joinGameRoute,
   moveCoin:[checkCanMoveCoin,moveCoin],
-  getPlayerNameBy:getPlayerNameBy
 };

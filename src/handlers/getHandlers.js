@@ -48,6 +48,16 @@ const renderBoardPage = function(req,res) {
   res.render('board',{title:'ludo',gameName:gameName,playerName:playerName});
 };
 
+const renderWaitingPage = function(req,res) {
+  let playerName = req.app.sessionManager.getPlayerBy(req.cookies.sessionId);
+  let gameName = req.cookies.gameName;
+  res.render('waiting',
+    {title:'Waiting For Opponents To Join',
+      gameName:gameName,
+      userName:playerName});
+};
+
+
 module.exports = {
   serveAvailableGames,
   serveWaitingStatus,
@@ -56,5 +66,6 @@ module.exports = {
   getLogs,
   getNextPos,
   getPlayerDetails,
-  renderBoardPage
+  renderBoardPage,
+  renderWaitingPage
 };

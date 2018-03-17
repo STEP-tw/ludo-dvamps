@@ -1,0 +1,57 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    |
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Roboto:300,400,500,700', rel='stylesheet')
+    |
+    link(rel='stylesheet', href='css/master.css')
+    |
+    link(rel='stylesheet', href='css/waiting.css')
+    |
+    link(rel='icon', href='images/favicon.ico', type='image/x-icon')
+    |
+    script(src='js/commonScripts.js', charset='utf-8', defer='')
+    |
+    script(src='js/waiting.js', charset='utf-8', defer='')
+    |
+    title #{title}
+  body
+    img#bgimg(src='/images/ludobackground.png')
+    |
+    header
+      img.diceimg(src='/images/dice2.png', alt='DICE', height='50px', width='60px')
+      |
+      h1.inline.heading
+        span.red L
+        |
+        span.green U
+        |
+        span.yellow D
+        |
+        span.blue O
+      |
+      .inline.exit
+        label#userName #{userName}
+        |
+        button#leave(type='reset', onclick='exitGame()') LEAVE
+    |
+    main
+      label#gameName #{gameName}
+      |
+      h3#message Waiting For Opponents To Join
+      |
+      h3#joinMessage Players Joined
+      |
+      .container
+      |
+      .overlay.hide
+        #ColorText
+          | Your Colour
+        |
+        #color
+        |
+        h3#Timer
+          | Game Starts In
+          span#sec 3
+          |  Seconds
