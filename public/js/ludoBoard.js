@@ -353,30 +353,17 @@ const endGame = function() {
   requestRollDice = null;
 };
 
-let animated = {};
-const animateCoin = function(coin, x, y) {
-  if(animated[coin.id]) return;
-  animated[coin.id] = true;
-  let xCord = parseInt(coin.getAttribute('cx'));
-  let yCord = parseInt(coin.getAttribute('cy'));
-  let animation = `<animateTransform attributeName="transform" type="translate" from="0 0" to="${x-xCord} ${y-yCord}" begin="0s" dur="5s" repeatCount="indefinite"/>`;
-  coin.innerHTML = animation;
-}
 const changeCoinPosition = (coinId, cellId, marginForX, marginForY) => {
   let coin = document.getElementById(coinId);
   let cell = document.getElementById(cellId);
   let text = document.querySelector(`#${coinId}-text`);
   let xCoOrd = +cell.x.animVal.value + marginForX;
   let yCoOrd = +cell.y.animVal.value + marginForY;
-  animateCoin(coin, xCoOrd, yCoOrd);
-  setTimeout(()=>{
-    coin.innerHTML = "";
-    animated[coin.id] = false;
-    coin.setAttribute('cx', xCoOrd);
-    coin.setAttribute('cy', yCoOrd);
-    text.setAttribute('x', xCoOrd);
-    text.setAttribute('y', yCoOrd);
-  },1500);
+  coin.innerHTML = "";
+  coin.setAttribute('cx', xCoOrd);
+  coin.setAttribute('cy', yCoOrd);
+  text.setAttribute('x', xCoOrd);
+  text.setAttribute('y', yCoOrd);
 };
 
 const setBoardSvg = function(boardSvg){
