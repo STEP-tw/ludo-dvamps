@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "export APP_VERSION='prod' && node server.js",
+    "dev": "export APP_VERSION='dev' && node server.js",
     "nodemon": "nodemon -w src -w server.js -w app.js",
     "linter": "eslint .",
     "coverage": "nyc mocha --recursive",

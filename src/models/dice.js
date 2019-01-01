@@ -1,8 +1,8 @@
 class Dice {
-  constructor(random) {
+  constructor(randomFunc) {
     this.min = 1;
     this.max = 6;
-    this.random = random;
+    this.random = randomFunc;
   }
   roll(){
     return Math.floor(this.random() * this.max) + this.min;
